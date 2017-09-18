@@ -8,7 +8,7 @@ def aq_ui
     pod 'YNDropDownMenu'
     pod 'FoldingCell'
     pod 'SCLAlertView'
-    pod 'SnapKit'
+    pod 'SnapKit', '~> 3.2.0'
 end
 
 def aq_base

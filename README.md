@@ -23,7 +23,7 @@ swift, swift-3, udacity, extension, uikit, foundation, app
 
 ## Changelog
 
-All notable changes of the AQOO release series are documented in project [CHANGELOG.md](CHANGELOG.md) file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles. The changelog documentation starts with version 0.9.9 (2017-09-14).
+All notable changes of the AQOO release series are documented in project [CHANGELOG.md](CHANGELOG.md) file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles. The changelog documentation starts with version 0.9.9 (2017-09-18).
 
 ## License-Term
 

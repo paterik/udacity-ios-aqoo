@@ -27,7 +27,8 @@
     import AppKit
 #endif
 
-public struct ConstraintPriority : ExpressibleByFloatLiteral, Equatable, Strideable {
+
+public struct ConstraintPriority : ExpressibleByFloatLiteral, Equatable {
     public typealias FloatLiteralType = Float
     
     public let value: Float
@@ -63,15 +64,5 @@ public struct ConstraintPriority : ExpressibleByFloatLiteral, Equatable, Stridea
     
     public static func ==(lhs: ConstraintPriority, rhs: ConstraintPriority) -> Bool {
         return lhs.value == rhs.value
-    }
-
-    // MARK: Strideable
-
-    public func advanced(by n: FloatLiteralType) -> ConstraintPriority {
-        return ConstraintPriority(floatLiteral: value + n)
-    }
-
-    public func distance(to other: ConstraintPriority) -> FloatLiteralType {
-        return other.value - value
     }
 }

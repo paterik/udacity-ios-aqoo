@@ -619,6 +619,7 @@
 				B1A620711F700D820093CAEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B1A620721F700D820093CAEF /* Build configuration list for PBXNativeTarget "aqooTests" */ = {
 			isa = XCConfigurationList;
@@ -627,6 +628,7 @@
 				B1A620741F700D820093CAEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B1A620751F700D820093CAEF /* Build configuration list for PBXNativeTarget "aqooUITests" */ = {
 			isa = XCConfigurationList;
@@ -635,6 +637,7 @@
 				B1A620771F700D820093CAEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
