@@ -8,14 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */; };
+		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
+		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
-		B1A6204A1F700D820093CAEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620491F700D820093CAEF /* ViewController.swift */; };
+		B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620491F700D820093CAEF /* LoginViewController.swift */; };
 		B1A6204D1F700D820093CAEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A6204B1F700D820093CAEF /* Main.storyboard */; };
 		B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1A6204E1F700D820093CAEF /* aqoo.xcdatamodeld */; };
 		B1A620521F700D820093CAEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1A620511F700D820093CAEF /* Assets.xcassets */; };
 		B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A620531F700D820093CAEF /* LaunchScreen.storyboard */; };
 		B1A620601F700D820093CAEF /* aqooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6205F1F700D820093CAEF /* aqooTests.swift */; };
 		B1A6206B1F700D820093CAEF /* aqooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6206A1F700D820093CAEF /* aqooUITests.swift */; };
+		B1F88B731F7033450005FE43 /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* LandingPageViewController.swift */; };
+		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
+		B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7E1F7045E80005FE43 /* UIImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +42,11 @@
 
 /* Begin PBXFileReference section */
 		670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.release.xcconfig"; sourceTree = "<group>"; };
+		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A620471F700D820093CAEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B1A620491F700D820093CAEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B1A620491F700D820093CAEF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B1A6204C1F700D820093CAEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B1A6204F1F700D820093CAEF /* aqoo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = aqoo.xcdatamodel; sourceTree = "<group>"; };
 		B1A620511F700D820093CAEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +58,9 @@
 		B1A620661F700D820093CAEF /* aqooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aqooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A6206A1F700D820093CAEF /* aqooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aqooUITests.swift; sourceTree = "<group>"; };
 		B1A6206C1F700D820093CAEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1F88B721F7033450005FE43 /* LandingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
+		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		B1F88B7E1F7045E80005FE43 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aqoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF148C225F4CDC81757308B8 /* Pods-aqoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +108,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B19C52691F7046700064E1A5 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				B19C526E1F7060230064E1A5 /* BaseViewController.swift */,
+			);
+			name = base;
+			sourceTree = "<group>";
+		};
 		B1A6203B1F700D820093CAEF = {
 			isa = PBXGroup;
 			children = (
@@ -123,12 +141,11 @@
 		B1A620461F700D820093CAEF /* aqoo */ = {
 			isa = PBXGroup;
 			children = (
+				B1F88B781F7045580005FE43 /* model */,
+				B1F88B751F7034DA0005FE43 /* views */,
+				B1F88B791F70458E0005FE43 /* controller */,
+				B1F88B741F7034BD0005FE43 /* ressources */,
 				B1A620471F700D820093CAEF /* AppDelegate.swift */,
-				B1A620491F700D820093CAEF /* ViewController.swift */,
-				B1A6204B1F700D820093CAEF /* Main.storyboard */,
-				B1A620511F700D820093CAEF /* Assets.xcassets */,
-				B1A620531F700D820093CAEF /* LaunchScreen.storyboard */,
-				B1A620561F700D820093CAEF /* Info.plist */,
 				B1A6204E1F700D820093CAEF /* aqoo.xcdatamodeld */,
 			);
 			path = aqoo;
@@ -150,6 +167,68 @@
 				B1A6206C1F700D820093CAEF /* Info.plist */,
 			);
 			path = aqooUITests;
+			sourceTree = "<group>";
+		};
+		B1F88B741F7034BD0005FE43 /* ressources */ = {
+			isa = PBXGroup;
+			children = (
+				B1A620511F700D820093CAEF /* Assets.xcassets */,
+				B1A620561F700D820093CAEF /* Info.plist */,
+				B19C526C1F705C3F0064E1A5 /* Keys.plist */,
+			);
+			name = ressources;
+			sourceTree = "<group>";
+		};
+		B1F88B751F7034DA0005FE43 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				B1F88B801F7046190005FE43 /* partials */,
+				B1A6204B1F700D820093CAEF /* Main.storyboard */,
+				B1A620531F700D820093CAEF /* LaunchScreen.storyboard */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		B1F88B781F7045580005FE43 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				B1F88B7A1F7045A40005FE43 /* common */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		B1F88B791F70458E0005FE43 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				B19C52691F7046700064E1A5 /* base */,
+				B1A620491F700D820093CAEF /* LoginViewController.swift */,
+				B1F88B721F7033450005FE43 /* LandingPageViewController.swift */,
+			);
+			name = controller;
+			sourceTree = "<group>";
+		};
+		B1F88B7A1F7045A40005FE43 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				B1F88B7B1F7045AD0005FE43 /* extension */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		B1F88B7B1F7045AD0005FE43 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				B1F88B7C1F7045C10005FE43 /* UIColor.swift */,
+				B1F88B7E1F7045E80005FE43 /* UIImage.swift */,
+			);
+			name = extension;
+			sourceTree = "<group>";
+		};
+		B1F88B801F7046190005FE43 /* partials */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = partials;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */,
 				B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */,
 				B1A620521F700D820093CAEF /* Assets.xcassets in Resources */,
 				B1A6204D1F700D820093CAEF /* Main.storyboard in Resources */,
@@ -363,8 +443,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
-				B1A6204A1F700D820093CAEF /* ViewController.swift in Sources */,
+				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
+				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
+				B1F88B731F7033450005FE43 /* LandingPageViewController.swift in Sources */,
+				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
+				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

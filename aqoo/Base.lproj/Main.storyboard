@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nWJ-Hn-QuD">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--LoginViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,160 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUILoginMain_v1" translatesAutoresizingMaskIntoConstraints="NO" id="uwS-dT-chU" userLabel="img_ui_lock">
+                                <rect key="frame" x="88" y="138" width="199" height="245"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="245" id="HNB-sH-PUe"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="MLR-7t-UEJ" userLabel="btn_ui_action_logout">
+                                <rect key="frame" x="16" y="607" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="mvf-R4-aHK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="LOGOUT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="Z9t-1i-qpO"/>
+                                    <action selector="btnSpotifyLogoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bjz-JD-w4e"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="kbM-SK-7I0" userLabel="btn_ui_action_login">
+                                <rect key="frame" x="16" y="559" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="7vZ-O5-WGU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="LOGIN">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="ZGQ-3c-zf9"/>
+                                    <action selector="btnSpotifyLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GK2-lV-JGh"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT CONNECTED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpM-Vm-Lqm" userLabel="lbl_ui_status">
+                                <rect key="frame" x="16" y="391" width="343" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="Juf-lg-TzO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="YpM-Vm-Lqm" firstAttribute="top" secondItem="uwS-dT-chU" secondAttribute="bottom" constant="8" symbolic="YES" id="DeC-8P-a8n"/>
+                            <constraint firstItem="kbM-SK-7I0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JeL-Zm-EeM"/>
+                            <constraint firstItem="kbM-SK-7I0" firstAttribute="leading" secondItem="MLR-7t-UEJ" secondAttribute="leading" id="KDd-8c-ZbH"/>
+                            <constraint firstItem="uwS-dT-chU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="72" id="KZF-qV-mSw"/>
+                            <constraint firstItem="kbM-SK-7I0" firstAttribute="centerX" secondItem="uwS-dT-chU" secondAttribute="centerX" id="PEN-zE-1eC"/>
+                            <constraint firstItem="uwS-dT-chU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="74" id="WFy-ZR-GT1"/>
+                            <constraint firstItem="kbM-SK-7I0" firstAttribute="trailing" secondItem="MLR-7t-UEJ" secondAttribute="trailing" id="WtC-ei-xlg"/>
+                            <constraint firstItem="MLR-7t-UEJ" firstAttribute="top" secondItem="kbM-SK-7I0" secondAttribute="bottom" constant="8" symbolic="YES" id="cxl-80-mg7"/>
+                            <constraint firstItem="uwS-dT-chU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ifT-hE-f5t"/>
+                            <constraint firstItem="YpM-Vm-Lqm" firstAttribute="leading" secondItem="kbM-SK-7I0" secondAttribute="leading" id="ilZ-Ti-rzf"/>
+                            <constraint firstItem="YpM-Vm-Lqm" firstAttribute="trailing" secondItem="kbM-SK-7I0" secondAttribute="trailing" id="mLk-e3-VDx"/>
+                            <constraint firstAttribute="bottom" secondItem="MLR-7t-UEJ" secondAttribute="bottom" constant="20" symbolic="YES" id="oQk-mg-C2Q"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="LOGIN" id="phR-5S-Gh6"/>
+                    <connections>
+                        <outlet property="btnSpotifyLogin" destination="kbM-SK-7I0" id="Q7s-dd-CE5"/>
+                        <outlet property="btnSpotifyLogout" destination="MLR-7t-UEJ" id="SYU-fc-YAE"/>
+                        <outlet property="imgLoginLock" destination="uwS-dT-chU" id="VO6-zm-z4T"/>
+                        <outlet property="lblSpotifySessionStatus" destination="YpM-Vm-Lqm" id="6Kp-zJ-CKU"/>
+                        <segue destination="AJl-Rd-v2Q" kind="showDetail" identifier="showSPFLandingPage" id="bLp-rW-yCa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1023" y="137"/>
+        </scene>
+        <!--SPFLandingPageViewController-->
+        <scene sceneID="53t-a8-Jf3">
+            <objects>
+                <viewController title="SPFLandingPageViewController" id="AJl-Rd-v2Q" customClass="LandingPageViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5DK-9h-8KU"/>
+                        <viewControllerLayoutGuide type="bottom" id="T5d-nh-XPY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yhT-ig-V9Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="kdv-gO-D4H" userLabel="btn_ui_action_do_something">
+                                <rect key="frame" x="16" y="607" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ZYv-NX-VDh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="DO SOMETHNG">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="oa7-R6-gTi"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppq-j1-INl" userLabel="mnu_ui_top_controls">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem title="WELCOME" id="cVK-Le-Zqd" userLabel="mnu_ui_top_navigation">
+                                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Tfl-ud-AZC" userLabel="btn_ui_exit_view">
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="kdv-gO-D4H" firstAttribute="leading" secondItem="yhT-ig-V9Q" secondAttribute="leadingMargin" id="AQ8-FM-o12"/>
+                            <constraint firstItem="kdv-gO-D4H" firstAttribute="trailing" secondItem="yhT-ig-V9Q" secondAttribute="trailingMargin" id="LVc-M3-D8Y"/>
+                            <constraint firstItem="ppq-j1-INl" firstAttribute="leading" secondItem="yhT-ig-V9Q" secondAttribute="leading" id="S5P-GI-y1a"/>
+                            <constraint firstAttribute="bottom" secondItem="kdv-gO-D4H" secondAttribute="bottom" constant="20" symbolic="YES" id="eIC-Xu-2hC"/>
+                            <constraint firstItem="kdv-gO-D4H" firstAttribute="centerX" secondItem="ppq-j1-INl" secondAttribute="centerX" id="gGD-OZ-m1P"/>
+                            <constraint firstItem="ppq-j1-INl" firstAttribute="top" secondItem="5DK-9h-8KU" secondAttribute="bottom" id="hKb-Ww-6Nd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnSpotifyCall" destination="kdv-gO-D4H" id="oCv-36-Kr0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hBt-bK-uPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1900" y="136.28185907046478"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="k0q-vn-cbX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nWJ-Hn-QuD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GUj-pt-ZgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="gag-8b-2Gd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cgv-u3-9Cq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140" y="137.18140929535232"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icnExitView_v1" width="25" height="25"/>
+        <image name="imgUILoginMain_v1" width="256" height="256"/>
+    </resources>
 </document>

@@ -225,3 +225,7 @@ fastlane/screenshots
 # IDE related files
 #
 .idea
+
+# KEY files
+#
+aqoo/keys.plist
