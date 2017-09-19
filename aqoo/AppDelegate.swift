@@ -14,8 +14,10 @@ import AVFoundation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate {
 
-    let spfCallbackURL = "aqoo://"
     let spfSessionUserDefaultsKey = "SpotifySession"
+    let spfSessionRequestSuccessNotifierId = "sessionUpdated"
+    let spfSessionRequestCanceledNotifierId = "sessionFail"
+    let spfSecretPropertyListFile = "Keys"
 
     var window: UIWindow?
     var spfKeys: NSDictionary?
@@ -35,20 +37,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
 
         // load api keys from special "Keys.plist" file (you have to generate one if you use this sources for your
         // own app or you want to compile this app by yourself)
-        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
-            spfKeys = NSDictionary(contentsOfFile: path)
-            if let dict = spfKeys {
+        if let path = Bundle.main.path(forResource: spfSecretPropertyListFile, ofType: "plist") {
+            if let dict = NSDictionary(contentsOfFile: path) {
+                
                 if let spfClientId = dict["spfClientId"] as? String {
                     spfAuth.clientID = spfClientId
-                    
                     print ("_dbg: using spotify clientId: \(spfClientId)")
+                }
+                
+                if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
+                    spfAuth.redirectURL = URL(string: spfCallbackURL)
+                    print ("_dbg: using spotify callBackURL: \(spfCallbackURL)")
                 }
             }
         }
         
-        print ("_dbg: start redirect process ...")
-        
-        spfAuth.redirectURL = URL(string: spfCallbackURL)
         spfAuth.requestedScopes = [SPTAuthStreamingScope]
         spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
         spfAuth.requestedScopes = [
@@ -79,14 +82,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                     
                     self.spfAuth.session = session
                     
-                }   else { print (error!.localizedDescription) }
-                
-                let userDefaults = UserDefaults.standard
-                let sessionData = NSKeyedArchiver.archivedData(withRootObject: session!)
-                    userDefaults.set(sessionData, forKey: "SpotifySession")
+                    let userDefaults = UserDefaults.standard
+                    let sessionData = NSKeyedArchiver.archivedData(withRootObject: session!)
+                    
+                    userDefaults.set(sessionData, forKey: self.spfSessionUserDefaultsKey)
                     userDefaults.synchronize()
-                
-                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "sessionUpdated"), object: self)
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: self.spfSessionRequestSuccessNotifierId), object: self)
+                    
+                }   else {
+                    
+                    print (error!.localizedDescription)
+                    
+                    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: self.spfSessionRequestCanceledNotifierId), object: self)
+                }
             }
             
             return true
