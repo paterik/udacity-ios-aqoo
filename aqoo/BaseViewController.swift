@@ -19,14 +19,14 @@ class BaseViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     //
-    // MARK: Base Variables
+    // MARK: Base Methods
     //
     
     func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
         
         let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
         
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }

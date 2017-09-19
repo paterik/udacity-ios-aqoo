@@ -9,17 +9,25 @@
 import UIKit
 import CoreData
 import Spotify
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate {
 
-    let spfCallbackURL = "aqoo-login://callback"
+    let spfCallbackURL = "aqoo://"
     let spfSessionUserDefaultsKey = "SpotifySession"
 
     var window: UIWindow?
     var spfKeys: NSDictionary?
     var spfSession: SPTSession?
     var spfPlayer: SPTAudioStreamingController?
+    var spfLoginUrl: URL?
+    var spfAuth = SPTAuth()
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+    }
     
     func application(
        _ application: UIApplication,
@@ -31,16 +39,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             spfKeys = NSDictionary(contentsOfFile: path)
             if let dict = spfKeys {
                 if let spfClientId = dict["spfClientId"] as? String {
-                    SPTAuth.defaultInstance().clientID = spfClientId
+                    spfAuth.clientID = spfClientId
                     
-                    print (spfClientId)
+                    print ("_dbg: using spotify clientId: \(spfClientId)")
                 }
             }
         }
         
-        SPTAuth.defaultInstance().redirectURL = URL(string:spfCallbackURL)
-        SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
-        SPTAuth.defaultInstance().sessionUserDefaultsKey = spfSessionUserDefaultsKey
+        print ("_dbg: start redirect process ...")
+        
+        spfAuth.redirectURL = URL(string: spfCallbackURL)
+        spfAuth.requestedScopes = [SPTAuthStreamingScope]
+        spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
+        spfAuth.requestedScopes = [
+            SPTAuthStreamingScope,
+            SPTAuthPlaylistReadPrivateScope,
+            SPTAuthPlaylistModifyPublicScope,
+            SPTAuthPlaylistModifyPrivateScope
+        ]
+        
+        spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()
         
         return true
     }
@@ -51,26 +69,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
          sourceApplication: String?,
          annotation: Any) -> Bool {
         
-        if SPTAuth.defaultInstance().canHandle(url) {
+        if spfAuth.canHandle(url) {
             
-            SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url) {
+            spfAuth.handleAuthCallback(withTriggeredAuthURL: url) {
                 
                 error, session in
                 
-                if error != nil {
-                    print("!!! SpotifyAuth error: \(String(describing: error?.localizedDescription))")
+                if error == nil && session != nil {
                     
-                    return
+                    self.spfAuth.session = session
                     
-                }   else {
-                    
-                    SPTAuth.defaultInstance().session = session
-                }
+                }   else { print (error!.localizedDescription) }
                 
-                NotificationCenter.default.post(
-                    name: NSNotification.Name.init(rawValue: "sessionUpdated"), object: self
-                )
+                let userDefaults = UserDefaults.standard
+                let sessionData = NSKeyedArchiver.archivedData(withRootObject: session!)
+                    userDefaults.set(sessionData, forKey: "SpotifySession")
+                    userDefaults.synchronize()
+                
+                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "sessionUpdated"), object: self)
             }
+            
+            return true
         }
         
         return false
