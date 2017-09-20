@@ -90,7 +90,7 @@
                         <outlet property="btnSpotifyLogout" destination="MLR-7t-UEJ" id="SYU-fc-YAE"/>
                         <outlet property="imgLoginLock" destination="uwS-dT-chU" id="VO6-zm-z4T"/>
                         <outlet property="lblSpotifySessionStatus" destination="YpM-Vm-Lqm" id="6Kp-zJ-CKU"/>
-                        <segue destination="AJl-Rd-v2Q" kind="showDetail" identifier="showSPFLandingPage" id="bLp-rW-yCa"/>
+                        <segue destination="AJl-Rd-v2Q" kind="showDetail" identifier="showLandingPage" id="bLp-rW-yCa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -131,6 +131,9 @@
                                     <navigationItem title="WELCOME" id="cVK-Le-Zqd" userLabel="mnu_ui_top_navigation">
                                         <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Tfl-ud-AZC" userLabel="btn_ui_exit_view">
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="btnExitLandingPageAction:" destination="AJl-Rd-v2Q" id="crt-HT-9NW"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -147,6 +150,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnExitLandingPage" destination="Tfl-ud-AZC" id="RMH-K9-xUv"/>
                         <outlet property="btnSpotifyCall" destination="kdv-gO-D4H" id="oCv-36-Kr0"/>
                     </connections>
                 </viewController>
