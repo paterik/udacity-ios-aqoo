@@ -12,9 +12,15 @@ class LandingPageViewController: BaseViewController {
     
     @IBOutlet weak var btnSpotifyCall: UIButton!
     
+    @IBOutlet weak var btnExitLandingPage: UIBarButtonItem!
     override func viewDidLoad() {
         
         super.viewDidLoad()
+    }
+
+    @IBAction func btnExitLandingPageAction(_ sender: Any) {
+    
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func btnSpotifyCallAction(_ sender: Any) {
