@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUILoginMain_v1" translatesAutoresizingMaskIntoConstraints="NO" id="uwS-dT-chU" userLabel="img_ui_lock">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUISpotifyStatusLocked_v1" translatesAutoresizingMaskIntoConstraints="NO" id="uwS-dT-chU" userLabel="img_ui_status">
                                 <rect key="frame" x="88" y="138" width="199" height="245"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="245" id="HNB-sH-PUe"/>
@@ -88,9 +88,9 @@
                     <connections>
                         <outlet property="btnSpotifyLogin" destination="kbM-SK-7I0" id="Q7s-dd-CE5"/>
                         <outlet property="btnSpotifyLogout" destination="MLR-7t-UEJ" id="SYU-fc-YAE"/>
-                        <outlet property="imgLoginLock" destination="uwS-dT-chU" id="VO6-zm-z4T"/>
+                        <outlet property="imgSpotifyStatus" destination="uwS-dT-chU" id="6x4-dU-s4w"/>
                         <outlet property="lblSpotifySessionStatus" destination="YpM-Vm-Lqm" id="6Kp-zJ-CKU"/>
-                        <segue destination="AJl-Rd-v2Q" kind="showDetail" identifier="showLandingPage" id="bLp-rW-yCa"/>
+                        <segue destination="AJl-Rd-v2Q" kind="show" identifier="showLandingPage" action="showDetailViewController:sender:" id="bLp-rW-yCa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -152,6 +152,7 @@
                     <connections>
                         <outlet property="btnExitLandingPage" destination="Tfl-ud-AZC" id="RMH-K9-xUv"/>
                         <outlet property="btnSpotifyCall" destination="kdv-gO-D4H" id="oCv-36-Kr0"/>
+                        <outlet property="mnuTopStatus" destination="cVK-Le-Zqd" id="AUg-bJ-QXp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBt-bK-uPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -161,7 +162,7 @@
         <!--Navigation Controller-->
         <scene sceneID="k0q-vn-cbX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nWJ-Hn-QuD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="nWJ-Hn-QuD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GUj-pt-ZgZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -179,6 +180,6 @@
     </scenes>
     <resources>
         <image name="icnExitView_v1" width="25" height="25"/>
-        <image name="imgUILoginMain_v1" width="256" height="256"/>
+        <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
     </resources>
 </document>
