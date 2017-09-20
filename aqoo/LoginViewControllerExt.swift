@@ -29,20 +29,14 @@ extension LoginViewController {
     
     func showLandingPage() {
         
-        print ("_showLandingPage()")
-        
-        performSegue(withIdentifier: "showLandingPage", sender: self)
+        performSegue(withIdentifier: segueIdentLandingPage, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        print ("prepare segue")
-        
-        if segue.identifier == "showLandingPage" {
-            
+
+        // handlie landingPage segue
+        if segue.identifier == segueIdentLandingPage {
             let controller = segue.destination as! LandingPageViewController
-                controller.testValue = "foo"
-            
             self.show(controller, sender: self)
         }
     }

@@ -19,6 +19,10 @@ class BaseViewController: UIViewController {
     let appDebugMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let segueIdentLandingPage  = "showLandingPage"
+    let segueIdentPlayListPage = "showPlayListPage"
+    
+    
     //
     // MARK: Base Methods
     //
@@ -38,6 +42,29 @@ class BaseViewController: UIViewController {
         }
         
         return false
+    }
+    
+    func closeSpotifySession() {
+    
+        let storage = HTTPCookieStorage.shared
+        let sessionData = NSKeyedArchiver.archivedData(withRootObject: "")
+        let userDefaults = UserDefaults.standard
+        
+        appDelegate.spfCurrentSession = nil
+        SPTAuth.defaultInstance().session = nil
+        
+        userDefaults.set(sessionData, forKey: appDelegate.spfSessionUserDefaultsKey)
+        userDefaults.synchronize()
+        
+        for cookie: HTTPCookie in storage.cookies! {
+            
+            if  (cookie.domain as NSString).range(of: "spotify."  ).length > 0 ||
+                (cookie.domain as NSString).range(of: "facebook." ).length > 0 {
+                
+                storage.deleteCookie(cookie)
+            }
+        }
+    
     }
     
     func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {

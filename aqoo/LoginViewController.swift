@@ -76,21 +76,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     
     @IBAction func btnSpotifyLogoutAction(_ sender: Any) {
         
-        let storage = HTTPCookieStorage.shared
-        let userDefaults = UserDefaults.standard
-        let sessionData = NSKeyedArchiver.archivedData(withRootObject: "")
-        
-        userDefaults.set(sessionData, forKey: appDelegate.spfSessionUserDefaultsKey)
-        userDefaults.synchronize()
-        
-        for cookie: HTTPCookie in storage.cookies! {
-            
-            if  (cookie.domain as NSString).range(of: "spotify."  ).length > 0 ||
-                (cookie.domain as NSString).range(of: "facebook." ).length > 0 {
-                
-                storage.deleteCookie(cookie)
-            }
-        }
+        closeSpotifySession()
     }
 }
 
