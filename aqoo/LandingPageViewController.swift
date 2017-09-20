@@ -11,11 +11,13 @@ import Spotify
 
 class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
     
+    @IBOutlet weak var mnuTopStatus: UINavigationItem!
     @IBOutlet weak var btnSpotifyCall: UIButton!
     @IBOutlet weak var btnExitLandingPage: UIBarButtonItem!
 
     var player: SPTAudioStreamingController?
     var authViewController: UIViewController?
+    var testValue: String?
     
     let sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
@@ -23,6 +25,20 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         
         super.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        mnuTopStatus.title = "TOKEN INVALID"
+        if  isSpotifyTokenValid() {
+            mnuTopStatus.title = "CONNECTED"
+            
+            initializePlayer(authSession: appDelegate.spfCurrentSession!)
+        }
+    } 
+    
+    override var prefersStatusBarHidden: Bool { return true }
     
     func initializePlayer(authSession: SPTSession) {
         
@@ -53,7 +69,8 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
 
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
     
-        dismiss(animated: true, completion: nil)
+       // dismiss(animated: true, completion: nil)
+        _ = self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func btnSpotifyCallAction(_ sender: Any) {
