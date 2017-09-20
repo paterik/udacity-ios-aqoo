@@ -42,6 +42,47 @@ class LoginViewController:  BaseViewController,
         )
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+    
+        if isSpotifyTokenValid() {
+            
+            lblSpotifySessionStatus.text = "STILL CONNECTED"
+            
+            showLandingPage()
+        
+        } else {
+            
+            if appDelegate.spfAuth.hasTokenRefreshService {
+        
+                lblSpotifySessionStatus.text = "REFRESH TOKEN"
+                
+                renewTokenAndShowLandingPage()
+            }
+        }
+    }
+    
+    func renewTokenAndShowLandingPage() {
+        
+        appDelegate.spfAuth.renewSession(currentSession) { error, session in
+            
+            SPTAuth.defaultInstance().session = session
+            if error != nil {
+                self.lblSpotifySessionStatus.text = "REFRESH TOKEN FAIL"
+                print("_dbg: error renewing session: \(error!.localizedDescription)")
+                return
+            }
+            
+            self.showLandingPage()
+        }
+    }
+    
+    func showLandingPage() {
+    
+        performSegue(withIdentifier: "showLandingPage", sender: nil)
+    }
+    
     func getAuthViewController(withURL url: URL) -> UIViewController {
 
         let webView = WebViewController(url: url)
