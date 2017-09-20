@@ -7,6 +7,7 @@ def aq_ui
     pod 'BGTableViewRowActionWithImage'
     pod 'YNDropDownMenu'
     pod 'FoldingCell'
+    pod 'Hero'
     pod 'SCLAlertView'
     pod 'SnapKit', '~> 3.2.0'
 end
