@@ -182,6 +182,11 @@ class LoginViewController:  BaseViewController,
     @IBAction func btnSpotifyLogoutAction(_ sender: Any) {
         
         let storage = HTTPCookieStorage.shared
+        let userDefaults = UserDefaults.standard
+        let sessionData = NSKeyedArchiver.archivedData(withRootObject: "")
+        
+        userDefaults.set(sessionData, forKey: appDelegate.spfSessionUserDefaultsKey)
+        userDefaults.synchronize()
         
         for cookie: HTTPCookie in storage.cookies! {
             
