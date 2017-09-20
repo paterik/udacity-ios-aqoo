@@ -120,6 +120,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B188CEE61F72E94400D01EC3 /* _playListPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = _playListPage;
+			sourceTree = "<group>";
+		};
 		B18989271F72B95000516A53 /* _login */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +254,7 @@
 		B1F88B791F70458E0005FE43 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				B188CEE61F72E94400D01EC3 /* _playListPage */,
 				B18989281F72B95C00516A53 /* _landingPage */,
 				B18989271F72B95000516A53 /* _login */,
 				B19C52691F7046700064E1A5 /* base */,
@@ -444,6 +452,7 @@
 				"${BUILT_PRODUCTS_DIR}/CoreStore/CoreStore.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/FoldingCell/FoldingCell.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -456,6 +465,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoldingCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
