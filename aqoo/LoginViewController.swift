@@ -9,21 +9,14 @@
 import UIKit
 import Spotify
 
-class LoginViewController:  BaseViewController,
-                            SPTAudioStreamingPlaybackDelegate,
-                            SPTAudioStreamingDelegate,
-                            WebViewControllerDelegate {
+class LoginViewController: BaseViewController, WebViewControllerDelegate {
 
     @IBOutlet weak var imgLoginLock: UIImageView!
     @IBOutlet weak var btnSpotifyLogin: UIButton!
     @IBOutlet weak var btnSpotifyLogout: UIButton!
     @IBOutlet weak var lblSpotifySessionStatus: UILabel!
     
-    var currentSession: SPTSession!
-    var player: SPTAudioStreamingController?
     var authViewController: UIViewController?
-    
-    let sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
     override func viewDidLoad() {
         
@@ -65,7 +58,7 @@ class LoginViewController:  BaseViewController,
     
     func renewTokenAndShowLandingPage() {
         
-        appDelegate.spfAuth.renewSession(currentSession) { error, session in
+        appDelegate.spfAuth.renewSession(appDelegate.spfCurrentSession) { error, session in
             
             SPTAuth.defaultInstance().session = session
             if error != nil {
@@ -100,56 +93,13 @@ class LoginViewController:  BaseViewController,
     
     func updateAfterSuccessLogin() {
 
-        if  isSpotifyTokenValid() {
-            initializePlayer(authSession: currentSession)
+        if isSpotifyTokenValid() {
+            
+            showLandingPage()
             
         } else { _handleErrorAsDialogMessage("Spotify Login Fail!", "Oops! I'm unable to verify valid authentication for this account!")}
         
         self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
-    }
-    
-    func initializePlayer(authSession: SPTSession) {
-        
-        if player != nil { return }
-        
-        player = SPTAudioStreamingController.sharedInstance()
-        player!.delegate = self
-        player!.playbackDelegate = self
-            
-        try! player!.start(withClientId: appDelegate.spfAuth.clientID)
-        
-        player!.login(withAccessToken: authSession.accessToken)
-    }
-    
-    func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
-        
-        self.player!.playSpotifyURI(sampleSong, startingWith: 0, startingWithPosition: 0, callback: {
-            
-            error in
-            
-            if (error == nil) {
-                print ("playing => \(self.sampleSong)")
-            }   else {
-                print ("_dbg: error while playing sample track \(self.sampleSong)")
-            }
-        })
-    }
-    
-    func isSpotifyTokenValid() -> Bool {
-    
-        let userDefaults = UserDefaults.standard
-        
-        if let sessionObj:AnyObject = userDefaults.object(forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            currentSession = firstTimeSession
-            
-            return currentSession != nil && currentSession.isValid()
-        }
-        
-        return false
     }
     
     func setupUILoginControls() {

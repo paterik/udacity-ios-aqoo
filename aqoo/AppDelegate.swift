@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var window: UIWindow?
     var spfKeys: NSDictionary?
     var spfSession: SPTSession?
+    var spfCurrentSession: SPTSession?
     var spfPlayer: SPTAudioStreamingController?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
@@ -88,13 +89,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                     userDefaults.set(sessionData, forKey: self.spfSessionUserDefaultsKey)
                     userDefaults.synchronize()
                     
-                    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: self.spfSessionRequestSuccessNotifierId), object: self)
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name.init(rawValue: self.spfSessionRequestSuccessNotifierId),
+                        object: self
+                    )
                     
                 }   else {
                     
                     print (error!.localizedDescription)
                     
-                    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: self.spfSessionRequestCanceledNotifierId), object: self)
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name.init(rawValue: self.spfSessionRequestCanceledNotifierId),
+                        object: self
+                    )
                 }
             }
             

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Spotify
 
 class BaseViewController: UIViewController {
     
@@ -21,6 +22,23 @@ class BaseViewController: UIViewController {
     //
     // MARK: Base Methods
     //
+    
+    func isSpotifyTokenValid() -> Bool {
+        
+        let userDefaults = UserDefaults.standard
+        
+        if let sessionObj:AnyObject = userDefaults.object(forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
+            
+            let sessionDataObj = sessionObj as! Data
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+            
+            appDelegate.spfCurrentSession = firstTimeSession
+            
+            return appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
+        }
+        
+        return false
+    }
     
     func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
         
