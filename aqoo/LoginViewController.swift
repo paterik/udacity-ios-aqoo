@@ -11,7 +11,7 @@ import Spotify
 
 class LoginViewController: BaseViewController, WebViewControllerDelegate {
 
-    @IBOutlet weak var imgLoginLock: UIImageView!
+    @IBOutlet weak var imgSpotifyStatus: UIImageView!
     @IBOutlet weak var btnSpotifyLogin: UIButton!
     @IBOutlet weak var btnSpotifyLogout: UIButton!
     @IBOutlet weak var lblSpotifySessionStatus: UILabel!
@@ -38,10 +38,12 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        setupUILoginControls() 
     
         if isSpotifyTokenValid() {
-            
-            lblSpotifySessionStatus.text = "STILL CONNECTED"
+
+            lblSpotifySessionStatus.text = "CONNECTED"
             
             showLandingPage()
         
@@ -51,69 +53,12 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
                 lblSpotifySessionStatus.text = "REFRESH TOKEN"
                 
-                renewTokenAndShowLandingPage()
+                renewTokenAndShowLandingPage() 
             }
         }
     }
     
-    func renewTokenAndShowLandingPage() {
-        
-        appDelegate.spfAuth.renewSession(appDelegate.spfCurrentSession) { error, session in
-            
-            SPTAuth.defaultInstance().session = session
-            if error != nil {
-                self.lblSpotifySessionStatus.text = "REFRESH TOKEN FAIL"
-                print("_dbg: error renewing session: \(error!.localizedDescription)")
-                return
-            }
-            
-            self.showLandingPage()
-        }
-    }
-    
-    func showLandingPage() {
-    
-        performSegue(withIdentifier: "showLandingPage", sender: nil)
-    }
-    
-    func getAuthViewController(withURL url: URL) -> UIViewController {
-
-        let webView = WebViewController(url: url)
-            webView.delegate = self
-        
-        return UINavigationController(rootViewController: webView)
-    }
-    
-    func webViewControllerDidFinish(_ controller: WebViewController) { }
-    
-    func updateAfterCancelLogin() {
-        
-        self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
-    }
-    
-    func updateAfterSuccessLogin() {
-
-        if isSpotifyTokenValid() {
-            
-            showLandingPage()
-            
-        } else { _handleErrorAsDialogMessage("Spotify Login Fail!", "Oops! I'm unable to verify valid authentication for this account!")}
-        
-        self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
-    }
-    
-    func setupUILoginControls() {
-        
-        let _tokenIsValid = isSpotifyTokenValid()
-        
-        btnSpotifyLogin.isEnabled =  _tokenIsValid
-        btnSpotifyLogin.isEnabled = !_tokenIsValid
-        
-        lblSpotifySessionStatus.text = "NOT CONNECTED"
-        if _tokenIsValid {
-            lblSpotifySessionStatus.text = "LOGGED IN"
-        }
-    }
+    override var prefersStatusBarHidden: Bool { return true }
     
     @IBAction func btnSpotifyLoginAction(_ sender: SPTConnectButton) {
         
