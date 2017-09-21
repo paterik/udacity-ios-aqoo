@@ -34,6 +34,8 @@ class BaseViewController: UIViewController {
         if let sessionObj:AnyObject = userDefaults.object(forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
             
             let sessionDataObj = sessionObj as! Data
+            
+            print (sessionDataObj)
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             
             appDelegate.spfCurrentSession = firstTimeSession

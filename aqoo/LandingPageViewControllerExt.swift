@@ -24,7 +24,7 @@ extension LandingPageViewController {
         player!.login(withAccessToken: authSession.accessToken)
     }
     
-    func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
+    /*func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         
         self.player!.playSpotifyURI(sampleSong, startingWith: 0, startingWithPosition: 0, callback: {
             
@@ -36,5 +36,5 @@ extension LandingPageViewController {
                 print ("_dbg: error while playing sample track \(self.sampleSong)")
             }
         })
-    }
+    }*/
 }
