@@ -20,7 +20,6 @@
 		B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A620531F700D820093CAEF /* LaunchScreen.storyboard */; };
 		B1A620601F700D820093CAEF /* aqooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6205F1F700D820093CAEF /* aqooTests.swift */; };
 		B1A6206B1F700D820093CAEF /* aqooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6206A1F700D820093CAEF /* aqooUITests.swift */; };
-		B1BD1EE51F76AED2001FC294 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
 		B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* PlaylistViewController.swift */; };
 		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
@@ -67,7 +66,6 @@
 		B1A620661F700D820093CAEF /* aqooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aqooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A6206A1F700D820093CAEF /* aqooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aqooUITests.swift; sourceTree = "<group>"; };
 		B1A6206C1F700D820093CAEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B1F88B721F7033450005FE43 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				B19C526E1F7060230064E1A5 /* BaseViewController.swift */,
-				B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */,
 				B1D4EAB51F71683200939998 /* WebViewController.swift */,
 			);
 			name = base;
@@ -503,7 +500,6 @@
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,
-				B1BD1EE51F76AED2001FC294 /* BaseTableViewController.swift in Sources */,
 				B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
