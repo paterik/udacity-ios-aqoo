@@ -13,6 +13,12 @@ extension LandingPageViewController {
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         
+        print ("\nplayback disabled ...\n")
+        
+        return
+        
+        /*
+        
         _player?.playSpotifyURI(sampleSong, startingWith: 0, startingWithPosition: 0, callback: {
             
             error in
@@ -22,6 +28,6 @@ extension LandingPageViewController {
             }   else {
                 print ("_dbg: error while playing sample track \(self.sampleSong)")
             }
-        })
+        })*/
     }
 }

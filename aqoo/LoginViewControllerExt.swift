@@ -34,7 +34,7 @@ extension LoginViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        // handlie landingPage segue
+        // handle landingPage segue
         if segue.identifier == segueIdentLandingPage {
             let controller = segue.destination as! LandingPageViewController
             self.show(controller, sender: self)
@@ -66,7 +66,10 @@ extension LoginViewController {
             
         } else {
             
-           _handleErrorAsDialogMessage("Spotify Login Fail!", "Oops! I'm unable to verify valid authentication for this account!")
+           _handleErrorAsDialogMessage(
+                "Spotify Login Fail!",
+                "Oops! I'm unable to verify valid authentication for your spotify account!"
+            )
         }
         
         self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
@@ -81,7 +84,9 @@ extension LoginViewController {
         
         lblSpotifySessionStatus.text = "NOT CONNECTED"
         imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusLocked_v1")
+        appDelegate.spfIsLoggedIn = false
         if _tokenIsValid {
+            appDelegate.spfIsLoggedIn = true
             lblSpotifySessionStatus.text = "CONNECTED"
             imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusConnected_v1")
         }
