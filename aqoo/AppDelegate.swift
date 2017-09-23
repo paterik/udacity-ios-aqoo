@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var spfSession: SPTSession?
     var spfCurrentSession: SPTSession?
     var spfIsLoggedIn: Bool = false
+    var spfUsername: String = ""
     var spfPlayer: SPTAudioStreamingController?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()

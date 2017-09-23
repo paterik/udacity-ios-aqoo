@@ -15,10 +15,11 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     @IBOutlet weak var btnSpotifyCall: UIButton!
     @IBOutlet weak var btnExitLandingPage: UIBarButtonItem!
 
+    override var prefersStatusBarHidden: Bool { return true }
     var authViewController: UIViewController?
     
     let _player = SPTAudioStreamingController.sharedInstance()
-    let sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
+    let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
     override func viewDidLoad() {
         
@@ -32,14 +33,18 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         mnuTopStatus.title = "TOKEN INVALID"
         if  isSpotifyTokenValid() {
             mnuTopStatus.title = "CONNECTED"
-            handleNewSession()
+            
+            //
+            // test API :: instantiate a new player and bound this player to current userSession
+            //
+            handleNewPlayerSession()
+            
             print("dbg: session => \(appDelegate.spfCurrentSession!.accessToken!)")
+            print("dbg: username => \(appDelegate.spfUsername)")
         }
     }
-
-    override var prefersStatusBarHidden: Bool { return true }
     
-    func handleNewSession() {
+    func handleNewPlayerSession() {
         
         if (_player?.loggedIn)! { return }
         
@@ -70,7 +75,8 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         do {
             
             try _player?.stop()
-                 closeSpotifySession()
+            
+            closeSpotifySession()
             
             _ = self.navigationController!.popViewController(animated: true)
             
@@ -86,7 +92,7 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
         
         //
-        // if you close this view, your spotify session will be closed (!!!)
+        // if you close this view, your spotify session will be closed (not in use yet)
         //
         // closeSession()
         

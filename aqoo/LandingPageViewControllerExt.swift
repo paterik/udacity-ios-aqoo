@@ -24,9 +24,9 @@ extension LandingPageViewController {
             error in
             
             if (error == nil) {
-                print ("playing => \(self.sampleSong)")
+                print ("\nplaying => \(self._sampleSong)\n")
             }   else {
-                print ("_dbg: error while playing sample track \(self.sampleSong)")
+                print ("_dbg: error while playing sample track \(self._sampleSong)")
             }
         })*/
     }

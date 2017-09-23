@@ -40,7 +40,8 @@ class BaseViewController: UIViewController {
                 if _firstTimeSession is SPTSession {
                     
                     appDelegate.spfCurrentSession = _firstTimeSession as? SPTSession
-                    appDelegate.spfIsLoggedIn =  appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
+                    appDelegate.spfIsLoggedIn = appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
+                    appDelegate.spfUsername = (appDelegate.spfCurrentSession?.canonicalUsername)!
                     
                     return appDelegate.spfIsLoggedIn
                     
