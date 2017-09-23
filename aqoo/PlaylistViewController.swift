@@ -10,10 +10,10 @@ import UIKit
 import Spotify
 
 class PlaylistViewController:   BaseViewController,
-                                UITableViewDataSource,
-                                UITableViewDelegate,
                                 SPTAudioStreamingPlaybackDelegate,
-                                SPTAudioStreamingDelegate {
+                                SPTAudioStreamingDelegate,
+                                UITableViewDataSource,
+                                UITableViewDelegate {
     
     var authViewController: UIViewController?
     var _playlists = [SPTPartialPlaylist]()
