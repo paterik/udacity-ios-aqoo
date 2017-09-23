@@ -23,6 +23,14 @@ extension PlaylistViewController {
         }
     }
     
+    func handleNewUserPlaylistSession() {
+        
+        _handlePlaylistGetFirstPage(
+            appDelegate.spfUsername,
+            appDelegate.spfCurrentSession!.accessToken!
+        )
+    }
+    
     func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
         
         currentPage.requestNextPage(
@@ -77,14 +85,6 @@ extension PlaylistViewController {
                     } else { self._handlePlaylistGetNextPage(_firstPage, accessToken) }
                 }
             }
-        )
-    }
-    
-    func handleNewUserPlaylistSession() {
-        
-        _handlePlaylistGetFirstPage(
-            appDelegate.spfUsername,
-            appDelegate.spfCurrentSession!.accessToken!
         )
     }
 }
