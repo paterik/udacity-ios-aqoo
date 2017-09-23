@@ -18,6 +18,8 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     override var prefersStatusBarHidden: Bool { return true }
     var authViewController: UIViewController?
     
+    var _playlists = [SPTPartialPlaylist]()
+    
     let _player = SPTAudioStreamingController.sharedInstance()
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
@@ -37,11 +39,68 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
             //
             // test API :: instantiate a new player and bound this player to current userSession
             //
-            handleNewPlayerSession()
+            // * handleNewPlayerSession()
+            
+            //
+            // test API :: instantiate new playlist request
+            //
+            handleNewUserPlaylistSession()
             
             print("dbg: session => \(appDelegate.spfCurrentSession!.accessToken!)")
             print("dbg: username => \(appDelegate.spfUsername)")
         }
+    }
+    
+    func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
+    
+        currentPage.requestNextPage(
+            withAccessToken: accessToken,
+            callback: {
+                
+                (error, response) in
+                
+                if  let _nextPage = response as? SPTListPage,
+                    let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
+                    
+                    self._playlists.append(contentsOf: _playlists)
+                    
+                    if _nextPage.hasNextPage {
+                        self._handlePlaylistGetNextPage(_nextPage, accessToken)
+                    }
+                }
+            }
+        )
+    }
+    
+    func _handlePlaylistGetFirstPage(_ username: String, _ accessToken: String) {
+        
+        SPTPlaylistList.playlists(
+            forUser: username,
+            withAccessToken: accessToken,
+            
+            callback: {
+                
+                (error, response) in
+                
+                if  let _firstPage = response as? SPTPlaylistList,
+                    let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
+                    
+                    self._playlists = _playlists
+                    
+                    if _firstPage.hasNextPage {
+                        self._handlePlaylistGetNextPage(_firstPage, accessToken)
+                    }
+                }
+            }
+        )
+    }
+    
+    func handleNewUserPlaylistSession() {
+        
+        _handlePlaylistGetFirstPage(
+            appDelegate.spfUsername,
+            appDelegate.spfCurrentSession!.accessToken!
+        )
     }
     
     func handleNewPlayerSession() {
@@ -101,6 +160,10 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     
     @IBAction func btnSpotifyCallAction(_ sender: Any) {
         
-        print ("btnSpotifyCallAction()")
+        for item in self._playlists {
+            print ("name: \(item.name!), \(item.trackCount) songs")
+            print ("uri: \(item.playableUri!)")
+            print ("\n--\n")
+        }
     }
 }
