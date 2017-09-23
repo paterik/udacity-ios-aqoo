@@ -29,16 +29,11 @@ extension LoginViewController {
     
     func showLandingPage() {
         
-        performSegue(withIdentifier: segueIdentLandingPage, sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        // handle landingPage segue
-        if segue.identifier == segueIdentLandingPage {
-            let controller = segue.destination as! LandingPageViewController
-            self.show(controller, sender: self)
-        }
+        //
+        // lets start with users playlistView
+        //
+        
+        performSegue(withIdentifier: segueIdentPlayListPage, sender: self)
     }
     
     func getAuthViewController(withURL url: URL) -> UIViewController {
@@ -56,7 +51,7 @@ extension LoginViewController {
     
     func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
-        if isSpotifyTokenValid() {
+        if appDelegate.isSpotifyTokenValid() {
             
             //
             // application entry point during development
@@ -77,7 +72,7 @@ extension LoginViewController {
     
     func setupUILoginControls() {
         
-        let _tokenIsValid = isSpotifyTokenValid()
+        let _tokenIsValid = appDelegate.isSpotifyTokenValid()
         
         btnSpotifyLogin.isEnabled =  _tokenIsValid
         btnSpotifyLogin.isEnabled = !_tokenIsValid
@@ -85,7 +80,8 @@ extension LoginViewController {
         lblSpotifySessionStatus.text = "NOT CONNECTED"
         imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusLocked_v1")
         appDelegate.spfIsLoggedIn = false
-        if _tokenIsValid {
+        
+        if _tokenIsValid == true {
             appDelegate.spfIsLoggedIn = true
             lblSpotifySessionStatus.text = "CONNECTED"
             imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusConnected_v1")

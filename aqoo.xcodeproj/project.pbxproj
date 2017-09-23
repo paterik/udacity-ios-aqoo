@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
-		B189892E1F72B9A800516A53 /* LandingPageViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* LandingPageViewControllerExt.swift */; };
+		B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
@@ -20,8 +20,9 @@
 		B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A620531F700D820093CAEF /* LaunchScreen.storyboard */; };
 		B1A620601F700D820093CAEF /* aqooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6205F1F700D820093CAEF /* aqooTests.swift */; };
 		B1A6206B1F700D820093CAEF /* aqooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6206A1F700D820093CAEF /* aqooUITests.swift */; };
+		B1BD1EE51F76AED2001FC294 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
-		B1F88B731F7033450005FE43 /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* LandingPageViewController.swift */; };
+		B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* PlaylistViewController.swift */; };
 		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
 		B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7E1F7045E80005FE43 /* UIImage.swift */; };
 /* End PBXBuildFile section */
@@ -49,7 +50,7 @@
 		B181B06E1F717C9100F29E8C /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/aqoo-cpdybjroehrohedthosfkrarpbuw/Build/Products/Debug-iphonesimulator/Spotify-iOS-SDK/Spotify.framework"; sourceTree = "<group>"; };
 		B181B0701F717CA100F29E8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewControllerExt.swift; sourceTree = "<group>"; };
-		B189892D1F72B9A800516A53 /* LandingPageViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingPageViewControllerExt.swift; sourceTree = "<group>"; };
+		B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewControllerExt.swift; sourceTree = "<group>"; };
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,8 +67,9 @@
 		B1A620661F700D820093CAEF /* aqooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aqooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A6206A1F700D820093CAEF /* aqooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aqooUITests.swift; sourceTree = "<group>"; };
 		B1A6206C1F700D820093CAEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		B1F88B721F7033450005FE43 /* LandingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
+		B1F88B721F7033450005FE43 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B1F88B7E1F7045E80005FE43 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aqoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,13 +122,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B188CEE61F72E94400D01EC3 /* _playListPage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = _playListPage;
-			sourceTree = "<group>";
-		};
 		B18989271F72B95000516A53 /* _login */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,13 +131,13 @@
 			name = _login;
 			sourceTree = "<group>";
 		};
-		B18989281F72B95C00516A53 /* _landingPage */ = {
+		B18989281F72B95C00516A53 /* _playlists */ = {
 			isa = PBXGroup;
 			children = (
 				B189892C1F72B99300516A53 /* extension */,
-				B1F88B721F7033450005FE43 /* LandingPageViewController.swift */,
+				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
 			);
-			name = _landingPage;
+			name = _playlists;
 			sourceTree = "<group>";
 		};
 		B18989291F72B97000516A53 /* extension */ = {
@@ -156,7 +151,7 @@
 		B189892C1F72B99300516A53 /* extension */ = {
 			isa = PBXGroup;
 			children = (
-				B189892D1F72B9A800516A53 /* LandingPageViewControllerExt.swift */,
+				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -165,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				B19C526E1F7060230064E1A5 /* BaseViewController.swift */,
+				B1BD1EE41F76AED2001FC294 /* BaseTableViewController.swift */,
 				B1D4EAB51F71683200939998 /* WebViewController.swift */,
 			);
 			name = base;
@@ -254,8 +250,7 @@
 		B1F88B791F70458E0005FE43 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				B188CEE61F72E94400D01EC3 /* _playListPage */,
-				B18989281F72B95C00516A53 /* _landingPage */,
+				B18989281F72B95C00516A53 /* _playlists */,
 				B18989271F72B95000516A53 /* _login */,
 				B19C52691F7046700064E1A5 /* base */,
 			);
@@ -500,14 +495,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
-				B189892E1F72B9A800516A53 /* LandingPageViewControllerExt.swift in Sources */,
+				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
-				B1F88B731F7033450005FE43 /* LandingPageViewController.swift in Sources */,
+				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,
+				B1BD1EE51F76AED2001FC294 /* BaseTableViewController.swift in Sources */,
 				B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUISpotifyStatusLocked_v1" translatesAutoresizingMaskIntoConstraints="NO" id="uwS-dT-chU" userLabel="img_ui_status">
-                                <rect key="frame" x="88" y="138" width="199" height="245"/>
+                                <rect key="frame" x="88" y="94" width="199" height="245"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="245" id="HNB-sH-PUe"/>
                                 </constraints>
@@ -39,7 +39,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="Z9t-1i-qpO"/>
                                     <action selector="btnSpotifyLogoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bjz-JD-w4e"/>
                                 </connections>
                             </button>
@@ -54,12 +53,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="ZGQ-3c-zf9"/>
                                     <action selector="btnSpotifyLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GK2-lV-JGh"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT CONNECTED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpM-Vm-Lqm" userLabel="lbl_ui_status">
-                                <rect key="frame" x="16" y="391" width="343" height="53"/>
+                                <rect key="frame" x="16" y="347" width="343" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="Juf-lg-TzO"/>
                                 </constraints>
@@ -90,74 +88,40 @@
                         <outlet property="btnSpotifyLogout" destination="MLR-7t-UEJ" id="SYU-fc-YAE"/>
                         <outlet property="imgSpotifyStatus" destination="uwS-dT-chU" id="6x4-dU-s4w"/>
                         <outlet property="lblSpotifySessionStatus" destination="YpM-Vm-Lqm" id="6Kp-zJ-CKU"/>
-                        <segue destination="AJl-Rd-v2Q" kind="show" identifier="showLandingPage" action="showDetailViewController:sender:" id="bLp-rW-yCa"/>
+                        <segue destination="FR7-Is-2GV" kind="show" identifier="showPlaylists" id="bJT-SF-nBR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1023" y="137"/>
+            <point key="canvasLocation" x="637" y="137"/>
         </scene>
-        <!--SPFLandingPageViewController-->
-        <scene sceneID="53t-a8-Jf3">
+        <!--Playlist View Controller-->
+        <scene sceneID="qLS-Oo-eQi">
             <objects>
-                <viewController title="SPFLandingPageViewController" id="AJl-Rd-v2Q" customClass="LandingPageViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5DK-9h-8KU"/>
-                        <viewControllerLayoutGuide type="bottom" id="T5d-nh-XPY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yhT-ig-V9Q">
+                <tableViewController id="FR7-Is-2GV" customClass="PlaylistViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="8Rn-b2-0Da">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="kdv-gO-D4H" userLabel="btn_ui_action_do_something">
-                                <rect key="frame" x="16" y="607" width="343" height="40"/>
-                                <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ZYv-NX-VDh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="DO SOMETHNG">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="btnSpotifyCallAction:" destination="AJl-Rd-v2Q" eventType="touchUpInside" id="oa7-R6-gTi"/>
-                                </connections>
-                            </button>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppq-j1-INl" userLabel="mnu_ui_top_controls">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <items>
-                                    <navigationItem title="WELCOME" id="cVK-Le-Zqd" userLabel="mnu_ui_top_navigation">
-                                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Tfl-ud-AZC" userLabel="btn_ui_exit_view">
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="btnExitLandingPageAction:" destination="AJl-Rd-v2Q" id="crt-HT-9NW"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="kdv-gO-D4H" firstAttribute="leading" secondItem="yhT-ig-V9Q" secondAttribute="leadingMargin" id="AQ8-FM-o12"/>
-                            <constraint firstItem="kdv-gO-D4H" firstAttribute="trailing" secondItem="yhT-ig-V9Q" secondAttribute="trailingMargin" id="LVc-M3-D8Y"/>
-                            <constraint firstItem="ppq-j1-INl" firstAttribute="leading" secondItem="yhT-ig-V9Q" secondAttribute="leading" id="S5P-GI-y1a"/>
-                            <constraint firstAttribute="bottom" secondItem="kdv-gO-D4H" secondAttribute="bottom" constant="20" symbolic="YES" id="eIC-Xu-2hC"/>
-                            <constraint firstItem="kdv-gO-D4H" firstAttribute="centerX" secondItem="ppq-j1-INl" secondAttribute="centerX" id="gGD-OZ-m1P"/>
-                            <constraint firstItem="ppq-j1-INl" firstAttribute="top" secondItem="5DK-9h-8KU" secondAttribute="bottom" id="hKb-Ww-6Nd"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="btnExitLandingPage" destination="Tfl-ud-AZC" id="RMH-K9-xUv"/>
-                        <outlet property="btnSpotifyCall" destination="kdv-gO-D4H" id="oCv-36-Kr0"/>
-                        <outlet property="mnuTopStatus" destination="cVK-Le-Zqd" id="AUg-bJ-QXp"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hBt-bK-uPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" id="Em4-AV-0A7">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Em4-AV-0A7" id="sPW-lk-mcc">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="FR7-Is-2GV" id="A21-nc-80m"/>
+                            <outlet property="delegate" destination="FR7-Is-2GV" id="dhh-4n-4EC"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TQc-4I-ZMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1900" y="136.28185907046478"/>
+            <point key="canvasLocation" x="1146" y="137"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k0q-vn-cbX">
@@ -179,7 +143,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icnExitView_v1" width="25" height="25"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
     </resources>
 </document>

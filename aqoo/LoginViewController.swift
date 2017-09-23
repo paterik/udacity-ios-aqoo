@@ -41,7 +41,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         setupUILoginControls() 
     
-        if isSpotifyTokenValid() {
+        if appDelegate.isSpotifyTokenValid() {
 
             lblSpotifySessionStatus.text = "CONNECTED"
             
@@ -76,7 +76,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     
     @IBAction func btnSpotifyLogoutAction(_ sender: Any) {
         
-        closeSpotifySession()
+        appDelegate.closeSpotifySession()
     }
 }
 

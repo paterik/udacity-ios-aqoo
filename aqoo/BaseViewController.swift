@@ -6,7 +6,6 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import Spotify
 
@@ -19,58 +18,14 @@ class BaseViewController: UIViewController {
     let appDebugMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    let segueIdentLandingPage  = "showLandingPage"
-    let segueIdentPlayListPage = "showPlayListPage"
+    let segueIdentPlayListPage = "showPlaylists"
     
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
+    
     
     //
     // MARK: Base Methods
     //
-    
-    func isSpotifyTokenValid() -> Bool {
-        
-        let userDefaults = UserDefaults.standard
-        
-        if  let sessionObj:AnyObject = userDefaults.object(
-            forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
-            
-            let sessionDataObj = sessionObj as! Data
-            
-            if  let _firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) {
-                if _firstTimeSession is SPTSession {
-                    
-                    appDelegate.spfCurrentSession = _firstTimeSession as? SPTSession
-                    appDelegate.spfIsLoggedIn = appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
-                    appDelegate.spfUsername = (appDelegate.spfCurrentSession?.canonicalUsername)!
-                    
-                    return appDelegate.spfIsLoggedIn
-                    
-                }
-            }
-        }
-        
-        return false
-    }
-    
-    func closeSpotifySession() {
-    
-        let storage = HTTPCookieStorage.shared
-        
-        appDelegate.spfIsLoggedIn = false
-        appDelegate.spfCurrentSession = nil
-        
-        SPTAuth.defaultInstance().session = nil
-        
-        for cookie: HTTPCookie in storage.cookies! {
-            
-            if  (cookie.domain as NSString).range(of: "spotify."  ).length > 0 ||
-                (cookie.domain as NSString).range(of: "facebook." ).length > 0 {
-                
-                storage.deleteCookie(cookie)
-            }
-        }
-    }
     
     func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
         
