@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var spfCurrentSession: SPTSession?
     var spfIsLoggedIn: Bool = false
     var spfUsername: String = ""
-    var spfPlayer: SPTAudioStreamingController?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
     
@@ -40,12 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                 
                 if let spfClientId = dict["spfClientId"] as? String {
                     spfAuth.clientID = spfClientId
-                    print ("_dbg: using spotify clientId: \(spfClientId)")
+                    print ("_dbg: using spotify clientId => \(spfClientId)\n")
                 }
                 
                 if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
                     spfAuth.redirectURL = URL(string: spfCallbackURL)
-                    print ("_dbg: using spotify callBackURL: \(spfCallbackURL)")
+                    print ("_dbg: using spotify callBackURL => \(spfCallbackURL)\n")
                 }
             }
         }
