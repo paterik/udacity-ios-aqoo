@@ -11,7 +11,7 @@ import Spotify
 
 extension PlaylistViewController {
     
-    func SetupUILoadPlaylist() {
+    func setupUILoadPlaylist() {
         
         print ("\nI've found \(_playlists.count) playlists for current user\n")
         print ("==\n")
@@ -21,6 +21,16 @@ extension PlaylistViewController {
             print ("uri: \(item.playableUri!)")
             print ("\n--\n")
         }
+        
+        tableView.reloadData()
+    }
+    
+    func setupMainMenuView() { }
+    
+    func setupUITableView() {
+    
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     func handleNewUserPlaylistSession() {

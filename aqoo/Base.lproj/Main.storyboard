@@ -93,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="637" y="137"/>
+            <point key="canvasLocation" x="990" y="135"/>
         </scene>
         <!--Playlist View Controller-->
         <scene sceneID="qLS-Oo-eQi">
@@ -118,10 +118,13 @@
                             <outlet property="delegate" destination="FR7-Is-2GV" id="dhh-4n-4EC"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="8Rn-b2-0Da" id="9n5-S9-fib"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQc-4I-ZMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1146" y="137"/>
+            <point key="canvasLocation" x="1849" y="136"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k0q-vn-cbX">

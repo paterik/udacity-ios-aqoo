@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import YNDropDownMenu
 
 class BaseViewController: UIViewController {
     
@@ -22,6 +23,9 @@ class BaseViewController: UIViewController {
     
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
+    let metaDateTimeFormat = "dd.MM.Y hh:mm"
+    
+    var appMenu: YNDropDownMenu?
     
     //
     // MARK: Base Methods
