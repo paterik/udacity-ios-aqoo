@@ -22,6 +22,7 @@ class BaseViewController: UIViewController {
     let segueIdentLandingPage  = "showLandingPage"
     let segueIdentPlayListPage = "showPlayListPage"
     
+    let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
     //
     // MARK: Base Methods
