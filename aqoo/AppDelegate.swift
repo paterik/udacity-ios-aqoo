@@ -23,14 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var spfKeys: NSDictionary?
     var spfSession: SPTSession?
     var spfCurrentSession: SPTSession?
+    var spfIsLoggedIn: Bool = false
     var spfPlayer: SPTAudioStreamingController?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
-    
-    func delay(_ delay:Double, closure:@escaping ()->()) {
-        DispatchQueue.main.asyncAfter(
-            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
-    }
     
     func application(
        _ application: UIApplication,
@@ -95,8 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                     )
                     
                 }   else {
-                    
-                    print (error!.localizedDescription)
                     
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.spfSessionRequestCanceledNotifierId),

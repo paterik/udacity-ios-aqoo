@@ -54,9 +54,13 @@ extension LoginViewController {
         self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
     }
     
-    func updateAfterSuccessLogin() {
+    func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
         if isSpotifyTokenValid() {
+            
+            //
+            // application entry point during development
+            //
             
             showLandingPage()
             

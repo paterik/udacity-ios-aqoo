@@ -15,9 +15,9 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     @IBOutlet weak var btnSpotifyCall: UIButton!
     @IBOutlet weak var btnExitLandingPage: UIBarButtonItem!
 
-    var player: SPTAudioStreamingController?
     var authViewController: UIViewController?
     
+    let _player = SPTAudioStreamingController.sharedInstance()
     let sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
     override func viewDidLoad() {
@@ -29,12 +29,10 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         
         super.viewWillAppear(animated)
         
-        handleNewSession()
-        
         mnuTopStatus.title = "TOKEN INVALID"
         if  isSpotifyTokenValid() {
             mnuTopStatus.title = "CONNECTED"
-            
+            handleNewSession()
             print("dbg: session => \(appDelegate.spfCurrentSession!.accessToken!)")
         }
     }
@@ -43,22 +41,24 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     
     func handleNewSession() {
         
+        if (_player?.loggedIn)! { return }
+        
         do {
             
-            try SPTAudioStreamingController.sharedInstance().start(
+            try _player?.start(
                 withClientId: appDelegate.spfAuth.clientID,
                 audioController: nil,
                 allowCaching: true
             )
             
-            SPTAudioStreamingController.sharedInstance().delegate = self
-            SPTAudioStreamingController.sharedInstance().playbackDelegate = self
-            SPTAudioStreamingController.sharedInstance().diskCache = SPTDiskCache()
-            SPTAudioStreamingController.sharedInstance().login(withAccessToken: appDelegate.spfCurrentSession!.accessToken!)
+            _player?.delegate = self
+            _player?.playbackDelegate = self
+            _player?.diskCache = SPTDiskCache()
+            _player?.login(withAccessToken: appDelegate.spfCurrentSession!.accessToken!)
             
         } catch let error {
             
-            let alert = UIAlertController(title: "Error init", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error Init Player", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true, completion: { _ in self.closeSpotifySession() })
@@ -69,15 +69,14 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         
         do {
             
-            try SPTAudioStreamingController.sharedInstance().stop()
-            
-                closeSpotifySession()
+            try _player?.stop()
+                 closeSpotifySession()
             
             _ = self.navigationController!.popViewController(animated: true)
             
         } catch let error {
             
-            let alert = UIAlertController(title: "Error Closing Streaming", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error Closing Player", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true, completion: { _ in self.closeSpotifySession() })
@@ -86,11 +85,16 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
         
+        //
+        // if you close this view, your spotify session will be closed (!!!)
+        //
+        // closeSession()
+        
         _ = self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func btnSpotifyCallAction(_ sender: Any) {
         
-        closeSession()
+        print ("btnSpotifyCallAction()")
     }
 }

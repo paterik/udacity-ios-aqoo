@@ -31,16 +31,21 @@ class BaseViewController: UIViewController {
         
         let userDefaults = UserDefaults.standard
         
-        if let sessionObj:AnyObject = userDefaults.object(forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
+        if  let sessionObj:AnyObject = userDefaults.object(
+            forKey: appDelegate.spfSessionUserDefaultsKey) as AnyObject? {
             
             let sessionDataObj = sessionObj as! Data
             
-            print (sessionDataObj)
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            appDelegate.spfCurrentSession = firstTimeSession
-            
-            return appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
+            if  let _firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) {
+                if _firstTimeSession is SPTSession {
+                    
+                    appDelegate.spfCurrentSession = _firstTimeSession as? SPTSession
+                    appDelegate.spfIsLoggedIn =  appDelegate.spfCurrentSession != nil && appDelegate.spfCurrentSession!.isValid()
+                    
+                    return appDelegate.spfIsLoggedIn
+                    
+                }
+            }
         }
         
         return false
@@ -49,14 +54,11 @@ class BaseViewController: UIViewController {
     func closeSpotifySession() {
     
         let storage = HTTPCookieStorage.shared
-        let sessionData = NSKeyedArchiver.archivedData(withRootObject: "")
-        let userDefaults = UserDefaults.standard
         
+        appDelegate.spfIsLoggedIn = false
         appDelegate.spfCurrentSession = nil
-        SPTAuth.defaultInstance().session = nil
         
-        userDefaults.set(sessionData, forKey: appDelegate.spfSessionUserDefaultsKey)
-        userDefaults.synchronize()
+        SPTAuth.defaultInstance().session = nil
         
         for cookie: HTTPCookie in storage.cookies! {
             
@@ -66,7 +68,6 @@ class BaseViewController: UIViewController {
                 storage.deleteCookie(cookie)
             }
         }
-    
     }
     
     func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {

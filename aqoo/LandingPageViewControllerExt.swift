@@ -10,23 +10,10 @@ import UIKit
 import Spotify
 
 extension LandingPageViewController {
-
-    func initializePlayer(authSession: SPTSession) {
-        
-        if player != nil { return }
-        
-        player = SPTAudioStreamingController.sharedInstance()
-        player!.delegate = self
-        player!.playbackDelegate = self
-        
-        try! player!.start(withClientId: appDelegate.spfAuth.clientID)
-        
-        player!.login(withAccessToken: authSession.accessToken)
-    }
     
-    /*func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
+    func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         
-        self.player!.playSpotifyURI(sampleSong, startingWith: 0, startingWithPosition: 0, callback: {
+        _player?.playSpotifyURI(sampleSong, startingWith: 0, startingWithPosition: 0, callback: {
             
             error in
             
@@ -36,5 +23,5 @@ extension LandingPageViewController {
                 print ("_dbg: error while playing sample track \(self.sampleSong)")
             }
         })
-    }*/
+    }
 }
