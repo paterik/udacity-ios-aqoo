@@ -22,16 +22,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgAppLogo_v1" translatesAutoresizingMaskIntoConstraints="NO" id="EHI-Aq-Ubn">
-                                <rect key="frame" x="16" y="28" width="343" height="403"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLaunchScreen_v1" translatesAutoresizingMaskIntoConstraints="NO" id="EHI-Aq-Ubn">
+                                <rect key="frame" x="0.0" y="28" width="375" height="619"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.9.9.1001" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TM-KS-bUb" userLabel="AppVersionLabel">
+                                <rect key="frame" x="16" y="638" width="343" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" symbolic="YES" id="RnT-Ut-7hj"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="EHI-Aq-Ubn" secondAttribute="bottom" constant="236" id="ghk-Ju-0Id"/>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="jHy-3O-jRT"/>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="xi5-Q6-R7j"/>
+                            <constraint firstAttribute="bottom" secondItem="EHI-Aq-Ubn" secondAttribute="bottom" constant="20" symbolic="YES" id="4tH-QO-nMa"/>
+                            <constraint firstItem="1TM-KS-bUb" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="618" id="B3r-w6-Fws"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="centerX" secondItem="1TM-KS-bUb" secondAttribute="centerX" id="Kq6-D7-cHD"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="NEa-lz-83g"/>
+                            <constraint firstItem="1TM-KS-bUb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="Rvp-XB-dfd"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" symbolic="YES" id="SG1-6i-39y"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="1TM-KS-bUb" secondAttribute="bottom" constant="8" symbolic="YES" id="fYM-m0-ldh"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -41,6 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="imgAppLogo_v1" width="150" height="150"/>
+        <image name="AppLaunchScreen_v1" width="375" height="667"/>
     </resources>
 </document>
