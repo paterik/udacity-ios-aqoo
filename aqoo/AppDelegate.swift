@@ -49,14 +49,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                 }
             }
         }
-        
-        spfAuth.requestedScopes = [SPTAuthStreamingScope]
+
         spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
         spfAuth.requestedScopes = [
             SPTAuthStreamingScope,
             SPTAuthPlaylistReadPrivateScope,
+            SPTAuthPlaylistReadCollaborativeScope,
             SPTAuthPlaylistModifyPublicScope,
-            SPTAuthPlaylistModifyPrivateScope
+            SPTAuthPlaylistModifyPrivateScope,
+            SPTAuthUserFollowModifyScope,
+            SPTAuthUserFollowReadScope,
+            SPTAuthUserLibraryReadScope,
+            SPTAuthUserLibraryModifyScope,
+            SPTAuthUserReadPrivateScope,
+            SPTAuthUserReadTopScope,
+            SPTAuthUserReadEmailScope,
+            
         ]
         
         spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()
