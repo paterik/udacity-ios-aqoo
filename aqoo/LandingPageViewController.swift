@@ -21,11 +21,16 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     var _playlists = [SPTPartialPlaylist]()
     
     let _player = SPTAudioStreamingController.sharedInstance()
-    let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.SetupUILoadPlaylist),
+            name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+            object: nil
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +56,18 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
         }
     }
     
+    func SetupUILoadPlaylist() {
+        
+        print ("\nI've found \(_playlists.count) playlists for current user\n")
+        print ("==\n")
+        for (index, item) in _playlists.enumerated() {
+            print ("list: #\(index)")
+            print ("name: \(item.name!), \(item.trackCount) songs")
+            print ("uri: \(item.playableUri!)")
+            print ("\n--\n")
+        }
+    }
+    
     func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
     
         currentPage.requestNextPage(
@@ -64,9 +81,14 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
                     
                     self._playlists.append(contentsOf: _playlists)
                     
-                    if _nextPage.hasNextPage {
-                        self._handlePlaylistGetNextPage(_nextPage, accessToken)
-                    }
+                    if _nextPage.hasNextPage == false {
+                        // no further entries in pagination? send completed call!
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+                            object: self
+                        )
+                        
+                    } else { self._handlePlaylistGetNextPage(_nextPage, accessToken) }
                 }
             }
         )
@@ -87,9 +109,14 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
                     
                     self._playlists = _playlists
                     
-                    if _firstPage.hasNextPage {
-                        self._handlePlaylistGetNextPage(_firstPage, accessToken)
-                    }
+                    if _firstPage.hasNextPage == false {
+                        // no further entries in pagination? send completed call!
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+                            object: self
+                        )
+                        
+                    } else { self._handlePlaylistGetNextPage(_firstPage, accessToken) }
                 }
             }
         )
@@ -160,10 +187,6 @@ class LandingPageViewController: BaseViewController, SPTAudioStreamingPlaybackDe
     
     @IBAction func btnSpotifyCallAction(_ sender: Any) {
         
-        for item in self._playlists {
-            print ("name: \(item.name!), \(item.trackCount) songs")
-            print ("uri: \(item.playableUri!)")
-            print ("\n--\n")
-        }
+        print ("hey dude!")
     }
 }

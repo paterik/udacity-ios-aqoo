@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     let spfSessionUserDefaultsKey = "SpotifySession"
     let spfSessionRequestSuccessNotifierId = "sessionUpdated"
     let spfSessionRequestCanceledNotifierId = "sessionFail"
+    let spfSessionPlaylistLoadCompletedNotifierId = "loadPlaylistCompleted"
     let spfSecretPropertyListFile = "Keys"
 
     var window: UIWindow?
