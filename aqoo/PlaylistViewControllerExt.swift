@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import CoreStore
 
 extension PlaylistViewController {
     
@@ -25,7 +26,7 @@ extension PlaylistViewController {
         tableView.reloadData()
     }
     
-    func setupMainMenuView() { }
+    func setupUIMainMenuView() { }
     
     func setupUITableView() {
     
@@ -35,6 +36,7 @@ extension PlaylistViewController {
     
     func handleNewUserPlaylistSession() {
         
+        _loadProvider("_spotify")
         _handlePlaylistGetFirstPage(
             appDelegate.spfUsername,
             appDelegate.spfCurrentSession!.accessToken!
@@ -94,6 +96,29 @@ extension PlaylistViewController {
                         
                     } else { self._handlePlaylistGetNextPage(_firstPage, accessToken) }
                 }
+            }
+        )
+    }
+    
+    func _loadProvider (_ tag: String) {
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> CoreStreamingProvider? in
+                return transaction.fetchOne(From<CoreStreamingProvider>(), Where("tag", isEqualTo: tag))
+            },
+            
+            success: { (transactionProvider) in
+                
+                if transactionProvider == nil {
+                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! No provider were found in database ...")
+                }   else {
+                    self._streamingProvider = transactionProvider!
+                }
+            },
+            
+            failure: { (error) in
+                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
             }
         )
     }

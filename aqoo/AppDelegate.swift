@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreStore
 import Spotify
 import AVFoundation
 
@@ -28,11 +29,80 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var spfUsername: String = ""
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
+    var coreStreamingProvider = [CoreStreamingProvider]()
     
-    func application(
-       _ application: UIApplication,
-         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func _setupProviderFixtures() {
+    
+        CoreStore.perform(
+            asynchronous: { ( transaction ) -> Void in
+                let provider = transaction.create(Into<CoreStreamingProvider>())
+                
+                provider.name = "Spotify"
+                provider.tag = "_spotify"
+                provider.isActive = true
+                provider.details = "our primary streaming provider for aqoo"
 
+            },
+            completion: { _ in }
+        )
+    }
+    
+    func setupSystemDB () {
+        
+        try! CoreStore.addStorageAndWait(
+            SQLiteStore(
+                fileName: "aqoo.sqlite",
+                configuration: "Default",
+                localStorageOptions: .recreateStoreOnModelMismatch
+            )
+        )
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> [CoreStreamingProvider]? in
+                
+                return transaction.fetchAll(From<CoreStreamingProvider>())
+            },
+            
+            success: { (transactionProvider) in
+                
+                if  transactionProvider?.isEmpty == true {
+                    self._setupProviderFixtures()
+                }   else {
+                    self.coreStreamingProvider = transactionProvider!
+                }
+            },
+            
+            failure: { (error) in
+                
+                print ("dbg: error while fetching streaming providers from db \(error.localizedDescription)")
+            }
+        )
+    }
+    
+    func setupSystemAPI() {
+    
+        spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
+        spfAuth.requestedScopes = [
+            SPTAuthStreamingScope,
+            SPTAuthPlaylistReadPrivateScope,
+            SPTAuthPlaylistReadCollaborativeScope,
+            SPTAuthPlaylistModifyPublicScope,
+            SPTAuthPlaylistModifyPrivateScope,
+            SPTAuthUserFollowModifyScope,
+            SPTAuthUserFollowReadScope,
+            SPTAuthUserLibraryReadScope,
+            SPTAuthUserLibraryModifyScope,
+            SPTAuthUserReadPrivateScope,
+            SPTAuthUserReadTopScope,
+            SPTAuthUserReadEmailScope
+        ]
+        
+        spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()
+    }
+    
+    func setupSystemConfig() {
+    
         // load api keys from special "Keys.plist" file (you have to generate one if you use this sources for your
         // own app or you want to compile this app by yourself)
         if let path = Bundle.main.path(forResource: spfSecretPropertyListFile, ofType: "plist") {
@@ -49,25 +119,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                 }
             }
         }
-
-        spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
-        spfAuth.requestedScopes = [
-            SPTAuthStreamingScope,
-            SPTAuthPlaylistReadPrivateScope,
-            SPTAuthPlaylistReadCollaborativeScope,
-            SPTAuthPlaylistModifyPublicScope,
-            SPTAuthPlaylistModifyPrivateScope,
-            SPTAuthUserFollowModifyScope,
-            SPTAuthUserFollowReadScope,
-            SPTAuthUserLibraryReadScope,
-            SPTAuthUserLibraryModifyScope,
-            SPTAuthUserReadPrivateScope,
-            SPTAuthUserReadTopScope,
-            SPTAuthUserReadEmailScope,
-            
-        ]
         
-        spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()
+        setupSystemAPI()
+    }
+    
+    func application(
+       _ application: UIApplication,
+         didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        setupSystemDB()
+        setupSystemConfig()
         
         return true
     }

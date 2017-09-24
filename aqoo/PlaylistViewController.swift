@@ -15,7 +15,8 @@ class PlaylistViewController:   BaseViewController,
                                 UITableViewDataSource,
                                 UITableViewDelegate {
     
-    var authViewController: UIViewController?
+    let _streamingProviderTag: String = "_spotify"
+    var _streamingProvider: CoreStreamingProvider?
     var _playlists = [SPTPartialPlaylist]()
     
     @IBOutlet var tableView: UITableView!
@@ -25,7 +26,7 @@ class PlaylistViewController:   BaseViewController,
         super.viewDidLoad()
         
         setupUITableView()
-        setupMainMenuView()
+        setupUIMainMenuView()
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadPlaylist),
