@@ -148,30 +148,20 @@ extension PlaylistViewController {
         
         for playListInCloud in _playlistsInCloud {
          
+            // 1.) check for hashed uri as identifier for both (equal) entries / local- and remote list
             if let playListInDb = _getPlayListFromDbByHash( playListInCloud.playableUri.absoluteString.md5() ) {
             
                 print ("found db counterPart of [\(playListInCloud.playableUri)] in DB as [\(playListInDb)]")
+                
+                // 2.) check for fingerprint changeSet in list
+                // _validateListForChanges(playListInDb, playListInCloud)
             }
         }
     }
     
     func _validateListForChanges(_ playListInDb: StreamPlayList, _ playListInCloud: SPTPartialPlaylist) -> Bool {
-    
-        let _fprintDb = String(
-             format: "%@:%@:%@:%@",
-             playListInDb.name,
-             playListInDb.trackCount,
-            "\(playListInDb.isPublic)",
-            "\(playListInDb.isCollaborative)").md5()
-        
-        let _fprintCloud = String(
-             format: "%@:%@:%@:%@",
-             playListInCloud.name,
-             playListInCloud.trackCount,
-            "\(playListInCloud.isPublic)",
-            "\(playListInCloud.isCollaborative)").md5()
-        
-        return _fprintDb == _fprintCloud
+
+        return playListInDb.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint()
     }
     
     func _loadProvider (_ tag: String) {
