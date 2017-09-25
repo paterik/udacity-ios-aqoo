@@ -7,6 +7,7 @@
 //
 
 import CoreStore
+import CryptoSwift
 
 class StreamPlayList: NSManagedObject {
     
@@ -27,4 +28,14 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaNumberOfShares: Int64
     
     @NSManaged var provider: CoreStreamingProvider?
+    
+    func getMD5FingerPrint() -> String {
+    
+        return String(
+            format: "%@:%@:%@:%@",
+            self.name,
+            self.trackCount,
+            "\(self.isPublic)",
+            "\(self.isCollaborative)").md5()
+    }
 }
