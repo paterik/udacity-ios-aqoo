@@ -9,14 +9,15 @@
 import UIKit
 import Spotify
 import CoreStore
+import CryptoSwift
 
 extension PlaylistViewController {
     
     func setupUILoadPlaylist() {
         
-        print ("\nI've found \(_playlists.count) playlists for current user\n")
+        print ("\nI've found \(_playlistsInCloud.count) playlists for current user\n")
         print ("==\n")
-        for (index, item) in _playlists.enumerated() {
+        for (index, item) in _playlistsInCloud.enumerated() {
             print ("list: #\(index)")
             print ("name: \(item.name!), \(item.trackCount) songs")
             print ("uri: \(item.playableUri!)")
@@ -37,10 +38,8 @@ extension PlaylistViewController {
     func handleNewUserPlaylistSession() {
         
         _loadProvider("_spotify")
-        _handlePlaylistGetFirstPage(
-            appDelegate.spfUsername,
-            appDelegate.spfCurrentSession!.accessToken!
-        )
+        _loadPlaylists(_streamingProvider!)
+        
     }
     
     func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
@@ -55,7 +54,7 @@ extension PlaylistViewController {
                 if  let _nextPage = response as? SPTListPage,
                     let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
                     
-                    self._playlists.append(contentsOf: _playlists)
+                    self._playlistsInCloud.append(contentsOf: _playlists)
                     
                     // check for additional subPages
                     if _nextPage.hasNextPage == false {
@@ -84,7 +83,7 @@ extension PlaylistViewController {
                 if  let _firstPage = response as? SPTPlaylistList,
                     let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
                     
-                    self._playlists = _playlists
+                    self._playlistsInCloud = _playlists
                     
                     // check for additional pages
                     if _firstPage.hasNextPage == false {
@@ -98,6 +97,81 @@ extension PlaylistViewController {
                 }
             }
         )
+    }
+    
+    func _loadPlaylists (_ provider: CoreStreamingProvider) {
+    
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> [StreamPlayList]? in
+                
+                return transaction.fetchAll(
+                    From<StreamPlayList>(),
+                    Where("provider", isEqualTo: provider) &&
+                    Where("owner", isEqualTo: self.appDelegate.spfUsername)
+                )
+            },
+            
+            success: { (transactionPlaylists) in
+                
+                if transactionPlaylists?.isEmpty == false {
+                    
+                    // store database fetch results in cache collection
+                    self._playlistsInDb = transactionPlaylists!
+                    
+                    // now fetch new playlists from api into new collection
+                    self._handlePlaylistGetFirstPage(
+                        self.appDelegate.spfUsername,
+                        self.appDelegate.spfCurrentSession!.accessToken!
+                    )
+                }
+            },
+            
+            failure: { (error) in
+                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
+            }
+        )
+    }
+    
+    func _getPlayListFromDbByHash(_ hash: String) -> StreamPlayList? {
+        
+        for playList in _playlistsInDb {
+            if playList.metaListHash == hash {
+                return playList
+            }
+        }
+        
+        return nil
+    }
+    
+    func _updatePlaylists() {
+        
+        for playListInCloud in _playlistsInCloud {
+         
+            if let playListInDb = _getPlayListFromDbByHash( playListInCloud.playableUri.absoluteString.md5() ) {
+            
+                print ("found db counterPart of [\(playListInCloud.playableUri)] in DB as [\(playListInDb)]")
+            }
+        }
+    }
+    
+    func _validateListForChanges(_ playListInDb: StreamPlayList, _ playListInCloud: SPTPartialPlaylist) -> Bool {
+    
+        let _fprintDb = String(
+             format: "%@:%@:%@:%@",
+             playListInDb.name,
+             playListInDb.trackCount,
+            "\(playListInDb.isPublic)",
+            "\(playListInDb.isCollaborative)").md5()
+        
+        let _fprintCloud = String(
+             format: "%@:%@:%@:%@",
+             playListInCloud.name,
+             playListInCloud.trackCount,
+            "\(playListInCloud.isPublic)",
+            "\(playListInCloud.isCollaborative)").md5()
+        
+        return _fprintDb == _fprintCloud
     }
     
     func _loadProvider (_ tag: String) {

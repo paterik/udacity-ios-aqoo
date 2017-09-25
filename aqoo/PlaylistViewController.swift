@@ -17,7 +17,8 @@ class PlaylistViewController:   BaseViewController,
     
     let _streamingProviderTag: String = "_spotify"
     var _streamingProvider: CoreStreamingProvider?
-    var _playlists = [SPTPartialPlaylist]()
+    var _playlistsInCloud = [SPTPartialPlaylist]()
+    var _playlistsInDb = [StreamPlayList]()
     
     @IBOutlet var tableView: UITableView!
     
@@ -56,14 +57,14 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
         
-        return _playlists.count
+        return _playlistsInCloud.count
     }
     
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let list = _playlists[indexPath.row]
+        let list = _playlistsInCloud[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "playListItem", for: indexPath) 
         
         cell.detailTextLabel?.text = list.name
