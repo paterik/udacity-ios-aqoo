@@ -23,6 +23,7 @@
 		B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE71F778621001FC294 /* StreamPlayList.swift */; };
 		B1BD1EEA1F778646001FC294 /* CoreStreamingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE91F778646001FC294 /* CoreStreamingProvider.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
+		B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DA0B1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift */; };
 		B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* PlaylistViewController.swift */; };
 		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
 		B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7E1F7045E80005FE43 /* UIImage.swift */; };
@@ -71,6 +72,7 @@
 		B1BD1EE71F778621001FC294 /* StreamPlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamPlayList.swift; sourceTree = "<group>"; };
 		B1BD1EE91F778646001FC294 /* CoreStreamingProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreStreamingProvider.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		B1E2DA0B1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFPartialPlaylistExt.swift; sourceTree = "<group>"; };
 		B1F88B721F7033450005FE43 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B1F88B7E1F7045E80005FE43 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				B1BD1EE71F778621001FC294 /* StreamPlayList.swift */,
 				B1BD1EE91F778646001FC294 /* CoreStreamingProvider.swift */,
+				B1E2DA0B1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
