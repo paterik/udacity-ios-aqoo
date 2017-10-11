@@ -213,7 +213,7 @@ extension PlaylistViewController {
                     _playlistInDb!.createdAt = Date()
                     _playlistInDb!.owner = self.appDelegate.spfUsername
                     _playlistInDb!.provider = transaction.fetchOne(
-                        From<CoreStreamingProvider>(),
+                        From<StreamProvider>(),
                         Where("tag", isEqualTo: providerTag)
                     )
                     
@@ -258,7 +258,7 @@ extension PlaylistViewController {
         )
     }
     
-    func loadPlaylists (_ provider: CoreStreamingProvider) {
+    func loadPlaylists (_ provider: StreamProvider) {
         
         let providerName = provider.name
 
@@ -313,8 +313,8 @@ extension PlaylistViewController {
         
         CoreStore.perform(
             
-            asynchronous: { (transaction) -> CoreStreamingProvider? in
-                return transaction.fetchOne(From<CoreStreamingProvider>(), Where("tag", isEqualTo: tag))
+            asynchronous: { (transaction) -> StreamProvider? in
+                return transaction.fetchOne(From<StreamProvider>(), Where("tag", isEqualTo: tag))
             },
             
             success: { (transactionProvider) in

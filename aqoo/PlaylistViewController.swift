@@ -17,13 +17,13 @@ class PlaylistViewController:   BaseViewController,
     
     let _defaultStreamingProviderTag: String = "_spotify"
     
-    var _defaultStreamingProvider: CoreStreamingProvider?
+    var _defaultStreamingProvider: StreamProvider?
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
     var _playListHashesInDb = [String]()
     var _playListHashesInCloud = [String]()
     var _playListHashesInCloudRemoved = [String]()
-    var _playListProvider: CoreStreamingProvider?
+    var _playListProvider: StreamProvider?
     
     @IBOutlet var tableView: UITableView!
     

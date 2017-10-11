@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var spfUsername: String = ""
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
-    var coreStreamingProvider = [CoreStreamingProvider]()
+    var coreStreamingProvider = [StreamProvider]()
     
     func _setupProviderFixtures() {
     
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
         
         CoreStore.perform(
             asynchronous: { ( transaction ) -> Void in
-                let provider = transaction.create(Into<CoreStreamingProvider>())
+                let provider = transaction.create(Into<StreamProvider>())
                 
                 provider.name = "Spotify"
                 provider.tag = "_spotify"
@@ -62,9 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
         
         CoreStore.perform(
             
-            asynchronous: { (transaction) -> [CoreStreamingProvider]? in
+            asynchronous: { (transaction) -> [StreamProvider]? in
                 
-                return transaction.fetchAll(From<CoreStreamingProvider>())
+                return transaction.fetchAll(From<StreamProvider>())
             },
             
             success: { (transactionProvider) in

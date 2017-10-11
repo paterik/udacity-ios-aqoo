@@ -28,7 +28,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
     
-    @NSManaged var provider: CoreStreamingProvider?
+    @NSManaged var provider: StreamProvider?
     
     func getMD5FingerPrint() -> String {
     

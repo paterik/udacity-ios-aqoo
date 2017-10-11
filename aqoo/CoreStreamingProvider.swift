@@ -1,5 +1,5 @@
 //
-//  CoreStreamingProvider.swift
+//  StreamProvider.swift
 //  aqoo
 //
 //  Created by Patrick Paechnatz on 24.09.17.
@@ -8,7 +8,7 @@
 
 import CoreStore
 
-class CoreStreamingProvider: NSManagedObject {
+class StreamProvider: NSManagedObject {
     
     @NSManaged var name: String
     @NSManaged var tag: String
