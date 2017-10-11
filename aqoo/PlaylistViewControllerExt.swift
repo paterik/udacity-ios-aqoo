@@ -15,11 +15,10 @@ extension PlaylistViewController {
     
     @objc func setupUILoadCloudPlaylists() {
         
-        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n")
-        print ("==\n")
-        
         var _playListHash: String!
-        
+
+        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n==\n")
+
         for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
             
             _playListHash = self.getMetaListHashByParam (
@@ -46,7 +45,7 @@ extension PlaylistViewController {
         ) {
             
            _playlistsInDb = playListCache
-            print ("cache: (re)evaluated, tableView will be refreshed ...")
+            print ("cache: (re)evaluated, tableView will be refreshed now ...")
         }
         
         tableView.reloadData()
@@ -125,9 +124,9 @@ extension PlaylistViewController {
         )
     }
     
-    func getMetaListHashByParam(_ playListUri: String, _ playListOwner: String) -> String {
+    func getMetaListHashByParam(_ playListPlayableUri: String, _ playListOwner: String) -> String {
         
-         return String( format: "%@:%@", playListUri, playListOwner).md5()
+         return String( format: "%@:%@", playListPlayableUri, playListOwner).md5()
     }
     
     func handlePlaylistDbCache (
@@ -200,6 +199,7 @@ extension PlaylistViewController {
             
             completion: { _ in
                 
+                // evaluate list extension completion and execute event signal after final cache item was handled
                 if playListIndex == self._playlistsInCloud.count - 1 {
                     print ("cache: playlist data handling finished, send signal to reload tableView now...")
                     NotificationCenter.default.post(
