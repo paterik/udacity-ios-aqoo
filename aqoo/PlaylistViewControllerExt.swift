@@ -73,8 +73,7 @@ extension PlaylistViewController {
                     let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
                     
                     self._playlistsInCloud.append(contentsOf: _playlists)
-                    
-                    // check for additional subPages
+
                     if _nextPage.hasNextPage == false {
                         // no further entries in pagination? send completion call now ...
                         NotificationCenter.default.post(
@@ -104,8 +103,7 @@ extension PlaylistViewController {
                     let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
                     
                     self._playlistsInCloud = _playlists
-                    
-                    // check for additional pages
+
                     if _firstPage.hasNextPage == false {
                         // no further entries in pagination? send completed call!
                         NotificationCenter.default.post(
@@ -119,21 +117,33 @@ extension PlaylistViewController {
         )
     }
     
+    func getMetaListHashByParam(_ playListUri: String, _ playListOwner: String) -> String {
+        
+         return String( format: "%@:%@", playListUri, playListOwner).md5()
+    }
+    
     func handlePlaylistDbCache (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
        _ providerTag: String ) {
         
         var _playlistInDb: StreamPlayList?
+        var _playListHash: String!
 
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
                 
+                // render hash for new playlist entry
+                _playListHash = self.getMetaListHashByParam (
+                    playListInCloud.playableUri.absoluteString,
+                    self.appDelegate.spfUsername
+                )
+                
                 // we've a corresponding (given) playlist entry in db? Check this entry again and prepare for update
                 _playlistInDb = transaction.fetchOne(
                     From<StreamPlayList>(),
-                    Where("metaListHash", isEqualTo: playListInCloud.playableUri.absoluteString.md5())
+                    Where("metaListHash", isEqualTo: _playListHash)
                 )
                 
                 // playlist cache entry in local db not available or not fetchable? Create a new one ...
@@ -149,7 +159,7 @@ extension PlaylistViewController {
                     _playlistInDb!.metaNumberOfUpdates = 0
                     _playlistInDb!.metaNumberOfShares = 0
                     _playlistInDb!.metaMarkedAsFavorite = false
-                    _playlistInDb!.metaListHash = playListInCloud.playableUri.absoluteString.md5()
+                    _playlistInDb!.metaListHash = _playListHash
                     _playlistInDb!.createdAt = Date()
                     _playlistInDb!.owner = self.appDelegate.spfUsername
                     _playlistInDb!.provider = transaction.fetchOne(
@@ -157,14 +167,14 @@ extension PlaylistViewController {
                         Where("tag", isEqualTo: providerTag)
                     )
                     
-                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> CREATED")
+                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> CREATED")
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
                 } else {
                  
                     if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
-                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> INGORED (no changes evaluated)")
+                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> INGORED (no changes evaluated)")
                         
                     } else {
                         
@@ -175,14 +185,14 @@ extension PlaylistViewController {
                         _playlistInDb!.metaNumberOfUpdates += 1
                         _playlistInDb!.updatedAt = Date()
                         
-                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> UPDATED")
+                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
                     }
                 }
             },
             completion: { _ in
                 
                 if playListIndex == self._playlistsInCloud.count - 1 {
-                    print ("cache: data handling finished send signal to reload tableView now...")
+                    print ("cache: playlist data handling finished, send signal to reload tableView now...")
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
                         object: self
