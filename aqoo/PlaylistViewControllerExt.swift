@@ -20,12 +20,12 @@ extension PlaylistViewController {
         
         for (index, playListInCloud) in _playlistsInCloud.enumerated() {
             
-            handlePlaylistDbCache (playListInCloud, _defaultStreamingProviderTag)
-            
-            print ("list: #\(index)")
-            print ("name: \(playListInCloud.name!), \(playListInCloud.trackCount) songs")
+            print ("list: #\(index) containing \(playListInCloud.trackCount) playable songs")
+            print ("name: \(playListInCloud.name!)")
             print ("uri: \(playListInCloud.playableUri!)")
             print ("\n--\n")
+            
+            handlePlaylistDbCache (playListInCloud, _defaultStreamingProviderTag)
         }
         
         tableView.reloadData()
@@ -117,28 +117,12 @@ extension PlaylistViewController {
                     From<StreamPlayList>(),
                     Where("metaListHash", isEqualTo: playListInCloud.playableUri.absoluteString.md5())
                 )
-                    
-                if self.validateListForChanges (playListInCloud, _playlistInDb!) {
-                    
-                    _playlistInDb!.name = playListInCloud.name
-                    _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
-                    _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
-                    _playlistInDb!.isPublic = playListInCloud.isPublic
-                    _playlistInDb!.metaNumberOfUpdates += 1
-                    _playlistInDb!.updatedAt = Date()
-                    
-                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> UPDATED")
-                    
-                } else {
-                    
-                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> INGORED (no changes evaluated)")
-                }
                 
                 // playlist cache entry in local db not available or not fetchable? Create a new one ...
                 if _playlistInDb == nil {
                     
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
-                
+                    
                     _playlistInDb!.name = playListInCloud.name
                     _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
                     _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
@@ -156,17 +140,29 @@ extension PlaylistViewController {
                     )
                     
                     print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> CREATED")
+                
+                // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
+                } else {
+                 
+                    if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
+                        
+                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> INGORED (no changes evaluated)")
+                        
+                    } else {
+                        
+                        _playlistInDb!.name = playListInCloud.name
+                        _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
+                        _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
+                        _playlistInDb!.isPublic = playListInCloud.isPublic
+                        _playlistInDb!.metaNumberOfUpdates += 1
+                        _playlistInDb!.updatedAt = Date()
+                        
+                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> UPDATED")
+                    }
                 }
             },
             completion: { _ in }
         )
-    }
-    
-    func validateListForChanges(
-       _ playListInCloud: SPTPartialPlaylist,
-       _ playListInDb: StreamPlayList) -> Bool {
-
-        return playListInDb.getMD5FingerPrint() != playListInCloud.getMD5FingerPrint()
     }
     
     func loadPlaylists (_ provider: CoreStreamingProvider) {
