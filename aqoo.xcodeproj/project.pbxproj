@@ -12,6 +12,7 @@
 		B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
+		B1A3D2461F8E3B660098330D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A3D2451F8E3B660098330D /* String.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
 		B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620491F700D820093CAEF /* LoginViewController.swift */; };
 		B1A6204D1F700D820093CAEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A6204B1F700D820093CAEF /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewControllerExt.swift; sourceTree = "<group>"; };
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B1A3D2451F8E3B660098330D /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A620471F700D820093CAEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1A620491F700D820093CAEF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			children = (
 				B1F88B7C1F7045C10005FE43 /* UIColor.swift */,
 				B1F88B7E1F7045E80005FE43 /* UIImage.swift */,
+				B1A3D2451F8E3B660098330D /* String.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
+				B1A3D2461F8E3B660098330D /* String.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
 				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,

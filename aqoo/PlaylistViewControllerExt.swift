@@ -13,10 +13,33 @@ import CryptoSwift
 
 extension PlaylistViewController {
     
+    
+    @objc func setupUILoadExtendedPlaylists() {
+        
+        CoreStore.perform(
+            asynchronous: { (transaction) -> Void in
+                
+                let orphanPlaylist = transaction.fetchOne(
+                    From<StreamPlayList>(),
+                    Where("metaListHash", isEqualTo: "0cd5d06886e530653ab2fadeb2628538")
+                )
+                
+                transaction.delete(orphanPlaylist)
+            },
+            
+            completion: { _ in }
+        )
+        
+        tableView.reloadData()
+    }
+    
     @objc func setupUILoadCloudPlaylists() {
         
         var _playListHash: String!
-
+            _playListHashesInDb = []
+            _playListHashesInCloud = []
+            _playListHashesInCloudToRemove = []
+        
         print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n==\n")
 
         for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
@@ -34,21 +57,6 @@ extension PlaylistViewController {
             
             handlePlaylistDbCache (playListInCloud, playlistIndex, _defaultStreamingProviderTag)
         }
-    }
-    
-    @objc func setupUILoadExtendedPlaylists() {
-        
-        if let playListCache = CoreStore.fetchAll(
-            From<StreamPlayList>(),
-            Where("provider", isEqualTo: _defaultStreamingProvider) &&
-            Where("owner", isEqualTo: self.appDelegate.spfUsername)
-        ) {
-            
-           _playlistsInDb = playListCache
-            print ("cache: (re)evaluated, tableView will be refreshed now ...")
-        }
-        
-        tableView.reloadData()
     }
     
     func setupUITableView() {
@@ -199,9 +207,32 @@ extension PlaylistViewController {
             
             completion: { _ in
                 
+                // save handled hashed in separate collection
+                self._playListHashesInCloud.append(_playListHash)
+                
                 // evaluate list extension completion and execute event signal after final cache item was handled
                 if playListIndex == self._playlistsInCloud.count - 1 {
-                    print ("cache: playlist data handling finished, send signal to reload tableView now...")
+                    
+                    if let playListCache = CoreStore.fetchAll(
+                        From<StreamPlayList>(),
+                        Where("provider", isEqualTo: self._defaultStreamingProvider) &&
+                        Where("owner", isEqualTo: self.appDelegate.spfUsername)
+                    ) {
+                        
+                        for (_, playlist) in playListCache.enumerated() {
+                            
+                            if  self._playListHashesInCloud.contains(playlist.metaListHash) == false {
+                                print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] orphan flagged for removal")
+                                self._playListHashesInCloudToRemove.append(playlist.metaListHash)
+                            }   else {
+                                self._playListHashesInDb.append(playlist.metaListHash)
+                            }
+                        }
+                        
+                        self._playlistsInDb = playListCache
+                    }
+                    
+                    print ("cache: playlist orphan scan finished, send signal to reload tableView now ...")
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
                         object: self
