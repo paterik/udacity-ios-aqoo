@@ -14,7 +14,7 @@ extension SPTPartialPlaylist {
     func getMD5FingerPrint() -> String {
         
         return String(
-            format: "%@:%@:%@:%@",
+            format: "%@:%d:%@:%@",
             self.name,
             self.trackCount,
             "\(self.isPublic)",
