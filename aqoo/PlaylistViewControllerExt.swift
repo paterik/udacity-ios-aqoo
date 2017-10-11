@@ -197,6 +197,7 @@ extension PlaylistViewController {
                     }
                 }
             },
+            
             completion: { _ in
                 
                 if playListIndex == self._playlistsInCloud.count - 1 {
@@ -213,14 +214,14 @@ extension PlaylistViewController {
     func loadPlaylists (_ provider: CoreStreamingProvider) {
         
         let providerName = provider.name
-        
+
+        print ("_ load cached playlists for provider [\(providerName)]")
+
         // always fetch new playlists from api for upcoming sync
         self.handlePlaylistGetFirstPage(
             self.appDelegate.spfUsername,
             self.appDelegate.spfCurrentSession!.accessToken!
         )
-        
-        print ("_ load cached playlists for provider [\(providerName)]")
         
         CoreStore.perform(
             
@@ -234,6 +235,7 @@ extension PlaylistViewController {
                     Where("owner", isEqualTo: self.appDelegate.spfUsername)
                 )
             },
+            
             success: { (transactionPlaylists) in
                 
                 if transactionPlaylists?.isEmpty == false {
@@ -246,11 +248,15 @@ extension PlaylistViewController {
                     
                     // clean previously cached playlist collection
                     self._playlistsInDb = []
-                    print ("_ no cached playlist data for provider [\(providerName)] found, we'll create cache on first listView load ...")
+                    print ("_ no cached playlist data for provider [\(providerName)] found ...")
                 }
             },
+            
             failure: { (error) in
-                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
+                self._handleErrorAsDialogMessage(
+                    "Error Loading Playlists",
+                    "Oops! An error occured while loading playlists of [\(providerName)] from database ..."
+                )
             }
         )
     }
@@ -275,12 +281,18 @@ extension PlaylistViewController {
                     
                 }   else {
                     
-                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! No provider were found in database ...")
+                    self._handleErrorAsDialogMessage(
+                        "Error Loading Provider",
+                        "Oops! No provider were found in database ..."
+                    )
                 }
             },
             
             failure: { (error) in
-                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
+                self._handleErrorAsDialogMessage(
+                    "Error Loading Provider",
+                    "Oops! An error occured while loading provider from database ..."
+                )
             }
         )
     }
