@@ -49,9 +49,6 @@ class PlaylistViewController:   BaseViewController,
             //
             
             handleNewUserPlaylistSession()
-            
-       
-            
         }
     }
     

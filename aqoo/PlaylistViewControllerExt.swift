@@ -167,8 +167,6 @@ extension PlaylistViewController {
     
     func loadPlaylists (_ provider: CoreStreamingProvider) {
         
-        _playListProvider = provider
-        
         let providerName = provider.name
         
         print ("_ load cached playlists for provider [\(providerName)]")
@@ -229,7 +227,8 @@ extension PlaylistViewController {
                 if transactionProvider != nil {
                     
                     print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
-                    self.loadPlaylists ( transactionProvider! )
+                    self._playListProvider = transactionProvider!
+                    self.loadPlaylists ( self._playListProvider! )
                     
                 }   else {
                     
