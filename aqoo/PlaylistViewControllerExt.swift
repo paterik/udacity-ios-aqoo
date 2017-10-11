@@ -13,35 +13,43 @@ import CryptoSwift
 
 extension PlaylistViewController {
     
-    @objc func setupUILoadExtendedPlaylist() {
+    @objc func setupUILoadCloudPlaylists() {
+        
+        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n")
+        print ("==\n")
+        
+        var _playListHash: String!
+        
+        for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
+            
+            _playListHash = self.getMetaListHashByParam (
+                playListInCloud.playableUri.absoluteString,
+                self.appDelegate.spfUsername
+            )
+            
+            print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
+            print ("name: \(playListInCloud.name!)")
+            print ("uri: \(playListInCloud.playableUri!)")
+            print ("hash: \(_playListHash!) (aqoo identifier)")
+            print ("\n--\n")
+            
+            handlePlaylistDbCache (playListInCloud, playlistIndex, _defaultStreamingProviderTag)
+        }
+    }
+    
+    @objc func setupUILoadExtendedPlaylists() {
         
         if let playListCache = CoreStore.fetchAll(
             From<StreamPlayList>(),
             Where("provider", isEqualTo: _defaultStreamingProvider) &&
             Where("owner", isEqualTo: self.appDelegate.spfUsername)
-            ) {
+        ) {
             
            _playlistsInDb = playListCache
             print ("cache: (re)evaluated, tableView will be refreshed ...")
         }
         
         tableView.reloadData()
-    }
-    
-    @objc func setupUILoadPlaylist() {
-        
-        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n")
-        print ("==\n")
-        
-        for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
-            
-            print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
-            print ("name: \(playListInCloud.name!)")
-            print ("uri: \(playListInCloud.playableUri!)")
-            print ("\n--\n")
-            
-            handlePlaylistDbCache (playListInCloud, playlistIndex, _defaultStreamingProviderTag)
-        }
     }
     
     func setupUITableView() {

@@ -32,13 +32,13 @@ class PlaylistViewController:   BaseViewController,
         setupUIMainMenuView()
         
         NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadPlaylist),
+            self, selector: #selector(self.setupUILoadCloudPlaylists),
             name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
             object: nil
         )
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadExtendedPlaylist),
+            self, selector: #selector(self.setupUILoadExtendedPlaylists),
             name: NSNotification.Name(rawValue: appDelegate.spfCachePlaylistLoadCompletedNotifierId),
             object: nil
         )
