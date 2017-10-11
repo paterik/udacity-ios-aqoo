@@ -20,6 +20,7 @@ class PlaylistViewController:   BaseViewController,
     
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
+    var _playListProvider: CoreStreamingProvider?
     
     @IBOutlet var tableView: UITableView!
     

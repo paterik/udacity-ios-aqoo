@@ -15,21 +15,21 @@ extension PlaylistViewController {
     
     @objc func setupUILoadPlaylist() {
         
-        print ("\nI've found \(_playlistsInCloud.count) playlists for current user\n")
+        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user in [\(_defaultStreamingProviderTag)] cloud\n")
         print ("==\n")
-        for (index, item) in _playlistsInCloud.enumerated() {
+        
+        for (index, playListInCloud) in _playlistsInCloud.enumerated() {
+            
+            handlePlaylistDbCache (playListInCloud, _defaultStreamingProviderTag)
+            
             print ("list: #\(index)")
-            print ("name: \(item.name!), \(item.trackCount) songs")
-            print ("uri: \(item.playableUri!)")
+            print ("name: \(playListInCloud.name!), \(playListInCloud.trackCount) songs")
+            print ("uri: \(playListInCloud.playableUri!)")
             print ("\n--\n")
         }
         
-        // store playlist in db
-        
         tableView.reloadData()
     }
-    
-    func setupUIMainMenuView() { }
     
     func setupUITableView() {
     
@@ -37,11 +37,7 @@ extension PlaylistViewController {
         tableView.dataSource = self
     }
     
-    func handleNewUserPlaylistSession() {
-        
-        // load spotify default provider tag (spotify)
-        synchronizePlaylists( _defaultStreamingProviderTag )
-    }
+    func setupUIMainMenuView() { }
     
     func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
         
@@ -59,7 +55,7 @@ extension PlaylistViewController {
                     
                     // check for additional subPages
                     if _nextPage.hasNextPage == false {
-                        // no further entries in pagination? send completed call!
+                        // no further entries in pagination? send completion call now ...
                         NotificationCenter.default.post(
                             name: NSNotification.Name.init(rawValue: self.appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
                             object: self
@@ -100,8 +96,83 @@ extension PlaylistViewController {
         )
     }
     
-    func loadPlaylists (_ provider: CoreStreamingProvider) {
+    func handleNewUserPlaylistSession() {
+        
+        print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
+        loadProvider ( _defaultStreamingProviderTag )
+    }
+    
+    func handlePlaylistDbCache (
+       _ playListInCloud: SPTPartialPlaylist,
+       _ providerTag: String ) {
+        
+        var _playlistInDb: StreamPlayList?
 
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                // we've a corresponding (given) playlist entry in db? Check this entry again and prepare for update
+                _playlistInDb = transaction.fetchOne(
+                    From<StreamPlayList>(),
+                    Where("metaListHash", isEqualTo: playListInCloud.playableUri.absoluteString.md5())
+                )
+                    
+                if self.validateListForChanges (playListInCloud, _playlistInDb!) {
+                    
+                    _playlistInDb!.name = playListInCloud.name
+                    _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
+                    _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
+                    _playlistInDb!.isPublic = playListInCloud.isPublic
+                    _playlistInDb!.metaNumberOfUpdates += 1
+                    _playlistInDb!.updatedAt = Date()
+                    
+                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> UPDATED")
+                    
+                } else {
+                    
+                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> INGORED (no changes evaluated)")
+                }
+                
+                // playlist cache entry in local db not available or not fetchable? Create a new one ...
+                if _playlistInDb == nil {
+                    
+                    _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
+                
+                    _playlistInDb!.name = playListInCloud.name
+                    _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
+                    _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
+                    _playlistInDb!.isPublic = playListInCloud.isPublic
+                    _playlistInDb!.metaLastListenedAt = nil
+                    _playlistInDb!.metaNumberOfUpdates = 0
+                    _playlistInDb!.metaNumberOfShares = 0
+                    _playlistInDb!.metaMarkedAsFavorite = false
+                    _playlistInDb!.metaListHash = playListInCloud.playableUri.absoluteString.md5()
+                    _playlistInDb!.createdAt = Date()
+                    _playlistInDb!.owner = self.appDelegate.spfUsername
+                    _playlistInDb!.provider = transaction.fetchOne(
+                        From<CoreStreamingProvider>(),
+                        Where("tag", isEqualTo: providerTag)
+                    )
+                    
+                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] -> CREATED")
+                }
+            },
+            completion: { _ in }
+        )
+    }
+    
+    func validateListForChanges(
+       _ playListInCloud: SPTPartialPlaylist,
+       _ playListInDb: StreamPlayList) -> Bool {
+
+        return playListInDb.getMD5FingerPrint() != playListInCloud.getMD5FingerPrint()
+    }
+    
+    func loadPlaylists (_ provider: CoreStreamingProvider) {
+        
+        _playListProvider = provider
+        
         let providerName = provider.name
         
         print ("_ load cached playlists for provider [\(providerName)]")
@@ -109,28 +180,27 @@ extension PlaylistViewController {
         CoreStore.perform(
             
             asynchronous: { (transaction) -> [StreamPlayList]? in
-    
+                
                 self._defaultStreamingProvider = provider
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>(),
                     Where("provider", isEqualTo: provider) &&
-                    Where("owner", isEqualTo: self.appDelegate.spfUsername)
+                        Where("owner", isEqualTo: self.appDelegate.spfUsername)
                 )
             },
-            
             success: { (transactionPlaylists) in
                 
                 if transactionPlaylists?.isEmpty == false {
                     
-                    print ("_ some playlist data for provider [\(providerName)] available ...")
+                    print ("_ \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
                     
                     // store database fetch results in cache collection
                     self._playlistsInDb = transactionPlaylists!
                     
                 } else {
                     
-                    print ("_ no cached playlist data for provider [\(providerName)] found ...")
+                    print ("_ no cached playlist data for provider [\(providerName)] found, we'll create cache on first listView load ...")
                     
                     // clean previously cached playlist collection
                     self._playlistsInDb = []
@@ -142,78 +212,10 @@ extension PlaylistViewController {
                     self.appDelegate.spfCurrentSession!.accessToken!
                 )
             },
-            
             failure: { (error) in
-                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
+                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
             }
         )
-    }
-    
-    func _getPlayListFromDbByHash(_ hash: String) -> StreamPlayList? {
-        
-        for playList in _playlistsInDb {
-            
-            if playList.metaListHash == hash {
-                return playList
-            }
-        }
-        
-        return nil
-    }
-    
-    func synchronizePlaylists(_ provider: String) {
-        
-        print ("_ try to synchronize playlists for provider [\(provider)] ...")
-        
-        loadProvider ( provider )
-        
-        for playListInCloud in _playlistsInCloud {
-            
-            print ("-> \(playListInCloud.playableUri)")
-            
-         
-            // 1.) check for hashed uri as identifier for both (equal) entries / local- and remote list
-            if let playListInDb = _getPlayListFromDbByHash( playListInCloud.playableUri.absoluteString.md5() ) {
-            
-                print ("_ found db counterPart of [\(playListInCloud.getMD5FingerPrint())] in DB as [\(playListInDb.getMD5FingerPrint())]")
-                
-                // 2.) check for fingerprint changeSet in local playlist
-                if validateListForChanges(playListInDb, playListInCloud) == true {
-                
-                    // 3.) update local playlist by primary propertySets (name, trackCount, isPublic and isCollaborative)
-                    CoreStore.perform(
-                        asynchronous: { (transaction) -> Void in
-                            let _playlist = transaction.fetchOne(
-                                 From<StreamPlayList>(),
-                                 Where("metaListHash", isEqualTo: playListInDb.metaListHash)
-                            )
-                            
-                            if  _playlist != nil {
-                                _playlist!.name = playListInCloud.name
-                                _playlist!.trackCount = Int64(playListInCloud.trackCount)
-                                _playlist!.isCollaborative = playListInCloud.isCollaborative
-                                _playlist!.isPublic = playListInCloud.isPublic
-                                _playlist!.metaNumberOfUpdates += 1
-                                _playlist!.updatedAt = Date()
-                            }
-                        },
-                        completion: { _ in }
-                    )
-                }
-                
-            } else {
-                
-                print ("_ no counterPart of [\(playListInCloud.getMD5FingerPrint())] found in db")
-                
-            }
-        }
-    }
-    
-    func validateListForChanges(
-       _ playListInDb: StreamPlayList,
-       _ playListInCloud: SPTPartialPlaylist) -> Bool {
-
-        return playListInDb.getMD5FingerPrint() != playListInCloud.getMD5FingerPrint()
     }
     
     func loadProvider (_ tag: String) {
@@ -228,12 +230,14 @@ extension PlaylistViewController {
             
             success: { (transactionProvider) in
                 
-                if transactionProvider == nil {
-                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! No provider were found in database ...")
-                }   else {
+                if transactionProvider != nil {
                     
                     print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
                     self.loadPlaylists ( transactionProvider! )
+                    
+                }   else {
+                    
+                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! No provider were found in database ...")
                 }
             },
             
