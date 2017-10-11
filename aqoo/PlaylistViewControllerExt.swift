@@ -13,22 +13,35 @@ import CryptoSwift
 
 extension PlaylistViewController {
     
+    @objc func setupUILoadExtendedPlaylist() {
+        
+        if let playListCache = CoreStore.fetchAll(
+            From<StreamPlayList>(),
+            Where("provider", isEqualTo: _defaultStreamingProvider) &&
+            Where("owner", isEqualTo: self.appDelegate.spfUsername)
+            ) {
+            
+           _playlistsInDb = playListCache
+            print ("cache: (re)evaluated, tableView will be refreshed ...")
+        }
+        
+        tableView.reloadData()
+    }
+    
     @objc func setupUILoadPlaylist() {
         
-        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user in [\(_defaultStreamingProviderTag)] cloud\n")
+        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n")
         print ("==\n")
         
-        for (index, playListInCloud) in _playlistsInCloud.enumerated() {
+        for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
             
-            print ("list: #\(index) containing \(playListInCloud.trackCount) playable songs")
+            print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
             print ("name: \(playListInCloud.name!)")
             print ("uri: \(playListInCloud.playableUri!)")
             print ("\n--\n")
             
-            handlePlaylistDbCache (playListInCloud, _defaultStreamingProviderTag)
+            handlePlaylistDbCache (playListInCloud, playlistIndex, _defaultStreamingProviderTag)
         }
-        
-        tableView.reloadData()
     }
     
     func setupUITableView() {
@@ -39,7 +52,15 @@ extension PlaylistViewController {
     
     func setupUIMainMenuView() { }
     
-    func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
+    func handleNewUserPlaylistSession() {
+        
+        print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
+        loadProvider ( _defaultStreamingProviderTag )
+    }
+    
+    func handlePlaylistGetNextPage(
+       _ currentPage: SPTListPage,
+       _ accessToken: String) {
         
         currentPage.requestNextPage(
             
@@ -61,13 +82,15 @@ extension PlaylistViewController {
                             object: self
                         )
                         
-                    } else { self._handlePlaylistGetNextPage(_nextPage, accessToken) }
+                    } else { self.handlePlaylistGetNextPage( _nextPage, accessToken ) }
                 }
             }
         )
     }
     
-    func _handlePlaylistGetFirstPage(_ username: String, _ accessToken: String) {
+    func handlePlaylistGetFirstPage(
+       _ username: String,
+       _ accessToken: String) {
         
         SPTPlaylistList.playlists(
             
@@ -90,20 +113,15 @@ extension PlaylistViewController {
                             object: self
                         )
                         
-                    } else { self._handlePlaylistGetNextPage(_firstPage, accessToken) }
+                    } else { self.handlePlaylistGetNextPage( _firstPage, accessToken ) }
                 }
             }
         )
     }
     
-    func handleNewUserPlaylistSession() {
-        
-        print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
-        loadProvider ( _defaultStreamingProviderTag )
-    }
-    
     func handlePlaylistDbCache (
        _ playListInCloud: SPTPartialPlaylist,
+       _ playListIndex: Int,
        _ providerTag: String ) {
         
         var _playlistInDb: StreamPlayList?
@@ -161,13 +179,28 @@ extension PlaylistViewController {
                     }
                 }
             },
-            completion: { _ in }
+            completion: { _ in
+                
+                if playListIndex == self._playlistsInCloud.count - 1 {
+                    print ("cache: data handling finished send signal to reload tableView now...")
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+                        object: self
+                    )
+                }
+            }
         )
     }
     
     func loadPlaylists (_ provider: CoreStreamingProvider) {
         
         let providerName = provider.name
+        
+        // always fetch new playlists from api for upcoming sync
+        self.handlePlaylistGetFirstPage(
+            self.appDelegate.spfUsername,
+            self.appDelegate.spfCurrentSession!.accessToken!
+        )
         
         print ("_ load cached playlists for provider [\(providerName)]")
         
@@ -180,34 +213,26 @@ extension PlaylistViewController {
                 return transaction.fetchAll(
                     From<StreamPlayList>(),
                     Where("provider", isEqualTo: provider) &&
-                        Where("owner", isEqualTo: self.appDelegate.spfUsername)
+                    Where("owner", isEqualTo: self.appDelegate.spfUsername)
                 )
             },
             success: { (transactionPlaylists) in
                 
                 if transactionPlaylists?.isEmpty == false {
                     
-                    print ("_ \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
-                    
                     // store database fetch results in cache collection
                     self._playlistsInDb = transactionPlaylists!
+                    print ("_ \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
                     
                 } else {
                     
-                    print ("_ no cached playlist data for provider [\(providerName)] found, we'll create cache on first listView load ...")
-                    
                     // clean previously cached playlist collection
                     self._playlistsInDb = []
+                    print ("_ no cached playlist data for provider [\(providerName)] found, we'll create cache on first listView load ...")
                 }
-                
-                // always fetch new playlists from api for upcoming sync
-                self._handlePlaylistGetFirstPage(
-                    self.appDelegate.spfUsername,
-                    self.appDelegate.spfCurrentSession!.accessToken!
-                )
             },
             failure: { (error) in
-                    self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
+                self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! An error occured while loading provider from database ...")
             }
         )
     }

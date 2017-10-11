@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     let spfSessionRequestSuccessNotifierId = "sessionUpdated"
     let spfSessionRequestCanceledNotifierId = "sessionFail"
     let spfSessionPlaylistLoadCompletedNotifierId = "loadPlaylistCompleted"
+    let spfCachePlaylistLoadCompletedNotifierId = "loadCachePlaylistCompleted"
     let spfSecretPropertyListFile = "Keys"
 
     var window: UIWindow?

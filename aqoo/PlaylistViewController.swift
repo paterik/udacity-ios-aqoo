@@ -16,8 +16,8 @@ class PlaylistViewController:   BaseViewController,
                                 UITableViewDelegate {
     
     let _defaultStreamingProviderTag: String = "_spotify"
-    var _defaultStreamingProvider: CoreStreamingProvider?
     
+    var _defaultStreamingProvider: CoreStreamingProvider?
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
     var _playListProvider: CoreStreamingProvider?
@@ -34,6 +34,12 @@ class PlaylistViewController:   BaseViewController,
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadPlaylist),
             name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadExtendedPlaylist),
+            name: NSNotification.Name(rawValue: appDelegate.spfCachePlaylistLoadCompletedNotifierId),
             object: nil
         )
     }
@@ -56,14 +62,14 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
         
-        return _playlistsInCloud.count
+        return _playlistsInDb.count
     }
     
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let list = _playlistsInCloud[indexPath.row]
+        let list = _playlistsInDb[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "playListItem", for: indexPath) 
         
         cell.detailTextLabel?.text = list.name
