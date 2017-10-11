@@ -44,12 +44,12 @@ extension LoginViewController {
         return UINavigationController(rootViewController: webView)
     }
     
-    func updateAfterCancelLogin() {
+    @objc func updateAfterCancelLogin() {
         
-        self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
+        self.presentedViewController?.dismiss(animated: true, completion: { self.setupUILoginControls() })
     }
     
-    func updateAfterSuccessLogin(_ notification: NSNotification?) {
+    @objc func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
         if appDelegate.isSpotifyTokenValid() {
             
@@ -67,7 +67,7 @@ extension LoginViewController {
             )
         }
         
-        self.presentedViewController?.dismiss(animated: true, completion: { _ in self.setupUILoginControls() })
+        self.presentedViewController?.dismiss(animated: true, completion: { self.setupUILoginControls() })
     }
     
     func setupUILoginControls() {

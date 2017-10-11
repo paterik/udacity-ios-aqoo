@@ -26,6 +26,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaLastListenedAt: Date?
     @NSManaged var metaMarkedAsFavorite: Bool
     @NSManaged var metaNumberOfShares: Int64
+    @NSManaged var metaNumberOfUpdates: Int64
     
     @NSManaged var provider: CoreStreamingProvider?
     

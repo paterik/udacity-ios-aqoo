@@ -13,7 +13,7 @@ import CryptoSwift
 
 extension PlaylistViewController {
     
-    func setupUILoadPlaylist() {
+    @objc func setupUILoadPlaylist() {
         
         print ("\nI've found \(_playlistsInCloud.count) playlists for current user\n")
         print ("==\n")
@@ -23,6 +23,8 @@ extension PlaylistViewController {
             print ("uri: \(item.playableUri!)")
             print ("\n--\n")
         }
+        
+        // store playlist in db
         
         tableView.reloadData()
     }
@@ -37,9 +39,8 @@ extension PlaylistViewController {
     
     func handleNewUserPlaylistSession() {
         
-        _loadProvider("_spotify")
-        _loadPlaylists(_streamingProvider!)
-        
+        // load spotify default provider tag (spotify)
+        synchronizePlaylists( _defaultStreamingProviderTag )
     }
     
     func _handlePlaylistGetNextPage(_ currentPage: SPTListPage, _ accessToken: String) {
@@ -99,11 +100,17 @@ extension PlaylistViewController {
         )
     }
     
-    func _loadPlaylists (_ provider: CoreStreamingProvider) {
-    
+    func loadPlaylists (_ provider: CoreStreamingProvider) {
+
+        let providerName = provider.name
+        
+        print ("_ load cached playlists for provider [\(providerName)]")
+        
         CoreStore.perform(
             
             asynchronous: { (transaction) -> [StreamPlayList]? in
+    
+                self._defaultStreamingProvider = provider
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>(),
@@ -116,15 +123,24 @@ extension PlaylistViewController {
                 
                 if transactionPlaylists?.isEmpty == false {
                     
+                    print ("_ some playlist data for provider [\(providerName)] available ...")
+                    
                     // store database fetch results in cache collection
                     self._playlistsInDb = transactionPlaylists!
                     
-                    // now fetch new playlists from api into new collection
-                    self._handlePlaylistGetFirstPage(
-                        self.appDelegate.spfUsername,
-                        self.appDelegate.spfCurrentSession!.accessToken!
-                    )
+                } else {
+                    
+                    print ("_ no cached playlist data for provider [\(providerName)] found ...")
+                    
+                    // clean previously cached playlist collection
+                    self._playlistsInDb = []
                 }
+                
+                // always fetch new playlists from api for upcoming sync
+                self._handlePlaylistGetFirstPage(
+                    self.appDelegate.spfUsername,
+                    self.appDelegate.spfCurrentSession!.accessToken!
+                )
             },
             
             failure: { (error) in
@@ -136,6 +152,7 @@ extension PlaylistViewController {
     func _getPlayListFromDbByHash(_ hash: String) -> StreamPlayList? {
         
         for playList in _playlistsInDb {
+            
             if playList.metaListHash == hash {
                 return playList
             }
@@ -144,27 +161,64 @@ extension PlaylistViewController {
         return nil
     }
     
-    func _updatePlaylists() {
+    func synchronizePlaylists(_ provider: String) {
+        
+        print ("_ try to synchronize playlists for provider [\(provider)] ...")
+        
+        loadProvider ( provider )
         
         for playListInCloud in _playlistsInCloud {
+            
+            print ("-> \(playListInCloud.playableUri)")
+            
          
             // 1.) check for hashed uri as identifier for both (equal) entries / local- and remote list
             if let playListInDb = _getPlayListFromDbByHash( playListInCloud.playableUri.absoluteString.md5() ) {
             
-                print ("found db counterPart of [\(playListInCloud.playableUri)] in DB as [\(playListInDb)]")
+                print ("_ found db counterPart of [\(playListInCloud.getMD5FingerPrint())] in DB as [\(playListInDb.getMD5FingerPrint())]")
                 
-                // 2.) check for fingerprint changeSet in list
-                // _validateListForChanges(playListInDb, playListInCloud)
+                // 2.) check for fingerprint changeSet in local playlist
+                if validateListForChanges(playListInDb, playListInCloud) == true {
+                
+                    // 3.) update local playlist by primary propertySets (name, trackCount, isPublic and isCollaborative)
+                    CoreStore.perform(
+                        asynchronous: { (transaction) -> Void in
+                            let _playlist = transaction.fetchOne(
+                                 From<StreamPlayList>(),
+                                 Where("metaListHash", isEqualTo: playListInDb.metaListHash)
+                            )
+                            
+                            if  _playlist != nil {
+                                _playlist!.name = playListInCloud.name
+                                _playlist!.trackCount = Int64(playListInCloud.trackCount)
+                                _playlist!.isCollaborative = playListInCloud.isCollaborative
+                                _playlist!.isPublic = playListInCloud.isPublic
+                                _playlist!.metaNumberOfUpdates += 1
+                                _playlist!.updatedAt = Date()
+                            }
+                        },
+                        completion: { _ in }
+                    )
+                }
+                
+            } else {
+                
+                print ("_ no counterPart of [\(playListInCloud.getMD5FingerPrint())] found in db")
+                
             }
         }
     }
     
-    func _validateListForChanges(_ playListInDb: StreamPlayList, _ playListInCloud: SPTPartialPlaylist) -> Bool {
+    func validateListForChanges(
+       _ playListInDb: StreamPlayList,
+       _ playListInCloud: SPTPartialPlaylist) -> Bool {
 
-        return playListInDb.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint()
+        return playListInDb.getMD5FingerPrint() != playListInCloud.getMD5FingerPrint()
     }
     
-    func _loadProvider (_ tag: String) {
+    func loadProvider (_ tag: String) {
+        
+        print ("_ try to load provider [\(tag)]")
         
         CoreStore.perform(
             
@@ -177,7 +231,9 @@ extension PlaylistViewController {
                 if transactionProvider == nil {
                     self._handleErrorAsDialogMessage("Error Loading Provider", "Oops! No provider were found in database ...")
                 }   else {
-                    self._streamingProvider = transactionProvider!
+                    
+                    print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
+                    self.loadPlaylists ( transactionProvider! )
                 }
             },
             

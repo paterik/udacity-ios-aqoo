@@ -70,7 +70,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
             
             self.authViewController = self.getAuthViewController(withURL: appDelegate.spfLoginUrl!)
             self.definesPresentationContext = true
-            self.present(self.authViewController!, animated: true, completion: { _ in })
+            self.present(self.authViewController!, animated: true)
         }
     }
     

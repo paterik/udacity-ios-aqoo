@@ -100,7 +100,7 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
      - parameter into: the `Into` clause indicating the destination `NSManagedObject` or `CoreStoreObject` entity type and the destination configuration
      - returns: a new `NSManagedObject` or `CoreStoreObject` instance of the specified entity type.
      */
-    public override func create<T: DynamicObject>(_ into: Into<T>) -> T {
+    public override func create<T>(_ into: Into<T>) -> T {
         
         CoreStore.assert(
             !self.isCommitted,
@@ -133,7 +133,7 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
      - parameter objectID: the `NSManagedObjectID` for the object to be edited
      - returns: an editable proxy for the specified `NSManagedObject` or `CoreStoreObject`.
      */
-    public override func edit<T: DynamicObject>(_ into: Into<T>, _ objectID: NSManagedObjectID) -> T? {
+    public override func edit<T>(_ into: Into<T>, _ objectID: NSManagedObjectID) -> T? {
         
         CoreStore.assert(
             !self.isCommitted,
@@ -203,10 +203,10 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
         self.isCommitted = true
         let group = DispatchGroup()
         group.enter()
-        self.context.saveAsynchronouslyWithCompletion { (result) -> Void in
+        self.context.saveAsynchronouslyWithCompletion { (hasChanges, error) -> Void in
             
-            completion(result.0, result.1)
-            self.result = result
+            completion(hasChanges, error)
+            self.result = (hasChanges, error)
             group.leave()
         }
         group.wait()
@@ -227,12 +227,15 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
             !self.isCommitted,
             "Attempted to commit a \(cs_typeName(self)) more than once."
         )
-        self.autoCommit { (result) in
+        self.autoCommit { (hasChanges, error) in
             
-            switch result {
+            if let error = error {
                 
-            case (let hasChanges, nil): completion(SaveResult(hasChanges: hasChanges))
-            case (_, let error?):       completion(SaveResult(error))
+                completion(SaveResult(error))
+            }
+            else {
+                
+                completion(SaveResult(hasChanges: hasChanges))
             }
         }
     }
@@ -267,9 +270,9 @@ public final class AsynchronousDataTransaction: BaseDataTransaction {
         }
         switch childTransaction.result {
             
-        case nil:                       return nil
-        case (let hasChanges, nil)?:    return SaveResult(hasChanges: hasChanges)
-        case (_, let error?)?:          return SaveResult(error)
+        case .none:                         return nil
+        case .some(let hasChanges, nil):    return SaveResult(hasChanges: hasChanges)
+        case .some(_, let error?):          return SaveResult(error)
         }
     }
 }

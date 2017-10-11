@@ -37,12 +37,12 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         self.webView.loadRequest(initialRequest)
     }
     
-    func done() {
+    @objc func done() {
         
         print ("\n_done ... exit the webView\n")
         
         self.delegate?.webViewControllerDidFinish(self)
-        self.presentingViewController?.dismiss(animated: true, completion: { _ in })
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {

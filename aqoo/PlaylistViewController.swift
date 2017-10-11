@@ -15,8 +15,9 @@ class PlaylistViewController:   BaseViewController,
                                 UITableViewDataSource,
                                 UITableViewDelegate {
     
-    let _streamingProviderTag: String = "_spotify"
-    var _streamingProvider: CoreStreamingProvider?
+    let _defaultStreamingProviderTag: String = "_spotify"
+    var _defaultStreamingProvider: CoreStreamingProvider?
+    
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
     
@@ -48,8 +49,8 @@ class PlaylistViewController:   BaseViewController,
             
             handleNewUserPlaylistSession()
             
-            print("\ndbg: session => \(appDelegate.spfCurrentSession!.accessToken!)")
-            print("dbg: username => \(appDelegate.spfUsername)\n")
+       
+            
         }
     }
     

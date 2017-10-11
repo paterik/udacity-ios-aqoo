@@ -16,6 +16,7 @@
         <attribute name="metaListHash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="metaMarkedAsFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfShares" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaNumberOfUpdates" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playableURI" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,6 +27,6 @@
     </entity>
     <elements>
         <element name="CoreStreamingProvider" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="270"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="285"/>
     </elements>
 </model>

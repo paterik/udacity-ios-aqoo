@@ -1,25 +1,24 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '10.0'
+platform :ios, '10.3'
 use_frameworks!
+inhibit_all_warnings!
 
 def aq_ui
     pod 'BGTableViewRowActionWithImage'
-    pod 'YNDropDownMenu'
     pod 'FoldingCell'
-    pod 'Hero'
-    pod 'SCLAlertView'
-    pod 'SnapKit', '~> 3.2.0'
+    pod 'SnapKit'
 end
 
 def aq_base
-    pod 'CryptoSwift', '<= 0.6.9'
-    pod 'Kingfisher', '~> 3.0'
+    pod 'CryptoSwift'
+    pod 'Kingfisher', '~> 4.0.1'
     pod 'Spotify-iOS-SDK'
+    pod 'Reachability'
 end
 
 def aq_data
-    pod 'CoreStore', '~> 4.0'
+    pod 'CoreStore', :git => 'https://github.com/JohnEstropia/CoreStore.git', :branch => 'prototype/Swift_4_0'
 end
 
 target 'aqoo' do

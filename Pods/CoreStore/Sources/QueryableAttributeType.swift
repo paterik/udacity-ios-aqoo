@@ -64,7 +64,7 @@ public protocol QueryableAttributeType: Hashable, SelectResultType {
     /**
      The `CoreDataNativeType` for this type when used in `Select` clauses.
      */
-    associatedtype QueryableNativeType: CoreDataNativeType
+    associatedtype QueryableNativeType
     
     /**
      The `NSAttributeType` for this type when used in `Select` clauses.
@@ -111,7 +111,7 @@ extension Bool: QueryableAttributeType {
     @inline(__always)
     public func cs_toQueryableNativeType() -> QueryableNativeType {
         
-        return self as NSNumber
+        return self as QueryableNativeType
     }
 }
 
@@ -133,7 +133,7 @@ extension CGFloat: QueryableAttributeType {
     @inline(__always)
     public func cs_toQueryableNativeType() -> QueryableNativeType {
         
-        return self as NSNumber
+        return self as QueryableNativeType
     }
 }
 
@@ -155,7 +155,7 @@ extension Data: QueryableAttributeType {
     @inline(__always)
     public func cs_toQueryableNativeType() -> QueryableNativeType {
         
-        return self as NSData
+        return self as QueryableNativeType
     }
 }
 
@@ -342,7 +342,11 @@ extension NSData: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSData
     
-    public static let cs_rawAttributeType: NSAttributeType = .binaryDataAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .binaryDataAttributeType
+    }
     
     @nonobjc @inline(__always)
     public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
@@ -369,7 +373,11 @@ extension NSDate: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSDate
     
-    public static let cs_rawAttributeType: NSAttributeType = .dateAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .dateAttributeType
+    }
     
     @nonobjc @inline(__always)
     public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
@@ -407,7 +415,11 @@ extension NSManagedObjectID: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSManagedObjectID
     
-    public static let cs_rawAttributeType: NSAttributeType = .objectIDAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .objectIDAttributeType
+    }
     
     @nonobjc @inline(__always)
     public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
@@ -434,12 +446,21 @@ extension NSNull: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSNull
     
-    public static let cs_rawAttributeType: NSAttributeType = .undefinedAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .undefinedAttributeType
+    }
     
     @nonobjc @inline(__always)
-    public static func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
+    public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
         
-        return self.init()
+        @inline(__always)
+        func forceCast<T: NSNull>(_ value: Any) -> T? {
+            
+            return value as? T
+        }
+        return forceCast(value)
     }
     
     @nonobjc @inline(__always)
@@ -456,6 +477,7 @@ extension NSNumber: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSNumber
     
+    @objc
     public class var cs_rawAttributeType: NSAttributeType {
         
         return .integer64AttributeType
@@ -486,7 +508,11 @@ extension NSString: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSString
     
-    public static let cs_rawAttributeType: NSAttributeType = .stringAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .stringAttributeType
+    }
     
     @nonobjc @inline(__always)
     public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
@@ -513,10 +539,14 @@ extension NSURL: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSString
     
-    public static let cs_rawAttributeType: NSAttributeType = .stringAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .stringAttributeType
+    }
     
     @nonobjc @inline(__always)
-    public static func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
+    public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
         
         return self.init(string: value as String)
     }
@@ -535,10 +565,14 @@ extension NSUUID: QueryableAttributeType {
     
     public typealias QueryableNativeType = NSString
     
-    public static let cs_rawAttributeType: NSAttributeType = .stringAttributeType
+    @nonobjc
+    public class var cs_rawAttributeType: NSAttributeType {
+        
+        return .stringAttributeType
+    }
     
     @nonobjc @inline(__always)
-    public static func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
+    public class func cs_fromQueryableNativeType(_ value: QueryableNativeType) -> Self? {
         
         return self.init(uuidString: value.lowercased)
     }
@@ -568,7 +602,7 @@ extension String: QueryableAttributeType {
     @inline(__always)
     public func cs_toQueryableNativeType() -> QueryableNativeType {
         
-        return self as NSString
+        return self as QueryableNativeType
     }
 }
 

@@ -111,7 +111,7 @@ public enum ValueContainer<O: CoreStoreObject> {
          - parameter affectedByKeyPaths: a set of key paths for properties whose values affect the value of the receiver. This is similar to `NSManagedObject.keyPathsForValuesAffectingValue(forKey:)`.
          */
         public init(
-            _ keyPath: KeyPath,
+            _ keyPath: RawKeyPath,
             initial: @autoclosure @escaping () -> V,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -124,7 +124,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             self.keyPath = keyPath
             self.isIndexed = isIndexed
             self.isTransient = isTransient
-            self.defaultValue = { initial().cs_toImportableNativeType() }
+            self.defaultValue = { initial().cs_toQueryableNativeType() }
             self.versionHashModifier = versionHashModifier
             self.renamingIdentifier = renamingIdentifier
             self.customGetter = customGetter
@@ -153,8 +153,8 @@ public enum ValueContainer<O: CoreStoreObject> {
                         
                         return customGetter(PartialObject<O>(object.rawObject!))
                     }
-                    return V.cs_fromImportableNativeType(
-                        object.rawObject!.value(forKey: self.keyPath)! as! V.ImportableNativeType
+                    return V.cs_fromQueryableNativeType(
+                        object.rawObject!.value(forKey: self.keyPath)! as! V.QueryableNativeType
                     )!
                 }
             }
@@ -179,7 +179,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                         return customSetter(PartialObject<O>(object.rawObject!), newValue)
                     }
                     return object.rawObject!.setValue(
-                        newValue.cs_toImportableNativeType(),
+                        newValue.cs_toQueryableNativeType(),
                         forKey: self.keyPath
                     )
                 }
@@ -194,7 +194,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             return V.cs_rawAttributeType
         }
         
-        public let keyPath: KeyPath
+        public let keyPath: RawKeyPath
         
         internal let isOptional = false
         internal let isIndexed: Bool
@@ -221,7 +221,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                     rawObject.didAccessValue(forKey: keyPath)
                 }
                 let value = customGetter(PartialObject<O>(rawObject))
-                return value.cs_toImportableNativeType()
+                return value.cs_toQueryableNativeType()
             }
         }
         
@@ -242,7 +242,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                 }
                 customSetter(
                     PartialObject<O>(rawObject),
-                    V.cs_fromImportableNativeType(newValue as! V.ImportableNativeType)!
+                    V.cs_fromQueryableNativeType(newValue as! V.QueryableNativeType)!
                 )
             }
         }
@@ -256,9 +256,9 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         // MARK: Deprecated
         
-        @available(*, deprecated: 3.1, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
+        @available(*, deprecated: 3.2, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
         public convenience init(
-            _ keyPath: KeyPath,
+            _ keyPath: RawKeyPath,
             `default`: @autoclosure @escaping () -> V,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -338,7 +338,7 @@ public enum ValueContainer<O: CoreStoreObject> {
          - parameter affectedByKeyPaths: a set of key paths for properties whose values affect the value of the receiver. This is similar to `NSManagedObject.keyPathsForValuesAffectingValue(forKey:)`.
          */
         public init(
-            _ keyPath: KeyPath,
+            _ keyPath: RawKeyPath,
             initial: @autoclosure @escaping () -> V? = nil,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -351,7 +351,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             self.keyPath = keyPath
             self.isIndexed = isIndexed
             self.isTransient = isTransient
-            self.defaultValue = { initial()?.cs_toImportableNativeType() }
+            self.defaultValue = { initial()?.cs_toQueryableNativeType() }
             self.versionHashModifier = versionHashModifier
             self.renamingIdentifier = renamingIdentifier
             self.customGetter = customGetter
@@ -380,8 +380,8 @@ public enum ValueContainer<O: CoreStoreObject> {
                         
                         return customGetter(PartialObject<O>(object.rawObject!))
                     }
-                    return (object.rawObject!.value(forKey: self.keyPath) as! V.ImportableNativeType?)
-                        .flatMap(V.cs_fromImportableNativeType)
+                    return (object.rawObject!.value(forKey: self.keyPath) as! V.QueryableNativeType?)
+                        .flatMap(V.cs_fromQueryableNativeType)
                 }
             }
             set {
@@ -405,7 +405,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                         return customSetter(PartialObject<O>(object.rawObject!), newValue)
                     }
                     object.rawObject!.setValue(
-                        newValue?.cs_toImportableNativeType(),
+                        newValue?.cs_toQueryableNativeType(),
                         forKey: self.keyPath
                     )
                 }
@@ -420,7 +420,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             return V.cs_rawAttributeType
         }
         
-        public let keyPath: KeyPath
+        public let keyPath: RawKeyPath
         internal let isOptional = true
         internal let isIndexed: Bool
         internal let isTransient: Bool
@@ -446,7 +446,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                     rawObject.didAccessValue(forKey: keyPath)
                 }
                 let value = customGetter(PartialObject<O>(rawObject))
-                return value?.cs_toImportableNativeType()
+                return value?.cs_toQueryableNativeType()
             }
         }
         
@@ -467,7 +467,7 @@ public enum ValueContainer<O: CoreStoreObject> {
                 }
                 customSetter(
                     PartialObject<O>(rawObject),
-                    (newValue as! V.ImportableNativeType?).flatMap(V.cs_fromImportableNativeType)
+                    (newValue as! V.QueryableNativeType?).flatMap(V.cs_fromQueryableNativeType)
                 )
             }
         }
@@ -481,10 +481,10 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         // MARK: Deprecated
         
-        @available(*, deprecated: 3.1, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
+        @available(*, deprecated: 3.2, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
         public convenience init(
-            _ keyPath: KeyPath,
-            `default`: @autoclosure @escaping () -> V?,
+            _ keyPath: RawKeyPath,
+            `default`: @autoclosure @escaping () -> V? = nil,
             isIndexed: Bool = false,
             isTransient: Bool = false,
             versionHashModifier: @autoclosure @escaping () -> String? = nil,
@@ -541,7 +541,7 @@ extension ValueContainer.Required {
      animal.species.value = anotherAnimal.species.value
      ```
      */
-    public static func .= <O2: CoreStoreObject>(_ property: ValueContainer<O>.Required<V>, _ property2: ValueContainer<O2>.Required<V>) {
+    public static func .= <O2>(_ property: ValueContainer<O>.Required<V>, _ property2: ValueContainer<O2>.Required<V>) {
         
         property.value = property2.value
     }
@@ -634,7 +634,7 @@ extension ValueContainer.Optional {
      animal.nickname.value = anotherAnimal.nickname.value
      ```
      */
-    public static func .= <O2: CoreStoreObject>(_ property: ValueContainer<O>.Optional<V>, _ property2: ValueContainer<O2>.Optional<V>) {
+    public static func .= <O2>(_ property: ValueContainer<O>.Optional<V>, _ property2: ValueContainer<O2>.Optional<V>) {
         
         property.value = property2.value
     }
@@ -649,7 +649,7 @@ extension ValueContainer.Optional {
      animal.nickname.value = anotherAnimal.species.value
      ```
      */
-    public static func .= <O2: CoreStoreObject>(_ property: ValueContainer<O>.Optional<V>, _ property2: ValueContainer<O2>.Required<V>) {
+    public static func .= <O2>(_ property: ValueContainer<O>.Optional<V>, _ property2: ValueContainer<O2>.Required<V>) {
         
         property.value = property2.value
     }
