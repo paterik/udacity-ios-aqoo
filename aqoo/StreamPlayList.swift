@@ -13,7 +13,7 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var name: String
     @NSManaged var owner: String
-    @NSManaged var trackCount: Int64
+    @NSManaged var trackCount: Int32
     @NSManaged var playableURI: String
     @NSManaged var smallestImage: Data?
     @NSManaged var largestImage: Data?
@@ -33,7 +33,7 @@ class StreamPlayList: NSManagedObject {
     func getMD5FingerPrint() -> String {
     
         return String(
-            format: "%@:%d:%@:%@",
+            format: "%@:%D:%@:%@",
             self.name,
             self.trackCount,
             "\(self.isPublic)",
