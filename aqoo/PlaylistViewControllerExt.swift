@@ -13,22 +13,23 @@ import CryptoSwift
 
 extension PlaylistViewController {
     
-    
     @objc func setupUILoadExtendedPlaylists() {
         
-        CoreStore.perform(
-            asynchronous: { (transaction) -> Void in
-                
-                let orphanPlaylist = transaction.fetchOne(
-                    From<StreamPlayList>(),
-                    Where("metaListHash", isEqualTo: "0cd5d06886e530653ab2fadeb2628538")
-                )
-                
-                transaction.delete(orphanPlaylist)
-            },
+        handlePlaylistDbCacheOrphans()
+        
+        if let _playListCache = CoreStore.fetchAll(
+            From<StreamPlayList>(),
+            Where("provider", isEqualTo: _defaultStreamingProvider) &&
+            Where("owner", isEqualTo: self.appDelegate.spfUsername)) {
             
-            completion: { _ in }
-        )
+            print ("--------------------------------------------------")
+            print ("\(_playListHashesInCloud.count) playlists in cloud")
+            print ("\(_playListHashesInDb.count) playlists in db")
+            print ("--------------------------------------------------")
+            
+           _playlistsInDb = _playListCache
+            print ("cache: (re)evaluated, tableView will be refreshed now ...")
+        }
         
         tableView.reloadData()
     }
@@ -38,7 +39,7 @@ extension PlaylistViewController {
         var _playListHash: String!
             _playListHashesInDb = []
             _playListHashesInCloud = []
-            _playListHashesInCloudToRemove = []
+            _playListHashesInCloudRemoved = []
         
         print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n==\n")
 
@@ -137,6 +138,40 @@ extension PlaylistViewController {
          return String( format: "%@:%@", playListPlayableUri, playListOwner).md5()
     }
     
+    func handlePlaylistDbCacheOrphans () {
+        
+        if let _playListCache = CoreStore.fetchAll(
+            From<StreamPlayList>(),
+            Where("provider", isEqualTo: self._defaultStreamingProvider) &&
+            Where("owner", isEqualTo: self.appDelegate.spfUsername)
+        ) {
+            
+            for (_, playlist) in _playListCache.enumerated() {
+                
+                // ignore all known / identical playlists
+                if  self._playListHashesInCloud.contains(playlist.metaListHash) {
+                    self._playListHashesInDb.append(playlist.metaListHash); continue
+                }
+            
+                // kill all obsolete/orphan cache entries
+                print ("cache: playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
+                CoreStore.perform(
+                    asynchronous: { (transaction) -> Void in
+                        let orphanPlaylist = transaction.fetchOne(
+                            From<StreamPlayList>(),
+                            Where("metaListHash", isEqualTo: playlist.metaListHash)
+                        );  transaction.delete(orphanPlaylist)
+                    },
+                    
+                    completion: { _ in
+                        self._playListHashesInCloudRemoved.append(playlist.metaListHash)
+                        print ("cache: playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                    }
+                )
+            }
+        }
+    }
+    
     func handlePlaylistDbCache (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
@@ -167,7 +202,7 @@ extension PlaylistViewController {
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
                     _playlistInDb!.name = playListInCloud.name
-                    _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
+                    _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playlistInDb!.isPublic = playListInCloud.isPublic
                     _playlistInDb!.metaLastListenedAt = nil
@@ -189,12 +224,12 @@ extension PlaylistViewController {
                  
                     if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
-                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> INGORED (no changes evaluated)")
+                        print ("cache: playlist data hash [\(_playlistInDb!.name)] handled -> IGNORED")
                         
                     } else {
                         
                         _playlistInDb!.name = playListInCloud.name
-                        _playlistInDb!.trackCount = Int64(playListInCloud.trackCount)
+                        _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playlistInDb!.isPublic = playListInCloud.isPublic
                         _playlistInDb!.metaNumberOfUpdates += 1
@@ -213,26 +248,7 @@ extension PlaylistViewController {
                 // evaluate list extension completion and execute event signal after final cache item was handled
                 if playListIndex == self._playlistsInCloud.count - 1 {
                     
-                    if let playListCache = CoreStore.fetchAll(
-                        From<StreamPlayList>(),
-                        Where("provider", isEqualTo: self._defaultStreamingProvider) &&
-                        Where("owner", isEqualTo: self.appDelegate.spfUsername)
-                    ) {
-                        
-                        for (_, playlist) in playListCache.enumerated() {
-                            
-                            if  self._playListHashesInCloud.contains(playlist.metaListHash) == false {
-                                print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] orphan flagged for removal")
-                                self._playListHashesInCloudToRemove.append(playlist.metaListHash)
-                            }   else {
-                                self._playListHashesInDb.append(playlist.metaListHash)
-                            }
-                        }
-                        
-                        self._playlistsInDb = playListCache
-                    }
-                    
-                    print ("cache: playlist orphan scan finished, send signal to reload tableView now ...")
+                    print ("cache: playlist data analytics completed, send signal to reload tableView now ...")
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
                         object: self
@@ -246,9 +262,8 @@ extension PlaylistViewController {
         
         let providerName = provider.name
 
-        print ("_ load cached playlists for provider [\(providerName)]")
-
         // always fetch new playlists from api for upcoming sync
+        print ("_ load and synchronize playlists for provider [\(providerName)]")
         self.handlePlaylistGetFirstPage(
             self.appDelegate.spfUsername,
             self.appDelegate.spfCurrentSession!.accessToken!
