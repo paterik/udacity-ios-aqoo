@@ -6,9 +6,8 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
-import Foundation
-import Spotify
 import UIKit
+import Spotify
 
 class SpotifyClient: NSObject {
     
@@ -59,7 +58,7 @@ class SpotifyClient: NSObject {
                 
                 if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
                     spfAuth.redirectURL = URL(string: spfCallbackURL)
-                    if debugMode == true { print ("_dbg [init]: using spotify callBackURL => \(spfCallbackURL)\n") }
+                    if debugMode == true { print ("_dbg [init]: using spotify callBackURL => \(spfCallbackURL)") }
                 }
             }
         }
