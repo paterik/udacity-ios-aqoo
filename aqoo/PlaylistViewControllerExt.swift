@@ -15,7 +15,8 @@ extension PlaylistViewController {
     
     @objc func setupUILoadExtendedPlaylists() {
         
-        handlePlaylistDbCacheOrphans()
+        
+        
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>().where(
                     (\StreamPlayList.owner == appDelegate.spfUsername) &&
@@ -38,13 +39,9 @@ extension PlaylistViewController {
     
     @objc func setupUILoadCloudPlaylists() {
         
-        var _playListHash: String!
-            _playListHashesInDb = []
-            _playListHashesInCloud = []
-            _playListHashesInCloudRemoved = []
+        var _playListHash: String!; _playListHashesInCloud = [] ; _playListHashesInDb = []
         
         print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n==\n")
-
         for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
             
             _playListHash = self.getMetaListHashByParam (
@@ -166,8 +163,11 @@ extension PlaylistViewController {
                     },
                     
                     completion: { _ in
-                        self._playListHashesInCloudRemoved.append(playlist.metaListHash)
                         print ("cache: playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+                            object: self
+                        )
                     }
                 )
             }
@@ -247,7 +247,7 @@ extension PlaylistViewController {
                 
                 // evaluate list extension completion and execute event signal after final cache item was handled
                 if playListIndex == self._playlistsInCloud.count - 1 {
-                    
+                    self.handlePlaylistDbCacheOrphans()
                     print ("cache: playlist data analytics completed, send signal to reload tableView now ...")
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
