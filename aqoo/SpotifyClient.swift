@@ -53,12 +53,12 @@ class SpotifyClient: NSObject {
                 
                 if let spfClientId = dict["spfClientId"] as? String {
                     spfAuth.clientID = spfClientId
-                    if debugMode == true { print ("_dbg [init]: using spotify clientId => \(spfClientId)") }
+                    if debugMode == true { print ("dbg [init] : using spotify clientId => \(spfClientId)") }
                 }
                 
                 if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
                     spfAuth.redirectURL = URL(string: spfCallbackURL)
-                    if debugMode == true { print ("_dbg [init]: using spotify callBackURL => \(spfCallbackURL)") }
+                    if debugMode == true { print ("dbg [init] : using spotify callBackURL => \(spfCallbackURL)") }
                 }
             }
         }
@@ -95,10 +95,9 @@ class SpotifyClient: NSObject {
         
         let storage = HTTPCookieStorage.shared
         
+        SPTAuth.defaultInstance().session = nil
         spfIsLoggedIn = false
         spfCurrentSession = nil
-        
-        SPTAuth.defaultInstance().session = nil
         
         for cookie: HTTPCookie in storage.cookies! {
             

@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     let spfSessionRequestCanceledNotifierId = "sessionFail"
     let spfSessionPlaylistLoadCompletedNotifierId = "loadPlaylistCompleted"
     let spfCachePlaylistLoadCompletedNotifierId = "loadCachePlaylistCompleted"
+    
+    let providerFixtureData = [
+        ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (will be default)"),
+        ("SoundCloud", "_soundcloud", false, "our soundcloud streaming provider (not implemented yet)"),
+        ("MixCloud", "_mixcloud", false, "our mixcloud streaming provider (not implemented yet)"),
+    ]
 
     var window: UIWindow?
     
@@ -98,10 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             asynchronous: { (transaction) -> [StreamProvider]? in
                 
                 return transaction.fetchAll(
-                    
-                    From<StreamProvider>().where(
-                        (\StreamProvider.isActive == true)
-                    )
+                    From<StreamProvider>().where((\StreamProvider.isActive == true))
                 )
             },
             
@@ -114,17 +117,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             
             failure: { (error) in
                 
-                print ("dbg: error while fetching streaming providers from db \(error.localizedDescription)")
+                print ("dbg [init] : error while fetching streaming providers from db \(error.localizedDescription)")
             }
         )
     }
-    
-    let providerFixtureData = [
-    
-        ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (will be default)"),
-        ("SoundCloud", "_soundcloud", false, "our soundcloud streaming provider (not implemented yet)"),
-        ("MixCloud", "_mixcloud", false, "our mixcloud streaming provider (not implemented yet)"),
-    ]
     
     internal func loadProviderFixtures() {
         

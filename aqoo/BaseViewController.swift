@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
     // MARK: Base Constants
     //
     
-    let appDebugMode: Bool = true
+    let debugMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let segueIdentPlayListPage = "showAllUserPlaylists"

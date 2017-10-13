@@ -23,13 +23,16 @@ extension PlaylistViewController {
             )
         {
             
-            print ("--------------------------------------------------")
-            print ("\(_playListHashesInCloud.count) playlists in cloud")
-            print ("\(_playListHashesInDb.count) playlists in db")
-            print ("--------------------------------------------------")
+            if debugMode == true {
+                
+                print ("cache: (re)evaluated, tableView will be refreshed now ...")
+                print ("--------------------------------------------------")
+                print ("\(_playListHashesInCloud.count) playlists in cloud")
+                print ("\(_playListHashesInDb.count) playlists in db")
+                print ("--------------------------------------------------")
+            }
             
            _playlistsInDb = _playListCache
-            print ("cache: (re)evaluated, tableView will be refreshed now ...")
         }
         
         tableView.reloadData()
@@ -39,7 +42,7 @@ extension PlaylistViewController {
         
         var _playListHash: String!; _playListHashesInCloud = [] ; _playListHashesInDb = []
         
-        print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n==\n")
+        if debugMode == true { print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n") }
         for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
             
             _playListHash = self.getMetaListHashByParam (
@@ -47,11 +50,14 @@ extension PlaylistViewController {
                 spotifyClient.spfUsername
             )
             
-            print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
-            print ("name: \(playListInCloud.name!)")
-            print ("uri: \(playListInCloud.playableUri!)")
-            print ("hash: \(_playListHash!) (aqoo identifier)")
-            print ("\n--\n")
+            if debugMode == true {
+                
+                print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
+                print ("name: \(playListInCloud.name!)")
+                print ("uri: \(playListInCloud.playableUri!)")
+                print ("hash: \(_playListHash!) (aqoo identifier)")
+                print ("\n--\n")
+            }
             
             handlePlaylistDbCache (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
@@ -82,13 +88,15 @@ extension PlaylistViewController {
         
         if spotifyClient.isSpotifyTokenValid() {
             
-            print ("_ try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
-            loadProvider ( spotifyClient.spfStreamingProviderDbTag )
+            if debugMode == true {
+                print ("dbg [playlists] : try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
+            };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
             
-            print ("_ oops, your cloudProviderToken is not valid anymore")
-            btnExitLandingPageAction( self )
+            if debugMode == true {
+                print ("dbg [playlists] : oops, your cloudProviderToken is not valid anymore")
+            };  btnExitLandingPageAction( self )
         }
     }
     
@@ -173,8 +181,12 @@ extension PlaylistViewController {
                 }
             
                 // kill all obsolete/orphan cache entries
-                print ("cache: playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
+                if debugMode == true {
+                    print ("cache: playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
+                }
+                
                 CoreStore.perform(
+                    
                     asynchronous: { (transaction) -> Void in
                         let orphanPlaylist = transaction.fetchOne(
                             From<StreamPlayList>().where((\StreamPlayList.metaListHash == playlist.metaListHash))
@@ -182,7 +194,11 @@ extension PlaylistViewController {
                     },
                     
                     completion: { _ in
-                        print ("cache: playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                        
+                        if self.debugMode == true {
+                            print ("cache: playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                        }
+                        
                         NotificationCenter.default.post(
                             name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
                             object: self
@@ -236,14 +252,18 @@ extension PlaylistViewController {
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
                     
-                    print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> CREATED")
+                    if self.debugMode == true {
+                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> CREATED")
+                    }
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
                 } else {
                  
                     if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
-                        print ("cache: playlist data hash [\(_playlistInDb!.name)] handled -> IGNORED")
+                        if self.debugMode == true {
+                            print ("cache: playlist data hash [\(_playlistInDb!.name)] handled, no changes detected‚ -> IGNORED")
+                        }
                         
                     } else {
                         
@@ -254,7 +274,9 @@ extension PlaylistViewController {
                         _playlistInDb!.metaNumberOfUpdates += 1
                         _playlistInDb!.updatedAt = Date()
                         
-                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
+                        if self.debugMode == true {
+                            print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
+                        }
                     }
                 }
             },
@@ -266,8 +288,13 @@ extension PlaylistViewController {
                 
                 // evaluate list extension completion and execute event signal after final cache item was handled
                 if playListIndex == self._playlistsInCloud.count - 1 {
+                    
                     self.handlePlaylistDbCacheOrphans()
-                    print ("cache: playlist data analytics completed, send signal to reload tableView now ...")
+                    
+                    if self.debugMode == true {
+                        print ("cache: playlist data persistence completed, send signal to reload tableView now ...")
+                    }
+                    
                     NotificationCenter.default.post(
                         name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
                         object: self
@@ -282,7 +309,10 @@ extension PlaylistViewController {
         let providerName = provider.name
 
         // always fetch new playlists from api for upcoming sync
-        print ("_ load and synchronize playlists for provider [\(providerName)]")
+        if debugMode == true {
+            print ("dbg [playlists] : load and synchronize playlists for provider [\(providerName)]")
+        
+        }
         self.handlePlaylistGetFirstPage(
             self.spotifyClient.spfUsername,
             self.spotifyClient.spfCurrentSession!.accessToken!
@@ -307,14 +337,16 @@ extension PlaylistViewController {
                 if transactionPlaylists?.isEmpty == false {
                     
                     // store database fetch results in cache collection
-                    self._playlistsInDb = transactionPlaylists!
-                    print ("_ \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
+                    if self.debugMode == true {
+                        print ("dbg [playlists] : \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
+                    };  self._playlistsInDb = transactionPlaylists!
                     
                 } else {
                     
                     // clean previously cached playlist collection
-                    self._playlistsInDb = []
-                    print ("_ no cached playlist data for provider [\(providerName)] found ...")
+                    if self.debugMode == true {
+                        print ("dbg [playlists] : no cached playlist data for provider [\(providerName)] found ...")
+                    };  self._playlistsInDb = []
                 }
             },
             
@@ -329,7 +361,7 @@ extension PlaylistViewController {
     
     func loadProvider (_ tag: String) {
         
-        print ("_ try to load provider [\(tag)]")
+        if self.debugMode == true { print ("dbg [playlists] : try to load provider [\(tag)]") }
         
         CoreStore.perform(
             
@@ -341,8 +373,10 @@ extension PlaylistViewController {
             success: { (transactionProvider) in
                 
                 if transactionProvider != nil {
+                    if self.debugMode == true {
+                        print ("dbg [playlists] : provider [\(tag)] successfully loaded, fetching playlists now")
+                    }
                     
-                    print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
                     self.spotifyClient.spfStreamingProvider = transactionProvider!
                     self.loadProviderPlaylists ( self.spotifyClient.spfStreamingProvider! )
                     
