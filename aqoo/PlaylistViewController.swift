@@ -57,7 +57,7 @@ class PlaylistViewController:   BaseViewController,
             // call API :: instantiate new playlist request
             //
             
-            handleNewUserPlaylistSession()
+            handlePlaylistCloudRefresh()
         }
     }
     
@@ -84,12 +84,7 @@ class PlaylistViewController:   BaseViewController,
     
     @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
         
-        print ("REFRESH PLAYLIST")
-        
-        NotificationCenter.default.post(
-            name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
-            object: self
-        )
+        handlePlaylistCloudRefresh()
         
     }
     

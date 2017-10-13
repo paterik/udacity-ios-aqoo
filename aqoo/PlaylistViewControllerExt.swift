@@ -67,7 +67,7 @@ extension PlaylistViewController {
     
     func setupUIMainMenuView() { }
     
-    func handleNewUserPlaylistSession() {
+    func handlePlaylistCloudRefresh() {
         
         print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
         loadProvider ( _defaultStreamingProviderTag )
