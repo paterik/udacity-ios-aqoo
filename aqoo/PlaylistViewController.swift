@@ -15,14 +15,17 @@ class PlaylistViewController:   BaseViewController,
                                 UITableViewDataSource,
                                 UITableViewDelegate {
     
-    let _defaultStreamingProviderTag: String = "_spotify"
+    //
+    // MARK: Class Special Constants
+    //
     
-    var _defaultStreamingProvider: StreamProvider?
+    let spotifyClient = SpotifyClient.sharedInstance
+    
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
     var _playListHashesInDb = [String]()
     var _playListHashesInCloud = [String]()
-    var _playListProvider: StreamProvider?
+    var _defaultStreamingProvider: StreamProvider?
     
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!

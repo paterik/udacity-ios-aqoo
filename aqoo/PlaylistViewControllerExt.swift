@@ -17,7 +17,7 @@ extension PlaylistViewController {
         
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>().where(
-                    (\StreamPlayList.owner == appDelegate.spfUsername) &&
+                    (\StreamPlayList.owner == spotifyClient.spfUsername) &&
                     (\StreamPlayList.provider == _defaultStreamingProvider)
                 )
             )
@@ -44,7 +44,7 @@ extension PlaylistViewController {
             
             _playListHash = self.getMetaListHashByParam (
                 playListInCloud.playableUri.absoluteString,
-                appDelegate.spfUsername
+                spotifyClient.spfUsername
             )
             
             print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
@@ -53,7 +53,7 @@ extension PlaylistViewController {
             print ("hash: \(_playListHash!) (aqoo identifier)")
             print ("\n--\n")
             
-            handlePlaylistDbCache (playListInCloud, playlistIndex, _defaultStreamingProviderTag)
+            handlePlaylistDbCache (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
     }
     
@@ -80,10 +80,10 @@ extension PlaylistViewController {
     
     func handlePlaylistCloudRefresh() {
         
-        if appDelegate.isSpotifyTokenValid() {
+        if spotifyClient.isSpotifyTokenValid() {
             
-            print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
-            loadProvider ( _defaultStreamingProviderTag )
+            print ("_ try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
+            loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
             
@@ -160,7 +160,7 @@ extension PlaylistViewController {
         
         if let _playListCache = CoreStore.defaultStack.fetchAll(
             From<StreamPlayList>().where(
-                (\StreamPlayList.owner == appDelegate.spfUsername) &&
+                (\StreamPlayList.owner == spotifyClient.spfUsername) &&
                 (\StreamPlayList.provider == _defaultStreamingProvider)
             )
         ) {
@@ -208,7 +208,7 @@ extension PlaylistViewController {
                 // render hash for new playlist entry
                 _playListHash = self.getMetaListHashByParam (
                     playListInCloud.playableUri.absoluteString,
-                    self.appDelegate.spfUsername
+                    self.spotifyClient.spfUsername
                 )
                 
                 // we've a corresponding (given) playlist entry in db? Check this entry again and prepare for update
@@ -231,7 +231,7 @@ extension PlaylistViewController {
                     _playlistInDb!.metaMarkedAsFavorite = false
                     _playlistInDb!.metaListHash = _playListHash
                     _playlistInDb!.createdAt = Date()
-                    _playlistInDb!.owner = self.appDelegate.spfUsername
+                    _playlistInDb!.owner = self.spotifyClient.spfUsername
                     _playlistInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
@@ -284,8 +284,8 @@ extension PlaylistViewController {
         // always fetch new playlists from api for upcoming sync
         print ("_ load and synchronize playlists for provider [\(providerName)]")
         self.handlePlaylistGetFirstPage(
-            self.appDelegate.spfUsername,
-            self.appDelegate.spfCurrentSession!.accessToken!
+            self.spotifyClient.spfUsername,
+            self.spotifyClient.spfCurrentSession!.accessToken!
         )
         
         CoreStore.perform(
@@ -296,7 +296,7 @@ extension PlaylistViewController {
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>().where(
-                        (\StreamPlayList.owner == self.appDelegate.spfUsername) &&
+                        (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
                         (\StreamPlayList.provider == provider)
                     )
                 )
@@ -343,8 +343,8 @@ extension PlaylistViewController {
                 if transactionProvider != nil {
                     
                     print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
-                    self._playListProvider = transactionProvider!
-                    self.loadProviderPlaylists ( self._playListProvider! )
+                    self.spotifyClient.spfStreamingProvider = transactionProvider!
+                    self.loadProviderPlaylists ( self.spotifyClient.spfStreamingProvider! )
                     
                 }   else {
                     

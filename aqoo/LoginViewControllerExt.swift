@@ -13,7 +13,7 @@ extension LoginViewController {
 
     func renewTokenAndShowLandingPage() {
         
-        appDelegate.spfAuth.renewSession(appDelegate.spfCurrentSession) { error, session in
+        appDelegate.spfAuth.renewSession(spotifyClient.spfCurrentSession) { error, session in
             
             SPTAuth.defaultInstance().session = session
             if error != nil {
@@ -53,7 +53,7 @@ extension LoginViewController {
     
     @objc func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
-        if appDelegate.isSpotifyTokenValid() {
+        if spotifyClient.isSpotifyTokenValid() {
             
             //
             // application entry point during development
@@ -74,17 +74,17 @@ extension LoginViewController {
     
     func setupUILoginControls() {
         
-        let _tokenIsValid = appDelegate.isSpotifyTokenValid()
+        let _tokenIsValid = spotifyClient.isSpotifyTokenValid()
         
         btnSpotifyLogin.isEnabled =  _tokenIsValid
         btnSpotifyLogin.isEnabled = !_tokenIsValid
         
         lblSpotifySessionStatus.text = "NOT CONNECTED"
         imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusLocked_v1")
-        appDelegate.spfIsLoggedIn = false
+        spotifyClient.spfIsLoggedIn = false
         
         if _tokenIsValid == true {
-            appDelegate.spfIsLoggedIn = true
+            spotifyClient.spfIsLoggedIn = true
             lblSpotifySessionStatus.text = "CONNECTED"
             imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusConnected_v1")
         }

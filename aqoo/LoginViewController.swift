@@ -18,6 +18,12 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     
     var authViewController: UIViewController?
     
+    //
+    // MARK: Class Special Constants
+    //
+    
+    let spotifyClient = SpotifyClient.sharedInstance
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -41,10 +47,9 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         setupUILoginControls() 
     
-        if appDelegate.isSpotifyTokenValid() {
+        if spotifyClient.isSpotifyTokenValid() {
 
             lblSpotifySessionStatus.text = "CONNECTED"
-            
             showLandingPage()
         
         } else {
@@ -52,7 +57,6 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
             if appDelegate.spfAuth.hasTokenRefreshService {
         
                 lblSpotifySessionStatus.text = "REFRESH TOKEN"
-                
                 renewTokenAndShowLandingPage() 
             }
         }
@@ -76,7 +80,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     
     @IBAction func btnSpotifyLogoutAction(_ sender: Any) {
         
-        appDelegate.closeSpotifySession()
+        spotifyClient.closeSpotifySession()
     }
 }
 
