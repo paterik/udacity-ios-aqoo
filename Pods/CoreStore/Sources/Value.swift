@@ -35,7 +35,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      The containing type for value propertiess. `Value` properties support any type that conforms to `ImportableAttributeType`.
      ```
      class Animal: CoreStoreObject {
-         let species = Value.Required<String>("species")
+         let species = Value.Required<String>("species", initial: "")
          let nickname = Value.Optional<String>("nickname")
          let color = Transformable.Optional<UIColor>("color")
      }
@@ -52,7 +52,7 @@ public extension DynamicObject where Self: CoreStoreObject {
  The containing type for value properties. Use the `DynamicObject.Value` typealias instead for shorter syntax.
  ```
  class Animal: CoreStoreObject {
-     let species = Value.Required<String>("species")
+     let species = Value.Required<String>("species", initial: "")
      let nickname = Value.Optional<String>("nickname")
      let color = Transformable.Optional<UIColor>("color")
  }
@@ -66,7 +66,7 @@ public enum ValueContainer<O: CoreStoreObject> {
      The containing type for required value properties. Any type that conforms to `ImportableAttributeType` are supported.
      ```
      class Animal: CoreStoreObject {
-         let species = Value.Required<String>("species")
+         let species = Value.Required<String>("species", initial: "")
          let nickname = Value.Optional<String>("nickname")
          let color = Transformable.Optional<UIColor>("color")
      }
@@ -80,9 +80,10 @@ public enum ValueContainer<O: CoreStoreObject> {
          ```
          class Person: CoreStoreObject {
              let title = Value.Required<String>("title", initial: "Mr.")
-             let name = Value.Required<String>("name")
+             let name = Value.Required<String>("name", initial: "")
              let displayName = Value.Required<String>(
                  "displayName",
+                 initial: "",
                  isTransient: true,
                  customGetter: Person.getName(_:)
              )
@@ -111,7 +112,7 @@ public enum ValueContainer<O: CoreStoreObject> {
          - parameter affectedByKeyPaths: a set of key paths for properties whose values affect the value of the receiver. This is similar to `NSManagedObject.keyPathsForValuesAffectingValue(forKey:)`.
          */
         public init(
-            _ keyPath: RawKeyPath,
+            _ keyPath: KeyPathString,
             initial: @autoclosure @escaping () -> V,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -194,7 +195,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             return V.cs_rawAttributeType
         }
         
-        public let keyPath: RawKeyPath
+        public let keyPath: KeyPathString
         
         internal let isOptional = false
         internal let isIndexed: Bool
@@ -258,7 +259,7 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         @available(*, deprecated: 3.2, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
         public convenience init(
-            _ keyPath: RawKeyPath,
+            _ keyPath: KeyPathString,
             `default`: @autoclosure @escaping () -> V,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -289,7 +290,7 @@ public enum ValueContainer<O: CoreStoreObject> {
      The containing type for optional value properties. Any type that conforms to `ImportableAttributeType` are supported.
      ```
      class Animal: CoreStoreObject {
-         let species = Value.Required<String>("species")
+         let species = Value.Required<String>("species", initial: "")
          let nickname = Value.Optional<String>("nickname")
          let color = Transformable.Optional<UIColor>("color")
      }
@@ -338,7 +339,7 @@ public enum ValueContainer<O: CoreStoreObject> {
          - parameter affectedByKeyPaths: a set of key paths for properties whose values affect the value of the receiver. This is similar to `NSManagedObject.keyPathsForValuesAffectingValue(forKey:)`.
          */
         public init(
-            _ keyPath: RawKeyPath,
+            _ keyPath: KeyPathString,
             initial: @autoclosure @escaping () -> V? = nil,
             isIndexed: Bool = false,
             isTransient: Bool = false,
@@ -420,7 +421,7 @@ public enum ValueContainer<O: CoreStoreObject> {
             return V.cs_rawAttributeType
         }
         
-        public let keyPath: RawKeyPath
+        public let keyPath: KeyPathString
         internal let isOptional = true
         internal let isIndexed: Bool
         internal let isTransient: Bool
@@ -483,7 +484,7 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         @available(*, deprecated: 3.2, renamed: "init(_:initial:isIndexed:isTransient:versionHashModifier:renamingIdentifier:customGetter:customSetter:affectedByKeyPaths:)")
         public convenience init(
-            _ keyPath: RawKeyPath,
+            _ keyPath: KeyPathString,
             `default`: @autoclosure @escaping () -> V? = nil,
             isIndexed: Bool = false,
             isTransient: Bool = false,

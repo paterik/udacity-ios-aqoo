@@ -92,7 +92,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      let person = CoreStore.fetchOne(From<Person>(), Person.where { $0.nickname == "John" })
      ```
      */
-    public static func `where`(_ condition: (Self) -> Where) -> Where  {
+    public static func `where`(_ condition: (Self) -> Where<Self>) -> Where<Self>  {
         
         return condition(self.meta)
     }
@@ -103,7 +103,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      let person = CoreStore.fetchAll(From<Person>(), Person.orderBy(ascending: { $0.age }))
      ```
      */
-    public static func orderBy<O, V>(ascending attribute: (Self) -> ValueContainer<O>.Required<V>) -> OrderBy  {
+    public static func orderBy<O, V>(ascending attribute: (Self) -> ValueContainer<O>.Required<V>) -> OrderBy<Self>  {
         
         return OrderBy(.ascending(attribute(self.meta).keyPath))
     }
@@ -114,7 +114,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      let person = CoreStore.fetchAll(From<Person>(), Person.orderBy(ascending: { $0.age }))
      ```
      */
-    public static func orderBy<O, V>(ascending attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy  {
+    public static func orderBy<O, V>(ascending attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy<Self>  {
         
         return OrderBy(.ascending(attribute(self.meta).keyPath))
     }
@@ -125,7 +125,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      let person = CoreStore.fetchAll(From<Person>(), Person.orderBy(descending: { $0.age }))
      ```
      */
-    public static func orderBy<O, V>(descending attribute: (Self) -> ValueContainer<O>.Required<V>) -> OrderBy  {
+    public static func orderBy<O, V>(descending attribute: (Self) -> ValueContainer<O>.Required<V>) -> OrderBy<Self>  {
         
         return OrderBy(.descending(attribute(self.meta).keyPath))
     }
@@ -136,22 +136,7 @@ public extension DynamicObject where Self: CoreStoreObject {
      let person = CoreStore.fetchAll(From<Person>(), Person.orderBy(descending: { $0.age }))
      ```
      */
-    public static func orderBy<O, V>(descending attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy  {
-        
-        return OrderBy(.descending(attribute(self.meta).keyPath))
-    }
-    
-    
-    // MARK: Deprecated
-    
-    @available(*, deprecated, renamed: "orderBy(ascending:)")
-    public static func ascending<O, V>(_ attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy  {
-        
-        return OrderBy(.ascending(attribute(self.meta).keyPath))
-    }
-    
-    @available(*, deprecated, renamed: "orderBy(descending:)")
-    public static func descending<O, V>(_ attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy  {
+    public static func orderBy<O, V>(descending attribute: (Self) -> ValueContainer<O>.Optional<V>) -> OrderBy<Self>  {
         
         return OrderBy(.descending(attribute(self.meta).keyPath))
     }
@@ -169,7 +154,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func == (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func == (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return Where(attribute.keyPath, isEqualTo: value)
     }
@@ -181,7 +166,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func != (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func != (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return !Where(attribute.keyPath, isEqualTo: value)
     }
@@ -193,7 +178,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func < (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func < (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return Where("%K < %@", attribute.keyPath, value)
     }
@@ -205,7 +190,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func > (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func > (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return Where("%K > %@", attribute.keyPath, value)
     }
@@ -217,7 +202,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func <= (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func <= (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return Where("%K <= %@", attribute.keyPath, value)
     }
@@ -229,7 +214,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func >= (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where {
+    public static func >= (_ attribute: ValueContainer<O>.Required<V>, _ value: V) -> Where<O> {
         
         return Where("%K >= %@", attribute.keyPath, value)
     }
@@ -241,7 +226,7 @@ public extension ValueContainer.Required {
      ```
      */
     @inline(__always)
-    public static func ~= <S: Sequence>(_ sequence: S, _ attribute: ValueContainer<O>.Required<V>) -> Where where S.Iterator.Element == V {
+    public static func ~= <S: Sequence>(_ sequence: S, _ attribute: ValueContainer<O>.Required<V>) -> Where<O> where S.Iterator.Element == V {
         
         return Where(attribute.keyPath, isMemberOf: sequence)
     }
@@ -259,7 +244,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func == (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func == (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         return Where(attribute.keyPath, isEqualTo: value)
     }
@@ -271,7 +256,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func != (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func != (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         return !Where(attribute.keyPath, isEqualTo: value)
     }
@@ -283,7 +268,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func < (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func < (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         if let value = value {
             
@@ -302,7 +287,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func > (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func > (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         if let value = value {
             
@@ -321,7 +306,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func <= (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func <= (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         if let value = value {
             
@@ -340,7 +325,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func >= (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where {
+    public static func >= (_ attribute: ValueContainer<O>.Optional<V>, _ value: V?) -> Where<O> {
         
         if let value = value {
             
@@ -359,7 +344,7 @@ public extension ValueContainer.Optional {
      ```
      */
     @inline(__always)
-    public static func ~= <S: Sequence>(_ sequence: S, _ attribute: ValueContainer<O>.Optional<V>) -> Where where S.Iterator.Element == V {
+    public static func ~= <S: Sequence>(_ sequence: S, _ attribute: ValueContainer<O>.Optional<V>) -> Where<O> where S.Iterator.Element == V {
         
         return Where(attribute.keyPath, isMemberOf: sequence)
     }
@@ -377,7 +362,7 @@ public extension RelationshipContainer.ToOne {
      ```
      */
     @inline(__always)
-    public static func == (_ relationship: RelationshipContainer<O>.ToOne<D>, _ object: D?) -> Where {
+    public static func == (_ relationship: RelationshipContainer<O>.ToOne<D>, _ object: D?) -> Where<O> {
         
         return Where(relationship.keyPath, isEqualTo: object)
     }
@@ -389,21 +374,9 @@ public extension RelationshipContainer.ToOne {
      ```
      */
     @inline(__always)
-    public static func != (_ relationship: RelationshipContainer<O>.ToOne<D>, _ object: D?) -> Where {
+    public static func != (_ relationship: RelationshipContainer<O>.ToOne<D>, _ object: D?) -> Where<O> {
         
         return !Where(relationship.keyPath, isEqualTo: object)
-    }
-    
-    /**
-     Creates a `Where` clause from a `CoreStoreObject.Relationship` property.
-     ```
-     let dog = CoreStore.fetchOne(From<Dog>(), Dog.where { $0.master ~= me })
-     ```
-     */
-    @inline(__always)
-    public static func ~= (_ relationship: RelationshipContainer<O>.ToOne<D>, _ object: D?) -> Where {
-        
-        return Where(relationship.keyPath, isEqualTo: object)
     }
     
     /**
@@ -413,7 +386,7 @@ public extension RelationshipContainer.ToOne {
      ```
      */
     @inline(__always)
-    public static func ~= <S: Sequence>(_ sequence: S, _ relationship: RelationshipContainer<O>.ToOne<D>) -> Where where S.Iterator.Element == D {
+    public static func ~= <S: Sequence>(_ sequence: S, _ relationship: RelationshipContainer<O>.ToOne<D>) -> Where<O> where S.Iterator.Element == D {
         
         return Where(relationship.keyPath, isMemberOf: sequence)
     }

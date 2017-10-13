@@ -1,6 +1,6 @@
 {
   "name": "CoreStore",
-  "version": "4.1.3",
+  "version": "5.0.0",
   "license": "MIT",
   "summary": "Unleashing the real power of Core Data with the elegance and safety of Swift",
   "homepage": "https://github.com/JohnEstropia/CoreStore",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/JohnEstropia/CoreStore.git",
-    "tag": "4.1.3"
+    "tag": "5.0.0"
   },
   "platforms": {
     "ios": "8.0",

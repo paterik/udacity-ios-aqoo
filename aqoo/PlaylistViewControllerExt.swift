@@ -16,11 +16,13 @@ extension PlaylistViewController {
     @objc func setupUILoadExtendedPlaylists() {
         
         handlePlaylistDbCacheOrphans()
-        
         if let _playListCache = CoreStore.fetchAll(
-            From<StreamPlayList>(),
-            Where("provider", isEqualTo: _defaultStreamingProvider) &&
-            Where("owner", isEqualTo: self.appDelegate.spfUsername)) {
+                From<StreamPlayList>().where(
+                    (\StreamPlayList.owner == appDelegate.spfUsername) &&
+                    (\StreamPlayList.provider == _defaultStreamingProvider)
+                )
+            )
+        {
             
             print ("--------------------------------------------------")
             print ("\(_playListHashesInCloud.count) playlists in cloud")
@@ -140,10 +142,11 @@ extension PlaylistViewController {
     
     func handlePlaylistDbCacheOrphans () {
         
-        if let _playListCache = CoreStore.fetchAll(
-            From<StreamPlayList>(),
-            Where("provider", isEqualTo: self._defaultStreamingProvider) &&
-            Where("owner", isEqualTo: self.appDelegate.spfUsername)
+        if let _playListCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayList>().where(
+                (\StreamPlayList.owner == appDelegate.spfUsername) &&
+                (\StreamPlayList.provider == _defaultStreamingProvider)
+            )
         ) {
             
             for (_, playlist) in _playListCache.enumerated() {
@@ -158,8 +161,7 @@ extension PlaylistViewController {
                 CoreStore.perform(
                     asynchronous: { (transaction) -> Void in
                         let orphanPlaylist = transaction.fetchOne(
-                            From<StreamPlayList>(),
-                            Where("metaListHash", isEqualTo: playlist.metaListHash)
+                            From<StreamPlayList>().where((\StreamPlayList.metaListHash == playlist.metaListHash))
                         );  transaction.delete(orphanPlaylist)
                     },
                     
@@ -192,8 +194,7 @@ extension PlaylistViewController {
                 
                 // we've a corresponding (given) playlist entry in db? Check this entry again and prepare for update
                 _playlistInDb = transaction.fetchOne(
-                    From<StreamPlayList>(),
-                    Where("metaListHash", isEqualTo: _playListHash)
+                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListHash))
                 )
                 
                 // playlist cache entry in local db not available or not fetchable? Create a new one ...
@@ -213,8 +214,7 @@ extension PlaylistViewController {
                     _playlistInDb!.createdAt = Date()
                     _playlistInDb!.owner = self.appDelegate.spfUsername
                     _playlistInDb!.provider = transaction.fetchOne(
-                        From<StreamProvider>(),
-                        Where("tag", isEqualTo: providerTag)
+                        From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
                     
                     print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> CREATED")
@@ -276,9 +276,10 @@ extension PlaylistViewController {
                 self._defaultStreamingProvider = provider
                 
                 return transaction.fetchAll(
-                    From<StreamPlayList>(),
-                    Where("provider", isEqualTo: provider) &&
-                    Where("owner", isEqualTo: self.appDelegate.spfUsername)
+                    From<StreamPlayList>().where(
+                        (\StreamPlayList.owner == self.appDelegate.spfUsername) &&
+                        (\StreamPlayList.provider == provider)
+                    )
                 )
             },
             
@@ -314,7 +315,8 @@ extension PlaylistViewController {
         CoreStore.perform(
             
             asynchronous: { (transaction) -> StreamProvider? in
-                return transaction.fetchOne(From<StreamProvider>(), Where("tag", isEqualTo: tag))
+                
+                return transaction.fetchOne(From<StreamProvider>().where(\StreamProvider.tag == tag))
             },
             
             success: { (transactionProvider) in
