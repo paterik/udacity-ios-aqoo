@@ -15,8 +15,6 @@ extension PlaylistViewController {
     
     @objc func setupUILoadExtendedPlaylists() {
         
-        
-        
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>().where(
                     (\StreamPlayList.owner == appDelegate.spfUsername) &&
@@ -46,7 +44,7 @@ extension PlaylistViewController {
             
             _playListHash = self.getMetaListHashByParam (
                 playListInCloud.playableUri.absoluteString,
-                self.appDelegate.spfUsername
+                appDelegate.spfUsername
             )
             
             print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
@@ -65,12 +63,33 @@ extension PlaylistViewController {
         tableView.dataSource = self
     }
     
-    func setupUIMainMenuView() { }
+    func setupUIEventObserver() {
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadCloudPlaylists),
+            name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadExtendedPlaylists),
+            name: NSNotification.Name(rawValue: appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+            object: nil
+        )
+    }
     
     func handlePlaylistCloudRefresh() {
         
-        print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
-        loadProvider ( _defaultStreamingProviderTag )
+        if appDelegate.isSpotifyTokenValid() {
+            
+            print ("_ try to synchronize playlists for provider [\(_defaultStreamingProviderTag)] ...")
+            loadProvider ( _defaultStreamingProviderTag )
+            
+        } else {
+            
+            print ("_ oops, your cloudProviderToken is not valid anymore")
+            btnExitLandingPageAction( self )
+        }
     }
     
     func handlePlaylistGetNextPage(
@@ -258,7 +277,7 @@ extension PlaylistViewController {
         )
     }
     
-    func loadPlaylists (_ provider: StreamProvider) {
+    func loadProviderPlaylists (_ provider: StreamProvider) {
         
         let providerName = provider.name
 
@@ -325,7 +344,7 @@ extension PlaylistViewController {
                     
                     print ("_ provider [\(tag)] successfully loaded, now try to load cached playlists ...")
                     self._playListProvider = transactionProvider!
-                    self.loadPlaylists ( self._playListProvider! )
+                    self.loadProviderPlaylists ( self._playListProvider! )
                     
                 }   else {
                     

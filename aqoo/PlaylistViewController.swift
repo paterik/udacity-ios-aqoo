@@ -32,33 +32,13 @@ class PlaylistViewController:   BaseViewController,
         super.viewDidLoad()
         
         setupUITableView()
-        setupUIMainMenuView()
-        
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadCloudPlaylists),
-            name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadExtendedPlaylists),
-            name: NSNotification.Name(rawValue: appDelegate.spfCachePlaylistLoadCompletedNotifierId),
-            object: nil
-        )
+        setupUIEventObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        
-        if appDelegate.isSpotifyTokenValid() {
-            
-            //
-            // call API :: instantiate new playlist request
-            //
-            
-            handlePlaylistCloudRefresh()
-        }
+        handlePlaylistCloudRefresh()
     }
     
     func tableView(
@@ -85,9 +65,7 @@ class PlaylistViewController:   BaseViewController,
     @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
         
         handlePlaylistCloudRefresh()
-        
     }
-    
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
         
