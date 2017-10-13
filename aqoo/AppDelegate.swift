@@ -97,7 +97,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             
             asynchronous: { (transaction) -> [StreamProvider]? in
                 
-                return transaction.fetchAll(From<StreamProvider>())
+                return transaction.fetchAll(
+                    
+                    From<StreamProvider>().where(
+                        (\StreamProvider.isActive == true)
+                    )
+                )
             },
             
             success: { (transactionProvider) in
@@ -114,18 +119,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
         )
     }
     
+    let providerFixtureData = [
+    
+        ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (will be default)"),
+        ("SoundCloud", "_soundcloud", false, "our soundcloud streaming provider (not implemented yet)"),
+        ("MixCloud", "_mixcloud", false, "our mixcloud streaming provider (not implemented yet)"),
+    ]
+    
     internal func loadProviderFixtures() {
         
         CoreStore.perform(
             
             asynchronous: { ( transaction ) -> Void in
-                let provider = transaction.create(Into<StreamProvider>())
                 
-                provider.name = "Spotify"
-                provider.tag = "_spotify"
-                provider.isActive = true
-                provider.details = "our primary streaming provider for aqoo (will be default)"
-                
+                for (_providerName, _providerTag, _enabled, _description) in self.providerFixtureData {
+                    
+                    var provider = transaction.create(Into<StreamProvider>())
+                    
+                    provider.name = _providerName
+                    provider.tag = _providerTag
+                    provider.isActive = _enabled as Bool
+                    provider.details = _description
+                }
             },
             
             completion: { _ in }
