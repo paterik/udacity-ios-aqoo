@@ -24,7 +24,8 @@ class PlaylistViewController:   BaseViewController,
     var _playListHashesInCloud = [String]()
     var _playListProvider: StreamProvider?
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         
@@ -80,6 +81,18 @@ class PlaylistViewController:   BaseViewController,
         return cell
         
     }
+    
+    @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
+        
+        print ("REFRESH PLAYLIST")
+        
+        NotificationCenter.default.post(
+            name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+            object: self
+        )
+        
+    }
+    
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
         

@@ -25,33 +25,29 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         super.viewDidLoad()
         
-        let initialRequest = URLRequest(url: self.initialURL)
+        let initialRequest = URLRequest(url: initialURL)
         
-        self.webView = UIWebView(frame: self.view.bounds)
-        self.webView.delegate = self
-        self.webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webView = UIWebView(frame: view.bounds)
+        webView.delegate = self
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        self.view.addSubview(self.webView)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
+        view.addSubview(webView)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
-        self.webView.loadRequest(initialRequest)
+        webView.loadRequest(initialRequest)
     }
     
     @objc func done() {
         
-        print ("\n_done ... exit the webView\n")
-        
-        self.delegate?.webViewControllerDidFinish(self)
-        self.presentingViewController?.dismiss(animated: true)
+        delegate?.webViewControllerDidFinish(self)
+        presentingViewController?.dismiss(animated: true)
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         
-        print ("_webViewDidFinishLoad")
-        
         if !self.loadComplete {
             delegate?.webViewController?(self, didCompleteInitialLoad: true)
-            self.loadComplete = true
+            loadComplete = true
         }
     }
     
@@ -60,15 +56,14 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         if !self.loadComplete {
             
             delegate?.webViewController?(self, didCompleteInitialLoad: true)
-            self.loadComplete = true
+            loadComplete = true
         }
     }
     
     init(url URL: URL) {
         
         super.init(nibName: nil, bundle: nil)
-        self.initialURL = URL as URL!
-        
+        initialURL = URL as URL!
     }
     
     required init?(coder aDecoder: NSCoder) {

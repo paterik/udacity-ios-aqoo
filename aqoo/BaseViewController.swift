@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
     let appDebugMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    let segueIdentPlayListPage = "showPlaylists"
+    let segueIdentPlayListPage = "showAllUserPlaylists"
     
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     

@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var coreStreamingProvider = [StreamProvider]()
     
     func _setupProviderFixtures() {
-    
-        print ("_setupProviderFixtures()")
         
         CoreStore.perform(
             asynchronous: { ( transaction ) -> Void in
@@ -70,11 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             success: { (transactionProvider) in
                 
                 if  transactionProvider?.isEmpty == true {
-                    print ("_ no provider found, load fixtures now ...")
                     self._setupProviderFixtures()
                 }   else {
-                    
-                    print ("_ provider already set, using primary provider now!")
                     self.coreStreamingProvider = transactionProvider!
                 }
             },

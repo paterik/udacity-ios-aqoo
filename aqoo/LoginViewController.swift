@@ -61,7 +61,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     override var prefersStatusBarHidden: Bool { return true }
     
     @IBAction func btnSpotifyLoginAction(_ sender: SPTConnectButton) {
-        
+
         if SPTAuth.supportsApplicationAuthentication() {
             
             UIApplication.shared.open(appDelegate.spfLoginUrl!, options: [:], completionHandler: nil)

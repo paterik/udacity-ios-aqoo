@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nWJ-Hn-QuD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nWJ-Hn-QuD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+        </array>
+        <array key="HelveticaNeueExtras.ttc">
+            <string>HelveticaNeue-CondensedBold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--LoginViewController-->
         <scene sceneID="tne-QT-ifu">
@@ -88,43 +95,149 @@
                         <outlet property="btnSpotifyLogout" destination="MLR-7t-UEJ" id="SYU-fc-YAE"/>
                         <outlet property="imgSpotifyStatus" destination="uwS-dT-chU" id="6x4-dU-s4w"/>
                         <outlet property="lblSpotifySessionStatus" destination="YpM-Vm-Lqm" id="6Kp-zJ-CKU"/>
-                        <segue destination="FR7-Is-2GV" kind="show" identifier="showPlaylists" id="bJT-SF-nBR"/>
+                        <segue destination="CE7-dl-yvP" kind="show" identifier="showAllUserPlaylists" id="plG-tM-Kll"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="990" y="135"/>
+            <point key="canvasLocation" x="988" y="137"/>
         </scene>
-        <!--Playlist View Controller-->
-        <scene sceneID="qLS-Oo-eQi">
+        <!--Tab Bar Controller-->
+        <scene sceneID="c1N-0K-ZsT">
             <objects>
-                <tableViewController id="FR7-Is-2GV" customClass="PlaylistViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="8Rn-b2-0Da">
+                <tabBarController id="CE7-dl-yvP" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OE3-rj-o9C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="o5I-q9-HMB" kind="relationship" relationship="viewControllers" id="Bpw-Xb-F7k"/>
+                        <segue destination="n84-nc-JIa" kind="relationship" relationship="viewControllers" id="guo-qf-An3"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IfR-xN-7nG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1822" y="136"/>
+        </scene>
+        <!--NavigationControllerPLTableView-->
+        <scene sceneID="Pj4-6L-3m6">
+            <objects>
+                <navigationController id="o5I-q9-HMB" userLabel="NavigationControllerPLTableView" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPLTableView" id="QGJ-gX-pgr"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="99P-xc-4WF">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ldu-zH-OI7" kind="relationship" relationship="rootViewController" id="4hp-uP-c8C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iSO-dH-V8A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2698" y="-174"/>
+        </scene>
+        <!--PlaylistViewController-->
+        <scene sceneID="mFT-1S-YiT">
+            <objects>
+                <viewController title="PlaylistViewController" id="ldu-zH-OI7" customClass="PlaylistViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Myj-bt-a9Z"/>
+                        <viewControllerLayoutGuide type="bottom" id="mIb-J0-e2h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FT1-iZ-UFI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" id="EYm-xY-HeA" userLabel="ui_tableview_cell">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EYm-xY-HeA" id="1s6-kh-D9q">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Playlists" id="vBT-KK-rGM" userLabel="ui_nav_playlists_main">
+                        <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="btnRefreshPlaylistAction:" destination="ldu-zH-OI7" id="xdP-VV-JWT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="btnRefreshPlaylist" destination="Mbz-BF-aJM" id="mfo-iz-ttJ"/>
+                        <outlet property="tableView" destination="6bT-aE-8Bz" id="Ghm-fX-YmC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3561" y="-174"/>
+        </scene>
+        <!--NavigationControllerPLCellView-->
+        <scene sceneID="kdu-Z7-SaA">
+            <objects>
+                <navigationController id="n84-nc-JIa" userLabel="NavigationControllerPLCellView" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icnPLCellView" selectedImage="icnPLCellView" id="EQj-TX-Mv8"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gcC-nm-zsu">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="nVm-oZ-we2" kind="relationship" relationship="rootViewController" id="jEy-VO-Va0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aR7-6y-o5e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="559"/>
+        </scene>
+        <!--Playlists-->
+        <scene sceneID="eXE-b4-4LC">
+            <objects>
+                <collectionViewController id="nVm-oZ-we2" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wLf-Vh-9ib">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" id="Em4-AV-0A7">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Em4-AV-0A7" id="sPW-lk-mcc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cM5-ui-JhB">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7mc-Im-RL5">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="dataSource" destination="FR7-Is-2GV" id="A21-nc-80m"/>
-                            <outlet property="delegate" destination="FR7-Is-2GV" id="dhh-4n-4EC"/>
+                            <outlet property="dataSource" destination="nVm-oZ-we2" id="Sj1-O3-j06"/>
+                            <outlet property="delegate" destination="nVm-oZ-we2" id="UDk-zR-e7W"/>
                         </connections>
-                    </tableView>
-                    <connections>
-                        <outlet property="tableView" destination="8Rn-b2-0Da" id="9n5-S9-fib"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TQc-4I-ZMc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Playlists" id="zSr-jq-wUe" userLabel="ui_nav_playlists_main">
+                        <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="lpw-L7-3pj" userLabel="btnRefreshPlaylist">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fid-O6-mIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1849" y="136"/>
+            <point key="canvasLocation" x="3561" y="558"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k0q-vn-cbX">
@@ -132,7 +245,6 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="nWJ-Hn-QuD" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GUj-pt-ZgZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -146,6 +258,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icnPLCellView" width="25" height="25"/>
+        <image name="icnPLRefresh" width="25" height="25"/>
+        <image name="icnPLTableView" width="25" height="25"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
     </resources>
 </document>

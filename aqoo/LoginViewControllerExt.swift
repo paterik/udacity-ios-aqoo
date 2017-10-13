@@ -33,6 +33,8 @@ extension LoginViewController {
         // lets start with users playlistView
         //
         
+        print ("showLandingPage")
+        
         performSegue(withIdentifier: segueIdentPlayListPage, sender: self)
     }
     
