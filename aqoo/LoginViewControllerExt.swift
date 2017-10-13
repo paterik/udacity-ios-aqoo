@@ -13,7 +13,7 @@ extension LoginViewController {
 
     func renewTokenAndShowLandingPage() {
         
-        appDelegate.spfAuth.renewSession(spotifyClient.spfCurrentSession) { error, session in
+        spotifyClient.spfAuth.renewSession(spotifyClient.spfCurrentSession) { error, session in
             
             SPTAuth.defaultInstance().session = session
             if error != nil {

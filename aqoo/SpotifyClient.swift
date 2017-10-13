@@ -21,16 +21,20 @@ class SpotifyClient: NSObject {
     //
     // MARK: Constants (Special)
     //
-    
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    let debugMode: Bool = true
     
     //
     // MARK: Constants (Normal)
     //
     
-    let debugMode: Bool = true
     let spfSessionUserDefaultsKey: String = "SpotifySession"
     let spfStreamingProviderDbTag: String = "_spotify"
+    let spfSecretPropertyListFile = "Keys"
+    
+    //
+    // MARK: Variables
+    //
     
     var spfKeys: NSDictionary?
     var spfSession: SPTSession?
@@ -38,6 +42,30 @@ class SpotifyClient: NSObject {
     var spfStreamingProvider: StreamProvider?
     var spfIsLoggedIn: Bool = false
     var spfUsername: String = "unknown"
+    var spfLoginUrl: URL?
+    var spfAuth = SPTAuth()
+    
+    func initAPI() {
+        
+        // load api keys from special "Keys.plist" file (you have to generate one if you use this sources for your
+        // own app or you want to compile this app by yourself)
+        if let path = Bundle.main.path(forResource: spfSecretPropertyListFile, ofType: "plist") {
+            if let dict = NSDictionary(contentsOfFile: path) {
+                
+                if let spfClientId = dict["spfClientId"] as? String {
+                    spfAuth.clientID = spfClientId
+                    if debugMode == true { print ("_dbg [init]: using spotify clientId => \(spfClientId)") }
+                }
+                
+                if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
+                    spfAuth.redirectURL = URL(string: spfCallbackURL)
+                    if debugMode == true { print ("_dbg [init]: using spotify callBackURL => \(spfCallbackURL)\n") }
+                }
+            }
+        }
+        
+        _initAPIContext()
+    }
     
     func isSpotifyTokenValid() -> Bool {
         
@@ -48,7 +76,7 @@ class SpotifyClient: NSObject {
             
             let sessionDataObj = sessionObj as! Data
             
-            if  let _firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) {
+            if let _firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) {
                 if _firstTimeSession is SPTSession {
                     
                     spfCurrentSession = _firstTimeSession as? SPTSession
@@ -81,5 +109,26 @@ class SpotifyClient: NSObject {
                 storage.deleteCookie(cookie)
             }
         }
+    }
+    
+    internal func _initAPIContext() {
+        
+        spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
+        spfAuth.requestedScopes = [
+            SPTAuthStreamingScope,
+            SPTAuthPlaylistReadPrivateScope,
+            SPTAuthPlaylistReadCollaborativeScope,
+            SPTAuthPlaylistModifyPublicScope,
+            SPTAuthPlaylistModifyPrivateScope,
+            SPTAuthUserFollowModifyScope,
+            SPTAuthUserFollowReadScope,
+            SPTAuthUserLibraryReadScope,
+            SPTAuthUserLibraryModifyScope,
+            SPTAuthUserReadPrivateScope,
+            SPTAuthUserReadTopScope,
+            SPTAuthUserReadEmailScope
+        ]
+        
+        spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()
     }
 }

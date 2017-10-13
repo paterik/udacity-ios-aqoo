@@ -54,7 +54,7 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         } else {
             
-            if appDelegate.spfAuth.hasTokenRefreshService {
+            if spotifyClient.spfAuth.hasTokenRefreshService {
         
                 lblSpotifySessionStatus.text = "REFRESH TOKEN"
                 renewTokenAndShowLandingPage() 
@@ -68,11 +68,11 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
 
         if SPTAuth.supportsApplicationAuthentication() {
             
-            UIApplication.shared.open(appDelegate.spfLoginUrl!, options: [:], completionHandler: nil)
+            UIApplication.shared.open( spotifyClient.spfLoginUrl!, options: [:], completionHandler: nil)
             
         }   else {
             
-            self.authViewController = self.getAuthViewController(withURL: appDelegate.spfLoginUrl!)
+            self.authViewController = self.getAuthViewController(withURL: spotifyClient.spfLoginUrl!)
             self.definesPresentationContext = true
             self.present(self.authViewController!, animated: true)
         }

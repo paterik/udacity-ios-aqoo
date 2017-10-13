@@ -16,10 +16,21 @@ class PlaylistViewController:   BaseViewController,
                                 UITableViewDelegate {
     
     //
+    // MARK: Class IBOutlet definitions
+    //
+    
+    @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
+    
+    //
     // MARK: Class Special Constants
     //
     
     let spotifyClient = SpotifyClient.sharedInstance
+  
+    //
+    // MARK: Class Variables
+    //
     
     var _playlistsInCloud = [SPTPartialPlaylist]()
     var _playlistsInDb = [StreamPlayList]()
@@ -27,8 +38,9 @@ class PlaylistViewController:   BaseViewController,
     var _playListHashesInCloud = [String]()
     var _defaultStreamingProvider: StreamProvider?
     
-    @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
-    @IBOutlet weak var tableView: UITableView!
+    //
+    // MARK: Class Method Overloads
+    //
     
     override func viewDidLoad() {
         
@@ -43,6 +55,10 @@ class PlaylistViewController:   BaseViewController,
         super.viewWillAppear(animated)
         handlePlaylistCloudRefresh()
     }
+    
+    //
+    // MARK: Class Table Delegates
+    //
     
     func tableView(
        _ tableView: UITableView,
@@ -65,14 +81,16 @@ class PlaylistViewController:   BaseViewController,
         
     }
     
+    //
+    // MARK: Class IBAction Methods
+    //
+    
     @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
         
         handlePlaylistCloudRefresh()
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
-        
-        // closeSession()
         
         _ = self.navigationController!.popViewController(animated: true)
     }
