@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */; };
+		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
+		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
 		B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
@@ -50,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.release.xcconfig"; sourceTree = "<group>"; };
+		B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylists.swift; sourceTree = "<group>"; };
+		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
 		B181B06C1F717C8200F29E8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B181B06E1F717C9100F29E8C /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/aqoo-cpdybjroehrohedthosfkrarpbuw/Build/Products/Debug-iphonesimulator/Spotify-iOS-SDK/Spotify.framework"; sourceTree = "<group>"; };
 		B181B0701F717CA100F29E8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -128,6 +132,36 @@
 				670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B13D6EFC1F91B6AB00486487 /* _playlists */ = {
+			isa = PBXGroup;
+			children = (
+				B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */,
+			);
+			name = _playlists;
+			sourceTree = "<group>";
+		};
+		B13D6EFD1F91B6C500486487 /* _player */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = _player;
+			sourceTree = "<group>";
+		};
+		B13D6F001F91BD3D00486487 /* _events */ = {
+			isa = PBXGroup;
+			children = (
+				B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */,
+			);
+			name = _events;
+			sourceTree = "<group>";
+		};
+		B13D6F031F91BDC500486487 /* _session */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = _session;
 			sourceTree = "<group>";
 		};
 		B18989271F72B95000516A53 /* _login */ = {
@@ -248,6 +282,10 @@
 		B1D6A3921F90FE31006E1DBC /* spotify.com */ = {
 			isa = PBXGroup;
 			children = (
+				B13D6F001F91BD3D00486487 /* _events */,
+				B13D6EFD1F91B6C500486487 /* _player */,
+				B13D6EFC1F91B6AB00486487 /* _playlists */,
+				B13D6F031F91BDC500486487 /* _session */,
 				B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */,
 			);
 			name = spotify.com;
@@ -553,6 +591,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */,
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
@@ -562,6 +601,7 @@
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
 				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,
+				B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,

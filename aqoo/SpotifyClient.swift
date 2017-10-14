@@ -9,7 +9,7 @@
 import UIKit
 import Spotify
 
-class SpotifyClient: NSObject {
+class SpotifyClient: SPFClientPlaylists {
     
     //
     // MARK: Constants (Statics)
