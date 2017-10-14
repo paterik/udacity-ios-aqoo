@@ -17,6 +17,7 @@ class SPFClientPlaylists: NSObject {
     var playlistsInCache = [StreamPlayList]()
     var playListHashesInCloud = [String]()
     var playListHashesInCache = [String]()
+    var playListDefaultImage: UIImage?
     
     func handlePlaylistGetNextPage(
        _ currentPage: SPTListPage,

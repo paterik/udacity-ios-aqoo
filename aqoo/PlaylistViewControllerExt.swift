@@ -28,7 +28,7 @@ extension PlaylistViewController {
                 print ("cache: (re)evaluated, tableView will be refreshed now ...")
                 print ("--------------------------------------------------")
                 print ("\(spotifyClient.playListHashesInCloud.count) playlists in cloud")
-                print ("\(spotifyClient.playListHashesInCache.count) playlists in db")
+                print ("\(spotifyClient.playListHashesInCache.count) playlists in db/cache")
                 print ("--------------------------------------------------")
             }
             
@@ -56,6 +56,23 @@ extension PlaylistViewController {
                 
                 print ("\nlist: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
                 print ("name: \(playListInCloud.name!)")
+                print ("owner: \(playListInCloud.owner.canonicalUserName!)")
+                
+                print ("imagesCount: \(playListInCloud.images.count)")
+                
+                if playListInCloud.images.count > 0 {
+                    
+                    for (index, image) in playListInCloud.images.enumerated() {
+                        
+                        if  let _rawImage = image as? SPTImage {
+                            if  _rawImage.size != CGSize(width:0, height:0) {
+                                let _imageUrl = _rawImage.imageURL.absoluteString
+                                print ("image #\(index): \(_rawImage) -> \(_imageUrl)")
+                            }
+                        }
+                    }
+                }
+                
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListHash!) (aqoo identifier)")
                 print ("\n--")
@@ -69,6 +86,8 @@ extension PlaylistViewController {
     
         tableView.delegate = self
         tableView.dataSource = self
+        
+        spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
     
     func setupUIEventObserver() {
@@ -176,6 +195,7 @@ extension PlaylistViewController {
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
                     _playlistInDb!.name = playListInCloud.name
+                    _playlistInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playlistInDb!.isPublic = playListInCloud.isPublic
@@ -185,7 +205,7 @@ extension PlaylistViewController {
                     _playlistInDb!.metaMarkedAsFavorite = false
                     _playlistInDb!.metaListHash = _playListHash
                     _playlistInDb!.createdAt = Date()
-                    _playlistInDb!.owner = self.spotifyClient.spfUsername
+                    _playlistInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playlistInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
@@ -200,7 +220,7 @@ extension PlaylistViewController {
                     if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(_playlistInDb!.name)] handled, no changes detected‚ -> IGNORED")
+                            print ("cache: playlist data hash [\(_playlistInDb!.name)] handled -> NO_CHANGES")
                         }
                         
                     } else {

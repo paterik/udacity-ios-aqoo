@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import Kingfisher
 
 class SpotifyClient: SPFClientPlaylists {
     
@@ -41,6 +42,7 @@ class SpotifyClient: SPFClientPlaylists {
     var spfStreamingProvider: StreamProvider?
     var spfIsLoggedIn: Bool = false
     var spfUsername: String = "unknown"
+    var spfUserDefaultImage: UIImage?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
     
@@ -66,6 +68,27 @@ class SpotifyClient: SPFClientPlaylists {
         _initAPIContext()
     }
     
+    func getDefaultPlaylistImageByUserPhoto(_ session: SPTSession) {
+        
+        print ("dbg [session] : fetch current user image from session object and corresponding api call")
+        
+        spfUserDefaultImage = UIImage(named: "imgUITblPlaylistDefault_v1")
+        
+        SPTUser.requestCurrentUser(withAccessToken: session.accessToken, callback: {
+            
+            ( error, response ) in
+            
+            if  let _currentUser = response as? SPTUser {
+                ImageDownloader.default.downloadImage(with: _currentUser.largestImage.imageURL, options: [], progressBlock: nil) {
+                    
+                    (image, error, url, data) in
+                    print("Downloaded Image: \(image)")
+                    self.spfUserDefaultImage = image
+                }
+            }
+        })
+    }
+    
     func isSpotifyTokenValid() -> Bool {
         
         let userDefaults = UserDefaults.standard
@@ -83,7 +106,6 @@ class SpotifyClient: SPFClientPlaylists {
                     spfUsername = (spfCurrentSession?.canonicalUsername)!
                     
                     return spfIsLoggedIn
-                    
                 }
             }
         }
