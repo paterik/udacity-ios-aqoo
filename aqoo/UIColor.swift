@@ -23,4 +23,11 @@ extension UIColor {
         
         self.init(red: (netHex >> 16) & 0xff, green: (netHex >> 8) & 0xff, blue: netHex & 0xff)
     }
+    
+    static var random: UIColor {
+       
+        srand48(Int(arc4random()))
+        
+        return UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1.0)
+    }
 }
