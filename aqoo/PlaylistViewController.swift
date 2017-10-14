@@ -22,6 +22,8 @@ class PlaylistViewController:   BaseViewController,
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
+    let _supportedProviderTag = "_spotify"
+    
     //
     // MARK: Class Variables
     //

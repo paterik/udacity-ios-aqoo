@@ -45,7 +45,6 @@ extension PlaylistViewController {
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
         
-        if debugMode == true { print ("\n***\nAQOO found \(spotifyClient.playlistsInCloud.count) playlist(s) for current user\n***\n") }
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
             _playListHash = spotifyClient.getMetaListHashByParam (
@@ -55,11 +54,11 @@ extension PlaylistViewController {
             
             if debugMode == true {
                 
-                print ("list: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
+                print ("\nlist: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
                 print ("name: \(playListInCloud.name!)")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListHash!) (aqoo identifier)")
-                print ("\n--\n")
+                print ("\n--")
             }
             
             handlePlaylistDbCache (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
@@ -243,62 +242,6 @@ extension PlaylistViewController {
         )
     }
     
-    func loadProviderPlaylists (_ provider: StreamProvider) {
-        
-        let providerName = provider.name
-
-        
-        if debugMode == true {
-            print ("dbg [playlists] : load and synchronize playlists for provider [\(providerName)]")
-        }
-        
-        // always fetch new playlists from api for upcoming sync!
-        spotifyClient.handlePlaylistGetFirstPage(
-            spotifyClient.spfUsername,
-            spotifyClient.spfCurrentSession!.accessToken!
-        );
-        
-        CoreStore.perform(
-            
-            asynchronous: { (transaction) -> [StreamPlayList]? in
-                
-                self._defaultStreamingProvider = provider
-                
-                return transaction.fetchAll(
-                    From<StreamPlayList>().where(
-                        (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
-                        (\StreamPlayList.provider == provider)
-                    )
-                )
-            },
-            
-            success: { (transactionPlaylists) in
-                
-                if transactionPlaylists?.isEmpty == false {
-                    
-                    // store database fetch results in cache collection
-                    if self.debugMode == true {
-                        print ("dbg [playlists] : \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
-                    };  self.spotifyClient.playlistsInCache = transactionPlaylists!
-                    
-                } else {
-                    
-                    // clean previously cached playlist collection
-                    if self.debugMode == true {
-                        print ("dbg [playlists] : no cached playlist data for provider [\(providerName)] found ...")
-                    };  self.spotifyClient.playlistsInCache = []
-                }
-            },
-            
-            failure: { (error) in
-                self._handleErrorAsDialogMessage(
-                    "Error Loading Playlists",
-                    "Oops! An error occured while loading playlists of [\(providerName)] from database ..."
-                )
-            }
-        )
-    }
-    
     func loadProvider (_ tag: String) {
         
         if self.debugMode == true { print ("dbg [playlists] : try to load provider [\(tag)]") }
@@ -307,7 +250,11 @@ extension PlaylistViewController {
             
             asynchronous: { (transaction) -> StreamProvider? in
                 
-                return transaction.fetchOne(From<StreamProvider>().where(\StreamProvider.tag == tag))
+                return transaction.fetchOne(
+                    From<StreamProvider>().where(
+                        (\StreamProvider.tag == tag) && (\StreamProvider.isActive == true)
+                    )
+                )
             },
             
             success: { (transactionProvider) in
@@ -333,6 +280,66 @@ extension PlaylistViewController {
                 self._handleErrorAsDialogMessage(
                     "Error Loading Provider",
                     "Oops! An error occured while loading provider from database ..."
+                )
+            }
+        )
+    }
+    
+    func loadProviderPlaylists (_ provider: StreamProvider) {
+        
+        if provider.tag != _supportedProviderTag {
+            
+            self._handleErrorAsDialogMessage(
+                "Error Loading Provider",
+                "Oops! The provider '\(provider.name)' isn't supported yet ..."
+            )
+            
+            return
+        }
+        
+        // first of all fetch new playlists from api for comparision
+        spotifyClient.handlePlaylistGetFirstPage(
+            spotifyClient.spfUsername,
+            spotifyClient.spfCurrentSession!.accessToken!
+        );
+        
+        // now fetch corresponding local playlists for sync process
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> [StreamPlayList]? in
+                
+                self._defaultStreamingProvider = provider
+                
+                return transaction.fetchAll(
+                    From<StreamPlayList>().where(
+                        (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
+                        (\StreamPlayList.provider == provider)
+                    )
+                )
+            },
+            
+            success: { (transactionPlaylists) in
+                
+                if transactionPlaylists?.isEmpty == false {
+                    
+                    // store database fetch results in cache collection
+                    if self.debugMode == true {
+                        print ("dbg [playlists] : \(transactionPlaylists!.count) playlists for this provider available ...")
+                    };  self.spotifyClient.playlistsInCache = transactionPlaylists!
+                    
+                } else {
+                    
+                    // clean previously cached playlist collection
+                    if self.debugMode == true {
+                        print ("dbg [playlists] : no cached playlist data for this provider found ...")
+                    };  self.spotifyClient.playlistsInCache = []
+                }
+            },
+            
+            failure: { (error) in
+                self._handleErrorAsDialogMessage(
+                    "Error Loading Playlists",
+                    "Oops! An error occured while loading playlists from database ..."
                 )
             }
         )
