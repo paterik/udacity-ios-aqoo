@@ -22,21 +22,19 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     // MARK: Class Special Constants
     //
     
-    let spotifyClient = SpotifyClient.sharedInstance
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.updateAfterSuccessLogin),
-            name: NSNotification.Name(rawValue: appDelegate.spfSessionRequestSuccessNotifierId),
+            name: NSNotification.Name(rawValue: spotifyClient.notifier.notifySessionRequestSuccess),
             object: nil
         )
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.updateAfterCancelLogin),
-            name: NSNotification.Name(rawValue: appDelegate.spfSessionRequestCanceledNotifierId),
+            name: NSNotification.Name(rawValue: spotifyClient.notifier.notifySessionRequestCanceled),
             object: nil
         )
     }

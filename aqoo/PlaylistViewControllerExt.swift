@@ -27,12 +27,12 @@ extension PlaylistViewController {
                 
                 print ("cache: (re)evaluated, tableView will be refreshed now ...")
                 print ("--------------------------------------------------")
-                print ("\(_playListHashesInCloud.count) playlists in cloud")
-                print ("\(_playListHashesInDb.count) playlists in db")
+                print ("\(spotifyClient.playListHashesInCloud.count) playlists in cloud")
+                print ("\(spotifyClient.playListHashesInCache.count) playlists in db")
                 print ("--------------------------------------------------")
             }
             
-           _playlistsInDb = _playListCache
+           spotifyClient.playlistsInCache = _playListCache
         }
         
         tableView.reloadData()
@@ -40,12 +40,15 @@ extension PlaylistViewController {
     
     @objc func setupUILoadCloudPlaylists() {
         
-        var _playListHash: String!; _playListHashesInCloud = [] ; _playListHashesInDb = []
+        var _playListHash: String!;
         
-        if debugMode == true { print ("\nAQOO just found \(_playlistsInCloud.count) playlist(s) for current user\n") }
-        for (playlistIndex, playListInCloud) in _playlistsInCloud.enumerated() {
+        spotifyClient.playListHashesInCloud = []
+        spotifyClient.playListHashesInCache = []
+        
+        if debugMode == true { print ("\n***\nAQOO found \(spotifyClient.playlistsInCloud.count) playlist(s) for current user\n***\n") }
+        for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
-            _playListHash = self.getMetaListHashByParam (
+            _playListHash = spotifyClient.getMetaListHashByParam (
                 playListInCloud.playableUri.absoluteString,
                 spotifyClient.spfUsername
             )
@@ -73,13 +76,13 @@ extension PlaylistViewController {
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadCloudPlaylists),
-            name: NSNotification.Name(rawValue: appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistLoadCompleted),
             object: nil
         )
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadExtendedPlaylists),
-            name: NSNotification.Name(rawValue: appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
         )
     }
@@ -100,70 +103,6 @@ extension PlaylistViewController {
         }
     }
     
-    func handlePlaylistGetNextPage(
-       _ currentPage: SPTListPage,
-       _ accessToken: String) {
-        
-        currentPage.requestNextPage(
-            
-            withAccessToken: accessToken,
-            callback: {
-                
-               ( error, response ) in
-                
-                if  let _nextPage = response as? SPTListPage,
-                    let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
-                    
-                    self._playlistsInCloud.append(contentsOf: _playlists)
-
-                    if _nextPage.hasNextPage == false {
-                        // no further entries in pagination? send completion call now ...
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
-                            object: self
-                        )
-                        
-                    } else { self.handlePlaylistGetNextPage( _nextPage, accessToken ) }
-                }
-            }
-        )
-    }
-    
-    func handlePlaylistGetFirstPage(
-       _ username: String,
-       _ accessToken: String) {
-        
-        SPTPlaylistList.playlists(
-            
-            forUser: username,
-            withAccessToken: accessToken,
-            callback: {
-                
-               ( error, response ) in
-                
-                if  let _firstPage = response as? SPTPlaylistList,
-                    let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
-                    
-                    self._playlistsInCloud = _playlists
-
-                    if _firstPage.hasNextPage == false {
-                        // no further entries in pagination? send completed call!
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfSessionPlaylistLoadCompletedNotifierId),
-                            object: self
-                        )
-                        
-                    } else { self.handlePlaylistGetNextPage( _firstPage, accessToken ) }
-                }
-            }
-        )
-    }
-    
-    func getMetaListHashByParam(_ playListPlayableUri: String, _ playListOwner: String) -> String {
-        
-         return String( format: "%@:%@", playListPlayableUri, playListOwner).md5()
-    }
-    
     func handlePlaylistDbCacheOrphans () {
         
         if let _playListCache = CoreStore.defaultStack.fetchAll(
@@ -176,8 +115,8 @@ extension PlaylistViewController {
             for (_, playlist) in _playListCache.enumerated() {
                 
                 // ignore all known / identical playlists
-                if  self._playListHashesInCloud.contains(playlist.metaListHash) {
-                    self._playListHashesInDb.append(playlist.metaListHash); continue
+                if spotifyClient.playListHashesInCloud.contains(playlist.metaListHash) {
+                   spotifyClient.playListHashesInCache.append(playlist.metaListHash); continue
                 }
             
                 // kill all obsolete/orphan cache entries
@@ -200,7 +139,7 @@ extension PlaylistViewController {
                         }
                         
                         NotificationCenter.default.post(
-                            name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+                            name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
                             object: self
                         )
                     }
@@ -222,7 +161,7 @@ extension PlaylistViewController {
             asynchronous: { (transaction) -> Void in
                 
                 // render hash for new playlist entry
-                _playListHash = self.getMetaListHashByParam (
+                _playListHash = self.spotifyClient.getMetaListHashByParam (
                     playListInCloud.playableUri.absoluteString,
                     self.spotifyClient.spfUsername
                 )
@@ -284,10 +223,10 @@ extension PlaylistViewController {
             completion: { _ in
                 
                 // save handled hashed in separate collection
-                self._playListHashesInCloud.append(_playListHash)
+                self.spotifyClient.playListHashesInCloud.append(_playListHash)
                 
                 // evaluate list extension completion and execute event signal after final cache item was handled
-                if playListIndex == self._playlistsInCloud.count - 1 {
+                if playListIndex == self.spotifyClient.playlistsInCloud.count - 1 {
                     
                     self.handlePlaylistDbCacheOrphans()
                     
@@ -296,7 +235,7 @@ extension PlaylistViewController {
                     }
                     
                     NotificationCenter.default.post(
-                        name: NSNotification.Name.init(rawValue: self.appDelegate.spfCachePlaylistLoadCompletedNotifierId),
+                        name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
                         object: self
                     )
                 }
@@ -308,15 +247,16 @@ extension PlaylistViewController {
         
         let providerName = provider.name
 
-        // always fetch new playlists from api for upcoming sync
+        
         if debugMode == true {
             print ("dbg [playlists] : load and synchronize playlists for provider [\(providerName)]")
-        
         }
-        self.handlePlaylistGetFirstPage(
-            self.spotifyClient.spfUsername,
-            self.spotifyClient.spfCurrentSession!.accessToken!
-        )
+        
+        // always fetch new playlists from api for upcoming sync!
+        spotifyClient.handlePlaylistGetFirstPage(
+            spotifyClient.spfUsername,
+            spotifyClient.spfCurrentSession!.accessToken!
+        );
         
         CoreStore.perform(
             
@@ -339,14 +279,14 @@ extension PlaylistViewController {
                     // store database fetch results in cache collection
                     if self.debugMode == true {
                         print ("dbg [playlists] : \(transactionPlaylists!.count) playlists for provider [\(providerName)] available ...")
-                    };  self._playlistsInDb = transactionPlaylists!
+                    };  self.spotifyClient.playlistsInCache = transactionPlaylists!
                     
                 } else {
                     
                     // clean previously cached playlist collection
                     if self.debugMode == true {
                         print ("dbg [playlists] : no cached playlist data for provider [\(providerName)] found ...")
-                    };  self._playlistsInDb = []
+                    };  self.spotifyClient.playlistsInCache = []
                 }
             },
             

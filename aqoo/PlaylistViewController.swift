@@ -23,19 +23,9 @@ class PlaylistViewController:   BaseViewController,
     @IBOutlet weak var tableView: UITableView!
     
     //
-    // MARK: Class Special Constants
-    //
-    
-    let spotifyClient = SpotifyClient.sharedInstance
-  
-    //
     // MARK: Class Variables
     //
     
-    var _playlistsInCloud = [SPTPartialPlaylist]()
-    var _playlistsInDb = [StreamPlayList]()
-    var _playListHashesInDb = [String]()
-    var _playListHashesInCloud = [String]()
     var _defaultStreamingProvider: StreamProvider?
     
     //
@@ -53,6 +43,7 @@ class PlaylistViewController:   BaseViewController,
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
         handlePlaylistCloudRefresh()
     }
     
@@ -64,21 +55,20 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
         
-        return _playlistsInDb.count
+        return spotifyClient.playlistsInCache.count
     }
     
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let list = _playlistsInDb[indexPath.row]
+        let list = spotifyClient.playlistsInCache[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "playListItem", for: indexPath) 
         
         cell.detailTextLabel?.text = list.name
         cell.textLabel?.text = list.name
         
         return cell
-        
     }
     
     //

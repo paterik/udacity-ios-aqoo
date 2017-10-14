@@ -17,11 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
 
     let spotifyClient = SpotifyClient.sharedInstance
     
-    let spfSessionRequestSuccessNotifierId = "sessionUpdated"
-    let spfSessionRequestCanceledNotifierId = "sessionFail"
-    let spfSessionPlaylistLoadCompletedNotifierId = "loadPlaylistCompleted"
-    let spfCachePlaylistLoadCompletedNotifierId = "loadCachePlaylistCompleted"
-    
     let providerFixtureData = [
         ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (will be default)"),
         ("SoundCloud", "_soundcloud", false, "our soundcloud streaming provider (not implemented yet)"),
@@ -66,14 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                     userDefaults.synchronize()
                     
                     NotificationCenter.default.post(
-                        name: NSNotification.Name.init(rawValue: self.spfSessionRequestSuccessNotifierId),
+                        name: NSNotification.Name.init(rawValue: self.spotifyClient.notifier.notifySessionRequestSuccess),
                         object: self
                     )
                     
                 }   else {
                     
                     NotificationCenter.default.post(
-                        name: NSNotification.Name.init(rawValue: self.spfSessionRequestCanceledNotifierId),
+                        name: NSNotification.Name.init(rawValue: self.spotifyClient.notifier.notifySessionRequestSuccess),
                         object: self
                     )
                 }
