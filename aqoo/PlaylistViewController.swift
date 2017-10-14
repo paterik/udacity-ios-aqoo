@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import Kingfisher
 
 class PlaylistViewController:   BaseViewController,
                                 SPTAudioStreamingPlaybackDelegate,
@@ -69,6 +70,10 @@ class PlaylistViewController:   BaseViewController,
         
         cell.detailTextLabel?.text = list.name
         cell.textLabel?.text = list.name
+        cell.imageView?.image = spotifyClient.spfUserDefaultImage
+        
+        // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
+        // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
         
         return cell
     }

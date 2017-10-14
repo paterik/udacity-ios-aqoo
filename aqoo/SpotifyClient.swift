@@ -43,6 +43,7 @@ class SpotifyClient: SPFClientPlaylists {
     var spfIsLoggedIn: Bool = false
     var spfUsername: String = "unknown"
     var spfUserDefaultImage: UIImage?
+    var spfUserDefaultImageUrl: URL?
     var spfLoginUrl: URL?
     var spfAuth = SPTAuth()
     
@@ -70,7 +71,9 @@ class SpotifyClient: SPFClientPlaylists {
     
     func getDefaultPlaylistImageByUserPhoto(_ session: SPTSession) {
         
-        print ("dbg [session] : fetch current user image from session object and corresponding api call")
+        if debugMode == true {
+            print ("dbg [session] : fetch current user image using corresponding api call")
+        }
         
         spfUserDefaultImage = UIImage(named: "imgUITblPlaylistDefault_v1")
         
@@ -79,11 +82,18 @@ class SpotifyClient: SPFClientPlaylists {
             ( error, response ) in
             
             if  let _currentUser = response as? SPTUser {
+                
                 ImageDownloader.default.downloadImage(with: _currentUser.largestImage.imageURL, options: [], progressBlock: nil) {
                     
                     (image, error, url, data) in
-                    print("Downloaded Image: \(image)")
+                    
+                    ImageCache.default.store( image, forKey: "spf_user_default_image" )
                     self.spfUserDefaultImage = image
+                    self.spfUserDefaultImageUrl = url!
+                    
+                    if debugMode == true {
+                        print ("dbg [session] : imageUrl of currentUser is \(url!.absoluteString)")
+                    }
                 }
             }
         })

@@ -109,13 +109,13 @@ extension PlaylistViewController {
         
         if spotifyClient.isSpotifyTokenValid() {
             
-            if debugMode == true {
+            if  debugMode == true {
                 print ("dbg [playlists] : try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
             };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
             
-            if debugMode == true {
+            if  debugMode == true {
                 print ("dbg [playlists] : oops, your cloudProviderToken is not valid anymore")
             };  btnExitLandingPageAction( self )
         }
@@ -137,7 +137,7 @@ extension PlaylistViewController {
                    spotifyClient.playListHashesInCache.append(playlist.metaListHash); continue
                 }
             
-                // kill all obsolete/orphan cache entries
+                // kill all obsolete / orphan cache entries
                 if debugMode == true {
                     print ("cache: playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
                 }
