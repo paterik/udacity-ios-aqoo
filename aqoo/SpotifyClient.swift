@@ -87,11 +87,11 @@ class SpotifyClient: SPFClientPlaylists {
                     
                     (image, error, url, data) in
                     
-                    ImageCache.default.store( image, forKey: "spf_user_default_image" )
-                    self.spfUserDefaultImage = image
+                    ImageCache.default.store( image!, forKey: "spf_user_default_image" )
+                    self.spfUserDefaultImage = image!
                     self.spfUserDefaultImageUrl = url!
                     
-                    if debugMode == true {
+                    if self.debugMode == true {
                         print ("dbg [session] : imageUrl of currentUser is \(url!.absoluteString)")
                     }
                 }
