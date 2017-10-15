@@ -23,7 +23,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Lg-tS-bEZ" userLabel="ui_background_left">
                     <rect key="frame" x="0.0" y="0.0" width="97" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -45,17 +45,17 @@
                         <constraint firstAttribute="width" constant="289" id="KEO-ed-NU4"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="zNm-E7-c8W" userLabel="ui_img_playlistCover">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_02" translatesAutoresizingMaskIntoConstraints="NO" id="zNm-E7-c8W" userLabel="ui_img_playlistCover">
                     <rect key="frame" x="6" y="2" width="84" height="84"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="84" id="Lka-AU-RZS"/>
                         <constraint firstAttribute="height" constant="84" id="xnf-Ja-CmY"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXTrackCount_v3" translatesAutoresizingMaskIntoConstraints="NO" id="m01-VL-ga8" userLabel="icnCellFXPLTrackCount">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXTrackCount_v3" translatesAutoresizingMaskIntoConstraints="NO" id="m01-VL-ga8" userLabel="icnCellMetaLeftSide">
                     <rect key="frame" x="3" y="55" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="RYj-In-9y0"/>
@@ -78,14 +78,14 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXFavorite_v2" translatesAutoresizingMaskIntoConstraints="NO" id="iKa-g3-raI" userLabel="icnCellFXPLTrackCount">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXFavorite_v2" translatesAutoresizingMaskIntoConstraints="NO" id="iKa-g3-raI" userLabel="icnCellMetaRightSide">
                     <rect key="frame" x="62" y="55" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="8oc-pX-l0T"/>
                         <constraint firstAttribute="height" constant="32" id="uVd-eK-4bM"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cb-Tb-doy" userLabel="ui_lbl_playlistTrackCount" customClass="UILabelDesignable" customModule="aqoo" customModuleProvider="target">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cb-Tb-doy" userLabel="ui_lbl_playlistTrackCount" customClass="UILabelDesignable" customModule="aqoo" customModuleProvider="target">
                     <rect key="frame" x="74" y="72" width="20" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="4ci-Vc-Hzq"/>
@@ -102,7 +102,8 @@
                     </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="iKa-g3-raI" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="55" id="1ta-k4-a0b"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="zNm-E7-c8W" secondAttribute="bottom" constant="4" id="6lE-5e-vFd"/>
@@ -131,11 +132,12 @@
                 <outlet property="lblPlaylistName" destination="m0I-4F-dfy" id="jwj-AV-0yK"/>
                 <outlet property="lblPlaylistTrackCount" destination="2cb-Tb-doy" id="Yku-wj-aid"/>
             </connections>
+            <point key="canvasLocation" x="67" y="46"/>
         </view>
     </objects>
     <resources>
         <image name="icnCellFXFavorite_v2" width="32" height="32"/>
         <image name="icnCellFXTrackCount_v3" width="32" height="32"/>
-        <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
+        <image name="sample_cover_02" width="150" height="150"/>
     </resources>
 </document>

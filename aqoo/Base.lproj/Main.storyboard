@@ -153,6 +153,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" id="EYm-xY-HeA" userLabel="ui_tableview_cell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -165,7 +166,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Playlists" id="vBT-KK-rGM" userLabel="ui_nav_playlists_main">
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">

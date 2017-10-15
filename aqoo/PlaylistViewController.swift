@@ -62,22 +62,25 @@ class PlaylistViewController:   BaseViewController,
         return spotifyClient.playlistsInCache.count
     }
     
+  
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+        let _cellBackgroundView = UIView()
         let playlistData = spotifyClient.playlistsInCache[indexPath.row]
-        let playlistCell = tableView.dequeueReusableCell(withIdentifier: _playlistCellIdentifier, for: indexPath) as! PlaylistTableCell
+        let playlistCell = tableView.dequeueReusableCell(
+            withIdentifier: _playlistCellIdentifier,
+            for: indexPath) as! PlaylistTableCell
 
+        _cellBackgroundView.backgroundColor = UIColor(netHex: 0x333333)
+        
+        playlistCell.backgroundColor = UIColor(netHex: 0x191919)
         playlistCell.lblPlaylistName.text = playlistData.name
         playlistCell.lblPlaylistTrackCount.text = "\(playlistData.trackCount)"
-        
-        /*cell.detailTextLabel?.text = list.name
-        cell.textLabel?.text = list.name
-        cell.imageView?.image = spotifyClient.spfUserDefaultImage
-        */
-        
-        
+        playlistCell.selectedBackgroundView = _cellBackgroundView
+        playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
+
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
         // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
         
