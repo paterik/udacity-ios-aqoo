@@ -24,6 +24,7 @@ class PlaylistViewController:   BaseViewController,
     @IBOutlet weak var tableView: UITableView!
     
     let _supportedProviderTag = "_spotify"
+    let _playlistCellIdentifier = "playListItem"
     
     //
     // MARK: Class Variables
@@ -65,17 +66,22 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let list = spotifyClient.playlistsInCache[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "playListItem", for: indexPath) 
+        let playlistData = spotifyClient.playlistsInCache[indexPath.row]
+        let playlistCell = tableView.dequeueReusableCell(withIdentifier: _playlistCellIdentifier, for: indexPath) as! PlaylistTableCell
+
+        playlistCell.lblPlaylistName.text = playlistData.name
+        playlistCell.lblPlaylistTrackCount.text = "\(playlistData.trackCount)"
         
-        cell.detailTextLabel?.text = list.name
+        /*cell.detailTextLabel?.text = list.name
         cell.textLabel?.text = list.name
         cell.imageView?.image = spotifyClient.spfUserDefaultImage
+        */
+        
         
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
         // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
         
-        return cell
+        return playlistCell
     }
     
     //
