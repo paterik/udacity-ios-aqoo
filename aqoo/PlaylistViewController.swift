@@ -9,6 +9,7 @@
 import UIKit
 import Spotify
 import Kingfisher
+import FoldingCell
 
 class PlaylistViewController:   BaseViewController,
                                 SPTAudioStreamingPlaybackDelegate,
@@ -23,6 +24,24 @@ class PlaylistViewController:   BaseViewController,
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
+    //
+    // MARK: Constants (sepcial)
+    //
+    
+    let kCloseCellHeight: CGFloat = 90
+    let kOpenCellHeight: CGFloat = 270
+    
+    fileprivate struct C {
+        struct CellHeight {
+            static let close: CGFloat = 90
+            static let open: CGFloat = 270
+        }
+    }
+    
+    //
+    // MARK: Constants (normal)
+    //
+    
     let _supportedProviderTag = "_spotify"
     let _playlistCellIdentifier = "playListItem"
     
@@ -30,6 +49,8 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Class Variables
     //
     
+    // var _cellHeights = [CGFloat]()
+    var _cellHeights = (0..<9999).map { _ in C.CellHeight.close }
     var _defaultStreamingProvider: StreamProvider?
     
     //
@@ -62,29 +83,83 @@ class PlaylistViewController:   BaseViewController,
         return spotifyClient.playlistsInCache.count
     }
     
-  
     func tableView(
        _ tableView: UITableView,
-         cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+            return _cellHeights[indexPath.row]
+    }
     
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let _cellBackgroundView = UIView()
         let playlistData = spotifyClient.playlistsInCache[indexPath.row]
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: _playlistCellIdentifier,
-            for: indexPath) as! PlaylistTableCell
+            for: indexPath) as! PlaylistTableFoldingCell
 
-        _cellBackgroundView.backgroundColor = UIColor(netHex: 0x333333)
-        
-        playlistCell.backgroundColor = UIColor(netHex: 0x191919)
         playlistCell.lblPlaylistName.text = playlistData.name
-        playlistCell.lblPlaylistTrackCount.text = "\(playlistData.trackCount)"
-        playlistCell.selectedBackgroundView = _cellBackgroundView
-        playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
-
+        
+        // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
+        
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
         // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
         
         return playlistCell
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func tableView(
+       _ tableView: UITableView,
+         didSelectRowAt indexPath: IndexPath) {
+        
+        guard case let cell as FoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else {
+            return
+        }
+        
+        var duration = 0.0
+        
+        if _cellHeights[indexPath.row] == kCloseCellHeight {
+            
+            // open cell
+            _cellHeights[indexPath.row] = kOpenCellHeight
+            cell.selectedAnimation(true, animated: true, completion: nil)
+            duration = 0.5
+            
+        } else {
+            
+            // close cell
+            _cellHeights[indexPath.row] = kCloseCellHeight
+            cell.selectedAnimation(false, animated: true, completion: nil)
+            duration = 1.1
+            
+        }
+        
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        },  completion: nil)
+    }
+    
+   @objc func tableView(
+      _ tableView: UITableView,
+        willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    
+        if case let cell as FoldingCell = cell {
+            if _cellHeights[indexPath.row] == C.CellHeight.close {
+                cell.selectedAnimation(false, animated: false, completion:nil)
+            } else {
+                cell.selectedAnimation(true, animated: false, completion: nil)
+            }
+        }
     }
     
     //

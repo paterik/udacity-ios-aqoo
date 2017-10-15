@@ -86,7 +86,9 @@ extension PlaylistViewController {
     
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "PlaylistTableCell", bundle: nil), forCellReuseIdentifier: _playlistCellIdentifier)
+        
+        // our prototype xib file (just for testing)
+        // tableView.register(UINib(nibName: "PlaylistTableCell", bundle: nil), forCellReuseIdentifier: _playlistCellIdentifier)
         
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
