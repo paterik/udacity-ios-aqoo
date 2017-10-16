@@ -78,14 +78,14 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXFavorite_v2" translatesAutoresizingMaskIntoConstraints="NO" id="iKa-g3-raI" userLabel="icnCellMetaRightSide">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXFavorite_v2" translatesAutoresizingMaskIntoConstraints="NO" id="iKa-g3-raI" userLabel="icnCellMetaRightSide">
                     <rect key="frame" x="62" y="55" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="8oc-pX-l0T"/>
                         <constraint firstAttribute="height" constant="32" id="uVd-eK-4bM"/>
                     </constraints>
                 </imageView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cb-Tb-doy" userLabel="ui_lbl_playlistTrackCount" customClass="UILabelDesignable" customModule="aqoo" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cb-Tb-doy" userLabel="ui_lbl_playlistTrackCount" customClass="UILabelDesignable" customModule="aqoo" customModuleProvider="target">
                     <rect key="frame" x="74" y="72" width="20" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="4ci-Vc-Hzq"/>
