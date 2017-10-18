@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -327,7 +327,7 @@
                                                                     <rect key="frame" x="99" y="0.0" width="260" height="90"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9zw-nW-ey9" userLabel="ui_view_content_002_follower">
+                                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9zw-nW-ey9" userLabel="ui_view_content_002_follower" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
                                                                             <rect key="frame" x="8" y="45" width="40" height="36"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <subviews>
@@ -338,6 +338,11 @@
                                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
                                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <nil key="highlightedColor"/>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                            <real key="value" value="2"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="follower" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ufz-Hl-GAK" userLabel="ui_lbl_playlistPlayCount_desc">
                                                                                     <rect key="frame" x="0.0" y="21" width="40" height="16"/>
@@ -597,16 +602,26 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="itemCount">
-                                                <integer key="value" value="3"/>
+                                                <integer key="value" value="4"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="backViewColor">
                                                 <color key="value" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="cViewCell" destination="q49-l2-U3C" id="j36-gz-B1X"/>
+                                            <outlet property="cViewCellNormal" destination="ZR1-8l-W4s" id="VNy-c4-01d"/>
+                                            <outlet property="cViewCellNormalLeft" destination="PFf-E0-ZJj" id="zTp-qH-bwN"/>
+                                            <outlet property="cViewCellNormalRight" destination="iEN-cu-FYJ" id="TUx-hH-9ww"/>
+                                            <outlet property="cViewCellOpen" destination="lIF-EV-Fgk" id="Whg-By-Dl9"/>
                                             <outlet property="containerView" destination="lIF-EV-Fgk" id="kQZ-0m-2or"/>
                                             <outlet property="containerViewTop" destination="CBj-qe-QTy" id="6cI-5M-CrP"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="FuB-1I-F56"/>
+                                            <outlet property="hViewCellNormalCategoryFrame" destination="L5W-cU-pYV" id="1EG-GH-C9d"/>
+                                            <outlet property="hViewCellOpenCategoryFrameFirst" destination="vqc-n1-gFG" id="ntC-Cj-2s4"/>
+                                            <outlet property="hViewCellOpenCategoryFrameFourth" destination="3yE-aV-veL" id="U9n-N5-cFq"/>
+                                            <outlet property="hViewCellOpenCategoryFrameSecond" destination="fxF-Gb-xtJ" id="3nc-pV-1PM"/>
+                                            <outlet property="hViewCellOpenCategoryFrameThird" destination="CIe-GY-3u1" id="F3e-h5-gzy"/>
                                             <outlet property="imageViewPlaylistCover" destination="JIc-Cj-IQH" id="vHV-vJ-uEn"/>
                                             <outlet property="lblPlaylistName" destination="DXJ-e0-451" id="bwG-Fd-daM"/>
                                             <outlet property="lblPlaylistPlaytime" destination="v6z-Ct-nhL" id="yM7-pW-Nei"/>
