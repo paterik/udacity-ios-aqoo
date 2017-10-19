@@ -11,8 +11,22 @@ import FoldingCell
 class PlaylistTableFoldingCell: FoldingCell {
 
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
+    @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!
+    @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
+    
     @IBOutlet weak var lblPlaylistName: UILabel!
+    @IBOutlet weak var lblPlaylistNameInDetail: UILabel!
     @IBOutlet weak var lblPlaylistPlaytime: UILabel!
+    @IBOutlet weak var lblPlaylistPlaytimeInDetail: UILabel!
+    
+    @IBOutlet weak var lblPlaylistCreatedAt: UILabel!
+    @IBOutlet weak var lblPlaylistUpdatedAt: UILabel!
+    
+    @IBOutlet weak var lblPlaylistMetaFollowerCount: UILabel!
+    @IBOutlet weak var lblPlaylistMetaShareCount: UILabel!
+    @IBOutlet weak var lblPlaylistMetaUpdateCount: UILabel!
+    @IBOutlet weak var lblPlaylistMetaTrackCount: UILabel!
+    @IBOutlet weak var lblPlaylistMetaPlayCount: UILabel!
     
     @IBOutlet weak var hViewCellNormalCategoryFrame: UIView!
     @IBOutlet weak var hViewCellOpenCategoryFrameFirst: UIView!
@@ -20,12 +34,29 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var hViewCellOpenCategoryFrameThird: UIView!
     @IBOutlet weak var hViewCellOpenCategoryFrameFourth: UIView!
     
-    @IBOutlet weak var cViewCellOpen: UIView!
-    @IBOutlet weak var cViewCell: UIView!
+    @IBOutlet weak var cViewPlaylistStatusMarker: UIImageView!
+    @IBOutlet weak var cViewPlaylistIsFavoriteMarker: UIView!
     
     @IBOutlet weak var cViewCellNormal: RotatedView!
     @IBOutlet weak var cViewCellNormalRight: UIView!
     @IBOutlet weak var cViewCellNormalLeft: UIView!
+    
+    @IBOutlet weak var cViewCellOpen: UIView!
+    @IBOutlet weak var cViewCellOpenContentRowFirst: UIView!
+    @IBOutlet weak var cViewCellOpenContentRowSecond: UIView!
+    @IBOutlet weak var cViewCellOpenContentRowThird: RotatedView!
+    @IBOutlet weak var cViewCellOpenContentRowFourth: RotatedView!
+    
+    @IBOutlet weak var btnPlaylistDelete: UIButton!
+    @IBOutlet weak var btnPlaylistShare: UIButton!
+    @IBOutlet weak var btnPlaylistEdit: UIButton!
+    @IBOutlet weak var btnPlaylistShowDetail: UIButton!
+    
+    @IBOutlet weak var btnPlaylistPlayNormal: UIButton!
+    @IBOutlet weak var btnPlaylistPlayLoop: UIButton!
+    @IBOutlet weak var btnPlaylistPlayShuffle: UIButton!
+    
+    @IBOutlet weak var cbxPlaylistTaggedAsFavorite: UISwitch!
     
     override func animationDuration(
         _ itemIndex: NSInteger,
