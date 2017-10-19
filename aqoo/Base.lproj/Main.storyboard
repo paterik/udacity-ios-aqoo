@@ -250,7 +250,7 @@
                                                                     <rect key="frame" x="99" y="0.0" width="260" height="90"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIE-ZH-x3y" userLabel="ui_lbl_playlistName">
-                                                                            <rect key="frame" x="8" y="12" width="242" height="20"/>
+                                                                            <rect key="frame" x="8" y="13" width="242" height="20"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="16"/>
                                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -262,7 +262,7 @@
                                                                             <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </imageView>
                                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMF-6O-bUa" userLabel="ui_btn_playlistPlayShuffle">
-                                                                            <rect key="frame" x="109" y="50" width="40" height="40"/>
+                                                                            <rect key="frame" x="109" y="51" width="40" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                                                             <state key="normal" image="icnSetPlayShuffle_0">
@@ -403,7 +403,7 @@
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="23" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qso-2k-NUx" userLabel="ui_lbl_playlistPlayCount">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="1" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
@@ -425,7 +425,7 @@
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="17x" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyw-mH-XVA" userLabel="ui_lbl_playlistPlayCount">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="1" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
@@ -609,11 +609,25 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="btnPlaylistDelete" destination="fUx-us-0jV" id="gL4-hi-lvJ"/>
+                                            <outlet property="btnPlaylistEdit" destination="VF0-jc-WsK" id="8wV-mA-3DK"/>
+                                            <outlet property="btnPlaylistPlayLoop" destination="D53-VY-DHd" id="Ru9-dc-AFL"/>
+                                            <outlet property="btnPlaylistPlayNormal" destination="tW5-jU-c3S" id="DES-xi-ilX"/>
+                                            <outlet property="btnPlaylistPlayShuffle" destination="sMF-6O-bUa" id="iba-0U-owH"/>
+                                            <outlet property="btnPlaylistShare" destination="Lys-H2-bfm" id="rUW-PS-ca2"/>
+                                            <outlet property="btnPlaylistShowDetail" destination="St4-fA-olW" id="Lml-Vc-WJD"/>
                                             <outlet property="cViewCell" destination="q49-l2-U3C" id="j36-gz-B1X"/>
                                             <outlet property="cViewCellNormal" destination="ZR1-8l-W4s" id="VNy-c4-01d"/>
                                             <outlet property="cViewCellNormalLeft" destination="PFf-E0-ZJj" id="zTp-qH-bwN"/>
                                             <outlet property="cViewCellNormalRight" destination="iEN-cu-FYJ" id="TUx-hH-9ww"/>
                                             <outlet property="cViewCellOpen" destination="lIF-EV-Fgk" id="Whg-By-Dl9"/>
+                                            <outlet property="cViewCellOpenContentRowFirst" destination="uEm-L6-f0N" id="Zfu-Ki-7kp"/>
+                                            <outlet property="cViewCellOpenContentRowFourth" destination="vfi-s7-Zxw" id="Y6u-PF-WDJ"/>
+                                            <outlet property="cViewCellOpenContentRowSecond" destination="Wic-g1-BMa" id="SOO-Vs-hXS"/>
+                                            <outlet property="cViewCellOpenContentRowThird" destination="2de-as-ZwF" id="0rV-Cd-zbp"/>
+                                            <outlet property="cViewPlaylistIsFavoriteMarker" destination="BPZ-pJ-Xwb" id="dOG-q2-qoD"/>
+                                            <outlet property="cViewPlaylistStatusMarker" destination="kbx-UY-CFy" id="rqp-ap-vMP"/>
+                                            <outlet property="cbxPlaylistTaggedAsFavorite" destination="Jcn-Y7-ozd" id="7Qa-lU-d3w"/>
                                             <outlet property="containerView" destination="lIF-EV-Fgk" id="kQZ-0m-2or"/>
                                             <outlet property="containerViewTop" destination="CBj-qe-QTy" id="6cI-5M-CrP"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="FuB-1I-F56"/>
@@ -622,9 +636,21 @@
                                             <outlet property="hViewCellOpenCategoryFrameFourth" destination="3yE-aV-veL" id="U9n-N5-cFq"/>
                                             <outlet property="hViewCellOpenCategoryFrameSecond" destination="fxF-Gb-xtJ" id="3nc-pV-1PM"/>
                                             <outlet property="hViewCellOpenCategoryFrameThird" destination="CIe-GY-3u1" id="F3e-h5-gzy"/>
+                                            <outlet property="imagePlaylistCoverInDetail" destination="ic3-eq-ZKo" id="dxk-1y-UrG"/>
                                             <outlet property="imageViewPlaylistCover" destination="JIc-Cj-IQH" id="vHV-vJ-uEn"/>
+                                            <outlet property="imageViewPlaylistCoverInDetail" destination="ic3-eq-ZKo" id="DbF-HG-NQ6"/>
+                                            <outlet property="imageViewPlaylistOwner" destination="wql-c6-nBr" id="hEu-yv-kbj"/>
+                                            <outlet property="lblPlaylistCreatedAt" destination="9tM-so-m19" id="ajk-lj-DX9"/>
+                                            <outlet property="lblPlaylistMetaFollowerCount" destination="PmW-rO-Fph" id="9W5-BE-uFR"/>
+                                            <outlet property="lblPlaylistMetaPlayCount" destination="hyw-mH-XVA" id="eqM-gK-Y4Z"/>
+                                            <outlet property="lblPlaylistMetaShareCount" destination="ecR-v4-PYM" id="6Q3-zh-CFc"/>
+                                            <outlet property="lblPlaylistMetaTrackCount" destination="Qso-2k-NUx" id="o3K-kF-LV2"/>
+                                            <outlet property="lblPlaylistMetaUpdateCount" destination="NeT-mG-YrQ" id="dHb-b6-SfO"/>
                                             <outlet property="lblPlaylistName" destination="DXJ-e0-451" id="bwG-Fd-daM"/>
+                                            <outlet property="lblPlaylistNameInDetail" destination="GIE-ZH-x3y" id="L1J-Dp-8RD"/>
                                             <outlet property="lblPlaylistPlaytime" destination="v6z-Ct-nhL" id="yM7-pW-Nei"/>
+                                            <outlet property="lblPlaylistPlaytimeInDetail" destination="VOT-Cs-qne" id="JJa-7d-rDA"/>
+                                            <outlet property="lblPlaylistUpdatedAt" destination="5sR-nF-tJn" id="P1L-pN-gPX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
