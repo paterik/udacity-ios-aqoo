@@ -83,12 +83,14 @@ extension PlaylistViewController {
     }
     
     func setupUITableView() {
+        
+        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
+        
+        tableView.estimatedRowHeight = kCloseCellHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
     
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // our prototype xib file (just for testing)
-        // tableView.register(UINib(nibName: "PlaylistTableCell", bundle: nil), forCellReuseIdentifier: _playlistCellIdentifier)
         
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }

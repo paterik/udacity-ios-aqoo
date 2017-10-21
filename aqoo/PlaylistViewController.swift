@@ -28,15 +28,9 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (sepcial)
     //
     
-    let kCloseCellHeight: CGFloat = 106
-    let kOpenCellHeight: CGFloat = 288
-    
-    fileprivate struct C {
-        struct CellHeight {
-            static let close: CGFloat = 106
-            static let open: CGFloat = 288
-        }
-    }
+    let kCloseCellHeight: CGFloat = 90
+    let kOpenCellHeight: CGFloat = 280
+    let kRowsCount = 9999
     
     //
     // MARK: Constants (normal)
@@ -49,8 +43,8 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Class Variables
     //
     
-    // var _cellHeights = [CGFloat]()
-    var _cellHeights = (0..<9999).map { _ in C.CellHeight.close }
+    var _cellHeights = [CGFloat]()
+    // var _cellHeights = (0..<9999).map { _ in C.CellHeight.close }
     var _defaultStreamingProvider: StreamProvider?
     
     //
@@ -100,9 +94,7 @@ class PlaylistViewController:   BaseViewController,
             withIdentifier: _playlistCellIdentifier,
             for: indexPath) as! PlaylistTableFoldingCell
 
-        playlistCell.lblPlaylistName.text = playlistData.name
-        playlistCell.cViewPlaylistStatusMarker.isHidden = true
-        
+        // playlistCell.lblPlaylistName.text = playlistData.name
         // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
         
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
@@ -155,7 +147,7 @@ class PlaylistViewController:   BaseViewController,
         willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     
         if case let cell as FoldingCell = cell {
-            if _cellHeights[indexPath.row] == C.CellHeight.close {
+            if _cellHeights[indexPath.row] == kCloseCellHeight {
                 cell.selectedAnimation(false, animated: false, completion:nil)
             } else {
                 cell.selectedAnimation(true, animated: false, completion: nil)
