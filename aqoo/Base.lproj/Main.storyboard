@@ -150,9 +150,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="365" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="365" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -165,20 +164,6 @@
                                             <subviews>
                                                 <view alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
                                                     <rect key="frame" x="8" y="8" width="359" height="90"/>
-                                                    <subviews>
-                                                        <view alpha="0.875" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uan-ws-cZ3" userLabel="ui_view_content_000">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="90"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1h-XE-5zG" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </view>
-                                                            </subviews>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </view>
-                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -188,60 +173,43 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-EV-Fgk" userLabel="containerView">
                                                     <rect key="frame" x="8" y="107" width="359" height="250"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
                                                             <rect key="frame" x="0.0" y="0.0" width="359" height="90"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqc-n1-gFG" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </view>
-                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="90" width="359" height="90"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fxF-Gb-xtJ" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </view>
-                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="180" width="359" height="35"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CIe-GY-3u1" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </view>
-                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="215" width="359" height="35"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3yE-aV-veL" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <color key="backgroundColor" red="0.098039215690000001" green="0.58823529409999997" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </view>
-                                                            </subviews>
                                                             <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="Hwd-te-5Pc"/>
+                                                        <constraint firstAttribute="trailing" secondItem="2de-as-ZwF" secondAttribute="trailing" id="3Fi-Nw-hZd"/>
+                                                        <constraint firstItem="vfi-s7-Zxw" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="215" identifier="yPosition" id="3UI-TP-473"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Wic-g1-BMa" secondAttribute="bottom" constant="70" id="7Dt-Wq-MbA"/>
+                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" id="9PM-gi-MaU"/>
+                                                        <constraint firstAttribute="bottom" secondItem="2de-as-ZwF" secondAttribute="bottom" constant="35" id="CP1-w7-yYE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="vfi-s7-Zxw" secondAttribute="bottom" id="ELx-yz-8M4"/>
                                                         <constraint firstAttribute="height" constant="250" id="J9G-Lh-hFw"/>
+                                                        <constraint firstAttribute="trailing" secondItem="uEm-L6-f0N" secondAttribute="trailing" id="OYY-KL-8UD"/>
+                                                        <constraint firstAttribute="trailing" secondItem="vfi-s7-Zxw" secondAttribute="trailing" id="SwO-pI-3sW"/>
+                                                        <constraint firstItem="Wic-g1-BMa" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="90" identifier="yPosition" id="UJ2-0Y-bBe"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Wic-g1-BMa" secondAttribute="trailing" id="Wa9-Ga-oTE"/>
+                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="XtB-b6-O14"/>
+                                                        <constraint firstItem="Wic-g1-BMa" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="bYe-64-40r"/>
+                                                        <constraint firstItem="2de-as-ZwF" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="pZk-Xp-vMW"/>
+                                                        <constraint firstItem="vfi-s7-Zxw" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="pwF-84-YL5"/>
+                                                        <constraint firstAttribute="bottom" secondItem="uEm-L6-f0N" secondAttribute="bottom" constant="160" id="rFV-Hz-Ihz"/>
+                                                        <constraint firstItem="2de-as-ZwF" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="180" identifier="yPosition" id="tBb-lb-vEn"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -276,6 +244,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6bT-aE-8Bz" firstAttribute="leading" secondItem="FT1-iZ-UFI" secondAttribute="leading" id="Jar-B7-yhB"/>
+                            <constraint firstItem="6bT-aE-8Bz" firstAttribute="top" secondItem="Myj-bt-a9Z" secondAttribute="bottom" id="JyL-gF-211"/>
+                            <constraint firstAttribute="trailing" secondItem="6bT-aE-8Bz" secondAttribute="trailing" id="baK-oe-35g"/>
+                            <constraint firstItem="mIb-J0-e2h" firstAttribute="top" secondItem="6bT-aE-8Bz" secondAttribute="bottom" id="ic2-aJ-0tm"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Playlists" id="vBT-KK-rGM" userLabel="ui_nav_playlists_main">
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">
