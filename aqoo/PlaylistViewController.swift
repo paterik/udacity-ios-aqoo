@@ -132,7 +132,7 @@ class PlaylistViewController:   BaseViewController,
             // close cell
             _cellHeights[indexPath.row] = kCloseCellHeight
             cell.selectedAnimation(false, animated: true, completion: nil)
-            duration = 1.1
+            duration = 0.75
             
         }
         
