@@ -92,6 +92,16 @@ extension PlaylistViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        let backgroundImgView : UIImageView! = UIImageView(frame: view.bounds)
+        
+        backgroundImgView.contentMode =  UIViewContentMode.scaleAspectFill
+        backgroundImgView.clipsToBounds = true
+        backgroundImgView.layoutIfNeeded()
+        backgroundImgView.image = UIImage(named: "img_aqoo_wp_01")
+        backgroundImgView.center = view.center
+        
+        tableView.backgroundView = backgroundImgView
+        
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
     
