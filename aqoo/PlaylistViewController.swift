@@ -29,12 +29,12 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 270
+    let kOpenCellHeight: CGFloat = 280
     
     fileprivate struct C {
         struct CellHeight {
             static let close: CGFloat = 90
-            static let open: CGFloat = 270
+            static let open: CGFloat = 280
         }
     }
     
@@ -101,6 +101,7 @@ class PlaylistViewController:   BaseViewController,
             for: indexPath) as! PlaylistTableFoldingCell
 
         playlistCell.lblPlaylistName.text = playlistData.name
+        playlistCell.cViewPlaylistStatusMarker.isHidden = true
         
         // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
         
