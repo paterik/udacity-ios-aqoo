@@ -212,7 +212,7 @@
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="JIc-Cj-IQH" userLabel="ui_img_playlistCover">
                                                                     <rect key="frame" x="1" y="0.0" width="90" height="90"/>
                                                                 </imageView>
-                                                                <view alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPZ-pJ-Xwb" userLabel="ui_img_playlistFavoriteFlag">
+                                                                <view hidden="YES" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPZ-pJ-Xwb" userLabel="ui_img_playlistFavoriteFlag">
                                                                     <rect key="frame" x="-3" y="58" width="32" height="32"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXTrackCount_v3" translatesAutoresizingMaskIntoConstraints="NO" id="bND-kh-u5i" userLabel="icnCellMetaLeftSideOrange">
@@ -260,6 +260,7 @@
                                                         <constraint firstItem="PFf-E0-ZJj" firstAttribute="bottom" secondItem="iEN-cu-FYJ" secondAttribute="bottom" id="lYD-H3-v5R"/>
                                                         <constraint firstItem="PFf-E0-ZJj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leadingMargin" id="vSX-Fs-EAo"/>
                                                         <constraint firstAttribute="trailing" secondItem="iEN-cu-FYJ" secondAttribute="trailing" id="wJb-is-Nwc"/>
+                                                        <constraint firstAttribute="height" constant="90" id="xXe-mq-2g4"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-EV-Fgk" userLabel="containerView">
@@ -828,18 +829,18 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="trailing" secondItem="lIF-EV-Fgk" secondAttribute="trailing" id="KBF-Uu-j4E"/>
-                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="topMargin" id="Rnz-Pz-woQ"/>
+                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="topMargin" identifier="foregroundViewTop" id="Rnz-Pz-woQ"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="trailing" secondItem="q49-l2-U3C" secondAttribute="trailingMargin" id="SUb-lR-QkM"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leadingMargin" id="fIX-4d-u0S"/>
-                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="bottom" constant="8" symbolic="YES" id="fcD-oa-WWv"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="lIF-EV-Fgk" secondAttribute="bottom" constant="-9" id="mzH-wI-K3l"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="pxb-oW-xDw"/>
+                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="106" identifier="containerViewTop" id="v7p-nf-f3U"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="itemCount">
-                                                <integer key="value" value="4"/>
+                                                <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="backViewColor">
                                                 <color key="value" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -853,11 +854,8 @@
                                             <outlet property="btnPlaylistPlayShuffle" destination="sMF-6O-bUa" id="iba-0U-owH"/>
                                             <outlet property="btnPlaylistShare" destination="Lys-H2-bfm" id="rUW-PS-ca2"/>
                                             <outlet property="btnPlaylistShowDetail" destination="St4-fA-olW" id="Lml-Vc-WJD"/>
-                                            <outlet property="cViewCell" destination="q49-l2-U3C" id="j36-gz-B1X"/>
-                                            <outlet property="cViewCellNormal" destination="ZR1-8l-W4s" id="VNy-c4-01d"/>
                                             <outlet property="cViewCellNormalLeft" destination="PFf-E0-ZJj" id="zTp-qH-bwN"/>
                                             <outlet property="cViewCellNormalRight" destination="iEN-cu-FYJ" id="TUx-hH-9ww"/>
-                                            <outlet property="cViewCellOpen" destination="lIF-EV-Fgk" id="Whg-By-Dl9"/>
                                             <outlet property="cViewCellOpenContentRowFirst" destination="uEm-L6-f0N" id="Zfu-Ki-7kp"/>
                                             <outlet property="cViewCellOpenContentRowFourth" destination="vfi-s7-Zxw" id="Y6u-PF-WDJ"/>
                                             <outlet property="cViewCellOpenContentRowSecond" destination="Wic-g1-BMa" id="SOO-Vs-hXS"/>
@@ -865,16 +863,17 @@
                                             <outlet property="cViewPlaylistIsFavoriteMarker" destination="BPZ-pJ-Xwb" id="dOG-q2-qoD"/>
                                             <outlet property="cViewPlaylistStatusMarker" destination="kbx-UY-CFy" id="rqp-ap-vMP"/>
                                             <outlet property="cbxPlaylistTaggedAsFavorite" destination="Jcn-Y7-ozd" id="7Qa-lU-d3w"/>
-                                            <outlet property="containerView" destination="lIF-EV-Fgk" id="kQZ-0m-2or"/>
-                                            <outlet property="foregroundView" destination="ZR1-8l-W4s" id="FuB-1I-F56"/>
+                                            <outlet property="containerView" destination="lIF-EV-Fgk" id="lP9-sv-qmC"/>
+                                            <outlet property="containerViewTop" destination="v7p-nf-f3U" id="8z6-AC-9gk"/>
+                                            <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
+                                            <outlet property="foregroundViewTop" destination="Rnz-Pz-woQ" id="iVC-0f-iyX"/>
                                             <outlet property="hViewCellNormalCategoryFrame" destination="L5W-cU-pYV" id="1EG-GH-C9d"/>
                                             <outlet property="hViewCellOpenCategoryFrameFirst" destination="vqc-n1-gFG" id="ntC-Cj-2s4"/>
                                             <outlet property="hViewCellOpenCategoryFrameFourth" destination="3yE-aV-veL" id="U9n-N5-cFq"/>
                                             <outlet property="hViewCellOpenCategoryFrameSecond" destination="fxF-Gb-xtJ" id="3nc-pV-1PM"/>
                                             <outlet property="hViewCellOpenCategoryFrameThird" destination="CIe-GY-3u1" id="F3e-h5-gzy"/>
-                                            <outlet property="imagePlaylistCoverInDetail" destination="ic3-eq-ZKo" id="dxk-1y-UrG"/>
                                             <outlet property="imageViewPlaylistCover" destination="JIc-Cj-IQH" id="vHV-vJ-uEn"/>
-                                            <outlet property="imageViewPlaylistCoverInDetail" destination="ic3-eq-ZKo" id="DbF-HG-NQ6"/>
+                                            <outlet property="imageViewPlaylistCoverInDetail" destination="ic3-eq-ZKo" id="QFF-jz-19o"/>
                                             <outlet property="imageViewPlaylistOwner" destination="wql-c6-nBr" id="hEu-yv-kbj"/>
                                             <outlet property="lblPlaylistCreatedAt" destination="9tM-so-m19" id="ajk-lj-DX9"/>
                                             <outlet property="lblPlaylistMetaFollowerCount" destination="PmW-rO-Fph" id="9W5-BE-uFR"/>

@@ -6,10 +6,11 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
+import UIKit
 import FoldingCell
 
 class PlaylistTableFoldingCell: FoldingCell {
-
+    
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
@@ -37,11 +38,9 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var cViewPlaylistStatusMarker: UIImageView!
     @IBOutlet weak var cViewPlaylistIsFavoriteMarker: UIView!
     
-    @IBOutlet weak var cViewCellNormal: RotatedView!
     @IBOutlet weak var cViewCellNormalRight: UIView!
     @IBOutlet weak var cViewCellNormalLeft: UIView!
     
-    @IBOutlet weak var cViewCellOpen: UIView!
     @IBOutlet weak var cViewCellOpenContentRowFirst: UIView!
     @IBOutlet weak var cViewCellOpenContentRowSecond: UIView!
     @IBOutlet weak var cViewCellOpenContentRowThird: RotatedView!

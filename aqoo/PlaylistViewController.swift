@@ -28,13 +28,13 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (sepcial)
     //
     
-    let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 280
+    let kCloseCellHeight: CGFloat = 106
+    let kOpenCellHeight: CGFloat = 288
     
     fileprivate struct C {
         struct CellHeight {
-            static let close: CGFloat = 90
-            static let open: CGFloat = 280
+            static let close: CGFloat = 106
+            static let open: CGFloat = 288
         }
     }
     
