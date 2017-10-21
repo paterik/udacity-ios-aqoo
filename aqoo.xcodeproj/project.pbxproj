@@ -28,7 +28,6 @@
 		B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE71F778621001FC294 /* StreamPlayList.swift */; };
 		B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE91F778646001FC294 /* StreamProvider.swift */; };
 		B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */; };
-		B1D1550E1F9797150015A4FF /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1550D1F9797150015A4FF /* UIView.swift */; };
 		B1D4CE4C1F936A94005D8F50 /* PlaylistTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
 		B1D6A3951F90FE6A006E1DBC /* SpotifyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */; };
@@ -86,7 +85,6 @@
 		B1BD1EE71F778621001FC294 /* StreamPlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamPlayList.swift; sourceTree = "<group>"; };
 		B1BD1EE91F778646001FC294 /* StreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamProvider.swift; sourceTree = "<group>"; };
 		B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableFoldingCell.swift; sourceTree = "<group>"; };
-		B1D1550D1F9797150015A4FF /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableCell.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyClient.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 				B1F88B7E1F7045E80005FE43 /* UIImage.swift */,
 				B1A3D2451F8E3B660098330D /* String.swift */,
 				B1BBECED1F93642B00BD9D39 /* UILabel.swift */,
-				B1D1550D1F9797150015A4FF /* UIView.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -617,7 +614,6 @@
 				B1A3D2461F8E3B660098330D /* String.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
-				B1D1550E1F9797150015A4FF /* UIView.swift in Sources */,
 				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,
 				B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
