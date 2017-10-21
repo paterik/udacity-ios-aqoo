@@ -158,11 +158,11 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="365" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="365"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.875" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="365"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
                                                     <rect key="frame" x="8" y="8" width="359" height="90"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -175,19 +175,75 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
                                                             <rect key="frame" x="0.0" y="0.0" width="359" height="90"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TPz-1F-USm" userLabel="ui_hview_line_sep_right">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
+                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="8" id="HtH-ax-TQI"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="TPz-1F-USm" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="JY4-nz-59b"/>
+                                                                <constraint firstItem="TPz-1F-USm" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="Ytb-tH-26e"/>
+                                                                <constraint firstAttribute="bottom" secondItem="TPz-1F-USm" secondAttribute="bottom" id="e3z-q5-c12"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="90" width="359" height="90"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ts-5U-qHz" userLabel="ui_hview_line_sep_right">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
+                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="8" id="JFV-BC-pGL"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="9ts-5U-qHz" firstAttribute="leading" secondItem="Wic-g1-BMa" secondAttribute="leading" id="GTi-Cx-i6t"/>
+                                                                <constraint firstItem="9ts-5U-qHz" firstAttribute="top" secondItem="Wic-g1-BMa" secondAttribute="top" id="Trz-Zy-dBa"/>
+                                                                <constraint firstAttribute="bottom" secondItem="9ts-5U-qHz" secondAttribute="bottom" id="oB3-1D-shS"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="180" width="359" height="35"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gN-aK-CrV" userLabel="ui_hview_line_separator_left">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
+                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="8" id="BLB-rl-C8i"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="6gN-aK-CrV" firstAttribute="leading" secondItem="2de-as-ZwF" secondAttribute="leading" id="LAW-5G-Jo4"/>
+                                                                <constraint firstItem="6gN-aK-CrV" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="top" id="wZx-Ge-sXB"/>
+                                                                <constraint firstAttribute="bottom" secondItem="6gN-aK-CrV" secondAttribute="bottom" id="yaU-Zd-HHq"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="215" width="359" height="35"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mU1-iK-GQn" userLabel="ui_hview_line_separator_left">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
+                                                                    <color key="backgroundColor" red="0.098039215690000001" green="0.58823529409999997" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="8" id="Y9m-dd-Qjf"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstItem="mU1-iK-GQn" firstAttribute="leading" secondItem="vfi-s7-Zxw" secondAttribute="leading" id="37i-BU-uka"/>
+                                                                <constraint firstAttribute="bottom" secondItem="mU1-iK-GQn" secondAttribute="bottom" id="GGy-3Q-02U"/>
+                                                                <constraint firstItem="mU1-iK-GQn" firstAttribute="top" secondItem="vfi-s7-Zxw" secondAttribute="top" id="Nyk-UV-DlM"/>
+                                                            </constraints>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
