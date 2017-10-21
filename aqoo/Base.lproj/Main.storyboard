@@ -155,7 +155,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="365" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="365"/>
@@ -261,7 +260,7 @@
                                                 <constraint firstItem="lIF-EV-Fgk" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="8" id="mea-oe-BQf"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="itemCount">
                                                 <integer key="value" value="4"/>
@@ -281,7 +280,7 @@
                                 <sections/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Playlists" id="vBT-KK-rGM" userLabel="ui_nav_playlists_main">
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">
