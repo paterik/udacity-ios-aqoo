@@ -29,7 +29,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 280
+    let kOpenCellHeight: CGFloat = 250
     let kRowsCount = 9999
     
     //
@@ -44,7 +44,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     var _cellHeights = [CGFloat]()
-    // var _cellHeights = (0..<9999).map { _ in C.CellHeight.close }
+
     var _defaultStreamingProvider: StreamProvider?
     
     //
