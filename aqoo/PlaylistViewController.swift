@@ -29,7 +29,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 250
+    let kOpenCellHeight: CGFloat = 280
     let kRowsCount = 9999
     
     //
@@ -125,14 +125,14 @@ class PlaylistViewController:   BaseViewController,
             // open cell
             _cellHeights[indexPath.row] = kOpenCellHeight
             cell.selectedAnimation(true, animated: true, completion: nil)
-            duration = 0.5
+            duration = 0.45
             
         } else {
             
             // close cell
             _cellHeights[indexPath.row] = kCloseCellHeight
             cell.selectedAnimation(false, animated: true, completion: nil)
-            duration = 0.75
+            duration = 0.70
             
         }
         

@@ -150,20 +150,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="365" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="441" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="365" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="365"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="390" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="390"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="365"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="390"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
-                                                    <rect key="frame" x="8" y="8" width="359" height="90"/>
+                                                    <rect key="frame" x="10" y="10" width="355" height="90"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -171,91 +171,35 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-EV-Fgk" userLabel="containerView">
-                                                    <rect key="frame" x="8" y="107" width="359" height="250"/>
+                                                    <rect key="frame" x="10" y="109" width="355" height="280"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="90"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TPz-1F-USm" userLabel="ui_hview_line_sep_right">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="8" id="HtH-ax-TQI"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
+                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="120"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstItem="TPz-1F-USm" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="JY4-nz-59b"/>
-                                                                <constraint firstItem="TPz-1F-USm" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="Ytb-tH-26e"/>
-                                                                <constraint firstAttribute="bottom" secondItem="TPz-1F-USm" secondAttribute="bottom" id="e3z-q5-c12"/>
-                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
-                                                            <rect key="frame" x="0.0" y="90" width="359" height="90"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ts-5U-qHz" userLabel="ui_hview_line_sep_right">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="90"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="8" id="JFV-BC-pGL"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
+                                                            <rect key="frame" x="0.0" y="90" width="355" height="120"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstItem="9ts-5U-qHz" firstAttribute="leading" secondItem="Wic-g1-BMa" secondAttribute="leading" id="GTi-Cx-i6t"/>
-                                                                <constraint firstItem="9ts-5U-qHz" firstAttribute="top" secondItem="Wic-g1-BMa" secondAttribute="top" id="Trz-Zy-dBa"/>
-                                                                <constraint firstAttribute="bottom" secondItem="9ts-5U-qHz" secondAttribute="bottom" id="oB3-1D-shS"/>
-                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
-                                                            <rect key="frame" x="0.0" y="180" width="359" height="35"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gN-aK-CrV" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="8" id="BLB-rl-C8i"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
+                                                            <rect key="frame" x="0.0" y="180" width="355" height="45"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstItem="6gN-aK-CrV" firstAttribute="leading" secondItem="2de-as-ZwF" secondAttribute="leading" id="LAW-5G-Jo4"/>
-                                                                <constraint firstItem="6gN-aK-CrV" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="top" id="wZx-Ge-sXB"/>
-                                                                <constraint firstAttribute="bottom" secondItem="6gN-aK-CrV" secondAttribute="bottom" id="yaU-Zd-HHq"/>
-                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
-                                                            <rect key="frame" x="0.0" y="215" width="359" height="35"/>
-                                                            <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mU1-iK-GQn" userLabel="ui_hview_line_separator_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="8" height="35"/>
-                                                                    <color key="backgroundColor" red="0.098039215690000001" green="0.58823529409999997" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="8" id="Y9m-dd-Qjf"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
+                                                            <rect key="frame" x="0.0" y="225" width="355" height="45"/>
                                                             <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstItem="mU1-iK-GQn" firstAttribute="leading" secondItem="vfi-s7-Zxw" secondAttribute="leading" id="37i-BU-uka"/>
-                                                                <constraint firstAttribute="bottom" secondItem="mU1-iK-GQn" secondAttribute="bottom" id="GGy-3Q-02U"/>
-                                                                <constraint firstItem="mU1-iK-GQn" firstAttribute="top" secondItem="vfi-s7-Zxw" secondAttribute="top" id="Nyk-UV-DlM"/>
-                                                            </constraints>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="2de-as-ZwF" secondAttribute="trailing" id="3Fi-Nw-hZd"/>
-                                                        <constraint firstItem="vfi-s7-Zxw" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="215" identifier="yPosition" id="3UI-TP-473"/>
+                                                        <constraint firstItem="vfi-s7-Zxw" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="225" identifier="yPosition" id="3UI-TP-473"/>
                                                         <constraint firstAttribute="bottom" secondItem="Wic-g1-BMa" secondAttribute="bottom" constant="70" id="7Dt-Wq-MbA"/>
                                                         <constraint firstItem="uEm-L6-f0N" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" id="9PM-gi-MaU"/>
-                                                        <constraint firstAttribute="bottom" secondItem="2de-as-ZwF" secondAttribute="bottom" constant="35" id="CP1-w7-yYE"/>
-                                                        <constraint firstAttribute="bottom" secondItem="vfi-s7-Zxw" secondAttribute="bottom" id="ELx-yz-8M4"/>
-                                                        <constraint firstAttribute="height" constant="250" id="J9G-Lh-hFw"/>
+                                                        <constraint firstAttribute="bottom" secondItem="2de-as-ZwF" secondAttribute="bottom" constant="55" id="CP1-w7-yYE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="vfi-s7-Zxw" secondAttribute="bottom" constant="10" id="ELx-yz-8M4"/>
+                                                        <constraint firstAttribute="height" constant="280" id="J9G-Lh-hFw"/>
                                                         <constraint firstAttribute="trailing" secondItem="uEm-L6-f0N" secondAttribute="trailing" id="OYY-KL-8UD"/>
                                                         <constraint firstAttribute="trailing" secondItem="vfi-s7-Zxw" secondAttribute="trailing" id="SwO-pI-3sW"/>
                                                         <constraint firstItem="Wic-g1-BMa" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="90" identifier="yPosition" id="UJ2-0Y-bBe"/>
@@ -271,12 +215,12 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="107" identifier="containerViewTop" id="0bt-lP-AsL"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZR1-8l-W4s" secondAttribute="trailing" constant="8" id="63M-5H-Hn1"/>
-                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="8" id="ap7-4r-n1J"/>
-                                                <constraint firstAttribute="trailing" secondItem="lIF-EV-Fgk" secondAttribute="trailing" constant="8" id="jlA-zh-2n8"/>
-                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="8" identifier="foregroundViewTop" id="l1t-UW-mH7"/>
-                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="8" id="mea-oe-BQf"/>
+                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="109" identifier="containerViewTop" id="0bt-lP-AsL"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZR1-8l-W4s" secondAttribute="trailing" constant="10" id="63M-5H-Hn1"/>
+                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="ap7-4r-n1J"/>
+                                                <constraint firstAttribute="trailing" secondItem="lIF-EV-Fgk" secondAttribute="trailing" constant="10" id="jlA-zh-2n8"/>
+                                                <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="10" identifier="foregroundViewTop" id="l1t-UW-mH7"/>
+                                                <constraint firstItem="lIF-EV-Fgk" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="mea-oe-BQf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
