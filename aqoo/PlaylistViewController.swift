@@ -29,7 +29,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90 // 90
-    let kOpenCellHeight: CGFloat = 330 // 310
+    let kOpenCellHeight: CGFloat = 350 // 310
     let kRowsCount = 9999
     
     //
@@ -137,6 +137,20 @@ class PlaylistViewController:   BaseViewController,
             
             duration = 0.90
             
+            for (index, cell) in (tableView.visibleCells as [UITableViewCell]).enumerated()  {
+                
+                // var point = tableView.convert(cell.center, to: tableView.superview)
+                // cell.alpha = ((point.y * 100) / tableView.bounds.maxY) / 100
+                // print (cell.alpha)
+                
+                print ("_ cell #\(index) : \(cell)")
+                
+                if (index == 3) {
+                    
+                    // cell.backgroundColor = UIColor(netHex: 0xff0000)
+                }                
+            }
+            
            _cellHeights[indexPath.row] = kCloseCellHeight
             
             animateFoldingCellClose(duration)
@@ -147,22 +161,8 @@ class PlaylistViewController:   BaseViewController,
         }
     }
     
-    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
-        
-        /*pCell.lblTaskMiniProgressBar.alpha = 0
-        pCell.lblTaskMiniProgressBar.frame.size.width = 0*/
-    }
-    
-    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
-        
-        /*UIView.animate(withDuration: pDuration, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            pCell.lblTaskMiniProgressBar.frame.size.width = pCell.UIMiniBar.progressLineWidth
-            pCell.lblTaskMiniProgressBar.alpha = 1
-            pCell.lblTaskName.alpha = 1
-            self.view.layoutIfNeeded()
-        }, completion: nil
-        )*/
-    }
+    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) { }
+    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) { }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
         
@@ -170,8 +170,7 @@ class PlaylistViewController:   BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             self.view.layoutIfNeeded()
-        }, completion: nil
-        )
+        },  completion: nil)
     }
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
@@ -180,8 +179,11 @@ class PlaylistViewController:   BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             self.view.layoutIfNeeded()
-        }, completion: nil
-        )
+        },  completion: { (Bool) -> Void in
+            
+            print ("done")
+            
+        } )
     }
     
     //
