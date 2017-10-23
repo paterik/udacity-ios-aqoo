@@ -155,18 +155,30 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="420" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" alpha="0.875" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="420" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="420"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.875" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
                                                     <rect key="frame" x="10" y="10" width="355" height="90"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNo-Tb-YuP" userLabel="ui_lbl_rowNumber">
+                                                            <rect key="frame" x="10" y="29" width="334" height="38"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="32"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="yNo-Tb-YuP" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="29" id="7cz-Fc-Kfw"/>
+                                                        <constraint firstItem="yNo-Tb-YuP" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="10" id="RuZ-PJ-sbq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="yNo-Tb-YuP" secondAttribute="trailing" constant="11" id="daa-BD-bZF"/>
+                                                        <constraint firstAttribute="bottom" secondItem="yNo-Tb-YuP" secondAttribute="bottom" constant="23" id="g4f-HA-Dxr"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
                                                     </constraints>
                                                 </view>
@@ -187,7 +199,7 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="255" width="355" height="45"/>
-                                                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -238,6 +250,7 @@
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
+                                            <outlet property="lblDebugRowNumber" destination="yNo-Tb-YuP" id="W7E-dK-syF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

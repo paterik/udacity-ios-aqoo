@@ -28,8 +28,8 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (sepcial)
     //
     
-    let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 310
+    let kCloseCellHeight: CGFloat = 90 // 90
+    let kOpenCellHeight: CGFloat = 330 // 310
     let kRowsCount = 9999
     
     //
@@ -97,6 +97,7 @@ class PlaylistViewController:   BaseViewController,
         let durations: [TimeInterval] = [0.26, 0.2, 0.2]
         playlistCell.durationsForExpandedState = durations
         playlistCell.durationsForCollapsedState = durations
+        playlistCell.lblDebugRowNumber.text = "#\(indexPath.row + 1)"
         
         // playlistCell.lblPlaylistName.text = playlistData.name
         // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
@@ -138,9 +139,10 @@ class PlaylistViewController:   BaseViewController,
             
            _cellHeights[indexPath.row] = kCloseCellHeight
             
+            animateFoldingCellClose(duration)
             cell.selectedAnimation(false, animated: true, completion: { () -> Void in
                 self.animateFoldingCellContentClose(duration, pCell: cell)
-                self.animateFoldingCellClose(duration)
+                
             })
         }
     }
@@ -174,7 +176,7 @@ class PlaylistViewController:   BaseViewController,
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
         
-        UIView.animate(withDuration: pDuration, delay: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: pDuration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             self.view.layoutIfNeeded()
