@@ -62,7 +62,8 @@ class PlaylistTableFoldingCell: FoldingCell {
           type:AnimationType)-> TimeInterval {
 
         // [0.33, 0.26, 0.26]
-        let durations = [0.2725, 0.2075, 0.1875]
+        // [0.2725, 0.2075, 0.1875]
+        let durations = [0.26, 0.2, 0.2]
         
         return durations[itemIndex]
     }

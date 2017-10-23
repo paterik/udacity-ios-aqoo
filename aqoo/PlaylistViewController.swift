@@ -29,7 +29,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90
-    let kOpenCellHeight: CGFloat = 280
+    let kOpenCellHeight: CGFloat = 310
     let kRowsCount = 9999
     
     //
@@ -94,6 +94,10 @@ class PlaylistViewController:   BaseViewController,
             withIdentifier: _playlistCellIdentifier,
             for: indexPath) as! PlaylistTableFoldingCell
 
+        let durations: [TimeInterval] = [0.26, 0.2, 0.2]
+        playlistCell.durationsForExpandedState = durations
+        playlistCell.durationsForCollapsedState = durations
+        
         // playlistCell.lblPlaylistName.text = playlistData.name
         // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
         
@@ -103,56 +107,79 @@ class PlaylistViewController:   BaseViewController,
         return playlistCell
     }
     
-    
-    
-    
-    
-    
-    
-    
     func tableView(
        _ tableView: UITableView,
          didSelectRowAt indexPath: IndexPath) {
         
-        guard case let cell as FoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else {
-            return
-        }
+        guard case let cell as FoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else { return }
+        if cell.isAnimating() { return }
+        
+        let isCellOpening = _cellHeights[indexPath.row] == kCloseCellHeight
+        let isCellClosing = !isCellOpening
         
         var duration = 0.0
-        
-        if _cellHeights[indexPath.row] == kCloseCellHeight {
+
+        if isCellOpening {
             
-            // open cell
-            _cellHeights[indexPath.row] = kOpenCellHeight
+            duration = 0.50
+            
+           _cellHeights[indexPath.row] = kOpenCellHeight
+            
+            animateFoldingCell(duration)
+            animateFoldingCellContentOpen(duration, pCell: cell)
+            
             cell.selectedAnimation(true, animated: true, completion: nil)
-            duration = 0.45
-            
-        } else {
-            
-            // close cell
-            _cellHeights[indexPath.row] = kCloseCellHeight
-            cell.selectedAnimation(false, animated: true, completion: nil)
-            duration = 0.70
             
         }
         
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        },  completion: nil)
+        if isCellClosing {
+            
+            duration = 0.90
+            
+           _cellHeights[indexPath.row] = kCloseCellHeight
+            
+            cell.selectedAnimation(false, animated: true, completion: { () -> Void in
+                self.animateFoldingCellContentClose(duration, pCell: cell)
+                self.animateFoldingCellClose(duration)
+            })
+        }
     }
     
-   @objc func tableView(
-      _ tableView: UITableView,
-        willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
+        
+        /*pCell.lblTaskMiniProgressBar.alpha = 0
+        pCell.lblTaskMiniProgressBar.frame.size.width = 0*/
+    }
     
-        if case let cell as FoldingCell = cell {
-            if _cellHeights[indexPath.row] == kCloseCellHeight {
-                cell.selectedAnimation(false, animated: false, completion:nil)
-            } else {
-                cell.selectedAnimation(true, animated: false, completion: nil)
-            }
-        }
+    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
+        
+        /*UIView.animate(withDuration: pDuration, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            pCell.lblTaskMiniProgressBar.frame.size.width = pCell.UIMiniBar.progressLineWidth
+            pCell.lblTaskMiniProgressBar.alpha = 1
+            pCell.lblTaskName.alpha = 1
+            self.view.layoutIfNeeded()
+        }, completion: nil
+        )*/
+    }
+    
+    func animateFoldingCell(_ pDuration: TimeInterval) {
+        
+        UIView.animate(withDuration: pDuration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            self.view.layoutIfNeeded()
+        }, completion: nil
+        )
+    }
+    
+    func animateFoldingCellClose(_ pDuration: TimeInterval) {
+        
+        UIView.animate(withDuration: pDuration, delay: 0, options: [], animations: { () -> Void in
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            self.view.layoutIfNeeded()
+        }, completion: nil
+        )
     }
     
     //

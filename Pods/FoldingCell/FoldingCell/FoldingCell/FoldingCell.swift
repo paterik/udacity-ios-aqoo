@@ -165,8 +165,8 @@ open class FoldingCell: UITableViewCell {
           multiplier: constraint.multiplier, constant: constraint.constant)
         
         newConstraints.append(newConstraint)
-      } else if let item: UIView = constraint.secondItem as? UIView , item == containerView {
-        let newConstraint = NSLayoutConstraint(item: constraint.firstItem, attribute: constraint.firstAttribute,
+      } else if let firstItem = constraint.firstItem as? UIView, let secondItem: UIView = constraint.secondItem as? UIView , secondItem == containerView {
+        let newConstraint = NSLayoutConstraint(item: firstItem, attribute: constraint.firstAttribute,
           relatedBy: constraint.relation, toItem: animationView, attribute: constraint.secondAttribute,
           multiplier: constraint.multiplier, constant: constraint.constant)
         
@@ -214,7 +214,7 @@ open class FoldingCell: UITableViewCell {
     
     // added other views
     let itemHeight = (containerViewSize.height - 2 * foregroundViewSize.height) / CGFloat(itemCount - 2)
-
+    
     if itemCount == 2 {
         // decrease containerView height or increase itemCount
         assert(containerViewSize.height - 2 * foregroundViewSize.height == 0, "contanerView.height too high")
@@ -223,7 +223,7 @@ open class FoldingCell: UITableViewCell {
         // decrease containerView height or increase itemCount
         assert(containerViewSize.height - 2 * foregroundViewSize.height >= itemHeight, "contanerView.height too high")
     }
-
+    
     var yPosition = 2 * foregroundViewSize.height
     var tag = 2
     for _ in 2..<itemCount {
