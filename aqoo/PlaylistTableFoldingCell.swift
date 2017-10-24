@@ -58,14 +58,14 @@ class PlaylistTableFoldingCell: FoldingCell {
     
     @IBOutlet weak var cbxPlaylistTaggedAsFavorite: UISwitch!
     
-    override func animationDuration(
+    /*override func animationDuration(
         _ itemIndex: NSInteger,
           type:AnimationType)-> TimeInterval {
 
         // [0.33, 0.26, 0.26]
         // [0.2725, 0.2075, 0.1875]
-        let durations = [0.26, 0.2, 0.2]
+        let durations = [0.0, 0.0, 0.0]
         
         return durations[itemIndex]
-    }
+    }*/
 }

@@ -150,16 +150,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="420" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="505" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6bT-aE-8Bz" userLabel="ui_tableview">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" alpha="0.875" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="420" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="420"/>
+                                    <tableViewCell clipsSubviews="YES" alpha="0.875" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="505" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="505"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.875" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="505"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">

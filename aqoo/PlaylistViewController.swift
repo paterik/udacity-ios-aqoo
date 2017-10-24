@@ -29,7 +29,7 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let kCloseCellHeight: CGFloat = 90 // 90
-    let kOpenCellHeight: CGFloat = 350 // 310
+    let kOpenCellHeight: CGFloat = 345 // 310
     let kRowsCount = 9999
     
     //
@@ -85,8 +85,8 @@ class PlaylistViewController:   BaseViewController,
     }
     
     func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       _ tableView: UITableView,
+         cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let _cellBackgroundView = UIView()
         let playlistData = spotifyClient.playlistsInCache[indexPath.row]
@@ -94,9 +94,12 @@ class PlaylistViewController:   BaseViewController,
             withIdentifier: _playlistCellIdentifier,
             for: indexPath) as! PlaylistTableFoldingCell
 
-        let durations: [TimeInterval] = [0.26, 0.2, 0.2]
-        playlistCell.durationsForExpandedState = durations
-        playlistCell.durationsForCollapsedState = durations
+        let openingDurations: [TimeInterval] = [0.255, 0.215, 0.225]
+        let closingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
+        
+        playlistCell.durationsForExpandedState = openingDurations
+        playlistCell.durationsForCollapsedState = closingDurations
+        
         playlistCell.lblDebugRowNumber.text = "#\(indexPath.row + 1)"
         
         // playlistCell.lblPlaylistName.text = playlistData.name
@@ -122,7 +125,7 @@ class PlaylistViewController:   BaseViewController,
 
         if isCellOpening {
             
-            duration = 0.50
+            duration = 0.5125
             
            _cellHeights[indexPath.row] = kOpenCellHeight
             
@@ -135,28 +138,13 @@ class PlaylistViewController:   BaseViewController,
         
         if isCellClosing {
             
-            duration = 0.90
+            duration = 0.1275
             
-            for (index, cell) in (tableView.visibleCells as [UITableViewCell]).enumerated()  {
-                
-                // var point = tableView.convert(cell.center, to: tableView.superview)
-                // cell.alpha = ((point.y * 100) / tableView.bounds.maxY) / 100
-                // print (cell.alpha)
-                
-                print ("_ cell #\(index) : \(cell)")
-                
-                if (index == 3) {
-                    
-                    // cell.backgroundColor = UIColor(netHex: 0xff0000)
-                }                
-            }
-            
-           _cellHeights[indexPath.row] = kCloseCellHeight
+            _cellHeights[indexPath.row] = kCloseCellHeight
             
             animateFoldingCellClose(duration)
             cell.selectedAnimation(false, animated: true, completion: { () -> Void in
                 self.animateFoldingCellContentClose(duration, pCell: cell)
-                
             })
         }
     }
@@ -166,24 +154,33 @@ class PlaylistViewController:   BaseViewController,
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
         
-        UIView.animate(withDuration: pDuration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: pDuration, delay: 0.05, options: .curveEaseOut, animations: { () -> Void in
+            
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
-            self.view.layoutIfNeeded()
-        },  completion: nil)
+            
+        },  completion: { (Bool) -> Void in
+            
+            print ("_ opening done")
+            
+        })
     }
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
         
-        UIView.animate(withDuration: pDuration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: pDuration, delay: 0.00,
+                       options: .curveEaseIn,
+                       animations:
+            { () -> Void in
+            
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
-            self.view.layoutIfNeeded()
+            
         },  completion: { (Bool) -> Void in
+
+            print ("_ closing done")
             
-            print ("done")
-            
-        } )
+        })
     }
     
     //
