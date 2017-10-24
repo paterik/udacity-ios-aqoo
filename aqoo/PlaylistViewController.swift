@@ -125,22 +125,17 @@ class PlaylistViewController:   BaseViewController,
 
         if isCellOpening {
             
-            duration = 0.5125
-            
-           _cellHeights[indexPath.row] = kOpenCellHeight
+           _cellHeights[indexPath.row] = kOpenCellHeight; duration = 0.5125
             
             animateFoldingCell(duration)
             animateFoldingCellContentOpen(duration, pCell: cell)
             
             cell.selectedAnimation(true, animated: true, completion: nil)
-            
         }
         
         if isCellClosing {
             
-            duration = 0.1275
-            
-            _cellHeights[indexPath.row] = kCloseCellHeight
+           _cellHeights[indexPath.row] = kCloseCellHeight; duration = 0.1275
             
             animateFoldingCellClose(duration)
             cell.selectedAnimation(false, animated: true, completion: { () -> Void in
@@ -154,33 +149,24 @@ class PlaylistViewController:   BaseViewController,
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
         
-        UIView.animate(withDuration: pDuration, delay: 0.05, options: .curveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: pDuration, delay: 0.05, options: .curveEaseOut, animations:
+        { () -> Void in
             
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in
-            
-            print ("_ opening done")
-            
-        })
+        },  completion: { (Bool) -> Void in print ("_ opening done") })
     }
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
         
-        UIView.animate(withDuration: pDuration, delay: 0.00,
-                       options: .curveEaseIn,
-                       animations:
-            { () -> Void in
+        UIView.animate(withDuration: pDuration, delay: 0.00, options: .curveEaseIn, animations:
+        { () -> Void in
             
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in
-
-            print ("_ closing done")
-            
-        })
+        },  completion: { (Bool) -> Void in print ("_ closing done") })
     }
     
     //
