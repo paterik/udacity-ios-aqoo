@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import CryptoSwift
+import Kingfisher
 
 extension PlaylistViewController {
     
@@ -26,10 +27,10 @@ extension PlaylistViewController {
             if debugMode == true {
                 
                 print ("cache: (re)evaluated, tableView will be refreshed now ...")
-                print ("--------------------------------------------------")
+                print ("---------------------------------------------------------")
                 print ("\(spotifyClient.playListHashesInCloud.count) playlists in cloud")
                 print ("\(spotifyClient.playListHashesInCache.count) playlists in db/cache")
-                print ("--------------------------------------------------")
+                print ("---------------------------------------------------------")
             }
             
            spotifyClient.playlistsInCache = _playListCache
@@ -53,26 +54,10 @@ extension PlaylistViewController {
             )
             
             if debugMode == true {
-                
                 print ("\nlist: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
                 print ("name: \(playListInCloud.name!)")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")
-                
                 print ("imagesCount: \(playListInCloud.images.count)")
-                
-                if playListInCloud.images.count > 0 {
-                    
-                    for (index, image) in playListInCloud.images.enumerated() {
-                        
-                        if  let _rawImage = image as? SPTImage {
-                            if  _rawImage.size != CGSize(width:0, height:0) {
-                                let _imageUrl = _rawImage.imageURL.absoluteString
-                                print ("image #\(index): \(_rawImage.size) -> \(_imageUrl)")
-                            }
-                        }
-                    }
-                }
-                
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListHash!) (aqoo identifier)")
                 print ("\n--")
@@ -105,6 +90,21 @@ extension PlaylistViewController {
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
     
+    func setupUICacheProcessor() {
+        
+        ImageCache.default.maxDiskCacheSize = 512 * 1024 * 1024 // activate 512mb image cache size
+        ImageCache.default.maxCachePeriodInSecond = 60 * 60 * 24 * 30 // activate 30-days cache for all images
+        ImageDownloader.default.downloadTimeout = 10.0 // activate a 10s download threshold
+        
+        _cacheTimer = Timer.scheduledTimer(
+            timeInterval: 3,
+            target: self,
+            selector: #selector(handleCacheTimerEvent),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
     func setupUIEventObserver() {
         
         NotificationCenter.default.addObserver(
@@ -118,6 +118,14 @@ extension PlaylistViewController {
             name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
         )
+    }
+    
+    func handleCacheTimerEvent() {
+        
+        print ("dbg [playlist] : evaluate cache now ...")
+        ImageCache.default.calculateDiskCacheSize { size in
+            print("dbg [playlist] : cache ➡ used disk size by bytes: \(size)")
+        }
     }
     
     func handlePlaylistCloudRefresh() {
@@ -250,6 +258,18 @@ extension PlaylistViewController {
                         if self.debugMode == true {
                             print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
                         }
+                    }
+                }
+                
+                if let  _largestImage = playListInCloud.largestImage as? SPTImage {
+                    if  _largestImage.size != CGSize(width:0, height:0) {
+                        _playlistInDb!.largestImageURL = _largestImage.imageURL.absoluteString
+                    }
+                }
+                
+                if let  _smallestImage = playListInCloud.smallestImage as? SPTImage {
+                    if  _smallestImage.size != CGSize(width:0, height:0) {
+                        _playlistInDb!.smallestImageURL = _smallestImage.imageURL.absoluteString
                     }
                 }
             },

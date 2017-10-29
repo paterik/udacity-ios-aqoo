@@ -16,7 +16,9 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var trackCount: Int32
     @NSManaged var playableURI: String
     @NSManaged var smallestImage: Data?
+    @NSManaged var smallestImageURL: String?
     @NSManaged var largestImage: Data?
+    @NSManaged var largestImageURL: String?
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
     @NSManaged var updatedAt: Date?
