@@ -165,7 +165,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZR1-8l-W4s" userLabel="foregroundView" customClass="RotatedView" customModule="FoldingCell">
                                                     <rect key="frame" x="10" y="10" width="355" height="90"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="pK2-6a-rSX" userLabel="ui_img_playlistCover">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="pK2-6a-rSX" userLabel="ui_img_playlistCover">
                                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                             <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -252,6 +252,7 @@
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
+                                            <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1063,6 +1064,7 @@
         <image name="icnShareContent_v2" width="25" height="25"/>
         <image name="icnShowPlaylist_v1" width="25" height="25"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
+        <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
         <image name="sample_cover_01" width="320" height="320"/>
         <image name="sample_cover_02" width="150" height="150"/>
         <image name="sample_user_01" width="100" height="100"/>

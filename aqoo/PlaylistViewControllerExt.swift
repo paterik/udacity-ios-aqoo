@@ -67,7 +67,7 @@ extension PlaylistViewController {
                         if  let _rawImage = image as? SPTImage {
                             if  _rawImage.size != CGSize(width:0, height:0) {
                                 let _imageUrl = _rawImage.imageURL.absoluteString
-                                print ("image #\(index): \(_rawImage) -> \(_imageUrl)")
+                                print ("image #\(index): \(_rawImage.size) -> \(_imageUrl)")
                             }
                         }
                     }
