@@ -83,7 +83,7 @@ extension PlaylistViewController {
         backgroundImgView.clipsToBounds = true
         backgroundImgView.layoutIfNeeded()
         // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
-        backgroundImgView.backgroundColor = UIColor(netHex: 0xe1e1e1)
+        backgroundImgView.backgroundColor = UIColor(netHex: 0x191919)
         backgroundImgView.center = view.center
         
         tableView.backgroundView = backgroundImgView

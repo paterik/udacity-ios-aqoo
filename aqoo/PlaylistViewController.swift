@@ -65,6 +65,8 @@ class PlaylistViewController:   BaseViewController,
         
         super.viewWillAppear(animated)
         
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
         handlePlaylistCloudRefresh()
     }
     
@@ -73,6 +75,8 @@ class PlaylistViewController:   BaseViewController,
         super.viewWillDisappear(animated)
         
         _cacheTimer.invalidate()
+        
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     //
