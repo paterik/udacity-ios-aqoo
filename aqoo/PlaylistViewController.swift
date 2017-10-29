@@ -45,7 +45,6 @@ class PlaylistViewController:   BaseViewController,
     
     var _cellHeights = [CGFloat]()
     var _defaultStreamingProvider: StreamProvider?
-    var _cacheImageViews = [UIImageView]()
     var _cacheTimer: Timer!
     
     
@@ -112,11 +111,21 @@ class PlaylistViewController:   BaseViewController,
         // playlistCell.lblPlaylistName.text = playlistData.name
         
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
-        // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
-
+        // imageView.kf.setImage(with: url, options: [.transition(.fade(0.2))])
+        
         playlistCell.imageViewPlaylistCover.kf.setImage(
             with: URL(string: playlistData.largestImageURL!),
-            placeholder: UIImage(named: "imgUITblPlaylistDefault_v1")
+            placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
+            options: [
+                .transition(.fade(0.2)),
+                .processor(
+                    
+                    ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100))
+                    // .append(another: BlackWhiteProcessor())
+                    // .append(another: OverlayImageProcessor(overlay: UIColor(netHex: 0x1DB954), fraction: 0.7))
+                
+                )
+            ]
         )
         
         return playlistCell

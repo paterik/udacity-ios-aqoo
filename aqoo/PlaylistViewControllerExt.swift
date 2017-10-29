@@ -57,7 +57,7 @@ extension PlaylistViewController {
                 print ("\nlist: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
                 print ("name: \(playListInCloud.name!)")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")
-                print ("imagesCount: \(playListInCloud.images.count)")
+                print ("imgCount: \(playListInCloud.images.count)")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListHash!) (aqoo identifier)")
                 print ("\n--")
@@ -82,7 +82,8 @@ extension PlaylistViewController {
         backgroundImgView.contentMode =  UIViewContentMode.scaleAspectFill
         backgroundImgView.clipsToBounds = true
         backgroundImgView.layoutIfNeeded()
-        backgroundImgView.image = UIImage(named: "img_aqoo_wp_01")
+        // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
+        backgroundImgView.backgroundColor = UIColor(netHex: 0xe1e1e1)
         backgroundImgView.center = view.center
         
         tableView.backgroundView = backgroundImgView
@@ -124,7 +125,9 @@ extension PlaylistViewController {
         
         print ("dbg [playlist] : evaluate cache now ...")
         ImageCache.default.calculateDiskCacheSize { size in
-            print("dbg [playlist] : cache ➡ used disk size by bytes: \(size)")
+            print ("dbg [playlist] : cache ➡ used disk size by bytes: \(size)")
+            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count) playlists in cloud")
+            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count) playlists in db/cache")
         }
     }
     
