@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CoreStore:
-    :commit: b6ee0b014f60430cb9e60b4f159fc5429372d4ac
+    :commit: 02d7870d759afc6bb356dab0bcddb446957fd6d7
     :git: https://github.com/JohnEstropia/CoreStore.git
 
 SPEC CHECKSUMS:

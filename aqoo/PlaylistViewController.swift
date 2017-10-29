@@ -28,7 +28,7 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (sepcial)
     //
     
-    let kCloseCellHeight: CGFloat = 90 // 90
+    let kCloseCellHeight: CGFloat = 100 // 90
     let kOpenCellHeight: CGFloat = 345 // 310
     let kRowsCount = 9999
     
@@ -99,8 +99,6 @@ class PlaylistViewController:   BaseViewController,
         
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations
-        
-        playlistCell.lblDebugRowNumber.text = "#\(indexPath.row + 1)"
         
         // playlistCell.lblPlaylistName.text = playlistData.name
         // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
