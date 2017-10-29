@@ -44,8 +44,10 @@ class PlaylistViewController:   BaseViewController,
     //
     
     var _cellHeights = [CGFloat]()
-
     var _defaultStreamingProvider: StreamProvider?
+    var _cacheImageViews = [UIImageView]()
+    var _cacheTimer: Timer!
+    
     
     //
     // MARK: Class Method Overloads
@@ -57,6 +59,7 @@ class PlaylistViewController:   BaseViewController,
         
         setupUITableView()
         setupUIEventObserver()
+        setupUICacheProcessor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +67,13 @@ class PlaylistViewController:   BaseViewController,
         super.viewWillAppear(animated)
         
         handlePlaylistCloudRefresh()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        
+        _cacheTimer.invalidate()
     }
     
     //
@@ -99,12 +109,15 @@ class PlaylistViewController:   BaseViewController,
         
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations
-        
         // playlistCell.lblPlaylistName.text = playlistData.name
-        // playlistCell.imageView?.image = spotifyClient.spfUserDefaultImage
         
         // let processor = OverlayImageProcessor(overlay: .random, fraction: 0.875)
         // cell.imageView?.kf.setImage(with: spotifyClient.spfUserDefaultImageUrl!, options: [.processor(processor)])
+
+        playlistCell.imageViewPlaylistCover.kf.setImage(
+            with: URL(string: playlistData.largestImageURL!),
+            placeholder: UIImage(named: "imgUITblPlaylistDefault_v1")
+        )
         
         return playlistCell
     }
