@@ -12,21 +12,23 @@ import CryptoSwift
 class StreamPlayList: NSManagedObject {
     
     @NSManaged var name: String
+    @NSManaged var desc: String
     @NSManaged var owner: String
     @NSManaged var trackCount: Int32
     @NSManaged var playableURI: String
-    @NSManaged var smallestImage: Data?
     @NSManaged var smallestImageURL: String?
-    @NSManaged var largestImage: Data?
     @NSManaged var largestImageURL: String?
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?
     
+    @NSManaged var metaListNameOrigin: String
+    @NSManaged var metaListDescriptionOrigin: String
     @NSManaged var metaListHash: String
     @NSManaged var metaLastListenedAt: Date?
     @NSManaged var metaMarkedAsFavorite: Bool
+    @NSManaged var metaMediaRessourcesArray: NSArray?
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
     
@@ -40,5 +42,13 @@ class StreamPlayList: NSManagedObject {
             self.trackCount,
             "\(self.isPublic)",
             "\(self.isCollaborative)").md5()
+    }
+}
+
+extension StreamPlayList {
+    
+    var images: [String] {
+        get { return metaMediaRessourcesArray as? Array<String> ?? [] }
+        set { metaMediaRessourcesArray = newValue as NSArray }
     }
 }

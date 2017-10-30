@@ -172,6 +172,13 @@
 			name = _session;
 			sourceTree = "<group>";
 		};
+		B1891D4B1FA74CAE009E463C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		B18989271F72B95000516A53 /* _login */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +316,7 @@
 		B1D6A3961F910F74006E1DBC /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				B1891D4B1FA74CAE009E463C /* Core */,
 				B1D6A3971F910F94006E1DBC /* SpotifyPlaylist */,
 			);
 			name = extension;

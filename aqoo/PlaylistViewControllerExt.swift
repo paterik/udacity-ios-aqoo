@@ -82,8 +82,9 @@ extension PlaylistViewController {
         backgroundImgView.contentMode =  UIViewContentMode.scaleAspectFill
         backgroundImgView.clipsToBounds = true
         backgroundImgView.layoutIfNeeded()
+        
         // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
-        backgroundImgView.backgroundColor = UIColor(netHex: 0x191919)
+        backgroundImgView.backgroundColor = UIColor(netHex: 0x222222)
         backgroundImgView.center = view.center
         
         tableView.backgroundView = backgroundImgView
@@ -126,9 +127,10 @@ extension PlaylistViewController {
         print ("dbg [playlist] : evaluate cache now ...")
         ImageCache.default.calculateDiskCacheSize { size in
             print ("dbg [playlist] : cache ➡ used disk size by bytes: \(size)")
-            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count) playlists in cloud")
-            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count) playlists in db/cache")
         }
+        
+        print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count) playlists in cloud")
+        print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count) playlists in db/cache")
     }
     
     func handlePlaylistCloudRefresh() {
@@ -136,13 +138,20 @@ extension PlaylistViewController {
         if spotifyClient.isSpotifyTokenValid() {
             
             if  debugMode == true {
-                print ("dbg [playlists] : try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
+                
+                print ("dbg [playlist] : kingfisher ➡ clear memory cache right away")
+                ImageCache.default.clearMemoryCache()
+                
+                print ("dbg [playlist] : kingfisher ➡ clear disk cache. This is an async operation")
+                ImageCache.default.clearDiskCache()
+                
+                print ("dbg [playlist] : try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
             };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
             
             if  debugMode == true {
-                print ("dbg [playlists] : oops, your cloudProviderToken is not valid anymore")
+                print ("dbg [playlist] : oops, your cloudProviderToken is not valid anymore")
             };  btnExitLandingPageAction( self )
         }
     }
@@ -192,6 +201,36 @@ extension PlaylistViewController {
         }
     }
     
+    func handlePlaylistDbCacheMediaData(
+       _ playlistInDb: StreamPlayList,
+       _ playListInCloud: SPTPartialPlaylist) -> StreamPlayList {
+        
+        if let  _largestImage = playListInCloud.largestImage as? SPTImage {
+            if  _largestImage.size != CGSize(width:0, height:0) {
+                playlistInDb.largestImageURL = _largestImage.imageURL.absoluteString
+                print ("_ largestImageURL = \(playlistInDb.largestImageURL)")
+            }
+        }
+        
+        if let  _smallestImage = playListInCloud.smallestImage as? SPTImage {
+            if  _smallestImage.size != CGSize(width:0, height:0) {
+                playlistInDb.smallestImageURL = _smallestImage.imageURL.absoluteString
+                print ("_ smallestImageURL = \(playlistInDb.smallestImageURL)")
+            }
+        }
+        
+        /* for (index, image) in playListInCloud.images.enumerated() {
+            if  let _rawImage = image as? SPTImage {
+                if  _rawImage.size != CGSize(width:0, height:0) {
+                    playlistInDb.metaMediaRessourcesArray!.adding(_rawImage.imageURL.absoluteString)
+                    print ("_ media append #\(index) = \(_rawImage.imageURL.absoluteString)")
+                }
+            }
+        } */
+        
+        return playlistInDb
+    }
+    
     func handlePlaylistDbCache (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
@@ -221,10 +260,13 @@ extension PlaylistViewController {
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
                     _playlistInDb!.name = playListInCloud.name
+                    _playlistInDb!.desc = playListInCloud.description
                     _playlistInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playlistInDb!.isPublic = playListInCloud.isPublic
+                    _playlistInDb!.metaListNameOrigin = playListInCloud.name
+                    _playlistInDb!.metaListDescriptionOrigin = playListInCloud.name
                     _playlistInDb!.metaLastListenedAt = nil
                     _playlistInDb!.metaNumberOfUpdates = 0
                     _playlistInDb!.metaNumberOfShares = 0
@@ -252,6 +294,7 @@ extension PlaylistViewController {
                     } else {
                         
                         _playlistInDb!.name = playListInCloud.name
+                        _playlistInDb!.desc = playListInCloud.description
                         _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playlistInDb!.isPublic = playListInCloud.isPublic
@@ -264,17 +307,8 @@ extension PlaylistViewController {
                     }
                 }
                 
-                if let  _largestImage = playListInCloud.largestImage as? SPTImage {
-                    if  _largestImage.size != CGSize(width:0, height:0) {
-                        _playlistInDb!.largestImageURL = _largestImage.imageURL.absoluteString
-                    }
-                }
-                
-                if let  _smallestImage = playListInCloud.smallestImage as? SPTImage {
-                    if  _smallestImage.size != CGSize(width:0, height:0) {
-                        _playlistInDb!.smallestImageURL = _smallestImage.imageURL.absoluteString
-                    }
-                }
+                // handle playlist media data, using external function
+                _playlistInDb = self.handlePlaylistDbCacheMediaData(_playlistInDb!, playListInCloud)
             },
             
             completion: { _ in
