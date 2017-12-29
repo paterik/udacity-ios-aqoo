@@ -42,10 +42,13 @@ extension PlaylistViewController {
     
     @objc func setupUILoadCloudPlaylists() {
         
-        var _playListFingerprint: String!;
+        var _playListFingerprint: String!
+        var _progress: Float! = 0.0
         
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
+        
+        progressBar.isHidden = false
         
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
@@ -54,16 +57,33 @@ extension PlaylistViewController {
                 spotifyClient.spfUsername
             )
             
+            _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
+
+            _updatePlaylistProgress(_progress)
+            
             if debugMode == true {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!) [ covers: \(playListInCloud.images.count) ]")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
+                print ("progress: \(_progress)")
                 print ("\n--")
             }
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
+    }
+    
+    func _updatePlaylistProgress(_ progressValue:Float?) {
+        
+        if  progressValue == nil {
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(75), execute: {
+            print ("\(progressValue)")
+            self.progressBar.setProgress(progressValue!, animated: true)
+        })
     }
     
     func setupUITableView() {
@@ -95,17 +115,15 @@ extension PlaylistViewController {
 
         let _superView = navigationController?.navigationBar
 
+        progressBar.progress = 0.0
         progressBar.backgroundColor = UIColor(netHex: 0x222222)
         progressBar.trackTintColor = UIColor(netHex: 0x222222)
         progressBar.progressTintColor = UIColor(netHex: 0x1ED760)
         
         _superView!.addSubview(progressBar)
         
-        
         progressBar.translatesAutoresizingMaskIntoConstraints = false
-        
     }
-
     
     func setupUICacheProcessor() {
         
