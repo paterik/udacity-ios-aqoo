@@ -62,7 +62,7 @@ extension PlaylistViewController {
                 print ("owner: \(playListInCloud.owner.canonicalUserName!) [ covers: \(playListInCloud.images.count) ]")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
-                print ("progress: \(_progress)")
+                print ("progress: \(_progress!)")
                 print ("\n--")
             }
             
@@ -232,8 +232,9 @@ extension PlaylistViewController {
        _ playListIndex: Int,
        _ providerTag: String ) {
         
-        var _playlistInDb: StreamPlayList?
+        var _playListInDb: StreamPlayList?
         var _playListFingerprint: String!
+        var _playlistIsMine: Bool!
 
         CoreStore.perform(
             
@@ -246,76 +247,76 @@ extension PlaylistViewController {
                 )
                 
                 // corresponding playlist entry exists in db? Check this entry again and prepare for update
-                _playlistInDb = transaction.fetchOne(
+                _playListInDb = transaction.fetchOne(
                     From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
                 )
                 
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
-                if _playlistInDb == nil {
+                if _playListInDb == nil {
                     
-                    
-                    if (playListInCloud.owner.canonicalUsername == spotifyClient.spfCurrentSession?.canonicalUsername) {
-                        
+                    _playlistIsMine = false
+                    if (playListInCloud.owner.canonicalUserName == self.spotifyClient.spfCurrentSession?.canonicalUsername) {
+                        _playlistIsMine = true
                         print ("this playlist [ \(playListInCloud.name) ] is currently mine !!!")
                     }
                     
-                    _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
+                    _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
-                    _playlistInDb!.name = playListInCloud.name
-                    _playlistInDb!.desc = playListInCloud.description
-                    _playlistInDb!.playableURI = playListInCloud.playableUri.absoluteString
-                    _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
-                    _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
-                    _playlistInDb!.isPublic = playListInCloud.isPublic
-                    _playlistInDb!.metaListNameOrigin = playListInCloud.name
-                    _playlistInDb!.metaListDescriptionOrigin = playListInCloud.name
-                    _playlistInDb!.metaLastListenedAt = nil
-                    _playlistInDb!.metaNumberOfUpdates = 0
-                    _playlistInDb!.metaNumberOfShares = 0
-                    _playlistInDb!.metaMarkedAsFavorite = false
-                    _playlistInDb!.metaListHash = _playListFingerprint
-                    _playlistInDb!.createdAt = Date()
-                    _playlistInDb!.metaPreviouslyUpdated = false
-                    _playlistInDb!.metaPreviouslyCreated = true
-                    _playlistInDb!.isMine = (playListInCloud.owner.canonicalUsername == spotifyClient.spfCurrentSession?.canonicalUsername)
-                    _playlistInDb!.owner = playListInCloud.owner.canonicalUserName
-                    _playlistInDb!.provider = transaction.fetchOne(
+                    _playListInDb!.name = playListInCloud.name
+                    _playListInDb!.desc = playListInCloud.description
+                    _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
+                    _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
+                    _playListInDb!.isCollaborative = playListInCloud.isCollaborative
+                    _playListInDb!.isPublic = playListInCloud.isPublic
+                    _playListInDb!.metaListNameOrigin = playListInCloud.name
+                    _playListInDb!.metaListDescriptionOrigin = playListInCloud.name
+                    _playListInDb!.metaLastListenedAt = nil
+                    _playListInDb!.metaNumberOfUpdates = 0
+                    _playListInDb!.metaNumberOfShares = 0
+                    _playListInDb!.metaMarkedAsFavorite = false
+                    _playListInDb!.metaListHash = _playListFingerprint
+                    _playListInDb!.createdAt = Date()
+                    _playListInDb!.metaPreviouslyUpdated = false
+                    _playListInDb!.metaPreviouslyCreated = true
+                    _playListInDb!.isMine = _playlistIsMine
+                    _playListInDb!.owner = playListInCloud.owner.canonicalUserName
+                    _playListInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
                     
                     if self.debugMode == true {
-                        print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> CREATED")
+                        print ("cache: playlist data hash [\(_playListInDb!.metaListHash)] handled -> CREATED")
                     }
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
                 } else {
                  
-                    if _playlistInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
+                    if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(_playlistInDb!.name)] handled -> NO_CHANGES")
+                            print ("cache: playlist data hash [\(_playListInDb!.name)] handled -> NO_CHANGES")
                         }
                         
                     } else {
                         
-                        _playlistInDb!.name = playListInCloud.name
-                        _playlistInDb!.desc = playListInCloud.description
-                        _playlistInDb!.trackCount = Int32(playListInCloud.trackCount)
-                        _playlistInDb!.isCollaborative = playListInCloud.isCollaborative
-                        _playlistInDb!.isPublic = playListInCloud.isPublic
-                        _playlistInDb!.metaNumberOfUpdates += 1
-                        _playlistInDb!.updatedAt = Date()
-                        _playlistInDb!.metaPreviouslyUpdated = true
-                        _playlistInDb!.metaPreviouslyCreated = false
+                        _playListInDb!.name = playListInCloud.name
+                        _playListInDb!.desc = playListInCloud.description
+                        _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
+                        _playListInDb!.isCollaborative = playListInCloud.isCollaborative
+                        _playListInDb!.isPublic = playListInCloud.isPublic
+                        _playListInDb!.metaNumberOfUpdates += 1
+                        _playListInDb!.updatedAt = Date()
+                        _playListInDb!.metaPreviouslyUpdated = true
+                        _playListInDb!.metaPreviouslyCreated = false
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
+                            print ("cache: playlist data hash [\(_playListInDb!.metaListHash)] handled -> UPDATED")
                         }
                     }
                 }
                 
                 // last step - handle playlist media data, using vendor functionality (kingfisher cache)
-                _playlistInDb = self.handlePlaylistDbCacheMediaData(_playlistInDb!, playListInCloud)
+                _playListInDb = self.handlePlaylistDbCacheMediaData(_playListInDb!, playListInCloud)
             },
             
             completion: { _ in
