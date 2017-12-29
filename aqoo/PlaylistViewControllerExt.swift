@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import SnapKit
 import CoreStore
 import CryptoSwift
 import Kingfisher
@@ -28,8 +29,8 @@ extension PlaylistViewController {
                 
                 print ("cache: (re)evaluated, tableView will be refreshed now ...")
                 print ("---------------------------------------------------------")
-                print ("\(spotifyClient.playListHashesInCloud.count) playlists in cloud")
-                print ("\(spotifyClient.playListHashesInCache.count) playlists in db/cache")
+                print ("\(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
+                print ("\(spotifyClient.playListHashesInCache.count - 1) playlists in db/cache")
                 print ("---------------------------------------------------------")
             }
             
@@ -41,29 +42,27 @@ extension PlaylistViewController {
     
     @objc func setupUILoadCloudPlaylists() {
         
-        var _playListHash: String!;
+        var _playListFingerprint: String!;
         
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
         
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
-            _playListHash = spotifyClient.getMetaListHashByParam (
+            _playListFingerprint = spotifyClient.getMetaListHashByParam (
                 playListInCloud.playableUri.absoluteString,
                 spotifyClient.spfUsername
             )
             
             if debugMode == true {
-                print ("\nlist: #\(playlistIndex) containing \(playListInCloud.trackCount) playable songs")
-                print ("name: \(playListInCloud.name!)")
-                print ("owner: \(playListInCloud.owner.canonicalUserName!)")
-                print ("imgCount: \(playListInCloud.images.count)")
+                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
+                print ("owner: \(playListInCloud.owner.canonicalUserName!) [ covers: \(playListInCloud.images.count) ]")
                 print ("uri: \(playListInCloud.playableUri!)")
-                print ("hash: \(_playListHash!) (aqoo identifier)")
+                print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("\n--")
             }
             
-            handlePlaylistDbCache (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
+            handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
     }
     
@@ -92,14 +91,30 @@ extension PlaylistViewController {
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
     
+    func setupUITableViewProgressBar() {
+
+        let _superView = navigationController?.navigationBar
+
+        progressBar.backgroundColor = UIColor(netHex: 0x222222)
+        progressBar.trackTintColor = UIColor(netHex: 0x222222)
+        progressBar.progressTintColor = UIColor(netHex: 0x1ED760)
+        
+        _superView!.addSubview(progressBar)
+        
+        
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+
+    
     func setupUICacheProcessor() {
         
-        ImageCache.default.maxDiskCacheSize = 512 * 1024 * 1024 // activate 512mb image cache size
-        ImageCache.default.maxCachePeriodInSecond = 60 * 60 * 24 * 30 // activate 30-days cache for all images
-        ImageDownloader.default.downloadTimeout = 10.0 // activate a 10s download threshold
+        ImageCache.default.maxDiskCacheSize = _imgCacheInMb * 1024 * 1024 // activate 512mb image cache size
+        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _imgCacheRevalidateInDays)
+        ImageDownloader.default.downloadTimeout = _imgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
         
         _cacheTimer = Timer.scheduledTimer(
-            timeInterval: 3,
+            timeInterval: TimeInterval(self._sysCacheCheckInSeconds),
             target: self,
             selector: #selector(handleCacheTimerEvent),
             userInfo: nil,
@@ -122,15 +137,17 @@ extension PlaylistViewController {
         )
     }
     
+    /*
+     * this method will be called every n-seconds to ensure your lists are up to date
+     */
     func handleCacheTimerEvent() {
         
-        print ("dbg [playlist] : evaluate cache now ...")
         ImageCache.default.calculateDiskCacheSize { size in
-            print ("dbg [playlist] : cache ➡ used disk size by bytes: \(size)")
+            print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._imgCacheInMb * 1024)")
+            
         }
         
-        print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count) playlists in cloud")
-        print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count) playlists in db/cache")
+        handlePlaylistCloudRefresh()
     }
     
     func handlePlaylistCloudRefresh() {
@@ -145,7 +162,8 @@ extension PlaylistViewController {
                 print ("dbg [playlist] : kingfisher ➡ clear disk cache. This is an async operation")
                 ImageCache.default.clearDiskCache()
                 
-                print ("dbg [playlist] : try to synchronize playlists for provider [\(spotifyClient.spfStreamingProviderDbTag)] ...")
+                print ("dbg [playlist] : sync [\(spotifyClient.spfStreamingProviderDbTag)] playlists ...")
+                
             };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
@@ -156,11 +174,10 @@ extension PlaylistViewController {
         }
     }
     
-    func handlePlaylistDbCacheOrphans () {
+    func handlePlaylistDbCacheCoreDataOrphans () {
         
         if let _playListCache = CoreStore.defaultStack.fetchAll(
             From<StreamPlayList>().where(
-                (\StreamPlayList.owner == spotifyClient.spfUsername) &&
                 (\StreamPlayList.provider == _defaultStreamingProvider)
             )
         ) {
@@ -169,7 +186,9 @@ extension PlaylistViewController {
                 
                 // ignore all known / identical playlists
                 if spotifyClient.playListHashesInCloud.contains(playlist.metaListHash) {
-                   spotifyClient.playListHashesInCache.append(playlist.metaListHash); continue
+                   spotifyClient.playListHashesInCache.append(playlist.metaListHash)
+                   
+                   continue
                 }
             
                 // kill all obsolete / orphan cache entries
@@ -206,55 +225,44 @@ extension PlaylistViewController {
        _ playListInCloud: SPTPartialPlaylist) -> StreamPlayList {
         
         if let  _largestImage = playListInCloud.largestImage as? SPTImage {
-            if  _largestImage.size != CGSize(width:0, height:0) {
+            if  _largestImage.size != CGSize(width: 0, height: 0) {
                 playlistInDb.largestImageURL = _largestImage.imageURL.absoluteString
-                print ("_ largestImageURL = \(playlistInDb.largestImageURL)")
             }
         }
         
         if let  _smallestImage = playListInCloud.smallestImage as? SPTImage {
-            if  _smallestImage.size != CGSize(width:0, height:0) {
+            if  _smallestImage.size != CGSize(width: 0, height: 0) {
                 playlistInDb.smallestImageURL = _smallestImage.imageURL.absoluteString
-                print ("_ smallestImageURL = \(playlistInDb.smallestImageURL)")
             }
         }
-        
-        /* for (index, image) in playListInCloud.images.enumerated() {
-            if  let _rawImage = image as? SPTImage {
-                if  _rawImage.size != CGSize(width:0, height:0) {
-                    playlistInDb.metaMediaRessourcesArray!.adding(_rawImage.imageURL.absoluteString)
-                    print ("_ media append #\(index) = \(_rawImage.imageURL.absoluteString)")
-                }
-            }
-        } */
         
         return playlistInDb
     }
     
-    func handlePlaylistDbCache (
+    func handlePlaylistDbCacheCoreData (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
        _ providerTag: String ) {
         
         var _playlistInDb: StreamPlayList?
-        var _playListHash: String!
+        var _playListFingerprint: String!
 
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
                 
-                // render hash for new playlist entry
-                _playListHash = self.spotifyClient.getMetaListHashByParam (
+                // render hash for new playlist using corresponding cloud entry
+                _playListFingerprint = self.spotifyClient.getMetaListHashByParam (
                     playListInCloud.playableUri.absoluteString,
-                    self.spotifyClient.spfUsername
+                    playListInCloud.owner.canonicalUserName
                 )
                 
-                // we've a corresponding (given) playlist entry in db? Check this entry again and prepare for update
+                // corresponding playlist entry exists in db? Check this entry again and prepare for update
                 _playlistInDb = transaction.fetchOne(
-                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListHash))
+                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
                 )
                 
-                // playlist cache entry in local db not available or not fetchable? Create a new one ...
+                // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if _playlistInDb == nil {
                     
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
@@ -271,7 +279,7 @@ extension PlaylistViewController {
                     _playlistInDb!.metaNumberOfUpdates = 0
                     _playlistInDb!.metaNumberOfShares = 0
                     _playlistInDb!.metaMarkedAsFavorite = false
-                    _playlistInDb!.metaListHash = _playListHash
+                    _playlistInDb!.metaListHash = _playListFingerprint
                     _playlistInDb!.createdAt = Date()
                     _playlistInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playlistInDb!.provider = transaction.fetchOne(
@@ -307,19 +315,19 @@ extension PlaylistViewController {
                     }
                 }
                 
-                // handle playlist media data, using external function
+                // last step - handle playlist media data, using vendor functionality (kingfisher cache)
                 _playlistInDb = self.handlePlaylistDbCacheMediaData(_playlistInDb!, playListInCloud)
             },
             
             completion: { _ in
                 
                 // save handled hashed in separate collection
-                self.spotifyClient.playListHashesInCloud.append(_playListHash)
+                self.spotifyClient.playListHashesInCloud.append(_playListFingerprint)
                 
                 // evaluate list extension completion and execute event signal after final cache item was handled
-                if playListIndex == self.spotifyClient.playlistsInCloud.count - 1 {
+                if playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                     
-                    self.handlePlaylistDbCacheOrphans()
+                    self.handlePlaylistDbCacheCoreDataOrphans()
                     
                     if self.debugMode == true {
                         print ("cache: playlist data persistence completed, send signal to reload tableView now ...")
@@ -336,7 +344,11 @@ extension PlaylistViewController {
     
     func loadProvider (_ tag: String) {
         
-        if self.debugMode == true { print ("dbg [playlists] : try to load provider [\(tag)]") }
+        if self.debugMode == true {
+            print ("dbg [playlist] : try to load provider [\(tag)]")
+            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
+            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
+        }
         
         CoreStore.perform(
             
@@ -353,7 +365,7 @@ extension PlaylistViewController {
                 
                 if transactionProvider != nil {
                     if self.debugMode == true {
-                        print ("dbg [playlists] : provider [\(tag)] successfully loaded, fetching playlists now")
+                        print ("dbg [playlist] : provider [\(tag)] successfully loaded, fetching playlists now")
                     }
                     
                     self.spotifyClient.spfStreamingProvider = transactionProvider!
@@ -379,7 +391,7 @@ extension PlaylistViewController {
     
     func loadProviderPlaylists (_ provider: StreamProvider) {
         
-        if provider.tag != _supportedProviderTag {
+        if provider.tag != _sysDefaultProviderTag {
             
             self._handleErrorAsDialogMessage(
                 "Error Loading Provider",
@@ -416,14 +428,14 @@ extension PlaylistViewController {
                     
                     // store database fetch results in cache collection
                     if self.debugMode == true {
-                        print ("dbg [playlists] : \(transactionPlaylists!.count) playlists for this provider available ...")
+                        print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists for this provider available ...")
                     };  self.spotifyClient.playlistsInCache = transactionPlaylists!
                     
                 } else {
                     
                     // clean previously cached playlist collection
                     if self.debugMode == true {
-                        print ("dbg [playlists] : no cached playlist data for this provider found ...")
+                        print ("dbg [playlist] : no cached playlist data for this provider found ...")
                     };  self.spotifyClient.playlistsInCache = []
                 }
             },

@@ -23,6 +23,7 @@ class PlaylistViewController:   BaseViewController,
     
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     //
     // MARK: Constants (sepcial)
@@ -36,9 +37,13 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (normal)
     //
     
-    let _supportedProviderTag = "_spotify"
-    let _playlistCellIdentifier = "playListItem"
+    let _sysDefaultProviderTag = "_spotify"
+    let _sysCacheCheckInSeconds = 99
     
+    let _imgCacheInMb: UInt = 512
+    let _imgCacheRevalidateInDays: UInt = 30
+    let _imgCacheRevalidateTimeoutInSeconds: Double = 10.0
+
     //
     // MARK: Class Variables
     //
@@ -57,8 +62,11 @@ class PlaylistViewController:   BaseViewController,
         super.viewDidLoad()
         
         setupUITableView()
+        setupUITableViewProgressBar()
+        
         setupUIEventObserver()
         setupUICacheProcessor()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +74,7 @@ class PlaylistViewController:   BaseViewController,
         super.viewWillAppear(animated)
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        
+   
         handlePlaylistCloudRefresh()
     }
     
@@ -75,7 +83,7 @@ class PlaylistViewController:   BaseViewController,
         super.viewWillDisappear(animated)
         
         _cacheTimer.invalidate()
-        
+
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
@@ -104,7 +112,7 @@ class PlaylistViewController:   BaseViewController,
         let _cellBackgroundView = UIView()
         let playlistData = spotifyClient.playlistsInCache[indexPath.row]
         let playlistCell = tableView.dequeueReusableCell(
-            withIdentifier: _playlistCellIdentifier,
+            withIdentifier: "playListItem",
             for: indexPath) as! PlaylistTableFoldingCell
 
         let openingDurations: [TimeInterval] = [0.255, 0.215, 0.225]
@@ -158,6 +166,7 @@ class PlaylistViewController:   BaseViewController,
     }
     
     func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) { }
+    
     func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) { }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
@@ -168,7 +177,11 @@ class PlaylistViewController:   BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in print ("_ opening done") })
+        },  completion: { (Bool) -> Void in
+            if self.debugMode == true {
+                print ("_ opening done")
+            }
+        })
     }
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
@@ -179,7 +192,11 @@ class PlaylistViewController:   BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in print ("_ closing done") })
+        },  completion: { (Bool) -> Void in
+            if self.debugMode == true {
+                print ("_ opening done")
+            }
+        })
     }
     
     //
