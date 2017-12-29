@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13241" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StreamPlayList" representedClassName=".StreamPlayList" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isCollaborative" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isMine" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPublic" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="largestImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaLastListenedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -14,6 +15,8 @@
         <attribute name="metaMediaRessourcesArray" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
         <attribute name="metaNumberOfShares" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfUpdates" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaPreviouslyCreated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaPreviouslyUpdated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playableURI" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,7 +36,7 @@
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="345"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="390"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

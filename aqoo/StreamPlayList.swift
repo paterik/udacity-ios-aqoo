@@ -18,6 +18,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var playableURI: String
     @NSManaged var smallestImageURL: String?
     @NSManaged var largestImageURL: String?
+    @NSManaged var isMine: Bool
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
     @NSManaged var updatedAt: Date?
@@ -31,6 +32,9 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaMediaRessourcesArray: NSArray?
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
+    
+    @NSManaged var metaPreviouslyUpdated: Bool
+    @NSManaged var metaPreviouslyCreated: Bool
     
     @NSManaged var provider: StreamProvider?
     
