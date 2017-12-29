@@ -23,7 +23,6 @@ class PlaylistViewController:   BaseViewController,
     
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var progressBar: UIProgressView!
     
     //
     // MARK: Constants (sepcial)
@@ -62,7 +61,6 @@ class PlaylistViewController:   BaseViewController,
         super.viewDidLoad()
         
         setupUITableView()
-        setupUITableViewProgressBar()
         
         setupUIEventObserver()
         setupUICacheProcessor()

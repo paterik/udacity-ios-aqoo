@@ -47,9 +47,7 @@ extension PlaylistViewController {
         
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
-        
-        progressBar.isHidden = false
-        
+
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
             _playListFingerprint = spotifyClient.getMetaListHashByParam (
@@ -59,8 +57,6 @@ extension PlaylistViewController {
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
-            _updatePlaylistProgress(_progress)
-            
             if debugMode == true {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!) [ covers: \(playListInCloud.images.count) ]")
@@ -72,18 +68,6 @@ extension PlaylistViewController {
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
-    }
-    
-    func _updatePlaylistProgress(_ progressValue:Float?) {
-        
-        if  progressValue == nil {
-            return
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(75), execute: {
-            print ("\(progressValue)")
-            self.progressBar.setProgress(progressValue!, animated: true)
-        })
     }
     
     func setupUITableView() {
@@ -109,20 +93,6 @@ extension PlaylistViewController {
         tableView.backgroundView = backgroundImgView
         
         spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
-    }
-    
-    func setupUITableViewProgressBar() {
-
-        let _superView = navigationController?.navigationBar
-
-        progressBar.progress = 0.0
-        progressBar.backgroundColor = UIColor(netHex: 0x222222)
-        progressBar.trackTintColor = UIColor(netHex: 0x222222)
-        progressBar.progressTintColor = UIColor(netHex: 0x1ED760)
-        
-        _superView!.addSubview(progressBar)
-        
-        progressBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupUICacheProcessor() {
@@ -242,14 +212,14 @@ extension PlaylistViewController {
        _ playlistInDb: StreamPlayList,
        _ playListInCloud: SPTPartialPlaylist) -> StreamPlayList {
         
-        if let  _largestImage = playListInCloud.largestImage as? SPTImage {
-            if  _largestImage.size != CGSize(width: 0, height: 0) {
+        if let _largestImage = playListInCloud.largestImage as? SPTImage {
+            if _largestImage.size != CGSize(width: 0, height: 0) {
                 playlistInDb.largestImageURL = _largestImage.imageURL.absoluteString
             }
         }
         
-        if let  _smallestImage = playListInCloud.smallestImage as? SPTImage {
-            if  _smallestImage.size != CGSize(width: 0, height: 0) {
+        if let _smallestImage = playListInCloud.smallestImage as? SPTImage {
+            if _smallestImage.size != CGSize(width: 0, height: 0) {
                 playlistInDb.smallestImageURL = _smallestImage.imageURL.absoluteString
             }
         }
