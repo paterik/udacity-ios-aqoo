@@ -575,6 +575,7 @@ public extension DataStack {
                                 sourceModel: sourceModel,
                                 destinationModel: destinationModel,
                                 mappingModel: mappingModel,
+                                migrationType: migrationType,
                                 progress: childProgress
                             )
                         }
@@ -680,10 +681,74 @@ public extension DataStack {
         return nil
     }
     
-    private func startMigrationForStorage<T: LocalStorage>(_ storage: T, sourceModel: NSManagedObjectModel, destinationModel: NSManagedObjectModel, mappingModel: NSMappingModel, progress: Progress) throws {
+    private func startMigrationForStorage<T: LocalStorage>(_ storage: T, sourceModel: NSManagedObjectModel, destinationModel: NSManagedObjectModel, mappingModel: NSMappingModel, migrationType: MigrationType, progress: Progress) throws {
+        
+        do {
+            
+            try storage.cs_finalizeStorageAndWait(soureModelHint: sourceModel)
+        }
+        catch {
+            
+            throw CoreStoreError(error)
+        }
         
         let fileURL = storage.fileURL
-        
+        if case .lightweight = migrationType {
+
+            do {
+
+                let timerQueue = DispatchQueue(
+                    label: "DataStack.lightweightMigration.timerQueue",
+                    qos: .utility,
+                    attributes: []
+                )
+                let estimatedTime: TimeInterval = 60 * 3 // 3 mins
+                let interval: TimeInterval = 1
+                let fakeTotalUnitCount: Float = 0.9 * Float(progress.totalUnitCount)
+                var fakeProgress: Float = 0
+                
+                var recursiveCheck: () -> Void = {}
+                recursiveCheck = {
+                    
+                    guard fakeProgress < 1 else {
+                        
+                        return
+                    }
+                    progress.completedUnitCount = Int64(fakeTotalUnitCount * fakeProgress)
+                    fakeProgress += Float(interval / estimatedTime)
+                    
+                    timerQueue.asyncAfter(
+                        deadline: .now() + interval,
+                        execute: recursiveCheck
+                    )
+                }
+                timerQueue.async(execute: recursiveCheck)
+                
+                _ = try withExtendedLifetime(NSPersistentStoreCoordinator(managedObjectModel: destinationModel)) { (coordinator: NSPersistentStoreCoordinator) in
+                    
+                    try coordinator.addPersistentStoreSynchronously(
+                        type(of: storage).storeType,
+                        configuration: storage.configuration,
+                        URL: fileURL,
+                        options: storage.dictionary(
+                            forOptions: storage.localStorageOptions.union(.allowSynchronousLightweightMigration)
+                        )
+                    )
+                }
+                timerQueue.sync {
+                    
+                    fakeProgress = 1
+                }
+                try storage.cs_finalizeStorageAndWait(soureModelHint: destinationModel)
+                progress.completedUnitCount = progress.totalUnitCount
+                return
+            }
+            catch {
+
+                throw CoreStoreError(error)
+            }
+        }
+
         let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.CoreStore.DataStack")
             .appendingPathComponent(ProcessInfo().globallyUniqueString)
@@ -708,7 +773,6 @@ public extension DataStack {
         
         do {
             
-            try storage.cs_finalizeStorageAndWait(soureModelHint: sourceModel)
             try migrationManager.migrateStore(
                 from: fileURL,
                 sourceType: type(of: storage).storeType,

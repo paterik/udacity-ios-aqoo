@@ -1,9 +1,9 @@
 PODS:
-  - BGTableViewRowActionWithImage (0.4.2)
+  - BGTableViewRowActionWithImage (0.4.3)
   - CoreStore (5.0.0)
   - CryptoSwift (0.8.0)
   - FoldingCell (3.0.0)
-  - Kingfisher (4.2.0)
+  - Kingfisher (4.6.1)
   - Reachability (3.2)
   - SnapKit (4.0.0)
   - Spotify-iOS-SDK (0.25.0):
@@ -31,15 +31,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CoreStore:
-    :commit: 02d7870d759afc6bb356dab0bcddb446957fd6d7
+    :commit: 15edabdbb5f230b237106c2d59603e3b1108c905
     :git: https://github.com/JohnEstropia/CoreStore.git
 
 SPEC CHECKSUMS:
-  BGTableViewRowActionWithImage: 3ea48f993aa6fc7159a8245ce495cda938b3243e
+  BGTableViewRowActionWithImage: 05bd250553eb5ddd33df4de41f4b6e232379b22b
   CoreStore: a2c17c76d5e10272ded239ac1260b3b0456ccdd3
   CryptoSwift: f81907430ebbe38b8404b4f6fb40f3c576a8755f
   FoldingCell: 55e9fcac546acc2c8f110f210af892aa90032160
-  Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
+  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e

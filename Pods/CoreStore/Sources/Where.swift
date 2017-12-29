@@ -158,9 +158,9 @@ public struct Where<D: DynamicObject>: WhereClauseType, FetchClause, QueryClause
      Initializes a `Where` clause that compares equality to `nil`
      
      - parameter keyPath: the keyPath to compare with
-     - parameter value: the arguments for the `==` operator
+     - parameter null: the arguments for the `==` operator
      */
-    public init(_ keyPath: KeyPathString, isEqualTo value: Void?) {
+    public init(_ keyPath: KeyPathString, isEqualTo null: Void?) {
         
         self.init(NSPredicate(format: "\(keyPath) == nil"))
     }
@@ -303,22 +303,22 @@ public extension Where where D: NSManagedObject {
      Initializes a `Where` clause that compares equality to `nil`
      
      - parameter keyPath: the keyPath to compare with
-     - parameter value: the arguments for the `==` operator
+     - parameter null: the arguments for the `==` operator
      */
-    public init<V: QueryableAttributeType>(_ keyPath: KeyPath<D, V>, isEqualTo value: Void?) {
+    public init<V: QueryableAttributeType>(_ keyPath: KeyPath<D, V>, isEqualTo null: Void?) {
         
-        self.init(keyPath._kvcKeyPathString!, isEqualTo: value)
+        self.init(keyPath._kvcKeyPathString!, isEqualTo: null)
     }
     
     /**
      Initializes a `Where` clause that compares equality to `nil`
      
      - parameter keyPath: the keyPath to compare with
-     - parameter value: the arguments for the `==` operator
+     - parameter null: the arguments for the `==` operator
      */
-    public init<O: DynamicObject>(_ keyPath: KeyPath<D, O>, isEqualTo value: Void?) {
+    public init<O: DynamicObject>(_ keyPath: KeyPath<D, O>, isEqualTo null: Void?) {
         
-        self.init(keyPath._kvcKeyPathString!, isEqualTo: value)
+        self.init(keyPath._kvcKeyPathString!, isEqualTo: null)
     }
     
     /**
@@ -397,22 +397,22 @@ public extension Where where D: CoreStoreObject {
      Initializes a `Where` clause that compares equality to `nil`
      
      - parameter keyPath: the keyPath to compare with
-     - parameter value: the arguments for the `==` operator
+     - parameter null: the arguments for the `==` operator
      */
-    public init<V>(_ keyPath: KeyPath<D, ValueContainer<D>.Optional<V>>, isEqualTo value: Void?) {
+    public init<V>(_ keyPath: KeyPath<D, ValueContainer<D>.Optional<V>>, isEqualTo null: Void?) {
         
-        self.init(D.meta[keyPath: keyPath].keyPath, isEqualTo: value)
+        self.init(D.meta[keyPath: keyPath].keyPath, isEqualTo: null)
     }
     
     /**
      Initializes a `Where` clause that compares equality to `nil`
      
      - parameter keyPath: the keyPath to compare with
-     - parameter value: the arguments for the `==` operator
+     - parameter null: the arguments for the `==` operator
      */
-    public init<O>(_ keyPath: KeyPath<D, RelationshipContainer<D>.ToOne<O>>, isEqualTo value: Void?) {
+    public init<O>(_ keyPath: KeyPath<D, RelationshipContainer<D>.ToOne<O>>, isEqualTo null: Void?) {
         
-        self.init(D.meta[keyPath: keyPath].keyPath, isEqualTo: value)
+        self.init(D.meta[keyPath: keyPath].keyPath, isEqualTo: null)
     }
     
     /**
@@ -501,6 +501,16 @@ public extension Where where D: CoreStoreObject {
     public init<O, S: Sequence>(_ keyPath: KeyPath<D, RelationshipContainer<D>.ToOne<O>>, isMemberOf list: S) where S.Iterator.Element: NSManagedObjectID {
         
         self.init(D.meta[keyPath: keyPath].keyPath, isMemberOf: list)
+    }
+    
+    /**
+     Initializes a `Where` clause from a closure
+     
+     - parameter condition: closure that returns the `Where` clause
+     */
+    public init(_ condition: (D) -> Where<D>) {
+        
+        self = condition(D.meta)
     }
 }
 
