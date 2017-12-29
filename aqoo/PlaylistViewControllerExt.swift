@@ -253,6 +253,12 @@ extension PlaylistViewController {
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if _playlistInDb == nil {
                     
+                    
+                    if (playListInCloud.owner.canonicalUsername == spotifyClient.spfCurrentSession?.canonicalUsername) {
+                        
+                        print ("this playlist [ \(playListInCloud.name) ] is currently mine !!!")
+                    }
+                    
                     _playlistInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
                     _playlistInDb!.name = playListInCloud.name
@@ -269,6 +275,9 @@ extension PlaylistViewController {
                     _playlistInDb!.metaMarkedAsFavorite = false
                     _playlistInDb!.metaListHash = _playListFingerprint
                     _playlistInDb!.createdAt = Date()
+                    _playlistInDb!.metaPreviouslyUpdated = false
+                    _playlistInDb!.metaPreviouslyCreated = true
+                    _playlistInDb!.isMine = (playListInCloud.owner.canonicalUsername == spotifyClient.spfCurrentSession?.canonicalUsername)
                     _playlistInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playlistInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
@@ -296,6 +305,8 @@ extension PlaylistViewController {
                         _playlistInDb!.isPublic = playListInCloud.isPublic
                         _playlistInDb!.metaNumberOfUpdates += 1
                         _playlistInDb!.updatedAt = Date()
+                        _playlistInDb!.metaPreviouslyUpdated = true
+                        _playlistInDb!.metaPreviouslyCreated = false
                         
                         if self.debugMode == true {
                             print ("cache: playlist data hash [\(_playlistInDb!.metaListHash)] handled -> UPDATED")
