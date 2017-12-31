@@ -63,6 +63,15 @@ extension PlaylistViewController {
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
+                
+                if playListInCloud.name == "Mit Star bewertet" {
+                    print ("\(playListInCloud)")
+                }
+                
+                if playListInCloud.name == "Liked from Radio" {
+                    print ("\(playListInCloud)")
+                }
+                
                 print ("\n--")
             }
             
@@ -273,7 +282,13 @@ extension PlaylistViewController {
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
                     _playListInDb!.metaNumberOfShares = 0
-                    _playListInDb!.metaMarkedAsFavorite = false
+                    
+                    _playListInDb!.metaNumberOfPlayedPartly = 0
+                    _playListInDb!.metaNumberOfPlayedCompletely = 0
+                    _playListInDb!.isPlaylistVotedByStar = false
+                    _playListInDb!.isPlaylistRadioSelected = false
+                    _playListInDb!.isHot = false
+                    
                     _playListInDb!.metaListHash = _playListFingerprint
                     _playListInDb!.createdAt = Date()
                     _playListInDb!.metaPreviouslyUpdated = false

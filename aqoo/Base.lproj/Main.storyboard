@@ -12,6 +12,7 @@
     <customFonts key="customFonts">
         <array key="HelveticaNeue.ttc">
             <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue-Medium</string>
         </array>
         <array key="HelveticaNeueExtras.ttc">
             <string>HelveticaNeue-CondensedBold</string>
@@ -182,13 +183,25 @@
                                                                 <constraint firstAttribute="height" constant="90" id="sId-km-DSj"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOb-wp-Paj" userLabel="ui_lbl_playlistName">
+                                                            <rect key="frame" x="98" y="8" width="249" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20" id="TAm-rT-164"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="NOb-wp-Paj" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="8" id="3bh-sa-NyC"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="HjW-ox-7ki"/>
+                                                        <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
                                                         <constraint firstAttribute="trailing" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="265" id="d8e-N6-bRQ"/>
                                                         <constraint firstAttribute="bottom" secondItem="pK2-6a-rSX" secondAttribute="bottom" id="qNl-Kh-K58"/>
+                                                        <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="98" id="r0k-mX-Ixd"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="slO-7Q-vuI"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
                                                     </constraints>
@@ -262,6 +275,7 @@
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
+                                            <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

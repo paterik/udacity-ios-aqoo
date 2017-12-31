@@ -25,7 +25,7 @@ class PlaylistViewController:   BaseViewController,
     @IBOutlet weak var tableView: UITableView!
     
     //
-    // MARK: Constants (sepcial)
+    // MARK: Constants (special)
     //
     
     let kCloseCellHeight: CGFloat = 100 // 90
@@ -61,7 +61,6 @@ class PlaylistViewController:   BaseViewController,
         super.viewDidLoad()
         
         setupUITableView()
-        
         setupUIEventObserver()
         setupUICacheProcessor()
 
@@ -115,6 +114,8 @@ class PlaylistViewController:   BaseViewController,
 
         let openingDurations: [TimeInterval] = [0.255, 0.215, 0.225]
         let closingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
+        
+        playlistCell.lblPlaylistName.text = playlistData.name
         
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations

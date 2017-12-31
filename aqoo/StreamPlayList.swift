@@ -18,9 +18,15 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var playableURI: String
     @NSManaged var smallestImageURL: String?
     @NSManaged var largestImageURL: String?
+   
+    @NSManaged var isHot: Bool
     @NSManaged var isMine: Bool
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
+    
+    @NSManaged var isPlaylistVotedByStar: Bool
+    @NSManaged var isPlaylistRadioSelected: Bool
+    
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?
     
@@ -28,10 +34,13 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaListDescriptionOrigin: String
     @NSManaged var metaListHash: String
     @NSManaged var metaLastListenedAt: Date?
-    @NSManaged var metaMarkedAsFavorite: Bool
+
     @NSManaged var metaMediaRessourcesArray: NSArray?
+    
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
+    @NSManaged var metaNumberOfPlayedPartly: Int64
+    @NSManaged var metaNumberOfPlayedCompletely: Int64
     
     @NSManaged var metaPreviouslyUpdated: Bool
     @NSManaged var metaPreviouslyCreated: Bool
