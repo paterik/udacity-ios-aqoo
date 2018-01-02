@@ -192,16 +192,30 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sob-eI-eHt" userLabel="ui_img_playlistRanking">
+                                                            <rect key="frame" x="-3" y="60" width="32" height="32"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icnCellFXTrackCount_v3" translatesAutoresizingMaskIntoConstraints="NO" id="kWC-iX-15N" userLabel="icnCellMetaLeftSideOrange">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="8" id="3bh-sa-NyC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="sob-eI-eHt" secondAttribute="trailing" constant="326" id="6Ru-4Y-cfl"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="HjW-ox-7ki"/>
                                                         <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
+                                                        <constraint firstAttribute="bottom" secondItem="sob-eI-eHt" secondAttribute="bottom" constant="-2" id="VeI-8H-tj8"/>
                                                         <constraint firstAttribute="trailing" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="265" id="d8e-N6-bRQ"/>
+                                                        <constraint firstItem="sob-eI-eHt" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="60" id="gSY-n0-yTP"/>
                                                         <constraint firstAttribute="bottom" secondItem="pK2-6a-rSX" secondAttribute="bottom" id="qNl-Kh-K58"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="98" id="r0k-mX-Ixd"/>
+                                                        <constraint firstItem="sob-eI-eHt" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="-3" id="rba-cj-iIT"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="slO-7Q-vuI"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
                                                     </constraints>
@@ -275,6 +289,7 @@
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
+                                            <outlet property="imageViewPlaylistIsMine" destination="kWC-iX-15N" id="oe6-hx-Yzn"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                         </connections>
                                     </tableViewCell>
