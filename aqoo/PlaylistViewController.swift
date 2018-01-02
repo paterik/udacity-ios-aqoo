@@ -106,6 +106,7 @@ class PlaylistViewController:   BaseViewController,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let _cellBackgroundView = UIView()
+        
         let playlistData = spotifyClient.playlistsInCache[indexPath.row]
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListItem",
@@ -116,11 +117,10 @@ class PlaylistViewController:   BaseViewController,
         
         playlistCell.lblPlaylistName.text = playlistData.name
         
-        if playlistData.isMine {
-            
-            let triangle = BaseTriangleView(frame: CGRect(x: 10, y: 10, width: 30 , height: 30))
-            triangle.backgroundColor = .clear
-            playlistCell.addSubview(triangle)
+        if  playlistData.isMine == false {
+            playlistCell.imageViewPlaylistIsMine.isHidden = true
+        } else {
+            playlistCell.imageViewPlaylistIsMine.isHidden = false
         }
         
         var _usedCoverImageURL: URL?
