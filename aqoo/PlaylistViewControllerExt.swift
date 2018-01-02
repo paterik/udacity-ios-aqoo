@@ -431,7 +431,7 @@ extension PlaylistViewController {
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>().where(
-                        (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
+                        // (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
                         (\StreamPlayList.provider == provider)
                     )
                 )

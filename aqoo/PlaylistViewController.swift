@@ -117,6 +117,13 @@ class PlaylistViewController:   BaseViewController,
         
         playlistCell.lblPlaylistName.text = playlistData.name
         
+        if playlistData.isMine {
+            
+            let triangle = BaseTriangleView(frame: CGRect(x: 10, y: 20, width: 25 , height: 30))
+            triangle.backgroundColor = .red
+            playlistCell.addSubview(triangle)
+        }
+        
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations
         playlistCell.imageViewPlaylistCover.kf.setImage(
