@@ -19,8 +19,7 @@ extension PlaylistViewController {
         
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>().where(
-                    (\StreamPlayList.owner == spotifyClient.spfUsername) &&
-                    (\StreamPlayList.provider == _defaultStreamingProvider)
+                    \StreamPlayList.provider == _defaultStreamingProvider
                 )
             )
         {
@@ -63,6 +62,12 @@ extension PlaylistViewController {
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
+                
+                if playListInCloud.name == "Muse Complete" {
+                    print ("\(playListInCloud.images)")
+                    print ("\(playListInCloud.largestImage)")
+                    print ("\(playListInCloud.smallestImage)")
+                }
                 
                 if playListInCloud.name == "Mit Star bewertet" {
                     print ("\(playListInCloud)")
@@ -233,6 +238,23 @@ extension PlaylistViewController {
             }
         }
         
+        // no smallest or largest image found, iterated through alternative image stack
+        // and take the first exisiting / plausible image as smallest cover image instead.
+        // in future verseion I'll pick up some random band image from flickr if nothing
+        // where found ...
+        if playlistInDb.largestImageURL == nil && playlistInDb.smallestImageURL == nil {
+            
+            for (index, coverImageAlt) in playListInCloud.images.enumerated() {
+                if let _coverImageAlt = coverImageAlt as? SPTImage {
+                    if _coverImageAlt.size != CGSize(width: 0, height: 0) {
+                        playlistInDb.smallestImageURL = _coverImageAlt.imageURL.absoluteString
+                        
+                        return playlistInDb
+                    }
+                }
+            }
+        }
+        
         return playlistInDb
     }
     
@@ -266,7 +288,6 @@ extension PlaylistViewController {
                     _playlistIsMine = false
                     if (playListInCloud.owner.canonicalUserName == self.spotifyClient.spfCurrentSession?.canonicalUsername) {
                         _playlistIsMine = true
-                        print ("this playlist [ \(playListInCloud.name) ] is currently mine !!!")
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
@@ -314,6 +335,7 @@ extension PlaylistViewController {
                         
                     } else {
                         
+                        // name, number of tracks or flags for public/collaborative changed? update list
                         _playListInDb!.name = playListInCloud.name
                         _playListInDb!.desc = playListInCloud.description
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
@@ -431,6 +453,7 @@ extension PlaylistViewController {
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>().where(
+                        // this will filter the current list to logged in user content only ...
                         // (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
                         (\StreamPlayList.provider == provider)
                     )

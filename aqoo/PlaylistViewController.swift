@@ -63,7 +63,6 @@ class PlaylistViewController:   BaseViewController,
         setupUITableView()
         setupUIEventObserver()
         setupUICacheProcessor()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,21 +118,38 @@ class PlaylistViewController:   BaseViewController,
         
         if playlistData.isMine {
             
-            let triangle = BaseTriangleView(frame: CGRect(x: 10, y: 20, width: 25 , height: 30))
-            triangle.backgroundColor = .red
+            let triangle = BaseTriangleView(frame: CGRect(x: 10, y: 10, width: 30 , height: 30))
+            triangle.backgroundColor = .clear
             playlistCell.addSubview(triangle)
+        }
+        
+        var _usedCoverImageURL: URL?
+        var _noCoverImageAvailable: Bool = true
+        
+        if playlistData.largestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistData.largestImageURL!)
+            _noCoverImageAvailable = false
+        }
+        
+        if playlistData.smallestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistData.smallestImageURL!)
+            _noCoverImageAvailable = false
         }
         
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations
-        playlistCell.imageViewPlaylistCover.kf.setImage(
-            with: URL(string: playlistData.largestImageURL!),
-            placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
-            options: [
-                .transition(.fade(0.2)),
-                .processor(ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100)))
-            ]
-        )
+        playlistCell.imageViewPlaylistCover.image = UIImage(named: "imgUITblPlaylistDefault_v1")
+        
+        if _noCoverImageAvailable == false {
+            playlistCell.imageViewPlaylistCover.kf.setImage(
+                with: URL(string: playlistData.largestImageURL!),
+                placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100)))
+                ]
+            )
+        }
         
         return playlistCell
     }
