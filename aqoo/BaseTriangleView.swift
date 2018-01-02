@@ -26,10 +26,10 @@ class BaseTriangleView : UIView {
         context.beginPath()
         context.move(to: CGPoint(x: rect.minX, y: rect.maxY))
         context.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        context.addLine(to: CGPoint(x: (rect.maxX / 2.0), y: rect.minY))
+        context.addLine(to: CGPoint(x: (rect.maxX), y: rect.minY))
         context.closePath()
         
-        context.setFillColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 0.60)
+        context.setFillColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 0.95)
         context.fillPath()
     }
 }
