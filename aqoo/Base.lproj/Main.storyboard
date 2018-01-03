@@ -178,10 +178,6 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="pK2-6a-rSX" userLabel="ui_img_playlistCover">
                                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                             <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="90" id="FfF-5L-NK0"/>
-                                                                <constraint firstAttribute="height" constant="90" id="sId-km-DSj"/>
-                                                            </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOb-wp-Paj" userLabel="ui_lbl_playlistName">
                                                             <rect key="frame" x="98" y="8" width="249" height="20"/>
@@ -192,10 +188,10 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sob-eI-eHt" userLabel="ui_img_playlistRanking">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sob-eI-eHt" userLabel="ui_img_playlistIdent">
                                                             <rect key="frame" x="-3" y="60" width="32" height="32"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icnCellFXTrackCount_v3" translatesAutoresizingMaskIntoConstraints="NO" id="kWC-iX-15N" userLabel="icnCellMetaLeftSideOrange">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="kWC-iX-15N" userLabel="ui_img_playlistIdentFlag">
                                                                     <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -208,15 +204,15 @@
                                                     <constraints>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="8" id="3bh-sa-NyC"/>
                                                         <constraint firstAttribute="trailing" secondItem="sob-eI-eHt" secondAttribute="trailing" constant="326" id="6Ru-4Y-cfl"/>
-                                                        <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="HjW-ox-7ki"/>
+                                                        <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="7rV-5p-jgq"/>
                                                         <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
                                                         <constraint firstAttribute="bottom" secondItem="sob-eI-eHt" secondAttribute="bottom" constant="-2" id="VeI-8H-tj8"/>
-                                                        <constraint firstAttribute="trailing" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="265" id="d8e-N6-bRQ"/>
+                                                        <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="YUS-9n-3Z6"/>
+                                                        <constraint firstAttribute="bottom" secondItem="pK2-6a-rSX" secondAttribute="bottom" id="cPf-y1-kYe"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="60" id="gSY-n0-yTP"/>
-                                                        <constraint firstAttribute="bottom" secondItem="pK2-6a-rSX" secondAttribute="bottom" id="qNl-Kh-K58"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="98" id="r0k-mX-Ixd"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="-3" id="rba-cj-iIT"/>
-                                                        <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="slO-7Q-vuI"/>
+                                                        <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="8" symbolic="YES" id="uMe-NH-gho"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
                                                     </constraints>
                                                 </view>
@@ -1088,6 +1084,7 @@
     </scenes>
     <resources>
         <image name="icnCellFXFavorite_v2" width="32" height="32"/>
+        <image name="icnCellFXIsMine_v1" width="32" height="32"/>
         <image name="icnCellFXTrackCount_v3" width="32" height="32"/>
         <image name="icnDelete_v1" width="25" height="25"/>
         <image name="icnFavoriteOn_v1" width="25" height="25"/>
