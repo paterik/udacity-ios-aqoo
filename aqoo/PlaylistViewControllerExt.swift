@@ -205,7 +205,6 @@ extension PlaylistViewController {
             }
             
             loadProvider ( spotifyClient.spfStreamingProviderDbTag )
-            // setupUITableView()
             
         } else {
             
@@ -368,7 +367,6 @@ extension PlaylistViewController {
             
             completion: { _ in
                 
-                print ("dbg [playlist] : [\(userName)], [\(playListInDb.metaListHash)] handled -> PROFILE_UPDATED")
                 self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
                     userName,
                     userProfileImageURL
@@ -573,7 +571,7 @@ extension PlaylistViewController {
                 
                 return transaction.fetchAll(
                     From<StreamPlayList>().where(
-                        // this will filter the current list to logged in user content only ...
+                        // info_1001: this will filter the current list to logged in user content only ...
                         // (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
                         (\StreamPlayList.provider == provider)
                     )
