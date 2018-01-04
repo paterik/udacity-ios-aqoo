@@ -36,6 +36,7 @@ extension PlaylistViewController {
            spotifyClient.playlistsInCache = _playListCache
         }
         
+        tableView.refreshTable()
         tableView.reloadData()
     }
     
@@ -99,8 +100,6 @@ extension PlaylistViewController {
         backgroundImgView.center = view.center
         
         tableView.backgroundView = backgroundImgView
-        
-        spotifyClient.getDefaultPlaylistImageByUserPhoto(spotifyClient.spfCurrentSession!)
     }
     
     func setupUICacheProcessor() {
@@ -127,18 +126,6 @@ extension PlaylistViewController {
               let date = userInfo["date"] as? Date else { return }
         
         _userProfilesHandled.append(profileUser.canonicalUserName)
-        
-        if self.debugMode == true {
-            print ("\n")
-            print ("=== EVENT_RECEIVED ===")
-            print ("-> event = [ \(notifier.notifyUserProfileLoadCompleted) ]")
-            print ("-> profile \(_userProfilesHandled.count) of \(_uniqueUserProfilesInPlaylists.count)")
-            print ("-> profileUser = \(profileUser)")
-            print ("-> profileImageURL = \(profileImageURL)")
-            print ("-> profileImageURLAvailable = \(profileImageURLAvailable)")
-            print ("-> date = \(date)")
-        }
-        
         if profileImageURLAvailable {
             _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
         }
@@ -238,7 +225,7 @@ extension PlaylistViewController {
         
         if debugMode == true {
             print ("dbg [playlist] : enrich playlists by adding \(_uniqueUserProfilesInPlaylists.count) user profiles")
-            print ("dbg [playlist] : profiles ➡ \(_uniqueUserProfilesInPlaylists.joined(separator: ", "))")
+            print ("dbg [playlist] : playlist profiles ➡ \(_uniqueUserProfilesInPlaylists.joined(separator: ", "))")
         }
         
         for (_, _userName) in _uniqueUserProfilesInPlaylists.enumerated() {

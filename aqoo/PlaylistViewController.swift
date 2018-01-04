@@ -101,7 +101,7 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-            return _cellHeights[indexPath.row]
+        return _cellHeights[indexPath.row]
     }
     
     func tableView(
@@ -130,7 +130,7 @@ class PlaylistViewController:   BaseViewController,
             playlistCell.imageViewPlaylistIsMine.isHidden = false
         }
 
-        let _processor = ResizingImageProcessor(referenceSize: CGSize(width: 64, height: 64))
+        let _profileImageProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 40, height: 40))
             .append(another: RoundCornerImageProcessor(cornerRadius: 45))
             .append(another: BlackWhiteProcessor())
         
@@ -141,13 +141,11 @@ class PlaylistViewController:   BaseViewController,
                 placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
                 options: [
                     .transition(.fade(0.2)),
-                    .processor(_processor)
+                    .processor(_profileImageProcessor)
                 ]
             )
             
-        } else {
-            playlistCell.imageViewPlaylistOwner.isHidden = true
-        }
+        } else { playlistCell.imageViewPlaylistOwner.isHidden = true }
         
         if playlistData.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistData.largestImageURL!)
