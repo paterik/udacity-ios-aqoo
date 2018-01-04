@@ -6,7 +6,6 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension CGRect {
@@ -26,13 +25,5 @@ extension CGPoint {
     
     init(_ x:CGFloat,_ y:CGFloat) {
         self.init(x:x,y:y)
-    }
-}
-
-extension UITableView {
-    
-    func refreshTable() {
-        let indexPathForSection = NSIndexSet(index: 0)
-        self.reloadSections(indexPathForSection as IndexSet, with: UITableViewRowAnimation.middle)
     }
 }
