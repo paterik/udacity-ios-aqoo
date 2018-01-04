@@ -37,15 +37,19 @@ class PlaylistViewController:   BaseViewController,
     // MARK: Constants (normal)
     //
     
+    let _sysCacheCheckInSeconds = 99
     let _sysDefaultProviderTag = "_spotify"
     let _sysDefaultSpotifyUsername = "spotify"
     let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
     let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
-    let _sysCacheCheckInSeconds = 99
+    let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
+    let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
+    let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
+    let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
     
-    let _imgCacheInMb: UInt = 512
-    let _imgCacheRevalidateInDays: UInt = 30
-    let _imgCacheRevalidateTimeoutInSeconds: Double = 10.0
+    let _sysImgCacheInMb: UInt = 512
+    let _sysImgCacheRevalidateInDays: UInt = 30
+    let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
 
     //
     // MARK: Class Variables
@@ -58,8 +62,6 @@ class PlaylistViewController:   BaseViewController,
     var _userProfilesHandledWithImages = [String: String]()
     var _userProfilesInPlaylists = [String]()
     var _userProfilesInPlaylistsUnique = [String]()
-    var _userProfileImageSize = CGSize(width: 128, height: 128)
-    var _userProfileImageCRadiusInDeg: CGFloat = 45
     
     //
     // MARK: Class Method Overloads
@@ -137,7 +139,7 @@ class PlaylistViewController:   BaseViewController,
         }
 
         if (playlistData.ownerImageURL == nil || playlistData.ownerImageURL == "") {
-            playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileDefault_v1")
+            playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
         }   else {
             handleOwnerProfileImageCacheForCell(playlistData.owner, playlistData.ownerImageURL, playlistCell)
         }
@@ -154,15 +156,15 @@ class PlaylistViewController:   BaseViewController,
         
         playlistCell.durationsForExpandedState = openingDurations
         playlistCell.durationsForCollapsedState = closingDurations
-        playlistCell.imageViewPlaylistCover.image = UIImage(named: "imgUITblPlaylistDefault_v1")
+        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
         
         if _noCoverImageAvailable == false {
             playlistCell.imageViewPlaylistCover.kf.setImage(
                 with: URL(string: playlistData.largestImageURL!),
-                placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
+                placeholder: UIImage(named: _sysDefaultCoverImage),
                 options: [
                     .transition(.fade(0.2)),
-                    .processor(ResizingImageProcessor(referenceSize: CGSize(width: 100, height: 100)))
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
                 ]
             )
         }

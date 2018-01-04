@@ -104,9 +104,9 @@ extension PlaylistViewController {
     
     func setupUICacheProcessor() {
         
-        ImageCache.default.maxDiskCacheSize = _imgCacheInMb * 1024 * 1024 // activate 512mb image cache size
-        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _imgCacheRevalidateInDays)
-        ImageDownloader.default.downloadTimeout = _imgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
+        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024 // activate 512mb image cache size
+        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
+        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
         
         _cacheTimer = Timer.scheduledTimer(
             timeInterval: TimeInterval(self._sysCacheCheckInSeconds),
@@ -191,7 +191,7 @@ extension PlaylistViewController {
     func handleCacheTimerEvent() {
         
         ImageCache.default.calculateDiskCacheSize { size in
-            print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._imgCacheInMb * 1024)")
+            print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
         };  handlePlaylistCloudRefresh()
     }
     
@@ -317,8 +317,8 @@ extension PlaylistViewController {
             playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
         }   else {
             let _profileImageProcessor = ResizingImageProcessor(
-                 referenceSize: _userProfileImageSize)
-                .append(another: RoundCornerImageProcessor(cornerRadius: _userProfileImageCRadiusInDeg))
+                 referenceSize: _sysUserProfileImageSize)
+                .append(another: RoundCornerImageProcessor(cornerRadius: _sysUserProfileImageCRadiusInDeg))
                 .append(another: BlackWhiteProcessor())
             
             playlistCell.imageViewPlaylistOwner.isHidden = false
