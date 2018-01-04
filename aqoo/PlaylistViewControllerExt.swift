@@ -58,24 +58,10 @@ extension PlaylistViewController {
 
             if debugMode == true {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
-                print ("owner: \(playListInCloud.owner.canonicalUserName!) [ covers: \(playListInCloud.images.count) ]")
+                print ("owner: \(playListInCloud.owner.canonicalUserName!) [ playlist covers: \(playListInCloud.images.count) ]")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
-                
-                if playListInCloud.name == "Muse Complete" {
-                    print ("\(playListInCloud.images)")
-                    print ("\(playListInCloud.largestImage)")
-                    print ("\(playListInCloud.smallestImage)")
-                }
-                
-                if playListInCloud.name == "Mit Star bewertet" {
-                    print ("\(playListInCloud)")
-                }
-                
-                if playListInCloud.name == "Liked from Radio" {
-                    print ("\(playListInCloud)")
-                }
                 
                 print ("\n--")
             }
@@ -124,7 +110,33 @@ extension PlaylistViewController {
         )
     }
     
+    func setupUILoadUserProfileImages(notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+              let profileUser = userInfo["profileUser"] as? SPTUser,
+              let profileImageURL = userInfo["profileImageURL"] as? URL,
+              let date = userInfo["date"] as? Date else {
+                
+                print("No userInfo found in notification")
+                
+                return
+        }
+        
+        print ("\n")
+        print ("EVENT_RECEIVED")
+        print ("-> profileUser = \(profileUser)")
+        print ("-> profileImageURL = \(profileImageURL)")
+        print ("-> date = \(profileImageURL)")
+        print ("\n")
+    }
+    
     func setupUIEventObserver() {
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadUserProfileImages),
+            name: NSNotification.Name(rawValue: self.notifier.notifyUserProfileLoadCompleted),
+            object: nil
+        )
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadCloudPlaylists),
@@ -266,6 +278,8 @@ extension PlaylistViewController {
         var _playListInDb: StreamPlayList?
         var _playListFingerprint: String!
         var _playlistIsMine: Bool!
+        var _ownerProfileImageURL: URL?
+        var _ownerProfileImageStringURL: String! = ""
 
         CoreStore.perform(
             
@@ -282,12 +296,23 @@ extension PlaylistViewController {
                     From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
                 )
                 
+                _ownerProfileImageURL = self.spotifyClient.getUserProfileImageURLByUserName(
+                    playListInCloud.owner.canonicalUserName,
+                    self.spotifyClient.spfCurrentSession!.accessToken!
+                )
+                
+                print ("-- PROFILE IMAGE URL : \(_ownerProfileImageURL)")
+                
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if _playListInDb == nil {
                     
                     _playlistIsMine = false
                     if (playListInCloud.owner.canonicalUserName == self.spotifyClient.spfCurrentSession?.canonicalUsername) {
                         _playlistIsMine = true
+                    }
+
+                    if  _ownerProfileImageURL != nil {
+                        _ownerProfileImageStringURL = _ownerProfileImageURL!.absoluteString
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
@@ -316,6 +341,8 @@ extension PlaylistViewController {
                     _playListInDb!.metaPreviouslyCreated = true
                     _playListInDb!.isMine = _playlistIsMine
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
+                    _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
+                    
                     _playListInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )

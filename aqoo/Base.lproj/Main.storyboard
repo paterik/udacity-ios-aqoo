@@ -198,13 +198,21 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </view>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_user_01" translatesAutoresizingMaskIntoConstraints="NO" id="lvd-FW-jux" userLabel="ui_img_owner">
+                                                            <rect key="frame" x="307" y="42" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="FMo-lj-jul"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="lvd-FW-jux" firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" id="0eh-i5-jXQ"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="8" id="3bh-sa-NyC"/>
                                                         <constraint firstAttribute="trailing" secondItem="sob-eI-eHt" secondAttribute="trailing" constant="326" id="6Ru-4Y-cfl"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="7rV-5p-jgq"/>
+                                                        <constraint firstItem="lvd-FW-jux" firstAttribute="top" secondItem="NOb-wp-Paj" secondAttribute="bottom" constant="14" id="OjX-pe-U63"/>
                                                         <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
                                                         <constraint firstAttribute="bottom" secondItem="sob-eI-eHt" secondAttribute="bottom" constant="-2" id="VeI-8H-tj8"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="YUS-9n-3Z6"/>
@@ -213,6 +221,7 @@
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="98" id="r0k-mX-Ixd"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="-3" id="rba-cj-iIT"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="8" symbolic="YES" id="uMe-NH-gho"/>
+                                                        <constraint firstItem="lvd-FW-jux" firstAttribute="bottom" secondItem="ZR1-8l-W4s" secondAttribute="bottomMargin" id="v2n-ii-coC"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
                                                     </constraints>
                                                 </view>
@@ -286,6 +295,7 @@
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
                                             <outlet property="imageViewPlaylistIsMine" destination="kWC-iX-15N" id="oe6-hx-Yzn"/>
+                                            <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                         </connections>
                                     </tableViewCell>
@@ -1001,6 +1011,22 @@
                                     <constraint firstItem="NCK-7f-EZ1" firstAttribute="bottom" secondItem="5ai-os-4Av" secondAttribute="bottom" id="sez-BW-ZmH"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAD-Ya-F8g" userLabel="ui_btn_playlistPlayNormal">
+                                <rect key="frame" x="319" y="70" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="hMh-TS-1Uf"/>
+                                </constraints>
+                                <state key="normal" image="icnSetPlayNormal_0">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="sample_user_01" translatesAutoresizingMaskIntoConstraints="NO" id="5T9-Jv-RQY" userLabel="ui_img_owner">
+                                <rect key="frame" x="114" y="70" width="40" height="40"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="QtH-kT-Qrd"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1092,6 +1118,7 @@
         <image name="icnPLRefresh" width="25" height="25"/>
         <image name="icnPLTableView" width="25" height="25"/>
         <image name="icnSetPauseMini_1" width="25" height="25"/>
+        <image name="icnSetPlayNormal_0" width="25" height="25"/>
         <image name="icnSetPlayNormal_1" width="25" height="25"/>
         <image name="icnSetPlayRepeatAll_0" width="25" height="25"/>
         <image name="icnSetPlayShuffle_0" width="25" height="25"/>

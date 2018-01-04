@@ -50,7 +50,7 @@ class PlaylistViewController:   BaseViewController,
     var _cellHeights = [CGFloat]()
     var _defaultStreamingProvider: StreamProvider?
     var _cacheTimer: Timer!
-    
+    var _usersHandledByProfileUpdate = [String]()
     
     //
     // MARK: Class Method Overloads
@@ -60,9 +60,9 @@ class PlaylistViewController:   BaseViewController,
         
         super.viewDidLoad()
         
-        setupUITableView()
-        setupUIEventObserver()
         setupUICacheProcessor()
+        setupUIEventObserver()
+        setupUITableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +101,8 @@ class PlaylistViewController:   BaseViewController,
             return _cellHeights[indexPath.row]
     }
     
+    
+    
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -119,8 +121,14 @@ class PlaylistViewController:   BaseViewController,
         
         if  playlistData.isMine == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
+            playlistCell.imageViewPlaylistOwner.isHidden = true
+            print ("--- ownerImageURL: \(playlistData.ownerImageURL)")
+            
         } else {
+            
             playlistCell.imageViewPlaylistIsMine.isHidden = false
+            playlistCell.imageViewPlaylistOwner.isHidden = false
+            playlistCell.imageViewPlaylistOwner.image = spotifyClient.spfUserDefaultImage!
         }
         
         var _usedCoverImageURL: URL?

@@ -23,6 +23,7 @@
         <attribute name="metaPreviouslyUpdated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playableURI" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="smallestImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -40,7 +41,7 @@
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="450"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="465"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

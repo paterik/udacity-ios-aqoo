@@ -14,6 +14,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var desc: String
     @NSManaged var owner: String
+    @NSManaged var ownerImageURL: String
     @NSManaged var trackCount: Int32
     @NSManaged var playableURI: String
     @NSManaged var smallestImageURL: String?

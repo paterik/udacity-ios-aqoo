@@ -69,6 +69,108 @@ class SpotifyClient: SPFClientPlaylists {
         _initAPIContext()
     }
     
+    func getUserProfileImageURLByUserName(_ userName: String, _ accessToken: String) -> URL? {
+        
+        var profileImageURL: URL?
+        
+        SPTUser.request(userName, withAccessToken: accessToken, callback: {
+            
+            ( error, response ) in
+            
+            if  let _user = response as? SPTUser {
+                profileImageURL = self.getUserProfileImageURLBySPTUser(_user)
+                NotificationCenter.default.post(
+                    name: NSNotification.Name.init(rawValue: self.notifier.notifyUserProfileLoadCompleted),
+                    object: nil,
+                    userInfo: [ "profileUser": _user, "profileImageURL": profileImageURL, "date": Date()]
+                )
+            }
+        })
+        
+        return profileImageURL
+    }
+    
+    func getUserProfileImageURLBySPTUser(_ user: SPTUser) -> URL? {
+        
+        var profileImageURL: URL?
+        
+        if  let _largestImage = user.largestImage as? SPTImage {
+            if  _largestImage.size != CGSize(width: 0, height: 0) {
+                profileImageURL = _largestImage.imageURL
+                if debugMode == true { print ("found largestImage value for user [\(user.canonicalUserName!)]") }
+                
+                return profileImageURL
+            }
+        }
+        
+        if  let _smallestImage = user.smallestImage as? SPTImage {
+            if  _smallestImage.size != CGSize(width: 0, height: 0) {
+                profileImageURL = _smallestImage.imageURL
+                if debugMode == true { print ("found smallestImage value for user [\(user.canonicalUserName!)]") }
+                
+                return profileImageURL
+            }
+        }
+        
+        if  profileImageURL == nil {
+            
+            for (index, userImageAlt) in user.images.enumerated() {
+                if let _userImageAlt = userImageAlt as? SPTImage {
+                    if _userImageAlt.imageURL != nil {
+                        profileImageURL = _userImageAlt.imageURL
+                        if debugMode == true { print ("found image url value for user [\(user.canonicalUserName!)]") }
+                        
+                        return profileImageURL
+                    }
+                }
+            }
+        }
+        
+        return profileImageURL
+    }
+    
+    func getUserProfileImageByUserName (
+        _ userName: String,
+        _ accessToken: String) -> String? {
+
+        if userName == nil { return nil }
+        
+        let kingFisherCacheId: String = "\(userName)"
+        
+        ImageCache.default.retrieveImage(forKey: kingFisherCacheId, options: nil) {
+            
+            image, cacheType in
+            
+            if let _image = image {
+                
+                print("image for user (key) \(kingFisherCacheId), cacheType: \(cacheType) already exist!")
+
+            } else {
+                
+                print("image for user (key) \(kingFisherCacheId), doesn't exist - downloading now")
+                
+                SPTUser.request(userName, withAccessToken: accessToken, callback: {
+                    
+                    ( error, response ) in
+                    
+                    if  let _user = response as? SPTUser {
+                        if let _userProfileImageURL = self.getUserProfileImageURLBySPTUser(_user) as? URL {
+       
+                            ImageDownloader.default.downloadImage(with: _userProfileImageURL, options: [], progressBlock: nil) {
+                                
+                                (image, error, url, data) in
+                                
+                                ImageCache.default.store( image!, forKey: "\(kingFisherCacheId)", toDisk: true)
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        
+        return "\(kingFisherCacheId)"
+    }
+    
     func getDefaultPlaylistImageByUserPhoto(_ session: SPTSession) {
         
         if debugMode == true {
@@ -87,7 +189,7 @@ class SpotifyClient: SPFClientPlaylists {
                     
                     (image, error, url, data) in
                     
-                    ImageCache.default.store( image!, forKey: "spf_user_default_image" )
+                    ImageCache.default.store( image!, forKey: _currentUser.canonicalUserName, toDisk: true)
                     self.spfUserDefaultImage = image!
                     self.spfUserDefaultImageUrl = url!
                     

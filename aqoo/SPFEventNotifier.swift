@@ -10,6 +10,7 @@ import Foundation
 
 struct SPFEventNotifier {
     
+    var notifyUserProfileLoadCompleted = "_cloud_user_profile_load_completed"
     var notifyPlaylistLoadCompleted = "__cloud_playlist_load_completed"
     var notifyPlaylistCacheLoadCompleted = "__cache_playlist_load_completed"
     var notifySessionRequestSuccess = "__cloud_session_request_completed"

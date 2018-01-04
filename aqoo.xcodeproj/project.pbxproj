@@ -279,6 +279,13 @@
 			path = aqooUITests;
 			sourceTree = "<group>";
 		};
+		B1B4A0BF1FFCBE8B00E83E92 /* _profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = _profile;
+			sourceTree = "<group>";
+		};
 		B1BD1EE61F7785F9001FC294 /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +308,7 @@
 		B1D6A3921F90FE31006E1DBC /* spotify.com */ = {
 			isa = PBXGroup;
 			children = (
+				B1B4A0BF1FFCBE8B00E83E92 /* _profile */,
 				B13D6F001F91BD3D00486487 /* _events */,
 				B13D6EFD1F91B6C500486487 /* _player */,
 				B13D6EFC1F91B6AB00486487 /* _playlists */,
