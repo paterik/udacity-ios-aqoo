@@ -202,7 +202,10 @@ extension PlaylistViewController {
             if  debugMode == true {
                 ImageCache.default.clearMemoryCache()
                 ImageCache.default.clearDiskCache()
-            };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
+            }
+            
+            loadProvider ( spotifyClient.spfStreamingProviderDbTag )
+            // setupUITableView()
             
         } else {
             
@@ -312,7 +315,7 @@ extension PlaylistViewController {
        _ playlistCell: PlaylistTableFoldingCell) {
         
         if  userName == _sysDefaultSpotifyUsername {
-            playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
+            playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
         }   else {
             let _profileImageProcessor = ResizingImageProcessor(
                  referenceSize: _userProfileImageSize)
@@ -338,8 +341,11 @@ extension PlaylistViewController {
         tableView.visibleCells.forEach { cell in
             
             if let  playlistCell = cell as? PlaylistTableFoldingCell {
-                if  playlistCell._dbgOwnerName != userName {
+                if  playlistCell._dbgOwnerName! != userName {
                     playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
+                    if  playlistCell._dbgOwnerName! == _sysDefaultSpotifyUsername {
+                        playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
+                    }
                     
                 }   else {
                     handleOwnerProfileImageCacheForCell(userName, userProfileImageURL, playlistCell)
@@ -582,12 +588,6 @@ extension PlaylistViewController {
                     if self.debugMode == true {
                         print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists available ...")
                     };  self.spotifyClient.playlistsInCache = transactionPlaylists!
-
-                    // weazL ... check refresh functionality asap! this lines seems not to be working ?!
-                    NotificationCenter.default.post(
-                        name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
-                        object: self
-                    )
                     
                 } else {
                     
