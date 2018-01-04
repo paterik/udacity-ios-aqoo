@@ -176,6 +176,11 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
+        // prevent cell row actions on open cell views (unfolded cells)
+        if let playlistCell = tableView.cellForRow(at: indexPath) as? PlaylistTableFoldingCell {
+            if playlistCell.frame.height > kCloseCellHeight { return [] }
+        }
+        
         let tblActionEdit = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
