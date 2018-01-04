@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import Kingfisher
 import FoldingCell
+import BGTableViewRowActionWithImage
 
 class PlaylistViewController:   BaseViewController,
                                 SPTAudioStreamingPlaybackDelegate,
@@ -167,6 +168,43 @@ class PlaylistViewController:   BaseViewController,
         }
         
         return playlistCell
+    }
+    
+    func tableView(
+       _ tableView: UITableView,
+         editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let tblActionEdit = BGTableViewRowActionWithImage.rowAction(
+            with: UITableViewRowActionStyle.default,
+            title: nil,
+            backgroundColor: UIColor(netHex: 0x222222),
+            image: UIImage(named: "icnSettings_v2"),
+            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+                
+                print ("TBL_ACTION_DETECTED : Edit")
+        }
+        
+        let tblActionDelete = BGTableViewRowActionWithImage.rowAction(
+            with: UITableViewRowActionStyle.default,
+            title: nil,
+            backgroundColor: UIColor(netHex: 0x222222),
+            image: UIImage(named: "icnDelete_v2"),
+            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+                
+                print ("TBL_ACTION_DETECTED : Delete")
+        }
+        
+        let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
+            with: UITableViewRowActionStyle.default,
+            title: nil,
+            backgroundColor: UIColor(netHex: 0x222222),
+            image: UIImage(named: "icnShowPlaylist_v2"),
+            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+                
+                print ("TBL_ACTION_DETECTED : ShowDetails")
+        }
+        
+        return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionDelete! ]
     }
     
     func tableView(
