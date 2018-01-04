@@ -28,6 +28,7 @@ class SpotifyClient: SPFClientPlaylists {
     // MARK: Constants (Normal)
     //
     
+    let spfInternalNoImageURL = "https://127.0.0.1/no_image"
     let spfSessionUserDefaultsKey: String = "SpotifySession"
     let spfStreamingProviderDbTag: String = "_spotify"
     let spfSecretPropertyListFile = "Keys"
@@ -69,64 +70,70 @@ class SpotifyClient: SPFClientPlaylists {
         _initAPIContext()
     }
     
-    func getUserProfileImageURLByUserName(_ userName: String, _ accessToken: String) -> URL? {
+    func getUserProfileImageURLByUserName(_ userName: String, _ accessToken: String) {
         
-        var profileImageURL: URL?
-        
+        var _profileImageURL: URL?
+        var _profileImageURLAvailable: Bool = false
+ 
         SPTUser.request(userName, withAccessToken: accessToken, callback: {
             
             ( error, response ) in
             
             if  let _user = response as? SPTUser {
-                profileImageURL = self.getUserProfileImageURLBySPTUser(_user)
+                
+                _profileImageURL = self.getUserProfileImageURLBySPTUser(_user)
+                if _profileImageURL!.absoluteString != URL(string: self.spfInternalNoImageURL)!.absoluteString {
+                   _profileImageURLAvailable = true
+                }
+                
                 NotificationCenter.default.post(
                     name: NSNotification.Name.init(rawValue: self.notifier.notifyUserProfileLoadCompleted),
                     object: nil,
-                    userInfo: [ "profileUser": _user, "profileImageURL": profileImageURL, "date": Date()]
+                    userInfo: [
+                        "profileUser": _user,
+                        "profileImageURL": _profileImageURL!,
+                        "profileImageURLAvailable" : _profileImageURLAvailable,
+                        "date": Date()
+                    ]
                 )
             }
         })
-        
-        return profileImageURL
     }
     
     func getUserProfileImageURLBySPTUser(_ user: SPTUser) -> URL? {
         
-        var profileImageURL: URL?
+        var _profileImageURL: URL?
         
         if  let _largestImage = user.largestImage as? SPTImage {
             if  _largestImage.size != CGSize(width: 0, height: 0) {
-                profileImageURL = _largestImage.imageURL
-                if debugMode == true { print ("found largestImage value for user [\(user.canonicalUserName!)]") }
+                _profileImageURL = _largestImage.imageURL
                 
-                return profileImageURL
+                return _profileImageURL
             }
         }
         
         if  let _smallestImage = user.smallestImage as? SPTImage {
             if  _smallestImage.size != CGSize(width: 0, height: 0) {
-                profileImageURL = _smallestImage.imageURL
-                if debugMode == true { print ("found smallestImage value for user [\(user.canonicalUserName!)]") }
+                _profileImageURL = _smallestImage.imageURL
                 
-                return profileImageURL
+                return _profileImageURL
             }
         }
         
-        if  profileImageURL == nil {
+        if _profileImageURL == nil {
             
             for (index, userImageAlt) in user.images.enumerated() {
                 if let _userImageAlt = userImageAlt as? SPTImage {
                     if _userImageAlt.imageURL != nil {
-                        profileImageURL = _userImageAlt.imageURL
-                        if debugMode == true { print ("found image url value for user [\(user.canonicalUserName!)]") }
+                       _profileImageURL = _userImageAlt.imageURL
                         
-                        return profileImageURL
+                        return _profileImageURL
                     }
                 }
             }
         }
         
-        return profileImageURL
+        return URL(string: spfInternalNoImageURL)
     }
     
     func getUserProfileImageByUserName (

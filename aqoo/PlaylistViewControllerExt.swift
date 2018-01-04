@@ -44,8 +44,14 @@ extension PlaylistViewController {
         var _playListFingerprint: String!
         var _progress: Float! = 0.0
         
+        // clear internal cache for playlists and user profiles
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
+        
+        _uniqueUserProfilesInPlaylists = []
+        _userProfilesInPlaylists = []
+        _userProfilesHandledWithImages = [:]
+        _userProfilesHandled = []
 
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
@@ -53,6 +59,8 @@ extension PlaylistViewController {
                 playListInCloud.playableUri.absoluteString,
                 spotifyClient.spfUsername
             )
+            
+            _userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName!)
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
@@ -115,19 +123,58 @@ extension PlaylistViewController {
         guard let userInfo = notification.userInfo,
               let profileUser = userInfo["profileUser"] as? SPTUser,
               let profileImageURL = userInfo["profileImageURL"] as? URL,
-              let date = userInfo["date"] as? Date else {
-                
-                print("No userInfo found in notification")
-                
-                return
+              let profileImageURLAvailable = userInfo["profileImageURLAvailable"] as? Bool,
+              let date = userInfo["date"] as? Date else { return }
+        
+        _userProfilesHandled.append(profileUser.canonicalUserName)
+        
+        if self.debugMode == true {
+            print ("\n")
+            print ("=== EVENT_RECEIVED ===")
+            print ("-> event = [ \(notifier.notifyUserProfileLoadCompleted) ]")
+            print ("-> profile \(_userProfilesHandled.count) of \(_uniqueUserProfilesInPlaylists.count)")
+            print ("-> profileUser = \(profileUser)")
+            print ("-> profileImageURL = \(profileImageURL)")
+            print ("-> profileImageURLAvailable = \(profileImageURLAvailable)")
+            print ("-> date = \(date)")
         }
         
-        print ("\n")
-        print ("EVENT_RECEIVED")
-        print ("-> profileUser = \(profileUser)")
-        print ("-> profileImageURL = \(profileImageURL)")
-        print ("-> date = \(profileImageURL)")
-        print ("\n")
+        if profileImageURLAvailable {
+            _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
+        }
+        
+        // all userProfiles handled? start refresh/enrichment cache process
+        if _userProfilesHandled.count == _uniqueUserProfilesInPlaylists.count {
+            
+            for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
+               
+                if debugMode == true {
+                    print ("dbg [playlist] : update cached playlist for userProfile [ \(_userName) ]")
+                }
+                
+                // fetch all known playlists for corresponding (profile available) user
+                if let _playListCache = CoreStore.defaultStack.fetchAll(
+                    From<StreamPlayList>().where(
+                        (\StreamPlayList.provider == _defaultStreamingProvider) &&
+                        (\StreamPlayList.owner == _userName))
+                    ) {
+                    
+                    // update cache entity for this user, add userProfileImageURL (using external function)
+                    for (_, playlistInDb) in _playListCache.enumerated() {
+                        
+                        if self.debugMode == true {
+                            print ("dbg [playlist] : refresh cache for [ \(_userName) ], [ \(playlistInDb.name) ]")
+                        };  self.handlePlaylistDbCacheOwnerProfileData(playlistInDb, _userName, _userProfileImageURL)
+                    }
+                }
+            }
+            
+            // so finaly reload playlist tableView and leave this method peacefully
+            NotificationCenter.default.post(
+                name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
+                object: self
+            )
+        }
     }
     
     func setupUIEventObserver() {
@@ -158,10 +205,7 @@ extension PlaylistViewController {
         
         ImageCache.default.calculateDiskCacheSize { size in
             print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._imgCacheInMb * 1024)")
-            
-        }
-        
-        handlePlaylistCloudRefresh()
+        };  handlePlaylistCloudRefresh()
     }
     
     func handlePlaylistCloudRefresh() {
@@ -188,12 +232,28 @@ extension PlaylistViewController {
         }
     }
     
+    func handlePlaylistProfileEnrichtment() {
+        
+        _uniqueUserProfilesInPlaylists = Array(Set(_userProfilesInPlaylists))
+        
+        if debugMode == true {
+            print ("dbg [playlist] : enrich playlists by adding \(_uniqueUserProfilesInPlaylists.count) user profiles")
+            print ("dbg [playlist] : profiles ➡ \(_uniqueUserProfilesInPlaylists.joined(separator: ", "))")
+        }
+        
+        for (_, _userName) in _uniqueUserProfilesInPlaylists.enumerated() {
+            
+            print ("dbg [playlist] : send userProfile request (event) for [ \(_userName) ]")
+            _ =  spotifyClient.getUserProfileImageURLByUserName(
+                _userName, spotifyClient.spfCurrentSession!.accessToken!
+            )
+        }
+    }
+    
     func handlePlaylistDbCacheCoreDataOrphans () {
         
         if let _playListCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayList>().where(
-                (\StreamPlayList.provider == _defaultStreamingProvider)
-            )
+            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
         ) {
             
             for (_, playlist) in _playListCache.enumerated() {
@@ -207,7 +267,7 @@ extension PlaylistViewController {
             
                 // kill all obsolete / orphan cache entries
                 if debugMode == true {
-                    print ("cache: playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
+                    print ("dbg [playlist] : playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
                 }
                 
                 CoreStore.perform(
@@ -221,13 +281,8 @@ extension PlaylistViewController {
                     completion: { _ in
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                            print ("dbg [playlist] : playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
                         }
-                        
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
-                            object: self
-                        )
                     }
                 )
             }
@@ -270,6 +325,25 @@ extension PlaylistViewController {
         return playlistInDb
     }
     
+    func handlePlaylistDbCacheOwnerProfileData (
+       _ playListInDb: StreamPlayList,
+       _ userName: String,
+       _ userProfileImageURL: String) {
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                playListInDb.ownerImageURL = userProfileImageURL
+            },
+            
+            completion: { _ in
+                
+                print ("dbg [playlist] : [\(userName)], [\(playListInDb.metaListHash)] handled -> PROFILE_UPDATED")
+            }
+        )
+    }
+    
     func handlePlaylistDbCacheCoreData (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
@@ -280,6 +354,7 @@ extension PlaylistViewController {
         var _playlistIsMine: Bool!
         var _ownerProfileImageURL: URL?
         var _ownerProfileImageStringURL: String! = ""
+        var _currentUserName = spotifyClient.spfCurrentSession?.canonicalUsername
 
         CoreStore.perform(
             
@@ -296,18 +371,11 @@ extension PlaylistViewController {
                     From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
                 )
                 
-                _ownerProfileImageURL = self.spotifyClient.getUserProfileImageURLByUserName(
-                    playListInCloud.owner.canonicalUserName,
-                    self.spotifyClient.spfCurrentSession!.accessToken!
-                )
-                
-                print ("-- PROFILE IMAGE URL : \(_ownerProfileImageURL)")
-                
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if _playListInDb == nil {
                     
                     _playlistIsMine = false
-                    if (playListInCloud.owner.canonicalUserName == self.spotifyClient.spfCurrentSession?.canonicalUsername) {
+                    if (playListInCloud.owner.canonicalUserName == _currentUserName) {
                         _playlistIsMine = true
                     }
 
@@ -348,7 +416,7 @@ extension PlaylistViewController {
                     )
                     
                     if self.debugMode == true {
-                        print ("cache: playlist data hash [\(_playListInDb!.metaListHash)] handled -> CREATED")
+                        print ("dbg [playlist] : playlist data hash [\(_playListInDb!.metaListHash)] handled -> CREATED")
                     }
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
@@ -357,7 +425,7 @@ extension PlaylistViewController {
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(_playListInDb!.name)] handled -> NO_CHANGES")
+                            print ("dbg [playlist] : playlist data hash [\(_playListInDb!.name)] handled -> NO_CHANGES")
                         }
                         
                     } else {
@@ -374,7 +442,7 @@ extension PlaylistViewController {
                         _playListInDb!.metaPreviouslyCreated = false
                         
                         if self.debugMode == true {
-                            print ("cache: playlist data hash [\(_playListInDb!.metaListHash)] handled -> UPDATED")
+                            print ("dbg [playlist] : playlist data hash [\(_playListInDb!.metaListHash)] handled -> UPDATED")
                         }
                     }
                 }
@@ -392,15 +460,7 @@ extension PlaylistViewController {
                 if playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                     
                     self.handlePlaylistDbCacheCoreDataOrphans()
-                    
-                    if self.debugMode == true {
-                        print ("cache: playlist data persistence completed, send signal to reload tableView now ...")
-                    }
-                    
-                    NotificationCenter.default.post(
-                        name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
-                        object: self
-                    )
+                    self.handlePlaylistProfileEnrichtment()
                 }
             }
         )

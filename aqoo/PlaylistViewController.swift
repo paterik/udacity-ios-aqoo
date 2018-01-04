@@ -50,7 +50,10 @@ class PlaylistViewController:   BaseViewController,
     var _cellHeights = [CGFloat]()
     var _defaultStreamingProvider: StreamProvider?
     var _cacheTimer: Timer!
-    var _usersHandledByProfileUpdate = [String]()
+    var _userProfilesHandled = [String]()
+    var _userProfilesHandledWithImages = [String: String]()
+    var _userProfilesInPlaylists = [String]()
+    var _uniqueUserProfilesInPlaylists = [String]()
     
     //
     // MARK: Class Method Overloads
@@ -101,8 +104,6 @@ class PlaylistViewController:   BaseViewController,
             return _cellHeights[indexPath.row]
     }
     
-    
-    
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -117,22 +118,36 @@ class PlaylistViewController:   BaseViewController,
         let openingDurations: [TimeInterval] = [0.255, 0.215, 0.225]
         let closingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
         
+        var _usedCoverImageURL: URL?
+        var _noCoverImageAvailable: Bool = true
+        
         playlistCell.lblPlaylistName.text = playlistData.name
         
         if  playlistData.isMine == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
-            playlistCell.imageViewPlaylistOwner.isHidden = true
-            print ("--- ownerImageURL: \(playlistData.ownerImageURL)")
             
         } else {
-            
             playlistCell.imageViewPlaylistIsMine.isHidden = false
-            playlistCell.imageViewPlaylistOwner.isHidden = false
-            playlistCell.imageViewPlaylistOwner.image = spotifyClient.spfUserDefaultImage!
         }
+
+        let _processor = ResizingImageProcessor(referenceSize: CGSize(width: 64, height: 64))
+            .append(another: RoundCornerImageProcessor(cornerRadius: 45))
+            .append(another: BlackWhiteProcessor())
         
-        var _usedCoverImageURL: URL?
-        var _noCoverImageAvailable: Bool = true
+        if (playlistData.ownerImageURL != nil && playlistData.ownerImageURL != "") {
+            playlistCell.imageViewPlaylistOwner.isHidden = false
+            playlistCell.imageViewPlaylistOwner.kf.setImage(
+                with: URL(string: playlistData.ownerImageURL),
+                placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(_processor)
+                ]
+            )
+            
+        } else {
+            playlistCell.imageViewPlaylistOwner.isHidden = true
+        }
         
         if playlistData.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistData.largestImageURL!)
