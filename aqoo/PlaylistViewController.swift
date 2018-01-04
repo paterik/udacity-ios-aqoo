@@ -53,7 +53,9 @@ class PlaylistViewController:   BaseViewController,
     var _userProfilesHandled = [String]()
     var _userProfilesHandledWithImages = [String: String]()
     var _userProfilesInPlaylists = [String]()
-    var _uniqueUserProfilesInPlaylists = [String]()
+    var _userProfilesInPlaylistsUnique = [String]()
+    var _userProfileImageSize = CGSize(width: 128, height: 128)
+    var _userProfileImageCRadiusInDeg: CGFloat = 45
     
     //
     // MARK: Class Method Overloads
@@ -122,30 +124,19 @@ class PlaylistViewController:   BaseViewController,
         var _noCoverImageAvailable: Bool = true
         
         playlistCell.lblPlaylistName.text = playlistData.name
+        playlistCell._dbgOwnerName = playlistData.owner
         
         if  playlistData.isMine == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
-            
-        } else {
+        }   else {
             playlistCell.imageViewPlaylistIsMine.isHidden = false
         }
 
-        let _profileImageProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 40, height: 40))
-            .append(another: RoundCornerImageProcessor(cornerRadius: 45))
-            .append(another: BlackWhiteProcessor())
-        
-        if (playlistData.ownerImageURL != nil && playlistData.ownerImageURL != "") {
-            playlistCell.imageViewPlaylistOwner.isHidden = false
-            playlistCell.imageViewPlaylistOwner.kf.setImage(
-                with: URL(string: playlistData.ownerImageURL),
-                placeholder: UIImage(named: "imgUITblPlaylistDefault_v1"),
-                options: [
-                    .transition(.fade(0.2)),
-                    .processor(_profileImageProcessor)
-                ]
-            )
-            
-        } else { playlistCell.imageViewPlaylistOwner.isHidden = true }
+        if (playlistData.ownerImageURL == nil || playlistData.ownerImageURL == "") {
+            playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileDefault_v1")
+        }   else {
+            handleOwnerProfileImageCacheForCell(playlistData.owner, playlistData.ownerImageURL, playlistCell)
+        }
         
         if playlistData.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistData.largestImageURL!)
@@ -237,7 +228,7 @@ class PlaylistViewController:   BaseViewController,
             
         },  completion: { (Bool) -> Void in
             if self.debugMode == true {
-                print ("_ opening done")
+                print ("_ closing done")
             }
         })
     }

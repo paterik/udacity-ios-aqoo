@@ -11,6 +11,8 @@ import FoldingCell
 
 class PlaylistTableFoldingCell: FoldingCell {
     
+    var _dbgOwnerName: String?
+    
     @IBOutlet weak var lblDebugRowNumber: UILabel!
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!

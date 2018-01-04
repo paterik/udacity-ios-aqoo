@@ -49,7 +49,7 @@ extension PlaylistViewController {
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
         
-        _uniqueUserProfilesInPlaylists = []
+        _userProfilesInPlaylistsUnique = []
         _userProfilesInPlaylists = []
         _userProfilesHandledWithImages = [:]
         _userProfilesHandled = []
@@ -131,7 +131,7 @@ extension PlaylistViewController {
         }
         
         // all userProfiles handled? start refresh/enrichment cache process
-        if _userProfilesHandled.count == _uniqueUserProfilesInPlaylists.count {
+        if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
             
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
                
@@ -150,7 +150,7 @@ extension PlaylistViewController {
                     for (_, playlistInDb) in _playListCache.enumerated() {
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : refresh cache for [ \(_userName) ], [ \(playlistInDb.name) ]")
+                            print ("dbg [playlist] : refresh cache for [ \(_userName) ] / [ \(playlistInDb.name) ]")
                         };  self.handlePlaylistDbCacheOwnerProfileData(playlistInDb, _userName, _userProfileImageURL)
                     }
                 }
@@ -221,14 +221,14 @@ extension PlaylistViewController {
     
     func handlePlaylistProfileEnrichtment() {
         
-        _uniqueUserProfilesInPlaylists = Array(Set(_userProfilesInPlaylists))
+        _userProfilesInPlaylistsUnique = Array(Set(_userProfilesInPlaylists))
         
         if debugMode == true {
-            print ("dbg [playlist] : enrich playlists by adding \(_uniqueUserProfilesInPlaylists.count) user profiles")
-            print ("dbg [playlist] : playlist profiles ➡ \(_uniqueUserProfilesInPlaylists.joined(separator: ", "))")
+            print ("dbg [playlist] : enrich playlists by adding \(_userProfilesInPlaylistsUnique.count) user profiles")
+            print ("dbg [playlist] : playlist profiles ➡ \(_userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
-        for (_, _userName) in _uniqueUserProfilesInPlaylists.enumerated() {
+        for (_, _userName) in _userProfilesInPlaylistsUnique.enumerated() {
             
             print ("dbg [playlist] : send userProfile request (event) for [ \(_userName) ]")
             _ =  spotifyClient.getUserProfileImageURLByUserName(
@@ -312,6 +312,48 @@ extension PlaylistViewController {
         return playlistInDb
     }
     
+    func handleOwnerProfileImageCacheForCell(
+       _ userName: String,
+       _ userProfileImageURL: String,
+       _ playlistCell: PlaylistTableFoldingCell) {
+        
+        if  userName == "spotify" {
+            playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileSpotify_v1")
+        }   else {
+            let _profileImageProcessor = ResizingImageProcessor(
+                referenceSize: _userProfileImageSize)
+                .append(another: RoundCornerImageProcessor(cornerRadius: _userProfileImageCRadiusInDeg))
+                .append(another: BlackWhiteProcessor())
+            
+            playlistCell.imageViewPlaylistOwner.isHidden = false
+            playlistCell.imageViewPlaylistOwner.kf.setImage(
+                with: URL(string: userProfileImageURL),
+                placeholder: UIImage(named: "imgUITblProfileDefault_v1"),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(_profileImageProcessor)
+                ]
+            )
+        }
+    }
+    
+    func handlePlaylistDbCacheOwnerProfileInitialData (
+       _ userName: String,
+       _ userProfileImageURL: String) {
+        
+        tableView.visibleCells.forEach { cell in
+            
+            if let  playlistCell = cell as? PlaylistTableFoldingCell {
+                if  playlistCell._dbgOwnerName != userName {
+                    playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileDefault_v1")
+                    
+                } else {
+                    handleOwnerProfileImageCacheForCell(userName, userProfileImageURL, playlistCell)
+                }
+            }
+        }
+    }
+    
     func handlePlaylistDbCacheOwnerProfileData (
        _ playListInDb: StreamPlayList,
        _ userName: String,
@@ -327,6 +369,7 @@ extension PlaylistViewController {
             completion: { _ in
                 
                 print ("dbg [playlist] : [\(userName)], [\(playListInDb.metaListHash)] handled -> PROFILE_UPDATED")
+                self.handlePlaylistDbCacheOwnerProfileInitialData(userName, userProfileImageURL)
             }
         )
     }
