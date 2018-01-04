@@ -37,6 +37,9 @@ class PlaylistViewController:   BaseViewController,
     //
     
     let _sysDefaultProviderTag = "_spotify"
+    let _sysDefaultSpotifyUsername = "spotify"
+    let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
+    let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
     let _sysCacheCheckInSeconds = 99
     
     let _imgCacheInMb: UInt = 512

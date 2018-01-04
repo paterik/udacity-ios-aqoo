@@ -26,7 +26,7 @@ extension PlaylistViewController {
             
             if debugMode == true {
                 
-                print ("cache: (re)evaluated, tableView will be refreshed now ...")
+                print ("\ncache: (re)evaluated, tableView will be refreshed now ...")
                 print ("---------------------------------------------------------")
                 print ("\(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
                 print ("\(spotifyClient.playListHashesInCache.count - 1) playlists in db/cache")
@@ -36,7 +36,7 @@ extension PlaylistViewController {
            spotifyClient.playlistsInCache = _playListCache
         }
         
-        tableView.refreshTable()
+        // tableView.refreshTable()
         tableView.reloadData()
     }
     
@@ -49,10 +49,10 @@ extension PlaylistViewController {
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
         
-        _userProfilesInPlaylistsUnique = []
-        _userProfilesInPlaylists = []
         _userProfilesHandledWithImages = [:]
         _userProfilesHandled = []
+        _userProfilesInPlaylistsUnique = []
+        _userProfilesInPlaylists = []
 
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
@@ -200,15 +200,8 @@ extension PlaylistViewController {
         if spotifyClient.isSpotifyTokenValid() {
             
             if  debugMode == true {
-                
-                print ("dbg [playlist] : kingfisher ➡ clear memory cache right away")
                 ImageCache.default.clearMemoryCache()
-                
-                print ("dbg [playlist] : kingfisher ➡ clear disk cache. This is an async operation")
                 ImageCache.default.clearDiskCache()
-                
-                print ("dbg [playlist] : sync [\(spotifyClient.spfStreamingProviderDbTag)] playlists ...")
-                
             };  loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
@@ -221,6 +214,7 @@ extension PlaylistViewController {
     
     func handlePlaylistProfileEnrichtment() {
         
+        // unify current userProfile array, remove double entries
         _userProfilesInPlaylistsUnique = Array(Set(_userProfilesInPlaylists))
         
         if debugMode == true {
@@ -231,7 +225,7 @@ extension PlaylistViewController {
         for (_, _userName) in _userProfilesInPlaylistsUnique.enumerated() {
             
             print ("dbg [playlist] : send userProfile request (event) for [ \(_userName) ]")
-            _ =  spotifyClient.getUserProfileImageURLByUserName(
+            spotifyClient.getUserProfileImageURLByUserName(
                 _userName, spotifyClient.spfCurrentSession!.accessToken!
             )
         }
@@ -317,18 +311,18 @@ extension PlaylistViewController {
        _ userProfileImageURL: String,
        _ playlistCell: PlaylistTableFoldingCell) {
         
-        if  userName == "spotify" {
-            playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileSpotify_v1")
+        if  userName == _sysDefaultSpotifyUsername {
+            playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
         }   else {
             let _profileImageProcessor = ResizingImageProcessor(
-                referenceSize: _userProfileImageSize)
+                 referenceSize: _userProfileImageSize)
                 .append(another: RoundCornerImageProcessor(cornerRadius: _userProfileImageCRadiusInDeg))
                 .append(another: BlackWhiteProcessor())
             
             playlistCell.imageViewPlaylistOwner.isHidden = false
             playlistCell.imageViewPlaylistOwner.kf.setImage(
                 with: URL(string: userProfileImageURL),
-                placeholder: UIImage(named: "imgUITblProfileDefault_v1"),
+                placeholder: UIImage(named: _sysDefaultUserProfileImage),
                 options: [
                     .transition(.fade(0.2)),
                     .processor(_profileImageProcessor)
@@ -337,7 +331,7 @@ extension PlaylistViewController {
         }
     }
     
-    func handlePlaylistDbCacheOwnerProfileInitialData (
+    func handlePlaylistDbCacheOwnerProfileInitialTableViewData (
        _ userName: String,
        _ userProfileImageURL: String) {
         
@@ -345,9 +339,9 @@ extension PlaylistViewController {
             
             if let  playlistCell = cell as? PlaylistTableFoldingCell {
                 if  playlistCell._dbgOwnerName != userName {
-                    playlistCell.imageViewPlaylistOwner.image = UIImage(named: "imgUITblProfileDefault_v1")
+                    playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
                     
-                } else {
+                }   else {
                     handleOwnerProfileImageCacheForCell(userName, userProfileImageURL, playlistCell)
                 }
             }
@@ -369,7 +363,10 @@ extension PlaylistViewController {
             completion: { _ in
                 
                 print ("dbg [playlist] : [\(userName)], [\(playListInDb.metaListHash)] handled -> PROFILE_UPDATED")
-                self.handlePlaylistDbCacheOwnerProfileInitialData(userName, userProfileImageURL)
+                self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
+                    userName,
+                    userProfileImageURL
+                )
             }
         )
     }
@@ -405,7 +402,7 @@ extension PlaylistViewController {
                 if _playListInDb == nil {
                     
                     _playlistIsMine = false
-                    if (playListInCloud.owner.canonicalUserName == _currentUserName) {
+                    if playListInCloud.owner.canonicalUserName == _currentUserName {
                         _playlistIsMine = true
                     }
 
@@ -583,8 +580,14 @@ extension PlaylistViewController {
                     
                     // store database fetch results in cache collection
                     if self.debugMode == true {
-                        print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists for this provider available ...")
+                        print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists available ...")
                     };  self.spotifyClient.playlistsInCache = transactionPlaylists!
+
+                    // weazL ... check refresh functionality asap! this lines seems not to be working ?!
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
+                        object: self
+                    )
                     
                 } else {
                     
