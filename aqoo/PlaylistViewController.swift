@@ -12,11 +12,9 @@ import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
 
-class PlaylistViewController:   BaseViewController,
-                                SPTAudioStreamingPlaybackDelegate,
-                                SPTAudioStreamingDelegate,
-                                UITableViewDataSource,
-                                UITableViewDelegate {
+class PlaylistViewController: BaseViewController,
+                              UITableViewDataSource,
+                              UITableViewDelegate {
     
     //
     // MARK: Class IBOutlet definitions

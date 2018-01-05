@@ -13,9 +13,7 @@ import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
 
-class PlaylistEditViewController:   BaseViewController,
-                                    SPTAudioStreamingPlaybackDelegate,
-                                    SPTAudioStreamingDelegate {
+class PlaylistEditViewController: BaseViewController {
 
     var playlistInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?

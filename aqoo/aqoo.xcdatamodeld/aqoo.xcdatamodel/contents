@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StreamPlayList" representedClassName=".StreamPlayList" syncable="YES">
+        <attribute name="coverImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isCollaborative" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -25,6 +26,7 @@
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playableURI" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="profileImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="smallestImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -41,7 +43,7 @@
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="465"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="495"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>
