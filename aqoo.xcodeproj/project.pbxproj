@@ -30,6 +30,8 @@
 		B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE71F778621001FC294 /* StreamPlayList.swift */; };
 		B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE91F778646001FC294 /* StreamProvider.swift */; };
 		B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA991FFE84DF008138F1 /* UITableView.swift */; };
+		B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */; };
+		B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */; };
 		B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */; };
 		B1D4CE4C1F936A94005D8F50 /* PlaylistTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
@@ -90,6 +92,8 @@
 		B1BD1EE71F778621001FC294 /* StreamPlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamPlayList.swift; sourceTree = "<group>"; };
 		B1BD1EE91F778646001FC294 /* StreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamProvider.swift; sourceTree = "<group>"; };
 		B1CDAA991FFE84DF008138F1 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewController.swift; sourceTree = "<group>"; };
+		B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewControllerExt.swift; sourceTree = "<group>"; };
 		B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableFoldingCell.swift; sourceTree = "<group>"; };
 		B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableCell.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 			children = (
 				B189892C1F72B99300516A53 /* extension */,
 				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
+				B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */,
 			);
 			name = _playlists;
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
+				B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -632,7 +638,9 @@
 				B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */,
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
+				B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
+				B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */,
 				B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
 				B1D6A3951F90FE6A006E1DBC /* SpotifyClient.swift in Sources */,
