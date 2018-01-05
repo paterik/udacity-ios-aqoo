@@ -50,6 +50,9 @@ class PlaylistViewController:   BaseViewController,
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30
     let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
+    
+    let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
+    let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
 
     //
     // MARK: Class Variables
@@ -62,6 +65,8 @@ class PlaylistViewController:   BaseViewController,
     var _userProfilesHandledWithImages = [String: String]()
     var _userProfilesInPlaylists = [String]()
     var _userProfilesInPlaylistsUnique = [String]()
+    var _playlistInCloudSelected: SPTPartialPlaylist?
+    var _playlistInCacheSelected: StreamPlayList?
     
     //
     // MARK: Class Method Overloads
@@ -115,52 +120,49 @@ class PlaylistViewController:   BaseViewController,
     func tableView(
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let _cellBackgroundView = UIView()
-        
-        let playlistData = spotifyClient.playlistsInCache[indexPath.row]
+
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListItem",
             for: indexPath) as! PlaylistTableFoldingCell
-
-        let openingDurations: [TimeInterval] = [0.255, 0.215, 0.225]
-        let closingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
         
+        let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
+
         var _usedCoverImageURL: URL?
         var _noCoverImageAvailable: Bool = true
         
-        playlistCell.lblPlaylistName.text = playlistData.name
-        playlistCell._dbgOwnerName = playlistData.owner
+        playlistCell.lblPlaylistName.text = playlistCacheData.name
+        playlistCell.metaOwnerName = playlistCacheData.owner
+        playlistCell.metaPlaylistInDb = playlistCacheData
         
-        if  playlistData.isMine == false {
+        if  playlistCacheData.isMine == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
         }   else {
             playlistCell.imageViewPlaylistIsMine.isHidden = false
         }
 
-        if (playlistData.ownerImageURL == nil || playlistData.ownerImageURL == "") {
+        if (playlistCacheData.ownerImageURL == nil || playlistCacheData.ownerImageURL == "") {
             playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
         }   else {
-            handleOwnerProfileImageCacheForCell(playlistData.owner, playlistData.ownerImageURL, playlistCell)
+            handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
         }
         
-        if playlistData.largestImageURL != nil {
-            _usedCoverImageURL = URL(string: playlistData.largestImageURL!)
+        if playlistCacheData.largestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistCacheData.largestImageURL!)
             _noCoverImageAvailable = false
         }
         
-        if playlistData.smallestImageURL != nil {
-            _usedCoverImageURL = URL(string: playlistData.smallestImageURL!)
+        if playlistCacheData.smallestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistCacheData.smallestImageURL!)
             _noCoverImageAvailable = false
         }
         
-        playlistCell.durationsForExpandedState = openingDurations
-        playlistCell.durationsForCollapsedState = closingDurations
+        playlistCell.durationsForExpandedState = _sysCellOpeningDurations
+        playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
         
         if _noCoverImageAvailable == false {
             playlistCell.imageViewPlaylistCover.kf.setImage(
-                with: URL(string: playlistData.largestImageURL!),
+                with: URL(string: playlistCacheData.largestImageURL!),
                 placeholder: UIImage(named: _sysDefaultCoverImage),
                 options: [
                     .transition(.fade(0.2)),
@@ -176,10 +178,12 @@ class PlaylistViewController:   BaseViewController,
        _ tableView: UITableView,
          editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
+        let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
+        
+        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+        
         // prevent cell row actions on open cell views (unfolded cells)
-        if let playlistCell = tableView.cellForRow(at: indexPath) as? PlaylistTableFoldingCell {
-            if playlistCell.frame.height > kCloseCellHeight { return [] }
-        }
+        if playlistCell.frame.height > kCloseCellHeight { return [] }
         
         let tblActionEdit = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
@@ -188,7 +192,7 @@ class PlaylistViewController:   BaseViewController,
             image: UIImage(named: "icnSettings_v2"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                print ("TBL_ACTION_DETECTED : Edit")
+                self.performSegue(withIdentifier: "showPlaylistEditView", sender: self)
         }
         
         let tblActionDelete = BGTableViewRowActionWithImage.rowAction(
@@ -279,6 +283,15 @@ class PlaylistViewController:   BaseViewController,
                 print ("_ closing done")
             }
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showPlaylistEditView" {
+            
+            let editViewController = segue.destination as! PlaylistEditViewController
+                editViewController.playlistInDb = _playlistInCacheSelected!
+        }
     }
     
     //

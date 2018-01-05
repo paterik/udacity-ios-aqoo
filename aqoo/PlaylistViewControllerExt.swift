@@ -36,8 +36,9 @@ extension PlaylistViewController {
            spotifyClient.playlistsInCache = _playListCache
         }
         
-        // tableView.refreshTable()
         tableView.reloadData()
+        tableView.refreshTable()
+        
     }
     
     @objc func setupUILoadCloudPlaylists() {
@@ -200,8 +201,8 @@ extension PlaylistViewController {
         if spotifyClient.isSpotifyTokenValid() {
             
             if  debugMode == true {
-                ImageCache.default.clearMemoryCache()
-                ImageCache.default.clearDiskCache()
+                // ImageCache.default.clearMemoryCache()
+                // ImageCache.default.clearDiskCache()
             }
             
             loadProvider ( spotifyClient.spfStreamingProviderDbTag )
@@ -340,9 +341,9 @@ extension PlaylistViewController {
         tableView.visibleCells.forEach { cell in
             
             if let  playlistCell = cell as? PlaylistTableFoldingCell {
-                if  playlistCell._dbgOwnerName! != userName {
+                if  playlistCell.metaOwnerName! != userName {
                     playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
-                    if  playlistCell._dbgOwnerName! == _sysDefaultSpotifyUsername {
+                    if  playlistCell.metaOwnerName! == _sysDefaultSpotifyUsername {
                         playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
                     }
                     

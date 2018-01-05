@@ -8,10 +8,13 @@
 
 import UIKit
 import FoldingCell
+import Spotify
 
 class PlaylistTableFoldingCell: FoldingCell {
     
-    var _dbgOwnerName: String?
+    var metaOwnerName: String?
+    var metaPlaylistInDb: StreamPlayList?
+    var metaPlayListInCloud: SPTPartialPlaylist?
     
     @IBOutlet weak var lblDebugRowNumber: UILabel!
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
