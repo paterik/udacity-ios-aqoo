@@ -180,8 +180,17 @@ class PlaylistViewController:   BaseViewController,
         
         let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
         
-        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
-        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+       _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+        if playlistCell.metaPlaylistInDb == nil {
+            _handleErrorAsDialogMessage(
+                "Error Loading Local Playlist",
+                "This local playlist [index: \(indexPath.row)] is not found in your cache context!"
+            )
+            
+            return []
+        }
+        
+       _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         playlistCell.metaPlayListInCloud = _playlistInCloudSelected
         
         if playlistCell.metaPlayListInCloud == nil {
@@ -189,6 +198,8 @@ class PlaylistViewController:   BaseViewController,
                 "Error Loading Cloud Playlist",
                 "The local playlist '\(_playlistInCacheSelected!.name)' is not found in your spotify cloud context!"
             )
+            
+            return []
         }
         
         // prevent cell row actions on open cell views (unfolded cells)

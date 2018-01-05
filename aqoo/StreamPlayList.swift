@@ -19,6 +19,9 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var playableURI: String
     @NSManaged var smallestImageURL: String?
     @NSManaged var largestImageURL: String?
+    
+    @NSManaged var coverImagePathOverride: String?
+    @NSManaged var profileImagePathOverride: String?
    
     @NSManaged var isHot: Bool
     @NSManaged var isMine: Bool
