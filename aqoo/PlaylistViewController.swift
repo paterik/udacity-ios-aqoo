@@ -181,6 +181,15 @@ class PlaylistViewController:   BaseViewController,
         let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
         
         _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        playlistCell.metaPlayListInCloud = _playlistInCloudSelected
+        
+        if playlistCell.metaPlayListInCloud == nil {
+            _handleErrorAsDialogMessage(
+                "Error Loading Cloud Playlist",
+                "The local playlist '\(_playlistInCacheSelected!.name)' is not found in your spotify cloud context!"
+            )
+        }
         
         // prevent cell row actions on open cell views (unfolded cells)
         if playlistCell.frame.height > kCloseCellHeight { return [] }
@@ -291,6 +300,7 @@ class PlaylistViewController:   BaseViewController,
             
             let editViewController = segue.destination as! PlaylistEditViewController
                 editViewController.playlistInDb = _playlistInCacheSelected!
+                editViewController.playListInCloud = _playlistInCloudSelected!
         }
     }
     

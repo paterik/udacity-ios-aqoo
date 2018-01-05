@@ -38,7 +38,6 @@ extension PlaylistViewController {
         
         tableView.reloadData()
         tableView.refreshTable()
-        
     }
     
     @objc func setupUILoadCloudPlaylists() {
@@ -496,6 +495,21 @@ extension PlaylistViewController {
                 }
             }
         )
+    }
+    
+    func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
+        
+        for (_, _playlistInCloud) in spotifyClient.playlistsInCloud.enumerated() {
+            
+            if playlistInDb.getMD5FingerPrint() == _playlistInCloud.getMD5FingerPrint() {
+                print ("MATCHED_DATA ::: [ \(playlistInDb.name) ], [\(_playlistInCloud.getMD5FingerPrint())]")
+                
+                return _playlistInCloud
+            }
+            
+        }
+        
+        return nil
     }
     
     func loadProvider (_ tag: String) {

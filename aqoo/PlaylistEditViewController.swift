@@ -36,6 +36,7 @@ class PlaylistEditViewController:   BaseViewController,
         navItemEditViewTitle.title = playlistInDb!.name
         
         print ("LOAD_PLAYLIST -> [cache: \(playlistInDb!.name)]")
+        print ("LOAD_PLAYLIST -> [cloud: \(playListInCloud!.name!)]")
     }
     
     @IBAction func btnExitEditViewAction(_ sender: Any) {
