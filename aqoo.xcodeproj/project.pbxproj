@@ -32,6 +32,7 @@
 		B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA991FFE84DF008138F1 /* UITableView.swift */; };
 		B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */; };
 		B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */; };
+		B1CDAAA02000D4F5008138F1 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9F2000D4F5008138F1 /* NSDate.swift */; };
 		B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */; };
 		B1D4CE4C1F936A94005D8F50 /* PlaylistTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */; };
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
@@ -94,6 +95,7 @@
 		B1CDAA991FFE84DF008138F1 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewController.swift; sourceTree = "<group>"; };
 		B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewControllerExt.swift; sourceTree = "<group>"; };
+		B1CDAA9F2000D4F5008138F1 /* NSDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
 		B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableFoldingCell.swift; sourceTree = "<group>"; };
 		B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableCell.swift; sourceTree = "<group>"; };
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				B1BBECED1F93642B00BD9D39 /* UILabel.swift */,
 				B17FC7CC1FF6508D00CA3166 /* CGDim.swift */,
 				B1CDAA991FFE84DF008138F1 /* UITableView.swift */,
+				B1CDAA9F2000D4F5008138F1 /* NSDate.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
 				B1D6A3951F90FE6A006E1DBC /* SpotifyClient.swift in Sources */,
 				B1A3D2461F8E3B660098330D /* String.swift in Sources */,
+				B1CDAAA02000D4F5008138F1 /* NSDate.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
 				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,
