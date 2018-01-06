@@ -21,60 +21,39 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
-    
     @IBOutlet weak var inpPlaylistTitle: UITextField!
     @IBOutlet weak var inpPlaylistDescription: UITextView!
+    
+    var inputsListenForChanges = [Any]()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        inpPlaylistDescription.delegate = self
+        inputsListenForChanges = [inpPlaylistTitle, inpPlaylistDescription]
+        
+        setupUINavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
+        setupUIInputFields()
+        setupUISwitchButtons()
+        
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        
-        navItemEditViewTitle.title = playListInDb!.name
-        inpPlaylistTitle.text = playListInDb!.name
-        inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
-        playListChanged = false
-        
-        print ("LOAD_PLAYLIST -> [cache: \(playListInDb!.name)]")
-        print ("LOAD_PLAYLIST -> [cloud: \(playListInCloud!.name!)]")
     }
+
+    func textViewDidChange(_ textView: UITextView) {
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-       
-        print ("CHANGED_PLAYLIST -> detect description changes begin")
-        if textView.text != playListInDb!.metaListInternalDescription {
-            print ("REAL CHANGES DETECTED IN DESCRIPTION (0)")
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        
-        print ("CHANGED_PLAYLIST -> detect description changes ended")
-        
-        if textView.text != playListInDb!.metaListInternalDescription {
-            print ("REAL CHANGES DETECTED IN DESCRIPTION (1)")
-        }
+        checkInputElementsForChanges()
     }
     
     @IBAction func inpPlaylistTitleDidChanged(_ sender: Any) {
-        
-        print ("CHANGED_PLAYLIST -> detect title changed")
-        
-        if let _textField = sender as? UITextField {
-            if _textField.text != playListInDb!.name {
-                print ("REAL CHANGES DETECTED IN TITLE")
-            }
-        }
+
+        checkInputElementsForChanges()
     }
-    
     
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
     
