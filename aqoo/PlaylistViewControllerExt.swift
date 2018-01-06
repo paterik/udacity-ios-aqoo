@@ -243,7 +243,6 @@ extension PlaylistViewController {
             )
             
             self.handlePlaylistCloudRefresh()
-            
         }
         
         let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
@@ -283,11 +282,11 @@ extension PlaylistViewController {
             print ("dbg [playlist] : playlist profiles ➡ \(_userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
-        for (_, _userName) in _userProfilesInPlaylistsUnique.enumerated() {
+        for (_, _profileUserName) in _userProfilesInPlaylistsUnique.enumerated() {
             
-            print ("dbg [playlist] : send userProfile request (event) for [ \(_userName) ]")
+            print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
             spotifyClient.getUserProfileImageURLByUserName(
-                _userName, spotifyClient.spfCurrentSession!.accessToken!
+                _profileUserName, spotifyClient.spfCurrentSession!.accessToken!
             )
         }
     }
@@ -315,6 +314,7 @@ extension PlaylistViewController {
                 CoreStore.perform(
                     
                     asynchronous: { (transaction) -> Void in
+                        
                         let orphanPlaylist = transaction.fetchOne(
                             From<StreamPlayList>().where((\StreamPlayList.metaListHash == playlist.metaListHash))
                         );  transaction.delete(orphanPlaylist)
@@ -347,10 +347,12 @@ extension PlaylistViewController {
             }
         }
         
+        //
         // no smallest or largest image found, iterated through alternative image stack
         // and take the first exisiting / plausible image as smallest cover image instead.
         // in future verseion I'll pick up some random band image from flickr if nothing
-        // where found ...
+        // where found (feature)
+        //
         if playlistInDb.largestImageURL == nil && playlistInDb.smallestImageURL == nil {
             
             for (index, coverImageAlt) in playListInCloud.images.enumerated() {
@@ -414,7 +416,7 @@ extension PlaylistViewController {
     
     func handlePlaylistDbCacheOwnerProfileData (
        _ playListInDb: StreamPlayList,
-       _ userName: String,
+       _ userProfileUserName: String,
        _ userProfileImageURL: String) {
         
         CoreStore.perform(
@@ -427,7 +429,7 @@ extension PlaylistViewController {
             completion: { _ in
                 
                 self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
-                    userName,
+                    userProfileUserName,
                     userProfileImageURL
                 )
             }
