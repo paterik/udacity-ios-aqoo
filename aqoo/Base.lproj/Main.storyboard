@@ -365,6 +365,12 @@
                                                 <action selector="btnExitEditViewAction:" destination="MO5-Jd-Yip" id="V0R-pa-HHr"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="wOk-UT-ixH" userLabel="ui_btn_save_view">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="btnSavePlaylistChangesAction:" destination="MO5-Jd-Yip" id="D8H-0Z-ogP"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -380,6 +386,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="name"/>
+                                        <connections>
+                                            <action selector="inpPlaylistTitleDidChanged:" destination="MO5-Jd-Yip" eventType="editingChanged" id="5sH-bo-sdv"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rax-wn-BfQ" userLabel="ui_hview_line_01">
                                         <rect key="frame" x="20" y="57" width="315" height="5"/>
@@ -400,7 +409,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="132" id="gbi-Lt-Vrm"/>
                                         </constraints>
-                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
@@ -572,6 +581,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSavePlaylistChanges" destination="wOk-UT-ixH" id="Tdx-vk-eb0"/>
+                        <outlet property="inpPlaylistDescription" destination="j2B-GG-LKo" id="6Gv-K3-iUa"/>
+                        <outlet property="inpPlaylistTitle" destination="WDe-jI-C9X" id="wIx-1A-0Z2"/>
                         <outlet property="navItemEditViewTitle" destination="4YG-cM-qIv" id="XNE-k3-FL0"/>
                     </connections>
                 </viewController>
@@ -1369,6 +1381,7 @@
         <image name="icnPLCellView" width="25" height="25"/>
         <image name="icnPLRefresh" width="25" height="25"/>
         <image name="icnPLTableView" width="25" height="25"/>
+        <image name="icnSave_v1" width="25" height="25"/>
         <image name="icnSetPauseMini_1" width="25" height="25"/>
         <image name="icnSetPlayNormal_0" width="25" height="25"/>
         <image name="icnSetPlayNormal_1" width="25" height="25"/>
