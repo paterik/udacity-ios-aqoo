@@ -125,7 +125,7 @@ class PlaylistViewController: BaseViewController,
             for: indexPath) as! PlaylistTableFoldingCell
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
-
+        
         var _usedCoverImageURL: URL?
         var _noCoverImageAvailable: Bool = true
         

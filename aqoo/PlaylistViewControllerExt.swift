@@ -91,24 +91,21 @@ extension PlaylistViewController {
         if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
             
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
-                
-                if debugMode == true {
-                    print ("dbg [playlist] : update cached playlist for userProfile [ \(_userName) ]")
-                }
-                
+               
                 // fetch all known playlists for corresponding (profile available) user
                 if let _playListCache = CoreStore.defaultStack.fetchAll(
                     From<StreamPlayList>().where(
                         (\StreamPlayList.provider == _defaultStreamingProvider) &&
-                        (\StreamPlayList.owner == _userName))
+                        (\StreamPlayList.owner    == _userName))
                     ) {
                     
                     // update cache entity for this user, add userProfileImageURL (using external function)
-                    for (_, playlistInDb) in _playListCache.enumerated() {
-                        
-                        if self.debugMode == true {
-                            print ("dbg [playlist] : refresh cache for [ \(_userName) ] / [ \(playlistInDb.name) ]")
-                        };  self.handlePlaylistDbCacheOwnerProfileData(playlistInDb, _userName, _userProfileImageURL)
+                    for (_, _playlistInDb) in _playListCache.enumerated() {
+                        self.handlePlaylistDbCacheOwnerProfileData(
+                            _playlistInDb,
+                            _userName,
+                            _userProfileImageURL
+                        )
                     }
                 }
             }
@@ -145,7 +142,7 @@ extension PlaylistViewController {
             
             spotifyClient.playlistsInCache = _playListCache
             
-            tableView.refreshTable()
+            // tableView.refreshTable()
             tableView.reloadData()
             
         } else {
@@ -223,7 +220,7 @@ extension PlaylistViewController {
             CoreStore.perform(
                 
                 asynchronous: { (transaction) -> [StreamPlayList]? in return transaction.fetchAll(From<StreamPlayList>()) },
-                    success:      { (transactionPlaylists) in
+                success: { (transactionPlaylists) in
                     
                     if transactionPlaylists?.isEmpty == false {
                         print ("dbg [playlist] : cache ➡ cleanUp local db cache, \(transactionPlaylists!.count - 1) rows will be removed")
@@ -231,6 +228,7 @@ extension PlaylistViewController {
                 },
                 
                 failure: { (error) in
+                    
                     self._handleErrorAsDialogMessage(
                         "Error Loading Playlist Cache",
                         "Oops! An error occured while loading playlists from database ..."
@@ -267,7 +265,7 @@ extension PlaylistViewController {
         } else {
             
             if  debugMode == true {
-                print ("dbg [playlist] : oops, your cloudProviderToken is not valid anymore")
+                print ("dbg [playlist] : Oops, your cloudProviderToken is not valid anymore")
             };  btnExitLandingPageAction( self )
         }
     }
@@ -418,7 +416,7 @@ extension PlaylistViewController {
        _ playListInDb: StreamPlayList,
        _ userProfileUserName: String,
        _ userProfileImageURL: String) {
-        
+
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
@@ -526,8 +524,8 @@ extension PlaylistViewController {
                         
                     } else {
                         
-                        // name, number of tracks or flags for public/collaborative changed? update list
-                        _playListInDb!.name = playListInCloud.name
+                        // name (origin) , number of tracks or flags for public/collaborative changed? update list
+                        _playListInDb!.metaListNameOrigin = playListInCloud.name
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playListInDb!.isPublic = playListInCloud.isPublic
@@ -583,8 +581,7 @@ extension PlaylistViewController {
         
         for (_, _playlistInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
-            if playlistInDb.getMD5FingerPrint() == _playlistInCloud.getMD5FingerPrint() {
-                print ("MATCHED_DATA ::: [ \(playlistInDb.name) ], [\(_playlistInCloud.getMD5FingerPrint())]")
+            if  playlistInDb.getMD5FingerPrint() == _playlistInCloud.getMD5FingerPrint() {
                 
                 return _playlistInCloud
             }

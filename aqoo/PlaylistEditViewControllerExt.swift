@@ -17,13 +17,22 @@ extension PlaylistEditViewController {
         inpPlaylistDescription.delegate = self
     }
     
-    func setupUISwitchButtons() { }
+    func setupUI() {
+        
+        playListChanged = false
+        inputsListenForChanges = [
+            inpPlaylistTitle,
+            inpPlaylistDescription
+        ]
+    }
     
     func setupUINavigation() {
         
         navItemEditViewTitle.title = playListInDb!.name
         handleSaveChangesButton(false)
     }
+    
+    func setupUISwitchButtons() { }
     
     func handleSaveChangesButton (_ enabled: Bool) {
         
@@ -37,25 +46,26 @@ extension PlaylistEditViewController {
             // check changes in playlist "title" element
             if let _element = element as? UITextField {
                 playListChanged = false
+                playListNameChanged = false
                 if _element.text! != playListInDb!.name {
                     playListChanged = true
+                    playListNameChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
-                // change detected? leave this method now, no further change-detection necessary
+                // previously change detected? leave this method now, no further change-detection necessary now
                 if playListChanged { return }
             }
             
             // check changes in playlist "description" element
             if let _element = element as? UITextView {
                 playListChanged = false
-                
-                print (_element.text!)
-                
+                playListDescriptionChanged = false
                 if _element.text! != playListInDb!.metaListInternalDescription {
                     playListChanged = true
+                    playListDescriptionChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
-                // change detected? leave this method now, no further change-detection necessary
+                // previously change detected? leave this method now, no further change-detection necessary now
                 if playListChanged { return }
             }
         }

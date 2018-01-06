@@ -54,7 +54,7 @@ class StreamPlayList: NSManagedObject {
     
         return String(
             format: "%@:%D:%@:%@",
-            self.name,
+            self.metaListNameOrigin,
             self.trackCount,
             "\(self.isPublic)",
             "\(self.isCollaborative)").md5()
