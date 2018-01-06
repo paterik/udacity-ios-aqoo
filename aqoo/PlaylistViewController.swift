@@ -309,7 +309,7 @@ class PlaylistViewController: BaseViewController,
         if segue.identifier == "showPlaylistEditView" {
             
             let editViewController = segue.destination as! PlaylistEditViewController
-                editViewController.playlistInDb = _playlistInCacheSelected!
+                editViewController.playListInDb = _playlistInCacheSelected!
                 editViewController.playListInCloud = _playlistInCloudSelected!
         }
     }

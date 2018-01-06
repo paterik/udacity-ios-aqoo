@@ -466,13 +466,11 @@ extension PlaylistViewController {
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
                     _playListInDb!.name = playListInCloud.name
-                    _playListInDb!.desc = playListInCloud.description
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playListInDb!.isPublic = playListInCloud.isPublic
                     _playListInDb!.metaListNameOrigin = playListInCloud.name
-                    _playListInDb!.metaListDescriptionOrigin = playListInCloud.name
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
                     _playListInDb!.metaNumberOfShares = 0
@@ -484,12 +482,18 @@ extension PlaylistViewController {
                     _playListInDb!.isHot = false
                     
                     _playListInDb!.metaListHash = _playListFingerprint
-                    _playListInDb!.createdAt = Date()
                     _playListInDb!.metaPreviouslyUpdated = false
                     _playListInDb!.metaPreviouslyCreated = true
                     _playListInDb!.isMine = _playlistIsMine
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
+                    
+                    _playListInDb!.createdAt = Date()
+                    
+                    _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
+                         playListInCloud,
+                        _playListInDb!
+                    )
                     
                     _playListInDb!.provider = transaction.fetchOne(
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
@@ -512,7 +516,6 @@ extension PlaylistViewController {
                         
                         // name, number of tracks or flags for public/collaborative changed? update list
                         _playListInDb!.name = playListInCloud.name
-                        _playListInDb!.desc = playListInCloud.description
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playListInDb!.isPublic = playListInCloud.isPublic
@@ -546,6 +549,24 @@ extension PlaylistViewController {
         )
     }
     
+    func getPlaylistInternalDescription(
+       _ playlistInCloud: SPTPartialPlaylist,
+       _ playlistInDb: StreamPlayList) -> String {
+        
+        var _updatedMetaString: String = ""
+        var _updatedDateString: NSString = ""
+        var _createdDateString: NSString = ""
+
+        if playlistInDb.updatedAt != nil {
+            _updatedDateString = getDateAsString(playlistInDb.updatedAt!)
+            _updatedMetaString = ", updated on \(_updatedDateString)"
+        }
+        
+        _createdDateString = getDateAsString(playlistInDb.createdAt!)
+        
+        return "This playlist \"\(playlistInCloud.name!)\" is owned by \(playlistInCloud.owner.canonicalUserName!), was firstly seen on \(_createdDateString) \(_updatedMetaString) and can be found in spotify at \(playlistInCloud.playableUri.absoluteString)"
+    }
+    
     func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
         
         for (_, _playlistInCloud) in spotifyClient.playlistsInCloud.enumerated() {
@@ -555,7 +576,6 @@ extension PlaylistViewController {
                 
                 return _playlistInCloud
             }
-            
         }
         
         return nil
