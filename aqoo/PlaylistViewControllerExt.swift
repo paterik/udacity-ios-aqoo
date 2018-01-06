@@ -15,12 +15,122 @@ import Kingfisher
 
 extension PlaylistViewController {
     
+    func setupUIEventObserver() {
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadUserProfileImages),
+            name: NSNotification.Name(rawValue: self.notifier.notifyUserProfileLoadCompleted),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadCloudPlaylists),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistLoadCompleted),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadExtendedPlaylists),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
+            object: nil
+        )
+    }
+    
+    func setupUITableView() {
+        
+        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
+        
+        tableView.estimatedRowHeight = kCloseCellHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        let backgroundImgView : UIImageView! = UIImageView(frame: view.bounds)
+        
+        backgroundImgView.contentMode =  UIViewContentMode.scaleAspectFill
+        backgroundImgView.clipsToBounds = true
+        backgroundImgView.layoutIfNeeded()
+        
+        // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
+        backgroundImgView.backgroundColor = UIColor(netHex: 0x222222)
+        backgroundImgView.center = view.center
+        
+        tableView.backgroundView = backgroundImgView
+    }
+    
+    func setupUICacheProcessor() {
+        
+        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024 // activate 512mb image cache size
+        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
+        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
+        
+        _cacheTimer = Timer.scheduledTimer(
+            timeInterval: TimeInterval(_sysCacheCheckInSeconds),
+            target: self,
+            selector: #selector(handleCacheTimerEvent),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    func setupUILoadUserProfileImages(notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+              let profileUser = userInfo["profileUser"] as? SPTUser,
+              let profileImageURL = userInfo["profileImageURL"] as? URL,
+              let profileImageURLAvailable = userInfo["profileImageURLAvailable"] as? Bool,
+              let date = userInfo["date"] as? Date else { return }
+        
+        _userProfilesHandled.append(profileUser.canonicalUserName)
+        if profileImageURLAvailable {
+            _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
+        }
+        
+        // all userProfiles handled? start refresh/enrichment cache process
+        if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
+            
+            for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
+                
+                if debugMode == true {
+                    print ("dbg [playlist] : update cached playlist for userProfile [ \(_userName) ]")
+                }
+                
+                // fetch all known playlists for corresponding (profile available) user
+                if let _playListCache = CoreStore.defaultStack.fetchAll(
+                    From<StreamPlayList>().where(
+                        (\StreamPlayList.provider == _defaultStreamingProvider) &&
+                        (\StreamPlayList.owner == _userName))
+                    ) {
+                    
+                    // update cache entity for this user, add userProfileImageURL (using external function)
+                    for (_, playlistInDb) in _playListCache.enumerated() {
+                        
+                        if self.debugMode == true {
+                            print ("dbg [playlist] : refresh cache for [ \(_userName) ] / [ \(playlistInDb.name) ]")
+                        };  self.handlePlaylistDbCacheOwnerProfileData(playlistInDb, _userName, _userProfileImageURL)
+                    }
+                }
+            }
+            
+            // so finaly reload playlist tableView and leave this method peacefully
+            NotificationCenter.default.post(
+                name: NSNotification.Name.init(rawValue: notifier.notifyPlaylistCacheLoadCompleted),
+                object: self
+            )
+        }
+    }
+    
     @objc func setupUILoadExtendedPlaylists() {
         
+        //
+        // primary fetch request for all local cached/enriched playlist data which will
+        // be finally shown in our tableView
+        //
         if let _playListCache = CoreStore.fetchAll(
-                From<StreamPlayList>().where(
-                    \StreamPlayList.provider == _defaultStreamingProvider
-                )
+                From<StreamPlayList>()
+                    .orderBy(.descending(\.owner))
+                    .where(\StreamPlayList.provider == _defaultStreamingProvider)
             )
         {
             
@@ -33,11 +143,18 @@ extension PlaylistViewController {
                 print ("---------------------------------------------------------")
             }
             
-           spotifyClient.playlistsInCache = _playListCache
+            spotifyClient.playlistsInCache = _playListCache
+            
+            tableView.refreshTable()
+            tableView.reloadData()
+            
+        } else {
+            
+            /*
+             * no plylistdata found ... show welcome screen or tutorial instead (feature)
+             *
+             */
         }
-        
-        tableView.reloadData()
-        tableView.refreshTable()
     }
     
     @objc func setupUILoadCloudPlaylists() {
@@ -67,124 +184,18 @@ extension PlaylistViewController {
 
             if debugMode == true {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
-                print ("owner: \(playListInCloud.owner.canonicalUserName!) [ playlist covers: \(playListInCloud.images.count) ]")
+                print ("owner: \(playListInCloud.owner.canonicalUserName!)")
+                print ("playlist covers: \(playListInCloud.images.count) (alternativ covers)")
                 print ("uri: \(playListInCloud.playableUri!)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
-                
                 print ("\n--")
             }
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
     }
-    
-    func setupUITableView() {
-        
-        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
-        
-        tableView.estimatedRowHeight = kCloseCellHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
-    
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        let backgroundImgView : UIImageView! = UIImageView(frame: view.bounds)
-        
-        backgroundImgView.contentMode =  UIViewContentMode.scaleAspectFill
-        backgroundImgView.clipsToBounds = true
-        backgroundImgView.layoutIfNeeded()
-        
-        // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
-        backgroundImgView.backgroundColor = UIColor(netHex: 0x222222)
-        backgroundImgView.center = view.center
-        
-        tableView.backgroundView = backgroundImgView
-    }
-    
-    func setupUICacheProcessor() {
-        
-        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024 // activate 512mb image cache size
-        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
-        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
-        
-        _cacheTimer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(self._sysCacheCheckInSeconds),
-            target: self,
-            selector: #selector(handleCacheTimerEvent),
-            userInfo: nil,
-            repeats: true
-        )
-    }
-    
-    func setupUILoadUserProfileImages(notification: Notification) {
-        
-        guard let userInfo = notification.userInfo,
-              let profileUser = userInfo["profileUser"] as? SPTUser,
-              let profileImageURL = userInfo["profileImageURL"] as? URL,
-              let profileImageURLAvailable = userInfo["profileImageURLAvailable"] as? Bool,
-              let date = userInfo["date"] as? Date else { return }
-        
-        _userProfilesHandled.append(profileUser.canonicalUserName)
-        if profileImageURLAvailable {
-            _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
-        }
-        
-        // all userProfiles handled? start refresh/enrichment cache process
-        if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
-            
-            for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
-               
-                if debugMode == true {
-                    print ("dbg [playlist] : update cached playlist for userProfile [ \(_userName) ]")
-                }
-                
-                // fetch all known playlists for corresponding (profile available) user
-                if let _playListCache = CoreStore.defaultStack.fetchAll(
-                    From<StreamPlayList>().where(
-                        (\StreamPlayList.provider == _defaultStreamingProvider) &&
-                        (\StreamPlayList.owner == _userName))
-                    ) {
-                    
-                    // update cache entity for this user, add userProfileImageURL (using external function)
-                    for (_, playlistInDb) in _playListCache.enumerated() {
-                        
-                        if self.debugMode == true {
-                            print ("dbg [playlist] : refresh cache for [ \(_userName) ] / [ \(playlistInDb.name) ]")
-                        };  self.handlePlaylistDbCacheOwnerProfileData(playlistInDb, _userName, _userProfileImageURL)
-                    }
-                }
-            }
-            
-            // so finaly reload playlist tableView and leave this method peacefully
-            NotificationCenter.default.post(
-                name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
-                object: self
-            )
-        }
-    }
-    
-    func setupUIEventObserver() {
-        
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadUserProfileImages),
-            name: NSNotification.Name(rawValue: self.notifier.notifyUserProfileLoadCompleted),
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadCloudPlaylists),
-            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistLoadCompleted),
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.setupUILoadExtendedPlaylists),
-            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
-            object: nil
-        )
-    }
-    
+
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
      */
@@ -244,9 +255,8 @@ extension PlaylistViewController {
         
         localCacheCleanUpRequest.addAction(dlgBtnYesAction)
         localCacheCleanUpRequest.addAction(dlgBtnCancelAction)
-        
-        
-        self.present(localCacheCleanUpRequest, animated: true, completion: nil)
+
+        present(localCacheCleanUpRequest, animated: true, completion: nil)
     }
     
     func handlePlaylistCloudRefresh() {
@@ -299,7 +309,7 @@ extension PlaylistViewController {
             
                 // kill all obsolete / orphan cache entries
                 if debugMode == true {
-                    print ("dbg [playlist] : playlist data hash [\(playlist.metaListHash)] orphan flagged for removal")
+                    print ("dbg [playlist] : playlist [\(playlist.name)] orphan flagged for removal")
                 }
                 
                 CoreStore.perform(
@@ -313,7 +323,7 @@ extension PlaylistViewController {
                     completion: { _ in
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist data hash [\(playlist.metaListHash)] handled -> REMOVED")
+                            print ("dbg [playlist] : playlist [\(playlist.name)] handled -> REMOVED")
                         }
                     }
                 )
@@ -500,7 +510,7 @@ extension PlaylistViewController {
                     )
                     
                     if self.debugMode == true {
-                        print ("dbg [playlist] : playlist data hash [\(_playListInDb!.metaListHash)] handled -> CREATED")
+                        print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> CREATED")
                     }
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
@@ -509,7 +519,7 @@ extension PlaylistViewController {
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist data hash [\(_playListInDb!.name)] handled -> NO_CHANGES")
+                            print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> NO_CHANGES")
                         }
                         
                     } else {
@@ -525,7 +535,7 @@ extension PlaylistViewController {
                         _playListInDb!.metaPreviouslyCreated = false
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist data hash [\(_playListInDb!.metaListHash)] handled -> UPDATED")
+                            print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> UPDATED")
                         }
                     }
                 }
@@ -583,10 +593,10 @@ extension PlaylistViewController {
     
     func loadProvider (_ tag: String) {
         
-        if self.debugMode == true {
-            print ("dbg [playlist] : try to load provider [\(tag)]")
-            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
-            print ("dbg [playlist] : cache ➡ \(self.spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
+        if  debugMode == true {
+            print ("dbg [playlist] : try to load provider [ \(tag) ]")
+            print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
+            print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
         }
         
         CoreStore.perform(
@@ -594,9 +604,8 @@ extension PlaylistViewController {
             asynchronous: { (transaction) -> StreamProvider? in
                 
                 return transaction.fetchOne(
-                    From<StreamProvider>().where(
-                        (\StreamProvider.tag == tag) && (\StreamProvider.isActive == true)
-                    )
+                    From<StreamProvider>()
+                        .where((\StreamProvider.tag == tag) && (\StreamProvider.isActive == true))
                 )
             },
             
@@ -632,7 +641,7 @@ extension PlaylistViewController {
         
         if provider.tag != _sysDefaultProviderTag {
             
-            self._handleErrorAsDialogMessage(
+            _handleErrorAsDialogMessage(
                 "Error Loading Provider",
                 "Oops! The provider '\(provider.name)' isn't supported yet ..."
             )
@@ -644,22 +653,16 @@ extension PlaylistViewController {
         spotifyClient.handlePlaylistGetFirstPage(
             spotifyClient.spfUsername,
             spotifyClient.spfCurrentSession!.accessToken!
-        );
+        )
         
-        // now fetch corresponding local playlists for sync process
+        // now (pre)fetch corresponding local playlists for sync process
         CoreStore.perform(
             
             asynchronous: { (transaction) -> [StreamPlayList]? in
                 
                 self._defaultStreamingProvider = provider
                 
-                return transaction.fetchAll(
-                    From<StreamPlayList>().where(
-                        // info_1001: this will filter the current list to logged in user content only ...
-                        // (\StreamPlayList.owner == self.spotifyClient.spfUsername) &&
-                        (\StreamPlayList.provider == provider)
-                    )
-                )
+                return transaction.fetchAll(From<StreamPlayList>().where(\StreamPlayList.provider == provider))
             },
             
             success: { (transactionPlaylists) in
@@ -667,20 +670,21 @@ extension PlaylistViewController {
                 if transactionPlaylists?.isEmpty == false {
                     
                     // store database fetch results in cache collection
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists available ...")
                     };  self.spotifyClient.playlistsInCache = transactionPlaylists!
                     
                 } else {
                     
                     // clean previously cached playlist collection
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [playlist] : no cached playlist data for this provider found ...")
                     };  self.spotifyClient.playlistsInCache = []
                 }
             },
             
             failure: { (error) in
+                
                 self._handleErrorAsDialogMessage(
                     "Error Loading Playlists",
                     "Oops! An error occured while loading playlists from database ..."
