@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import CoreStore
 import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
@@ -283,7 +284,7 @@ class PlaylistViewController: BaseViewController,
             
         },  completion: { (Bool) -> Void in
             if self.debugMode == true {
-                print ("_ opening done")
+                print ("_ opening cell done")
             }
         })
     }
@@ -298,7 +299,7 @@ class PlaylistViewController: BaseViewController,
             
         },  completion: { (Bool) -> Void in
             if self.debugMode == true {
-                print ("_ closing done")
+                print ("_ closing cell done")
             }
         })
     }
@@ -319,7 +320,11 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
         
-        handlePlaylistCloudRefresh()
+        if  self.debugMode == true {
+            handlePlaylistCacheCleanUp()
+        }   else {
+            handlePlaylistCloudRefresh()
+        }
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {

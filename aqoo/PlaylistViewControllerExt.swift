@@ -195,15 +195,64 @@ extension PlaylistViewController {
         };  handlePlaylistCloudRefresh()
     }
     
+    func handlePlaylistCacheCleanUp() {
+        
+        let localCacheCleanUpRequest = UIAlertController(
+            title: "Remove Local Cache?",
+            message: "you are in devMode of this app, do you want to delete the complete local cache now?",
+            preferredStyle: UIAlertControllerStyle.alert
+        )
+        
+        let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
+            
+            print ("dbg [playlist] : cache ➡ cleanUp local image cache")
+            ImageCache.default.clearMemoryCache()
+            ImageCache.default.clearDiskCache()
+            
+            CoreStore.perform(
+                
+                asynchronous: { (transaction) -> [StreamPlayList]? in return transaction.fetchAll(From<StreamPlayList>()) },
+                    success:      { (transactionPlaylists) in
+                    
+                    if transactionPlaylists?.isEmpty == false {
+                        print ("dbg [playlist] : cache ➡ cleanUp local db cache, \(transactionPlaylists!.count - 1) rows will be removed")
+                    }
+                },
+                
+                failure: { (error) in
+                    self._handleErrorAsDialogMessage(
+                        "Error Loading Playlist Cache",
+                        "Oops! An error occured while loading playlists from database ..."
+                    )
+            })
+            
+            CoreStore.perform(
+                asynchronous: { (transaction) -> Void in transaction.deleteAll(From<StreamPlayList>()) },
+                completion:   { _ in print ("dbg [playlist] : cache ➡ local db cache removed") }
+            )
+            
+            self.handlePlaylistCloudRefresh()
+            
+        }
+        
+        let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
+            
+            self.handlePlaylistCloudRefresh()
+            
+            return
+        }
+        
+        localCacheCleanUpRequest.addAction(dlgBtnYesAction)
+        localCacheCleanUpRequest.addAction(dlgBtnCancelAction)
+        
+        
+        self.present(localCacheCleanUpRequest, animated: true, completion: nil)
+    }
+    
     func handlePlaylistCloudRefresh() {
         
         if spotifyClient.isSpotifyTokenValid() {
-            
-            if  debugMode == true {
-                // ImageCache.default.clearMemoryCache()
-                // ImageCache.default.clearDiskCache()
-            }
-            
+
             loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {

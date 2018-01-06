@@ -204,6 +204,13 @@
                                                                 <constraint firstAttribute="width" constant="40" id="FMo-lj-jul"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblContentChanged_v1" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-jW-gyw" userLabel="ui_img_contentChanged">
+                                                            <rect key="frame" x="98" y="67" width="15" height="15"/>
+                                                            <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="bxc-HS-IB7"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -216,13 +223,16 @@
                                                         <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
                                                         <constraint firstAttribute="bottom" secondItem="sob-eI-eHt" secondAttribute="bottom" constant="-2" id="VeI-8H-tj8"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" id="YUS-9n-3Z6"/>
+                                                        <constraint firstItem="v2e-jW-gyw" firstAttribute="top" secondItem="NOb-wp-Paj" secondAttribute="bottom" constant="39" id="Zoh-GU-Jmu"/>
                                                         <constraint firstAttribute="bottom" secondItem="pK2-6a-rSX" secondAttribute="bottom" id="cPf-y1-kYe"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="60" id="gSY-n0-yTP"/>
+                                                        <constraint firstItem="v2e-jW-gyw" firstAttribute="bottom" secondItem="lvd-FW-jux" secondAttribute="bottom" id="jmC-7z-ZyA"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="98" id="r0k-mX-Ixd"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="-3" id="rba-cj-iIT"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="8" symbolic="YES" id="uMe-NH-gho"/>
                                                         <constraint firstItem="lvd-FW-jux" firstAttribute="bottom" secondItem="ZR1-8l-W4s" secondAttribute="bottomMargin" id="v2n-ii-coC"/>
                                                         <constraint firstAttribute="height" constant="90" id="xsA-WQ-Hxb"/>
+                                                        <constraint firstItem="v2e-jW-gyw" firstAttribute="leading" secondItem="NOb-wp-Paj" secondAttribute="leading" id="zXr-aH-rhs"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lIF-EV-Fgk" userLabel="containerView">
@@ -327,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3561" y="-174"/>
+            <point key="canvasLocation" x="3560.8000000000002" y="-174.06296851574214"/>
         </scene>
         <!--PlaylistEditViewController-->
         <scene sceneID="9oS-mC-jbO">
@@ -1368,6 +1378,7 @@
         <image name="icnShareContent_v2" width="25" height="25"/>
         <image name="icnShowPlaylist_v1" width="25" height="25"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
+        <image name="imgUITblContentChanged_v1" width="25" height="25"/>
         <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
         <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
         <image name="sample_cover_01" width="320" height="320"/>
