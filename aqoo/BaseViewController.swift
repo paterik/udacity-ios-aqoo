@@ -38,4 +38,9 @@ class BaseViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func getDateAsString (_ dateValue: Date, _ dateFormatter: String = "dd.MM.Y hh:mm") -> NSString {
+        
+        return NSDate().dateToString(Date(), dateFormatter) as! NSString
+    }
 }
