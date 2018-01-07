@@ -214,14 +214,14 @@ class PlaylistViewController: BaseViewController,
                 self.performSegue(withIdentifier: "showPlaylistEditView", sender: self)
         }
         
-        let tblActionDelete = BGTableViewRowActionWithImage.rowAction(
+        let tblActionHide = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
             backgroundColor: UIColor(netHex: 0x222222),
-            image: UIImage(named: "icnDelete_v2"),
+            image: UIImage(named: "icnHide_v1"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                print ("TBL_ACTION_DETECTED : Delete")
+                print ("TBL_ACTION_DETECTED : Hide")
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -234,7 +234,7 @@ class PlaylistViewController: BaseViewController,
                 print ("TBL_ACTION_DETECTED : ShowDetails")
         }
         
-        return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionDelete! ]
+        return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
     }
     
     func tableView(
