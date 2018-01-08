@@ -22,10 +22,27 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     var playListNameChanged: Bool = false
     var playListDescriptionChanged: Bool = false
     
+    enum tagFor: Int {
+        case PlaylistTitle = 1
+        case PlaylistDescription = 2
+        case PlaylistIsHot = 3
+        case PlaylistIsLikedFromRadio = 4
+        case PlaylistIsVotedByStars = 5
+        case PlaylistIsUseCoverOrigin = 6
+        case PlaylistIsUseCoverOverride = 7
+    }
+    
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
     @IBOutlet weak var inpPlaylistDescription: UITextView!
+    @IBOutlet weak var switchMyFavoriteList: UISwitch!
+    @IBOutlet weak var switchAutoListLikedFromRadio: UISwitch!
+    @IBOutlet weak var switchAutoListStarVoted: UISwitch!
+    @IBOutlet weak var switchUseCoverOrigin: UISwitch!
+    @IBOutlet weak var switchUseCoverOverride: UISwitch!
+    @IBOutlet weak var imgViewCoverOrigin: UIImageView!
+    @IBOutlet weak var imgViewCoverOverride: UIImageView!
     
     var inputsListenForChanges = [Any]()
     
@@ -47,20 +64,47 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
 
-    func textViewDidChange(_ textView: UITextView) {
-    
+    func textViewDidChange(_ sender: UITextView) {
+        
         checkInputElementsForChanges()
     }
     
-    @IBAction func inpPlaylistTitleDidChanged(_ sender: Any) {
+    @IBAction func inpPlaylistTitleDidChanged(_ sender: UITextField) {
 
         checkInputElementsForChanges()
+    }
+    
+    @IBAction func switchMyFavoriteListChanged(_ sender: UISwitch) {
+        
+        checkSwitchElementsForChanges(
+            sender,
+            playListInDb!.isHot
+        )
+    }
+    
+    @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
+        
+        checkSwitchElementsForChanges(
+            sender,
+            playListInDb!.isPlaylistRadioSelected
+        )
+    }
+    
+    @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
+       
+        checkSwitchElementsForChanges(
+            sender,
+            playListInDb!.isPlaylistVotedByStar
+        )
     }
     
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
 
-        var _playListTitle: String = self.inpPlaylistTitle.text!
-        var _playListDescription: String = self.inpPlaylistDescription.text!
+        var _playListTitle: String = inpPlaylistTitle.text!
+        var _playListDescription: String = inpPlaylistDescription.text!
+        var _playListIsHot: Bool = switchMyFavoriteList.isOn
+        var _playlistIsRadioSelected: Bool = switchAutoListLikedFromRadio.isOn
+        var _playlistIsStarVoted: Bool = switchAutoListStarVoted.isOn
         
         CoreStore.perform(
             asynchronous: { (transaction) -> Void in
@@ -74,6 +118,9 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaPreviouslyUpdated = true
                     playlistToUpdate!.metaNumberOfUpdates += 1
+                    playlistToUpdate!.isHot = _playListIsHot
+                    playlistToUpdate!.isPlaylistRadioSelected = _playlistIsRadioSelected
+                    playlistToUpdate!.isPlaylistVotedByStar = _playlistIsStarVoted
                     
                     if  self.playListNameChanged == true {
                         print ("playlist name changed and persisted now!")

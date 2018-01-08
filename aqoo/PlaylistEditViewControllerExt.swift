@@ -32,11 +32,24 @@ extension PlaylistEditViewController {
         handleSaveChangesButton(false)
     }
     
-    func setupUISwitchButtons() { }
+    func setupUISwitchButtons() {
+        
+        switchMyFavoriteList.isOn = playListInDb!.isHot
+        switchAutoListStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
+        switchAutoListLikedFromRadio.isOn = playListInDb!.isPlaylistRadioSelected
+    }
     
     func handleSaveChangesButton (_ enabled: Bool) {
         
         btnSavePlaylistChanges.isEnabled = enabled
+    }
+    
+    func checkSwitchElementsForChanges(_ switchElement: UISwitch, _ metaValue: Bool) {
+        
+        playListChanged = true
+        if  switchElement.isOn == metaValue {
+            playListChanged = false
+        };  handleSaveChangesButton( playListChanged )
     }
     
     func checkInputElementsForChanges() {
@@ -52,7 +65,8 @@ extension PlaylistEditViewController {
                     playListNameChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
-                // previously change detected? leave this method now, no further change-detection necessary now
+                // previously change detected? leave this method now,
+                // no further change-detection necessary now
                 if playListChanged { return }
             }
             
@@ -65,7 +79,8 @@ extension PlaylistEditViewController {
                     playListDescriptionChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
-                // previously change detected? leave this method now, no further change-detection necessary now
+                // previously change detected? leave this method now,
+                // no further change-detection necessary now
                 if playListChanged { return }
             }
         }

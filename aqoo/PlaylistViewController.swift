@@ -218,7 +218,7 @@ class PlaylistViewController: BaseViewController,
             with: UITableViewRowActionStyle.default,
             title: nil,
             backgroundColor: UIColor(netHex: 0x222222),
-            image: UIImage(named: "icnHide_v1"),
+            image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
                 print ("TBL_ACTION_DETECTED : Hide")
