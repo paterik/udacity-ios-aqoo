@@ -204,7 +204,7 @@
                                                                 <constraint firstAttribute="width" constant="40" id="FMo-lj-jul"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblContentChanged_v1" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-jW-gyw" userLabel="ui_img_contentChanged">
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblContentChanged_v1" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-jW-gyw" userLabel="ui_img_contentChanged">
                                                             <rect key="frame" x="98" y="67" width="15" height="15"/>
                                                             <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -303,6 +303,7 @@
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
+                                            <outlet property="imageViewContentChangedManually" destination="v2e-jW-gyw" id="qi5-gr-gWX"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
                                             <outlet property="imageViewPlaylistIsMine" destination="kWC-iX-15N" id="oe6-hx-Yzn"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>

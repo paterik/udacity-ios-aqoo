@@ -133,6 +133,12 @@ class PlaylistViewController: BaseViewController,
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
         
+        if  playlistCacheData.metaPreviouslyUpdatedManually == true {
+            playlistCell.imageViewContentChangedManually.isHidden = false
+        }   else {
+            playlistCell.imageViewContentChangedManually.isHidden = true
+        }
+        
         if  playlistCacheData.isMine == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
         }   else {

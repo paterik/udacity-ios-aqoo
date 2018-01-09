@@ -45,6 +45,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaNumberOfPlayedPartly: Int64
     @NSManaged var metaNumberOfPlayedCompletely: Int64
     
+    @NSManaged var metaPreviouslyUpdatedManually: Bool
     @NSManaged var metaPreviouslyUpdated: Bool
     @NSManaged var metaPreviouslyCreated: Bool
     
