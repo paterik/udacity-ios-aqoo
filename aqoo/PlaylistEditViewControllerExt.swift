@@ -10,20 +10,20 @@ import UIKit
 
 extension PlaylistEditViewController {
     
-    func setupUIInputFields() {
-        
-        inpPlaylistTitle.text = playListInDb!.name
-        inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
-        inpPlaylistDescription.delegate = self
-    }
-    
-    func setupUI() {
+    func setupUIGeneral() {
         
         playListChanged = false
         inputsListenForChanges = [
             inpPlaylistTitle,
             inpPlaylistDescription
         ]
+    }
+    
+    func setupUIInputFields() {
+        
+        inpPlaylistTitle.text = playListInDb!.name
+        inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
+        inpPlaylistDescription.delegate = self
     }
     
     func setupUINavigation() {

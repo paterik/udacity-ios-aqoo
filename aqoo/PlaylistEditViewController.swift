@@ -16,22 +16,6 @@ import BGTableViewRowActionWithImage
 
 class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
 
-    var playListInDb: StreamPlayList?
-    var playListInCloud: SPTPartialPlaylist?
-    var playListChanged: Bool = false
-    var playListNameChanged: Bool = false
-    var playListDescriptionChanged: Bool = false
-    
-    enum tagFor: Int {
-        case PlaylistTitle = 1
-        case PlaylistDescription = 2
-        case PlaylistIsHot = 3
-        case PlaylistIsLikedFromRadio = 4
-        case PlaylistIsVotedByStars = 5
-        case PlaylistIsUseCoverOrigin = 6
-        case PlaylistIsUseCoverOverride = 7
-    }
-    
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
@@ -44,13 +28,28 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var imgViewCoverOrigin: UIImageView!
     @IBOutlet weak var imgViewCoverOverride: UIImageView!
     
+    var playListInDb: StreamPlayList?
+    var playListInCloud: SPTPartialPlaylist?
+    var playListChanged: Bool = false
+    var playListNameChanged: Bool = false
+    var playListDescriptionChanged: Bool = false
     var inputsListenForChanges = [Any]()
     
+    enum tagFor: Int {
+        case PlaylistTitle = 1
+        case PlaylistDescription = 2
+        case PlaylistIsHot = 3
+        case PlaylistIsLikedFromRadio = 4
+        case PlaylistIsVotedByStars = 5
+        case PlaylistIsUseCoverOrigin = 6
+        case PlaylistIsUseCoverOverride = 7
+    }
+ 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        setupUI()
+        setupUIGeneral()
         setupUINavigation()
     }
     
