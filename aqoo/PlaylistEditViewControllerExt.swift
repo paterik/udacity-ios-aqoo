@@ -57,8 +57,6 @@ extension PlaylistEditViewController {
         for (_, element) in inputsListenForChanges.enumerated() {
             
             playListChanged = false
-            playListNameChanged = false
-            playListDescriptionChanged = false
             
             // check changes in playlist "title" element
             if let _element = element as? UITextField {
@@ -66,7 +64,6 @@ extension PlaylistEditViewController {
                 if _element.tag   != tagFor.PlaylistTitle.rawValue { return }
                 if _element.text! != playListInDb!.name {
                     playListChanged = true
-                    playListNameChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
                 //
@@ -82,7 +79,6 @@ extension PlaylistEditViewController {
                 if _element.tag   != tagFor.PlaylistDescription.rawValue { return }
                 if _element.text! != playListInDb!.metaListInternalDescription {
                     playListChanged = true
-                    playListDescriptionChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
                 if playListChanged { return }

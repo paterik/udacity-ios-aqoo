@@ -31,8 +31,6 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
-    var playListNameChanged: Bool = false
-    var playListDescriptionChanged: Bool = false
     var inputsListenForChanges = [Any]()
     
     enum tagFor: Int {
@@ -75,26 +73,17 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     
     @IBAction func switchMyFavoriteListChanged(_ sender: UISwitch) {
         
-        checkSwitchElementsForChanges(
-            sender,
-            playListInDb!.isHot
-        )
+        checkSwitchElementsForChanges(sender, playListInDb!.isHot)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
         
-        checkSwitchElementsForChanges(
-            sender,
-            playListInDb!.isPlaylistRadioSelected
-        )
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
     }
     
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
        
-        checkSwitchElementsForChanges(
-            sender,
-            playListInDb!.isPlaylistVotedByStar
-        )
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
@@ -114,22 +103,15 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                 
                 if  playlistToUpdate != nil {
 
-                    playlistToUpdate!.updatedAt = Date()
-                    playlistToUpdate!.metaPreviouslyUpdated = true
-                    playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.isHot = _playListIsHot
                     playlistToUpdate!.isPlaylistRadioSelected = _playlistIsRadioSelected
                     playlistToUpdate!.isPlaylistVotedByStar = _playlistIsStarVoted
+                    playlistToUpdate!.name = _playListTitle
+                    playlistToUpdate!.metaListInternalDescription = _playListDescription
                     
-                    if  self.playListNameChanged == true {
-                        print ("playlist name changed and persisted now!")
-                        playlistToUpdate!.name = _playListTitle
-                    }
-                    
-                    if  self.playListDescriptionChanged == true {
-                        print ("playlist description changed and persisted now!")
-                        playlistToUpdate!.metaListInternalDescription = _playListDescription
-                    }
+                    playlistToUpdate!.updatedAt = Date()
+                    playlistToUpdate!.metaNumberOfUpdates += 1
+                    playlistToUpdate!.metaPreviouslyUpdatedManually = true
                 }
             },
             completion: { _ in
