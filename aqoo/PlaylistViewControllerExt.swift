@@ -38,6 +38,12 @@ extension PlaylistViewController {
     
     func setupUITableView() {
         
+        //
+        // thats a bit "majic" here, we've to prepare our table/cell struture by
+        // a minimum of countable cells (as preCache) this will be work until someone
+        // had a playlist containing more than 9999 songs -> still looking for alt.
+        // logic implementation here 🤔
+        //
         _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
         
         tableView.estimatedRowHeight = kCloseCellHeight
@@ -61,9 +67,9 @@ extension PlaylistViewController {
     
     func setupUICacheProcessor() {
         
-        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024 // activate 512mb image cache size
+        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024
         ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
-        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds // activate a 10s download threshold
+        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds
         
         _cacheTimer = Timer.scheduledTimer(
             timeInterval: TimeInterval(_sysCacheCheckInSeconds),
@@ -220,7 +226,10 @@ extension PlaylistViewController {
             
             CoreStore.perform(
                 
-                asynchronous: { (transaction) -> [StreamPlayList]? in return transaction.fetchAll(From<StreamPlayList>()) },
+                asynchronous: { (transaction) -> [StreamPlayList]? in
+                    
+                    return transaction.fetchAll(From<StreamPlayList>()) },
+                
                 success: { (transactionPlaylists) in
                     
                     if transactionPlaylists?.isEmpty == false {
@@ -234,7 +243,8 @@ extension PlaylistViewController {
                         "Error Loading Playlist Cache",
                         "Oops! An error occured while loading playlists from database ..."
                     )
-            })
+                }
+            )
             
             CoreStore.perform(
                 asynchronous: { (transaction) -> Void in transaction.deleteAll(From<StreamPlayList>()) },
