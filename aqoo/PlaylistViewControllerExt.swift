@@ -417,6 +417,9 @@ extension PlaylistViewController {
        _ userProfileUserName: String,
        _ userProfileImageURL: String) {
 
+        // don't override owners image url if allready set previously
+        if playListInDb.ownerImageURL == userProfileImageURL { return }
+        
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
@@ -493,6 +496,7 @@ extension PlaylistViewController {
                     
                     _playListInDb!.metaListHash = _playListFingerprint
                     _playListInDb!.metaPreviouslyUpdated = false
+                    _playListInDb!.metaPreviouslyUpdatedManually = false
                     _playListInDb!.metaPreviouslyCreated = true
                     _playListInDb!.isMine = _playlistIsMine
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
@@ -531,6 +535,7 @@ extension PlaylistViewController {
                         _playListInDb!.isPublic = playListInCloud.isPublic
                         _playListInDb!.metaNumberOfUpdates += 1
                         _playListInDb!.updatedAt = Date()
+                        _playListInDb!.metaPreviouslyUpdatedManually = false
                         _playListInDb!.metaPreviouslyUpdated = true
                         _playListInDb!.metaPreviouslyCreated = false
                         
