@@ -180,7 +180,8 @@ extension PlaylistViewController {
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
             if debugMode == true {
-                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ] ➡ \(playListInCloud.trackCount) song(s)")
+                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ]")
+                print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")
                 print ("playlist covers: \(playListInCloud.images.count) (alternativ covers)")
                 print ("uri: \(playListInCloud.playableUri!)")
