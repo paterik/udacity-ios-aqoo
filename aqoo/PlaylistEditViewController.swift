@@ -103,11 +103,12 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                 
                 if  playlistToUpdate != nil {
 
+                    playlistToUpdate!.metaListInternalName = _playListTitle
+                    playlistToUpdate!.metaListInternalDescription = _playListDescription
+                    
                     playlistToUpdate!.isHot = _playListIsHot
                     playlistToUpdate!.isPlaylistRadioSelected = _playlistIsRadioSelected
                     playlistToUpdate!.isPlaylistVotedByStar = _playlistIsStarVoted
-                    playlistToUpdate!.name = _playListTitle
-                    playlistToUpdate!.metaListInternalDescription = _playListDescription
                     
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaNumberOfUpdates += 1

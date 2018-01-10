@@ -21,14 +21,14 @@ extension PlaylistEditViewController {
     
     func setupUIInputFields() {
         
-        inpPlaylistTitle.text = playListInDb!.name
+        inpPlaylistTitle.text = playListInDb!.metaListInternalName
         inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
         inpPlaylistDescription.delegate = self
     }
     
     func setupUINavigation() {
         
-        navItemEditViewTitle.title = playListInDb!.name
+        navItemEditViewTitle.title = playListInDb!.metaListInternalName
         handleSaveChangesButton(false)
     }
     
@@ -37,11 +37,6 @@ extension PlaylistEditViewController {
         switchMyFavoriteList.isOn = playListInDb!.isHot
         switchAutoListStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
         switchAutoListLikedFromRadio.isOn = playListInDb!.isPlaylistRadioSelected
-    }
-    
-    func handleSaveChangesButton (_ enabled: Bool) {
-        
-        btnSavePlaylistChanges.isEnabled = enabled
     }
     
     func checkSwitchElementsForChanges(_ switchElement: UISwitch, _ metaValue: Bool) {
@@ -62,7 +57,7 @@ extension PlaylistEditViewController {
             if let _element = element as? UITextField {
                 
                 if _element.tag   != tagFor.PlaylistTitle.rawValue { return }
-                if _element.text! != playListInDb!.name {
+                if _element.text! != playListInDb!.metaListInternalName {
                     playListChanged = true
                 };  handleSaveChangesButton(playListChanged)
                 
@@ -84,5 +79,10 @@ extension PlaylistEditViewController {
                 if playListChanged { return }
             }
         }
+    }
+    
+    func handleSaveChangesButton (_ enabled: Bool) {
+        
+        btnSavePlaylistChanges.isEnabled = enabled
     }
 }
