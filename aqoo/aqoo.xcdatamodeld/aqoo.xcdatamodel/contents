@@ -13,6 +13,7 @@
         <attribute name="metaLastListenedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="metaListHash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListInternalDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metaListInternalName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListNameOrigin" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaMediaRessourcesArray" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
         <attribute name="metaNumberOfPlayedCompletely" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -22,7 +23,6 @@
         <attribute name="metaPreviouslyCreated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaPreviouslyUpdated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaPreviouslyUpdatedManually" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playableURI" optional="YES" attributeType="String" syncable="YES"/>

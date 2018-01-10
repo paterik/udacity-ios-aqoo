@@ -11,7 +11,6 @@ import CryptoSwift
 
 class StreamPlayList: NSManagedObject {
     
-    @NSManaged var name: String
     @NSManaged var owner: String
     @NSManaged var ownerImageURL: String
     @NSManaged var trackCount: Int32
@@ -33,8 +32,10 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?
     
-    @NSManaged var metaListNameOrigin: String
     @NSManaged var metaListInternalDescription: String
+    @NSManaged var metaListInternalName: String
+    @NSManaged var metaListNameOrigin: String
+    
     @NSManaged var metaListHash: String
     @NSManaged var metaLastListenedAt: Date?
 
