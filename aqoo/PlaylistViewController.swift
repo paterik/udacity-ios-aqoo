@@ -129,7 +129,7 @@ class PlaylistViewController: BaseViewController,
         var _usedCoverImageURL: URL?
         var _noCoverImageAvailable: Bool = true
         
-        playlistCell.lblPlaylistName.text = playlistCacheData.name
+        playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
         
@@ -201,7 +201,7 @@ class PlaylistViewController: BaseViewController,
         if playlistCell.metaPlayListInCloud == nil {
             _handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
-                "The local playlist '\(_playlistInCacheSelected!.name)' is not found in your spotify cloud context!"
+                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' is not found in your spotify cloud context!"
             )
             
             return []

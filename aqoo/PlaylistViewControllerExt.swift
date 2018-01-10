@@ -198,6 +198,10 @@ extension PlaylistViewController {
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
+        
+        if debugMode == true {
+            print ("\napi handling for playlists endpoint finalized\n\n==\n")
+        }
     }
 
     /*
@@ -317,7 +321,7 @@ extension PlaylistViewController {
             
                 // kill all obsolete / orphan cache entries
                 if debugMode == true {
-                    print ("dbg [playlist] : playlist [\(playlist.name)] orphan flagged for removal")
+                    print ("dbg [playlist] : [\(playlist.metaListInternalName)] orphan flagged for removal")
                 }
                 
                 CoreStore.perform(
@@ -332,7 +336,7 @@ extension PlaylistViewController {
                     completion: { _ in
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist [\(playlist.name)] handled -> REMOVED")
+                            print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> REMOVED")
                         }
                     }
                 )
@@ -488,8 +492,7 @@ extension PlaylistViewController {
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
-                    
-                    _playListInDb!.name = playListInCloud.name
+
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
@@ -515,6 +518,7 @@ extension PlaylistViewController {
                     
                     _playListInDb!.createdAt = Date()
                     
+                    _playListInDb!.metaListInternalName = playListInCloud.name
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
                          playListInCloud,
                         _playListInDb!
@@ -525,7 +529,7 @@ extension PlaylistViewController {
                     )
                     
                     if self.debugMode == true {
-                        print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> CREATED")
+                        print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> CREATED")
                     }
                 
                 // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
@@ -534,7 +538,7 @@ extension PlaylistViewController {
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> NO_CHANGES")
+                            print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> NO_CHANGES")
                         }
                         
                     } else {
@@ -551,7 +555,7 @@ extension PlaylistViewController {
                         _playListInDb!.metaPreviouslyCreated = false
                         
                         if self.debugMode == true {
-                            print ("dbg [playlist] : playlist [\(_playListInDb!.name)] handled -> UPDATED")
+                            print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> UPDATED")
                         }
                     }
                 }
