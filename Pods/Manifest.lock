@@ -1,7 +1,7 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.3)
   - CoreStore (5.0.0)
-  - CryptoSwift (0.8.0)
+  - CryptoSwift (0.8.1)
   - FoldingCell (3.0.0)
   - Kingfisher (4.6.1)
   - Reachability (3.2)
@@ -37,7 +37,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 05bd250553eb5ddd33df4de41f4b6e232379b22b
   CoreStore: a2c17c76d5e10272ded239ac1260b3b0456ccdd3
-  CryptoSwift: f81907430ebbe38b8404b4f6fb40f3c576a8755f
+  CryptoSwift: 4b07d5b508c1eb67bfa314a727b705f8048a85de
   FoldingCell: 55e9fcac546acc2c8f110f210af892aa90032160
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
