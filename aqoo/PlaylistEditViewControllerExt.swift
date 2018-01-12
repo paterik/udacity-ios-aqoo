@@ -22,18 +22,24 @@ extension PlaylistEditViewController {
         let labelTextAttributes: [NSAttributedStringKey : Any] = [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.white]
         
         slider.attributedTextForFraction = { fraction in
+            
             let formatter = NumberFormatter()
-            formatter.maximumIntegerDigits = 3
-            formatter.maximumFractionDigits = 0
+                formatter.maximumIntegerDigits = 3
+                formatter.maximumFractionDigits = 0
+            
             let string = formatter.string(from: (fraction * 100) as NSNumber) ?? ""
-            return NSAttributedString(string: string, attributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.black])
+            
+            return NSAttributedString(string: string, attributes: [
+                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                .foregroundColor: UIColor.black
+                ]
+            )
         }
         
         slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
         slider.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
         slider.fraction = 0.5
-        slider.shadowOffset = CGSize(width: 0, height: 10)
-        slider.shadowBlur = 5
+        
         slider.shadowColor = UIColor(white: 0, alpha: 0.1)
         slider.contentViewColor = UIColor(netHex: 0x1DB954)
         slider.valueViewColor = .white
