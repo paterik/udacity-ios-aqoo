@@ -13,6 +13,7 @@ import CoreStore
 import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
+import fluid_slider
 
 class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
 
@@ -20,27 +21,21 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
     @IBOutlet weak var inpPlaylistDescription: UITextView!
-    @IBOutlet weak var switchMyFavoriteList: UISwitch!
     @IBOutlet weak var switchAutoListLikedFromRadio: UISwitch!
     @IBOutlet weak var switchAutoListStarVoted: UISwitch!
-    @IBOutlet weak var switchUseCoverOrigin: UISwitch!
-    @IBOutlet weak var switchUseCoverOverride: UISwitch!
-    @IBOutlet weak var imgViewCoverOrigin: UIImageView!
-    @IBOutlet weak var imgViewCoverOverride: UIImageView!
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var inputsListenForChanges = [Any]()
     
+    @IBOutlet var slider: Slider!
+    
     enum tagFor: Int {
         case PlaylistTitle = 1
         case PlaylistDescription = 2
-        case PlaylistIsHot = 3
-        case PlaylistIsLikedFromRadio = 4
-        case PlaylistIsVotedByStars = 5
-        case PlaylistIsUseCoverOrigin = 6
-        case PlaylistIsUseCoverOverride = 7
+        case PlaylistIsLikedFromRadio = 3
+        case PlaylistIsVotedByStars = 4
     }
  
     override func viewDidLoad() {
@@ -90,7 +85,7 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
 
         var _playListTitle: String = inpPlaylistTitle.text!
         var _playListDescription: String = inpPlaylistDescription.text!
-        var _playListIsHot: Bool = switchMyFavoriteList.isOn
+        
         var _playlistIsRadioSelected: Bool = switchAutoListLikedFromRadio.isOn
         var _playlistIsStarVoted: Bool = switchAutoListStarVoted.isOn
         
@@ -106,7 +101,6 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                     playlistToUpdate!.metaListInternalName = _playListTitle
                     playlistToUpdate!.metaListInternalDescription = _playListDescription
                     
-                    playlistToUpdate!.isHot = _playListIsHot
                     playlistToUpdate!.isPlaylistRadioSelected = _playlistIsRadioSelected
                     playlistToUpdate!.isPlaylistVotedByStar = _playlistIsStarVoted
                     
