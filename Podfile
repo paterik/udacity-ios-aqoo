@@ -8,6 +8,7 @@ def aq_ui
     pod 'BGTableViewRowActionWithImage'
     pod 'FoldingCell'
     pod 'SnapKit'
+    pod 'fluid-slider'
 end
 
 def aq_base
