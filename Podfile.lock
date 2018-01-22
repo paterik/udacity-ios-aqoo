@@ -2,9 +2,9 @@ PODS:
   - BGTableViewRowActionWithImage (0.4.3)
   - CoreStore (5.0.0)
   - CryptoSwift (0.8.1)
-  - fluid-slider (0.0.5):
+  - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.0.0)
+  - FoldingCell (3.0.1)
   - Kingfisher (4.6.1)
   - pop (1.0.10)
   - Reachability (3.2)
@@ -42,8 +42,8 @@ SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 05bd250553eb5ddd33df4de41f4b6e232379b22b
   CoreStore: a2c17c76d5e10272ded239ac1260b3b0456ccdd3
   CryptoSwift: 4b07d5b508c1eb67bfa314a727b705f8048a85de
-  fluid-slider: 3bac94fc5d10936156db978595073d1530ff4592
-  FoldingCell: 55e9fcac546acc2c8f110f210af892aa90032160
+  fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
+  FoldingCell: fb3e1ae5c220a7b108cf491b88d3349eb473c7d4
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
