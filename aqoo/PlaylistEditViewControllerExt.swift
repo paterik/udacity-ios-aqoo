@@ -15,8 +15,7 @@ extension PlaylistEditViewController {
         
         playListChanged = false
         inputsListenForChanges = [
-            inpPlaylistTitle,
-            inpPlaylistDescription
+            inpPlaylistTitle
         ]
         
         let labelTextAttributes: [NSAttributedStringKey : Any] = [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.white]
@@ -43,7 +42,6 @@ extension PlaylistEditViewController {
         slider.shadowColor = UIColor(white: 0, alpha: 0.1)
         slider.contentViewColor = UIColor(netHex: 0x1DB954)
         slider.valueViewColor = .white
-        
     }
     
     func setupUIInputFields() {
@@ -63,14 +61,6 @@ extension PlaylistEditViewController {
         
         switchAutoListStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
         switchAutoListLikedFromRadio.isOn = playListInDb!.isPlaylistRadioSelected
-    }
-    
-    func checkSwitchElementsForChanges(_ switchElement: UISwitch, _ metaValue: Bool) {
-        
-        playListChanged = true
-        if  switchElement.isOn == metaValue {
-            playListChanged = false
-        };  handleSaveChangesButton( playListChanged )
     }
     
     func checkInputElementsForChanges() {

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Patrick Paechnatz. All rights reserved.
 //
 
-
 import UIKit
 import Spotify
 import CoreStore
@@ -20,9 +19,6 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
-    @IBOutlet weak var inpPlaylistDescription: UITextView!
-    @IBOutlet weak var switchAutoListLikedFromRadio: UISwitch!
-    @IBOutlet weak var switchAutoListStarVoted: UISwitch!
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -33,9 +29,7 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
     
     enum tagFor: Int {
         case PlaylistTitle = 1
-        case PlaylistDescription = 2
-        case PlaylistIsLikedFromRadio = 3
-        case PlaylistIsVotedByStars = 4
+        case PlaylistVoting = 2
     }
  
     override func viewDidLoad() {
@@ -66,28 +60,9 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         checkInputElementsForChanges()
     }
     
-    @IBAction func switchMyFavoriteListChanged(_ sender: UISwitch) {
-        
-        checkSwitchElementsForChanges(sender, playListInDb!.isHot)
-    }
-    
-    @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
-        
-        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
-    }
-    
-    @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
-       
-        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
-    }
-    
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
 
         var _playListTitle: String = inpPlaylistTitle.text!
-        var _playListDescription: String = inpPlaylistDescription.text!
-        
-        var _playlistIsRadioSelected: Bool = switchAutoListLikedFromRadio.isOn
-        var _playlistIsStarVoted: Bool = switchAutoListStarVoted.isOn
         
         CoreStore.perform(
             asynchronous: { (transaction) -> Void in
@@ -99,11 +74,6 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                 if  playlistToUpdate != nil {
 
                     playlistToUpdate!.metaListInternalName = _playListTitle
-                    playlistToUpdate!.metaListInternalDescription = _playListDescription
-                    
-                    playlistToUpdate!.isPlaylistRadioSelected = _playlistIsRadioSelected
-                    playlistToUpdate!.isPlaylistVotedByStar = _playlistIsStarVoted
-                    
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
