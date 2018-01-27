@@ -63,11 +63,15 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
         
+        // only one if this internal switches are allowed!
+        switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsStarVoted.isOn
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
         
+        // only one if this internal switches are allowed!
+        switchPlaylistIsStarVoted.isOn = !switchPlaylistIsRadioLiked.isOn
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
     }
     
