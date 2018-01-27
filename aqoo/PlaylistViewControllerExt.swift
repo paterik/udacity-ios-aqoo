@@ -17,6 +17,8 @@ extension PlaylistViewController {
     
     func setupUIEventObserver() {
         
+        _playlistChanged = false
+        
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadUserProfileImages),
             name: NSNotification.Name(rawValue: self.notifier.notifyUserProfileLoadCompleted),
@@ -710,5 +712,11 @@ extension PlaylistViewController {
                 )
             }
         )
+    }
+    
+    func promoteToChanged(value: Bool) {
+        
+        print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
+        _playlistChanged = value
     }
 }

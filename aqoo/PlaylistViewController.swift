@@ -15,7 +15,8 @@ import BGTableViewRowActionWithImage
 
 class PlaylistViewController: BaseViewController,
                               UITableViewDataSource,
-                              UITableViewDelegate {
+                              UITableViewDelegate,
+                              PlaylistEditViewDetailDelegate {
     
     //
     // MARK: Class IBOutlet definitions
@@ -66,6 +67,7 @@ class PlaylistViewController: BaseViewController,
     var _userProfilesInPlaylistsUnique = [String]()
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
+    var _playlistChanged: Bool?
     
     //
     // MARK: Class Method Overloads
@@ -96,6 +98,17 @@ class PlaylistViewController: BaseViewController,
         _cacheTimer.invalidate()
 
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showPlaylistEditView" {
+            
+            let editViewController = segue.destination as! PlaylistEditViewController
+                ditViewController.playListInDb = _playlistInCacheSelected!
+                editViewController.playListInCloud = _playlistInCloudSelected!
+                editViewController.delegate = self
+        }
     }
     
     //
@@ -308,16 +321,6 @@ class PlaylistViewController: BaseViewController,
                 print ("_ closing cell done")
             }
         })
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "showPlaylistEditView" {
-            
-            let editViewController = segue.destination as! PlaylistEditViewController
-                editViewController.playListInDb = _playlistInCacheSelected!
-                editViewController.playListInCloud = _playlistInCloudSelected!
-        }
     }
     
     //

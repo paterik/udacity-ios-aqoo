@@ -14,18 +14,28 @@ import FoldingCell
 import BGTableViewRowActionWithImage
 import fluid_slider
 
-class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
+class PlaylistEditViewController: BaseViewController,
+                                  UITextViewDelegate,
+                                  PlaylistEditViewDetailDelegate {
 
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
+    @IBOutlet var slider: Slider!
+    
+    //
+    // MARK: Class Variables
+    //
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var inputsListenForChanges = [Any]()
-    
-    @IBOutlet var slider: Slider!
+    var delegate: PlaylistEditViewDetailDelegate?
     
     enum tagFor: Int {
         case PlaylistTitle = 1
@@ -40,6 +50,10 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         setupUINavigation()
     }
     
+    //
+    // MARK: Class Method Overloads
+    //
+    
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -48,11 +62,30 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showPlaylistEditViewDetail" {
+            
+            let editViewDetailController = segue.destination as! PlaylistEditViewDetailController
+                editViewDetailController.delegate = self
+                editViewDetailController.playListInDb = playListInDb!
+                editViewDetailController.playListInCloud = playListInCloud!
+        }
+    }
 
+    //
+    // MARK: Class Method Delegates
+    //
+    
     func textViewDidChange(_ sender: UITextView) {
         
         checkInputElementsForChanges()
     }
+    
+    //
+    // MARK: Class IBAction Methods
+    //
     
     @IBAction func inpPlaylistTitleDidChanged(_ sender: UITextField) {
 
@@ -86,17 +119,12 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         )
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "showPlaylistEditViewDetail" {
-            
-            let editViewDetailController = segue.destination as! PlaylistEditViewDetailController
-                editViewDetailController.playListInDb = playListInDb!
-                editViewDetailController.playListInCloud = playListInCloud!
-        }
-    }
-    
     @IBAction func btnExitEditViewAction(_ sender: Any) {
+        
+        // delegate information about current playlist entity state to playlistView
+        if let delegate = self.delegate {
+            delegate.promoteToChanged( playListChanged )
+        }
         
         dismiss(animated: true, completion: nil)
     }

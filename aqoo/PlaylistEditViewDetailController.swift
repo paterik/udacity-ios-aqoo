@@ -26,6 +26,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var inputsListenForChanges = [Any]()
+    var delegate: PlaylistEditViewDetailDelegate?
  
     enum tagFor: Int {
         case PlaylistDescription = 1
@@ -78,6 +79,11 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     }
     
     @IBAction func btnCancelEditViewAction(_ sender: Any) {
+        
+        // delegate information about current playlist entity state to playlistEditView
+        if let delegate = self.delegate {
+            delegate.promoteToChanged( playListChanged )
+        }
         
         dismiss(animated: true, completion: nil)
     }

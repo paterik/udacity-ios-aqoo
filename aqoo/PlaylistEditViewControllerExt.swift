@@ -93,4 +93,10 @@ extension PlaylistEditViewController {
         
         btnSavePlaylistChanges.isEnabled = enabled
     }
+    
+    func promoteToChanged(value: Bool) {
+        
+        print ("dbg [delegate] : value changed -> PlaylistEditViewControllerExt :: playlistChanged == \(value)")
+        _playlistChanged = value
+    }
 }
