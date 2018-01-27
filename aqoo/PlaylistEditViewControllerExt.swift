@@ -75,17 +75,7 @@ extension PlaylistEditViewController {
                 //
                 if playListChanged { return }
             }
-            
-            // check changes in playlist "description" element
-            if let _element = element as? UITextView {
-                
-                if _element.tag   != tagFor.PlaylistDescription.rawValue { return }
-                if _element.text! != playListInDb!.metaListInternalDescription {
-                    playListChanged = true
-                };  handleSaveChangesButton(playListChanged)
-                
-                if playListChanged { return }
-            }
+
         }
     }
     
@@ -94,9 +84,9 @@ extension PlaylistEditViewController {
         btnSavePlaylistChanges.isEnabled = enabled
     }
     
-    func promoteToChanged(value: Bool) {
+    func promoteToChanged(_ value: Bool) {
         
         print ("dbg [delegate] : value changed -> PlaylistEditViewControllerExt :: playlistChanged == \(value)")
-        _playlistChanged = value
+        playListChanged = value
     }
 }

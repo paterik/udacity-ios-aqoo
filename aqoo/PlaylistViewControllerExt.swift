@@ -714,7 +714,7 @@ extension PlaylistViewController {
         )
     }
     
-    func promoteToChanged(value: Bool) {
+    func promoteToChanged(_ value: Bool) {
         
         print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
         _playlistChanged = value

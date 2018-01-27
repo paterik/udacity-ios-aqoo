@@ -10,5 +10,5 @@ import Foundation
 
 protocol PlaylistEditViewDetailDelegate {
     
-    func promoteToChanged(value: Bool)
+    func promoteToChanged(_ value: Bool)
 }
