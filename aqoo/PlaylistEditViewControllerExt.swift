@@ -75,7 +75,6 @@ extension PlaylistEditViewController {
                 //
                 if playListChanged { return }
             }
-
         }
     }
     
@@ -84,9 +83,15 @@ extension PlaylistEditViewController {
         btnSavePlaylistChanges.isEnabled = enabled
     }
     
+    func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
+        
+        print ("dbg [delegate] : value transmitted -> PlaylistEditViewControllerExt :: playlistItem == [\(playlistItem.metaListInternalName)]")
+    }
+    
     func promoteToChanged(_ value: Bool) {
         
         print ("dbg [delegate] : value changed -> PlaylistEditViewControllerExt :: playlistChanged == \(value)")
+        handleSaveChangesButton( value )
         playListChanged = value
     }
 }

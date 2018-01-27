@@ -53,6 +53,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
+    // not working
     func textViewDidChange(_ sender: UITextView) {
      
         print ("textView change detected ...")
@@ -89,7 +90,14 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         
         // delegate information about current playlist entity state to playlistEditView
         if let delegate = self.delegate {
+            
+            playListInDb!.isPlaylistHidden = switchPlaylistIsHidden.isOn
+            playListInDb!.isPlaylistRadioSelected = switchPlaylistIsRadioLiked.isOn
+            playListInDb!.isPlaylistVotedByStar = switchPlaylistIsStarVoted.isOn
+            playListInDb!.metaListInternalDescription = inpPlaylistDescription.text
+            
             delegate.promoteToChanged( playListChanged )
+            delegate.promoteChangedPlaylistObject( playListInDb! )
         }
         
         dismiss(animated: true, completion: nil)

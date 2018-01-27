@@ -11,4 +11,6 @@ import Foundation
 protocol PlaylistEditViewDetailDelegate {
     
     func promoteToChanged(_ value: Bool)
+    
+    func promoteChangedPlaylistObject (_ playlistItem : StreamPlayList)
 }

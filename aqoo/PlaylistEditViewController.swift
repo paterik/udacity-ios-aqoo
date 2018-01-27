@@ -109,6 +109,7 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
+                    self.playListInDb = playlistToUpdate!
                 }
             },
             completion: { _ in
@@ -124,6 +125,7 @@ class PlaylistEditViewController: BaseViewController,
         // delegate information about current playlist entity state to playlistView
         if let delegate = self.delegate {
             delegate.promoteToChanged( playListChanged )
+            delegate.promoteChangedPlaylistObject( playListInDb! )
         }
         
         dismiss(animated: true, completion: nil)

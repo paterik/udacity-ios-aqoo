@@ -714,6 +714,11 @@ extension PlaylistViewController {
         )
     }
     
+    func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
+        
+        print ("dbg [delegate] : value transmitted -> PlaylistViewControllerExt :: playlistItem == [\(playlistItem.metaListInternalName)]")
+    }
+    
     func promoteToChanged(_ value: Bool) {
         
         print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
