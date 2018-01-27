@@ -16,15 +16,20 @@ import fluid_slider
 
 class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     
+    @IBOutlet var switchPlaylistIsStarVoted: UISwitch!
+    @IBOutlet var switchPlaylistIsRadioLiked: UISwitch!
+    @IBOutlet var switchPlaylistIsHidden: UISwitch!
+    
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var inputsListenForChanges = [Any]()
-    
+ 
     enum tagFor: Int {
         case PlaylistDescription = 1
-        case PlaylistIsRadioSelected = 2
-        case PlaylistIsVotingSelected = 3
+        case PlaylistIsStarVoted = 2
+        case PlaylistIsRadioLiked = 3
+        case PlaylistIsHidden = 4
     }
     
     override func viewDidLoad() {
@@ -45,9 +50,9 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
-    @IBAction func switchMyFavoriteListChanged(_ sender: UISwitch) {
+    @IBAction func switchActionHidePlaylistFromAllViewsChanged(_ sender: UISwitch) {
         
-        checkSwitchElementsForChanges(sender, playListInDb!.isHot)
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistHidden)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
@@ -60,9 +65,10 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
-    @IBAction func btnSavePlaylistChangesAction(_ sender: Any) { }
+    @IBAction func btnResetPlaylistStatistics(_ sender: UIButton) { }
+    @IBAction func btnResetPlaylistToSPFDefaults(_ sender: UIButton) { }
     
-    @IBAction func btnExitEditViewAction(_ sender: Any) {
+    @IBAction func btnCancelEditViewAction(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
     }
