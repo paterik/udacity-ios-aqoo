@@ -45,7 +45,6 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
         super.viewWillAppear(animated)
         
         setupUIInputFields()
-        setupUISwitchButtons()
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
@@ -85,6 +84,16 @@ class PlaylistEditViewController: BaseViewController, UITextViewDelegate {
                 self.btnExitEditViewAction( self )
             }
         )
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showPlaylistEditViewDetail" {
+            
+            let editViewDetailController = segue.destination as! PlaylistEditViewDetailController
+                editViewDetailController.playListInDb = playListInDb!
+                editViewDetailController.playListInCloud = playListInCloud!
+        }
     }
     
     @IBAction func btnExitEditViewAction(_ sender: Any) {

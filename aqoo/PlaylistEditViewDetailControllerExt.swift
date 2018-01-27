@@ -10,17 +10,38 @@ import UIKit
 
 extension PlaylistEditViewDetailController {
 
-    func setupUIGeneral() {}
-    func setupUIInputFields() {}
-    func setupUINavigation() {}
-    func setupUISwitchButtons() {}
+    func setupUIGeneral() {
+        
+        playListChanged = false
+        inputsListenForChanges = [
+            inpPlaylistDescription
+        ]
+    }
+    
+    func setupUIInputFields() {
+        
+        inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
+        inpPlaylistDescription.delegate = self
+    }
+    
+    func setupUINavigation() {
+        
+        navItemEditViewTitle.title = playListInDb!.metaListInternalName
+    }
+    
+    func setupUISwitchButtons() {
+        
+        switchPlaylistIsStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
+        switchPlaylistIsRadioLiked.isOn = playListInDb!.isPlaylistRadioSelected
+        switchPlaylistIsHidden.isOn = playListInDb!.isPlaylistHidden
+    }
     
     func checkSwitchElementsForChanges(_ switchElement: UISwitch, _ metaValue: Bool) {
         
         playListChanged = true
         if  switchElement.isOn == metaValue {
             playListChanged = false
-        };  handleSaveChangesButton( playListChanged )
+        }
     }
     
     func checkInputElementsForChanges() {

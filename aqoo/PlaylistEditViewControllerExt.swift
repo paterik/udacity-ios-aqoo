@@ -47,20 +47,12 @@ extension PlaylistEditViewController {
     func setupUIInputFields() {
         
         inpPlaylistTitle.text = playListInDb!.metaListInternalName
-        inpPlaylistDescription.text = playListInDb!.metaListInternalDescription
-        inpPlaylistDescription.delegate = self
     }
     
     func setupUINavigation() {
         
         navItemEditViewTitle.title = playListInDb!.metaListInternalName
         handleSaveChangesButton(false)
-    }
-    
-    func setupUISwitchButtons() {
-        
-        switchAutoListStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
-        switchAutoListLikedFromRadio.isOn = playListInDb!.isPlaylistRadioSelected
     }
     
     func checkInputElementsForChanges() {

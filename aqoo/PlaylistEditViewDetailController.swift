@@ -19,6 +19,8 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     @IBOutlet var switchPlaylistIsStarVoted: UISwitch!
     @IBOutlet var switchPlaylistIsRadioLiked: UISwitch!
     @IBOutlet var switchPlaylistIsHidden: UISwitch!
+    @IBOutlet var inpPlaylistDescription: UITextView!
+    @IBOutlet var navItemEditViewTitle: UINavigationBar!
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -50,9 +52,9 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
-    @IBAction func switchActionHidePlaylistFromAllViewsChanged(_ sender: UISwitch) {
+    @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
         
-        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistHidden)
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
@@ -60,13 +62,20 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
     }
     
-    @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
+    @IBAction func switchActionHidePlaylistFromAllViewsChanged(_ sender: UISwitch) {
         
-        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistHidden)
     }
     
-    @IBAction func btnResetPlaylistStatistics(_ sender: UIButton) { }
-    @IBAction func btnResetPlaylistToSPFDefaults(_ sender: UIButton) { }
+    @IBAction func btnResetPlaylistStatistics(_ sender: UIButton) {
+        
+        print ("btnResetPlaylistStatistics:action")
+    }
+    
+    @IBAction func btnResetPlaylistToSPFDefaults(_ sender: UIButton) {
+        
+        print ("btnResetPlaylistToSPFDefaults:action")
+    }
     
     @IBAction func btnCancelEditViewAction(_ sender: Any) {
         

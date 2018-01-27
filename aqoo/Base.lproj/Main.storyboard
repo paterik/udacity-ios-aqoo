@@ -1546,8 +1546,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="inpPlaylistDescription" destination="tZY-E4-Fii" id="McO-dl-Wtf"/>
-                        <outlet property="navItemEditViewTitle" destination="qgT-z2-kvh" id="pjj-BV-oW8"/>
+                        <outlet property="inpPlaylistDescription" destination="tZY-E4-Fii" id="SAy-0l-5Wq"/>
+                        <outlet property="navItemEditViewTitle" destination="d6x-uV-ktD" id="lGv-Rb-ua6"/>
                         <outlet property="switchAutoListLikedFromRadio" destination="p8T-jJ-zTI" id="0Rr-La-z7c"/>
                         <outlet property="switchAutoListStarVoted" destination="Sek-NY-yDz" id="gpY-c1-T13"/>
                         <outlet property="switchPlaylistIsHidden" destination="Wcr-4u-SQV" id="Ake-To-q9o"/>
