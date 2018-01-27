@@ -28,6 +28,7 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var isPlaylistVotedByStar: Bool
     @NSManaged var isPlaylistRadioSelected: Bool
+    @NSManaged var isPlaylistHidden: Bool
     
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?

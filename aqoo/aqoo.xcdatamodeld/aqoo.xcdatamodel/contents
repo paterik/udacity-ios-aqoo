@@ -6,6 +6,7 @@
         <attribute name="isCollaborative" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isHot" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMine" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isPlaylistHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistRadioSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistVotedByStar" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPublic" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -43,7 +44,7 @@
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="495"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="510"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>
