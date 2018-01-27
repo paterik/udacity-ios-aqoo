@@ -26,7 +26,7 @@ extension PlaylistEditViewDetailController {
     
     func setupUINavigation() {
         
-        // navItemEditViewTitle.title = playListInDb!.metaListInternalName
+        navItemEditViewTitle.title = playListInDb!.metaListInternalName
     }
     
     func setupUISwitchButtons() {

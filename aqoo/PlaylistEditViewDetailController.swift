@@ -20,7 +20,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     @IBOutlet var switchPlaylistIsRadioLiked: UISwitch!
     @IBOutlet var switchPlaylistIsHidden: UISwitch!
     @IBOutlet var inpPlaylistDescription: UITextView!
-    @IBOutlet var navItemEditViewTitle: UINavigationBar!
+    @IBOutlet var navItemEditViewTitle: UINavigationItem!
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -51,6 +51,13 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         setupUISwitchButtons()
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+    }
+    
+    func textViewDidChange(_ sender: UITextView) {
+     
+        print ("textView change detected ...")
+        
+        checkInputElementsForChanges()
     }
     
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {

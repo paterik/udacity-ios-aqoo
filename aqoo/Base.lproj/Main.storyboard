@@ -466,6 +466,7 @@
                                         </state>
                                         <connections>
                                             <action selector="btnSpotifyLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oGR-5n-wKC"/>
+                                            <segue destination="rqx-iJ-BrN" kind="showDetail" identifier="showPlaylistEditViewDetail" id="iL7-XV-yDA"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1547,9 +1548,7 @@
                     </view>
                     <connections>
                         <outlet property="inpPlaylistDescription" destination="tZY-E4-Fii" id="SAy-0l-5Wq"/>
-                        <outlet property="navItemEditViewTitle" destination="d6x-uV-ktD" id="lGv-Rb-ua6"/>
-                        <outlet property="switchAutoListLikedFromRadio" destination="p8T-jJ-zTI" id="0Rr-La-z7c"/>
-                        <outlet property="switchAutoListStarVoted" destination="Sek-NY-yDz" id="gpY-c1-T13"/>
+                        <outlet property="navItemEditViewTitle" destination="qgT-z2-kvh" id="3rd-MI-5Sq"/>
                         <outlet property="switchPlaylistIsHidden" destination="Wcr-4u-SQV" id="Ake-To-q9o"/>
                         <outlet property="switchPlaylistIsRadioLiked" destination="p8T-jJ-zTI" id="c3x-TZ-D8c"/>
                         <outlet property="switchPlaylistIsStarVoted" destination="Sek-NY-yDz" id="2Ei-lr-45j"/>
