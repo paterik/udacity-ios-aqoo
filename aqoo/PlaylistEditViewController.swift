@@ -25,8 +25,7 @@ class PlaylistEditViewController: BaseViewController,
     @IBOutlet weak var navItemEditViewTitle: UINavigationItem!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
-    @IBOutlet var slider: Slider!
-    
+    @IBOutlet var inpPlaylistRatingSlider: Slider!
     //
     // MARK: Class Variables
     //
@@ -48,6 +47,7 @@ class PlaylistEditViewController: BaseViewController,
         
         setupUIGeneral()
         setupUINavigation()
+        setupRatingSlider()
     }
     
     //
@@ -95,6 +95,7 @@ class PlaylistEditViewController: BaseViewController,
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
 
         var _playListTitle: String = inpPlaylistTitle.text!
+        var _playListRating: Float = Float(inpPlaylistRatingSlider.fraction)
         
         CoreStore.perform(
             asynchronous: { (transaction) -> Void in
@@ -109,6 +110,7 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
+                    playlistToUpdate!.metaListInternalRating = _playListRating
                     self.playListInDb = playlistToUpdate!
                 }
             },

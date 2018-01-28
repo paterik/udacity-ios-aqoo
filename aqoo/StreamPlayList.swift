@@ -35,6 +35,7 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var metaListInternalDescription: String
     @NSManaged var metaListInternalName: String
+    @NSManaged var metaListInternalRating: Float
     @NSManaged var metaListNameOrigin: String
     
     @NSManaged var metaListHash: String

@@ -531,9 +531,9 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="btnSavePlaylistChanges" destination="wOk-UT-ixH" id="Tdx-vk-eb0"/>
+                        <outlet property="inpPlaylistRatingSlider" destination="plH-F9-JuX" id="A4J-km-qhm"/>
                         <outlet property="inpPlaylistTitle" destination="WDe-jI-C9X" id="wIx-1A-0Z2"/>
                         <outlet property="navItemEditViewTitle" destination="4YG-cM-qIv" id="XNE-k3-FL0"/>
-                        <outlet property="slider" destination="plH-F9-JuX" id="9Iu-mJ-8lh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-Dl-arD" userLabel="First Responder" sceneMemberID="firstResponder"/>

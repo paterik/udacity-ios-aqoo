@@ -11,20 +11,18 @@ import fluid_slider
 
 extension PlaylistEditViewController {
     
-    func setupUIGeneral() {
+    func setupRatingSlider() {
         
-        playListChanged = false
-        inputsListenForChanges = [
-            inpPlaylistTitle
+        let labelTextAttributes: [NSAttributedStringKey : Any] = [
+            .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+            .foregroundColor: UIColor.white
         ]
         
-        let labelTextAttributes: [NSAttributedStringKey : Any] = [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.white]
-        
-        slider.attributedTextForFraction = { fraction in
+        inpPlaylistRatingSlider.attributedTextForFraction = { fraction in
             
             let formatter = NumberFormatter()
-                formatter.maximumIntegerDigits = 3
-                formatter.maximumFractionDigits = 0
+            formatter.maximumIntegerDigits = 3
+            formatter.maximumFractionDigits = 0
             
             let string = formatter.string(from: (fraction * 100) as NSNumber) ?? ""
             
@@ -35,13 +33,23 @@ extension PlaylistEditViewController {
             )
         }
         
-        slider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
-        slider.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
-        slider.fraction = 0.5
+        inpPlaylistRatingSlider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
+        inpPlaylistRatingSlider.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
+        inpPlaylistRatingSlider.fraction = CGFloat(playListInDb!.metaListInternalRating)
         
-        slider.shadowColor = UIColor(white: 0, alpha: 0.1)
-        slider.contentViewColor = UIColor(netHex: 0x1DB954)
-        slider.valueViewColor = .white
+        inpPlaylistRatingSlider.shadowColor = UIColor(white: 0, alpha: 0.1)
+        inpPlaylistRatingSlider.contentViewColor = UIColor(netHex: 0x1DB954)
+        inpPlaylistRatingSlider.valueViewColor = .white
+        
+        inpPlaylistRatingSlider.addTarget(self, action: #selector(checkInputPlaylistRatingChanged), for: .valueChanged)
+    }
+    
+    func setupUIGeneral() {
+        
+        playListChanged = false
+        inputsListenForChanges = [
+            inpPlaylistTitle
+        ]
     }
     
     func setupUIInputFields() {
@@ -53,6 +61,15 @@ extension PlaylistEditViewController {
         
         navItemEditViewTitle.title = playListInDb!.metaListInternalName
         handleSaveChangesButton(false)
+    }
+    
+    func checkInputPlaylistRatingChanged() {
+        
+        playListChanged = false
+        if inpPlaylistRatingSlider.fraction != CGFloat(playListInDb!.metaListInternalRating) {
+            playListChanged = true
+        };  handleSaveChangesButton(playListChanged)
+        
     }
     
     func checkInputElementsForChanges() {
@@ -85,7 +102,8 @@ extension PlaylistEditViewController {
     
     func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
         
-        print ("dbg [delegate] : value transmitted -> PlaylistEditViewControllerExt :: playlistItem == [\(playlistItem.metaListInternalName)]")
+        let _identifier = playlistItem.metaListInternalName
+        print ("dbg [delegate] : value transmitted -> PlaylistEditViewControllerExt :: playlistItem == [\(_identifier)]")
     }
     
     func promoteToChanged(_ value: Bool) {

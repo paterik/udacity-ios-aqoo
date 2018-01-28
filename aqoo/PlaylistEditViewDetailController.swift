@@ -63,14 +63,14 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
         
-        // only one if this internal switches are allowed!
+        // only one if this internal spotify flags are allowed!
         switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsStarVoted.isOn
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
         
-        // only one if this internal switches are allowed!
+        // only one if this internal spotify flags are allowed!
         switchPlaylistIsStarVoted.isOn = !switchPlaylistIsRadioLiked.isOn
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
     }
@@ -78,16 +78,6 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     @IBAction func switchActionHidePlaylistFromAllViewsChanged(_ sender: UISwitch) {
         
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistHidden)
-    }
-    
-    @IBAction func btnResetPlaylistStatistics(_ sender: UIButton) {
-        
-        print ("btnResetPlaylistStatistics:action")
-    }
-    
-    @IBAction func btnResetPlaylistToSPFDefaults(_ sender: UIButton) {
-        
-        print ("btnResetPlaylistToSPFDefaults:action")
     }
     
     @IBAction func btnCancelEditViewAction(_ sender: Any) {
@@ -105,5 +95,15 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         }
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func btnResetPlaylistStatistics(_ sender: UIButton) {
+        
+        print ("btnResetPlaylistStatistics:action")
+    }
+    
+    @IBAction func btnResetPlaylistToSPFDefaults(_ sender: UIButton) {
+        
+        print ("btnResetPlaylistToSPFDefaults:action")
     }
 }
