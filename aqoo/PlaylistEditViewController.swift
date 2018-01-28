@@ -16,6 +16,8 @@ import fluid_slider
 
 class PlaylistEditViewController: BaseViewController,
                                   UITextViewDelegate,
+                                  UIImagePickerControllerDelegate,
+                                  UINavigationControllerDelegate,
                                   PlaylistEditViewDetailDelegate {
 
     //
@@ -27,7 +29,7 @@ class PlaylistEditViewController: BaseViewController,
     @IBOutlet weak var inpPlaylistTitle: UITextField!
     @IBOutlet var inpPlaylistRatingSlider: Slider!
     @IBOutlet var imgPlaylistCoverOrigin: UIImageView!
-    @IBOutlet var imgPlaylistCoverOverride: UIImageView!
+    @IBOutlet var btnPlaylistCoverOverride: UIButton!
     
     //
     // MARK: Constants (normal)
@@ -35,6 +37,7 @@ class PlaylistEditViewController: BaseViewController,
     
     let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
     let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
+    let imagePickerController = UIImagePickerController()
     
     //
     // MARK: Class Variables
@@ -43,6 +46,7 @@ class PlaylistEditViewController: BaseViewController,
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
+    var imagePickerSuccess: Bool = false
     var inputsListenForChanges = [Any]()
     var delegate: PlaylistEditViewDetailDelegate?
     
@@ -59,6 +63,10 @@ class PlaylistEditViewController: BaseViewController,
         setupUINavigation()
         setupUIRatingSlider()
         setupUICoverImages()
+        
+        
+        // set delegate for imagePicker (cam, photoLib ...)
+        imagePickerController.delegate = self
     }
     
     //
@@ -131,6 +139,53 @@ class PlaylistEditViewController: BaseViewController,
                 self.btnExitEditViewAction( self )
             }
         )
+    }
+    
+    @IBAction func btnPlaylistCoverOverrideAction(_ sender: UIButton) {
+        
+        let alertController = UIAlertController(
+            title: "Pick an image",
+            message: "Choose your image location",
+            preferredStyle: .alert)
+        
+        if isPhotoLibrarayAvailable() {
+            
+            let photoLibAction = UIAlertAction(title: "From Photos", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .photoLibrary
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(photoLibAction)
+        }
+        
+        if isSavedPhotosAlbumAvailable() {
+            
+            let photoAlbumAction = UIAlertAction(title: "From Album", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .savedPhotosAlbum
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(photoAlbumAction)
+        }
+        
+        if isCameraAvailable() {
+            
+            let cameraAction = UIAlertAction(title: "From Camera", style: UIAlertActionStyle.default ) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .camera
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(cameraAction)
+        }
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in return
+        })
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func btnExitEditViewAction(_ sender: Any) {

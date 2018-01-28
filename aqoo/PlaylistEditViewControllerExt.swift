@@ -48,6 +48,8 @@ extension PlaylistEditViewController {
     func setupUIGeneral() {
         
         playListChanged = false
+        imagePickerSuccess = false
+        
         inputsListenForChanges = [
             inpPlaylistTitle
         ]
@@ -100,7 +102,6 @@ extension PlaylistEditViewController {
         if inpPlaylistRatingSlider.fraction != CGFloat(playListInDb!.metaListInternalRating) {
             playListChanged = true
         };  handleSaveChangesButton(playListChanged)
-        
     }
     
     func checkInputElementsForChanges() {
@@ -129,6 +130,55 @@ extension PlaylistEditViewController {
     func handleSaveChangesButton (_ enabled: Bool) {
         
         btnSavePlaylistChanges.isEnabled = enabled
+    }
+    
+    func isCameraAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+    }
+    
+    func isPhotoLibrarayAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)
+    }
+    
+    func isSavedPhotosAlbumAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum)
+    }
+    
+    func isLocalImageStockAvailable() -> Bool {
+        return isPhotoLibrarayAvailable() || isSavedPhotosAlbumAvailable()
+    }
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            btnPlaylistCoverOverride.contentMode = .scaleAspectFit
+            btnPlaylistCoverOverride.setBackgroundImage(pickedImage, for: UIControlState.normal)
+            imagePickerSuccess = true
+            
+            print ("success !!!")
+        } else {
+            print ("fail !!!")
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(
+        _ picker: UIImagePickerController) {
+        
+        imagePickerSuccess = false
+        
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func loadImagePickerSource() {
+        
+        imagePickerController.allowsEditing = false
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
