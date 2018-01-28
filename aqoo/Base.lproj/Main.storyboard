@@ -531,6 +531,8 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="btnSavePlaylistChanges" destination="wOk-UT-ixH" id="Tdx-vk-eb0"/>
+                        <outlet property="imgPlaylistCoverOrigin" destination="yky-rt-gcZ" id="oY9-5K-sl2"/>
+                        <outlet property="imgPlaylistCoverOverride" destination="P5n-Su-1RB" id="wTS-D7-yEL"/>
                         <outlet property="inpPlaylistRatingSlider" destination="plH-F9-JuX" id="A4J-km-qhm"/>
                         <outlet property="inpPlaylistTitle" destination="WDe-jI-C9X" id="wIx-1A-0Z2"/>
                         <outlet property="navItemEditViewTitle" destination="4YG-cM-qIv" id="XNE-k3-FL0"/>

@@ -8,10 +8,11 @@
 
 import UIKit
 import fluid_slider
+import Kingfisher
 
 extension PlaylistEditViewController {
     
-    func setupRatingSlider() {
+    func setupUIRatingSlider() {
         
         let labelTextAttributes: [NSAttributedStringKey : Any] = [
             .font: UIFont.systemFont(ofSize: 12, weight: .bold),
@@ -50,6 +51,36 @@ extension PlaylistEditViewController {
         inputsListenForChanges = [
             inpPlaylistTitle
         ]
+    }
+    
+    func setupUICoverImages() {
+        
+        var _playListCoverURL: String?
+        var _noCoverImageAvailable: Bool = true
+        
+        // set default image before any kind of cover processing
+        imgPlaylistCoverOrigin.image = UIImage(named: _sysDefaultCoverImage)
+        
+        // evaluate the "perfect" cover for our detailView
+        if (playListInDb!.largestImageURL != nil) {
+           _playListCoverURL = playListInDb!.largestImageURL!
+           _noCoverImageAvailable = false
+        }   else if (playListInDb!.smallestImageURL != nil) {
+           _playListCoverURL = playListInDb!.smallestImageURL!
+           _noCoverImageAvailable = false
+        }
+        
+        // cover image url available - using kf processing technics and render one
+        if _noCoverImageAvailable == false {
+            imgPlaylistCoverOrigin.kf.setImage(
+                with: URL(string: _playListCoverURL!),
+                placeholder: UIImage(named: _sysDefaultCoverImage),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverDetailImageSize))
+                ]
+            )
+        }
     }
     
     func setupUIInputFields() {

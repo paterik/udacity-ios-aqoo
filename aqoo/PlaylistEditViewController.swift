@@ -26,6 +26,16 @@ class PlaylistEditViewController: BaseViewController,
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var inpPlaylistTitle: UITextField!
     @IBOutlet var inpPlaylistRatingSlider: Slider!
+    @IBOutlet var imgPlaylistCoverOrigin: UIImageView!
+    @IBOutlet var imgPlaylistCoverOverride: UIImageView!
+    
+    //
+    // MARK: Constants (normal)
+    //
+    
+    let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
+    let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
+    
     //
     // MARK: Class Variables
     //
@@ -47,7 +57,8 @@ class PlaylistEditViewController: BaseViewController,
         
         setupUIGeneral()
         setupUINavigation()
-        setupRatingSlider()
+        setupUIRatingSlider()
+        setupUICoverImages()
     }
     
     //
