@@ -60,6 +60,9 @@ extension PlaylistEditViewController {
         var _playListCoverURL: String?
         var _noCoverImageAvailable: Bool = true
         
+        // set delegate for imagePicker (cam, photoLib ...)
+        imagePickerController.delegate = self
+        
         // set default image before any kind of cover processing
         imgPlaylistCoverOrigin.image = UIImage(named: _sysDefaultCoverImage)
         
@@ -152,15 +155,15 @@ extension PlaylistEditViewController {
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : Any]) {
         
+        imagePickerSuccess = false
+        imgPlaylistCoverOrigin.alpha = 1.0
+        
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
             btnPlaylistCoverOverride.contentMode = .scaleAspectFit
             btnPlaylistCoverOverride.setBackgroundImage(pickedImage, for: UIControlState.normal)
             imagePickerSuccess = true
             
-            print ("success !!!")
-        } else {
-            print ("fail !!!")
+            imgPlaylistCoverOrigin.alpha = 0.65
         }
         
         dismiss(animated: true, completion: nil)

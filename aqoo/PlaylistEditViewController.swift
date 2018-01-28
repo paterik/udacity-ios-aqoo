@@ -63,10 +63,6 @@ class PlaylistEditViewController: BaseViewController,
         setupUINavigation()
         setupUIRatingSlider()
         setupUICoverImages()
-        
-        
-        // set delegate for imagePicker (cam, photoLib ...)
-        imagePickerController.delegate = self
     }
     
     //
