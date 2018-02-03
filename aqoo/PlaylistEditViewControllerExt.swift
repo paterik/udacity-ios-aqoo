@@ -29,8 +29,8 @@ extension PlaylistEditViewController {
             let string = formatter.string(from: (fraction * 100) as NSNumber) ?? ""
             
             return NSAttributedString(string: string, attributes: [
-                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
-                .foregroundColor: UIColor.black
+                    .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                    .foregroundColor: UIColor.black
                 ]
             )
         }
@@ -50,18 +50,23 @@ extension PlaylistEditViewController {
         
         playListChanged = false
         imagePickerSuccess = false
-        btnPlaylistCoverOverride.contentMode = .scaleAspectFit
-        btnPlaylistCoverOverride.setBackgroundImage(UIImage(named: _sysDefaultCoverOverrideImage), for: UIControlState.normal)
+        resetCoverOverrideButton()
         
         inputsListenForChanges = [
             inpPlaylistTitle
         ]
     }
     
+    func resetCoverOverrideButton() {
+        
+        btnPlaylistCoverOverride.contentMode = .scaleAspectFit
+        btnPlaylistCoverOverride.setBackgroundImage(UIImage(named: _sysDefaultCoverOverrideImage), for: UIControlState.normal)
+        btnPlaylistCoverOverride.setImage(nil, for: UIControlState.normal)
+    }
+    
     func setupUICoverImages() {
         
         var _playListCoverURL: String?
-        var _noCoverImageAvailable: Bool = true
         
         // set delegate for imagePicker (cam, photoLib ...)
         imagePickerController.delegate = self
@@ -90,7 +95,9 @@ extension PlaylistEditViewController {
             )
         }
         
-        if playListInDb!.coverImagePathOverride != nil {
+        if  playListInDb!.coverImagePathOverride != nil {
+           _noCoverOverrideImageAvailable = false
+            
             if let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
                 btnPlaylistCoverOverride.setBackgroundImage(_image, for: UIControlState.normal)
                 btnPlaylistCoverOverride.setImage(UIImage(named: "icnSwitch_v1"), for: UIControlState.normal)

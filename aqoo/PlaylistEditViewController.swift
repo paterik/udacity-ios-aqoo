@@ -52,6 +52,13 @@ class PlaylistEditViewController: BaseViewController,
     var inputsListenForChanges = [Any]()
     var delegate: PlaylistEditViewDetailDelegate?
     
+    //
+    // MARK: Class LowLevel Variables
+    //
+    
+    var _noCoverImageAvailable: Bool = true
+    var _noCoverOverrideImageAvailable: Bool = true
+    
     enum tagFor: Int {
         case PlaylistTitle = 1
         case PlaylistVoting = 2
@@ -141,10 +148,32 @@ class PlaylistEditViewController: BaseViewController,
     
     @IBAction func btnPlaylistCoverOverrideAction(_ sender: UIButton) {
         
+        var _title = "Pick an image"
+        var _message = "Choose your image location"
+        if  _noCoverOverrideImageAvailable == false {
+            _title = "Pick an image or reset the current one"
+            _message = "Choose your image location or reset the current one to spotify default"
+        }
+        
         let alertController = UIAlertController(
-            title: "Pick an image",
-            message: "Choose your image location",
+            title: _title,
+            message: _message,
             preferredStyle: .alert)
+     
+        if _noCoverOverrideImageAvailable == false {
+            let photoResetAction = UIAlertAction(title: "Reset", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                
+                self.playListInDb!.coverImagePathOverride = nil
+                self.resetCoverOverrideButton()
+                self.handleSaveChangesButton( true )
+                self.playListChanged = true
+                
+                return
+            }
+            
+            alertController.addAction(photoResetAction)
+        }
         
         if isPhotoLibrarayAvailable() {
             
