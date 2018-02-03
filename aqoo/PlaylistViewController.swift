@@ -12,6 +12,7 @@ import CoreStore
 import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
+import Photos
 
 class PlaylistViewController: BaseViewController,
                               UITableViewDataSource,
@@ -141,10 +142,15 @@ class PlaylistViewController: BaseViewController,
         
         var _usedCoverImageURL: URL?
         var _noCoverImageAvailable: Bool = true
+        var _noCoverOverrideImageAvailable: Bool = true
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
+        
+        if playlistCacheData.coverImagePathOverride != nil {
+            _noCoverOverrideImageAvailable = false
+        }
         
         if  playlistCacheData.metaPreviouslyUpdatedManually == true {
             playlistCell.imageViewContentChangedManually.isHidden = false
@@ -178,7 +184,16 @@ class PlaylistViewController: BaseViewController,
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
         
-        if _noCoverImageAvailable == false {
+        if _noCoverOverrideImageAvailable == false {
+            if let _image = getImageByFileName(playlistCacheData.coverImagePathOverride!) {
+                playlistCell.imageViewPlaylistCover.image = _image
+            }   else {
+               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+            }
+        }
+        
+        // set spotify cover image only if no cover image override available and at least one cover image are found
+        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true {
             playlistCell.imageViewPlaylistCover.kf.setImage(
                 with: URL(string: playlistCacheData.largestImageURL!),
                 placeholder: UIImage(named: _sysDefaultCoverImage),
