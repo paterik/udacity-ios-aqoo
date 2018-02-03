@@ -441,6 +441,7 @@ extension PlaylistViewController {
             
             asynchronous: { (transaction) -> Void in
                 
+                // weazL:: sometimes my app will crash here unexpected
                 playListInDb.ownerImageURL = userProfileImageURL
             },
             
