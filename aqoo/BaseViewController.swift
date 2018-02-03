@@ -43,4 +43,40 @@ class BaseViewController: UIViewController {
         
         return NSDate().dateToString(Date(), dateFormatter) as! NSString
     }
+    
+    var getDocumentsUrl: URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    }
+    
+    func getImageByFileName(_ fileName: String) -> UIImage? {
+        
+        let fileURL = getDocumentsUrl.appendingPathComponent(fileName)
+        do {
+            
+            let imageData = try Data(contentsOf: fileURL)
+            
+            return UIImage(data: imageData)
+            
+        } catch {
+            
+            _handleErrorAsDialogMessage("IO Error (Read)", "\(error.localizedDescription)")
+        }
+        
+        return nil
+    }
+    
+    func getSavedImageFileName(_ image: UIImage, _ fileName: String) -> String? {
+        
+        let fileURL = getDocumentsUrl.appendingPathComponent(fileName)
+        if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+            try? imageData.write(to: fileURL, options: .atomic)
+            
+            print ("\n!!! \(fileName) !!!\n")
+            return fileName
+        }
+        
+        _handleErrorAsDialogMessage("IO Error (Write)", "unable to save image data to your device")
+        
+        return nil
+    }
 }
