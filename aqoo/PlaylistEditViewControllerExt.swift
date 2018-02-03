@@ -9,6 +9,7 @@
 import UIKit
 import fluid_slider
 import Kingfisher
+import CryptoSwift
 
 extension PlaylistEditViewController {
     
@@ -152,19 +153,34 @@ extension PlaylistEditViewController {
     }
     
     func imagePickerController(
-        _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [String : Any]) {
+       _ picker: UIImagePickerController,
+         didFinishPickingMediaWithInfo info: [String : Any]) {
         
         imagePickerSuccess = false
         imgPlaylistCoverOrigin.alpha = 1.0
+        playListInDb!.coverImagePathOverride = nil
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
             btnPlaylistCoverOverride.contentMode = .scaleAspectFit
             btnPlaylistCoverOverride.setBackgroundImage(pickedImage, for: UIControlState.normal)
-            imagePickerSuccess = true
+
+            let _imageDataRaw = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let _imageDataResized = _imageDataRaw.kf.resize(to: _sysPlaylistCoverOverrideResize)
+            let _imageDataCropped = _imageDataResized.kf.crop(
+                to: _sysPlaylistCoverDetailImageSize,
+                anchorOn: CGPoint(x: 10, y: 10)
+            )
             
+            playListInDb!.coverImagePathOverride = getSavedImageFileName(_imageDataCropped, String.random().md5())
+            
+            imagePickerSuccess = true
             imgPlaylistCoverOrigin.alpha = 0.65
         }
+        
+        // every change on successfull image pick will be result in a changed playlist
+        playListChanged = imagePickerSuccess
+        handleSaveChangesButton( imagePickerSuccess )
         
         dismiss(animated: true, completion: nil)
     }

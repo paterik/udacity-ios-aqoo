@@ -37,6 +37,7 @@ class PlaylistEditViewController: BaseViewController,
     
     let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
     let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
+    let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let imagePickerController = UIImagePickerController()
     
     //
@@ -111,7 +112,6 @@ class PlaylistEditViewController: BaseViewController,
 
         var _playListTitle: String = inpPlaylistTitle.text!
         var _playListRating: Float = Float(inpPlaylistRatingSlider.fraction)
-        
         CoreStore.perform(
             asynchronous: { (transaction) -> Void in
                 let playlistToUpdate = transaction.fetchOne(
@@ -126,6 +126,7 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
                     playlistToUpdate!.metaListInternalRating = _playListRating
+                    playlistToUpdate!.coverImagePathOverride = self.playListInDb!.coverImagePathOverride
                     self.playListInDb = playlistToUpdate!
                 }
             },
