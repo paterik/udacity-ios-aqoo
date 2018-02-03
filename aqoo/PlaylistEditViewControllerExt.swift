@@ -50,6 +50,8 @@ extension PlaylistEditViewController {
         
         playListChanged = false
         imagePickerSuccess = false
+        btnPlaylistCoverOverride.contentMode = .scaleAspectFit
+        btnPlaylistCoverOverride.setBackgroundImage(UIImage(named: _sysDefaultCoverOverrideImage), for: UIControlState.normal)
         
         inputsListenForChanges = [
             inpPlaylistTitle
@@ -86,6 +88,15 @@ extension PlaylistEditViewController {
                     .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverDetailImageSize))
                 ]
             )
+        }
+        
+        if playListInDb!.coverImagePathOverride != nil {
+            if let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
+                btnPlaylistCoverOverride.setBackgroundImage(_image, for: UIControlState.normal)
+                btnPlaylistCoverOverride.setImage(UIImage(named: "icnSwitch_v1"), for: UIControlState.normal)
+            }   else {
+                _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+            }
         }
     }
     
@@ -161,8 +172,7 @@ extension PlaylistEditViewController {
         playListInDb!.coverImagePathOverride = nil
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
-            btnPlaylistCoverOverride.contentMode = .scaleAspectFit
+
             btnPlaylistCoverOverride.setBackgroundImage(pickedImage, for: UIControlState.normal)
 
             let _imageDataRaw = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -174,8 +184,8 @@ extension PlaylistEditViewController {
             
             playListInDb!.coverImagePathOverride = getSavedImageFileName(_imageDataCropped, String.random().md5())
             
-            imagePickerSuccess = true
             imgPlaylistCoverOrigin.alpha = 0.65
+            imagePickerSuccess = true
         }
         
         // every change on successfull image pick will be result in a changed playlist
