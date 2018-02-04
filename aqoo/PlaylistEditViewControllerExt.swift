@@ -50,14 +50,14 @@ extension PlaylistEditViewController {
         
         playListChanged = false
         imagePickerSuccess = false
-        resetCoverOverrideButton()
+        setupUICoverOverrideButton()
         
         inputsListenForChanges = [
             inpPlaylistTitle
         ]
     }
     
-    func resetCoverOverrideButton() {
+    func setupUICoverOverrideButton() {
         
         btnPlaylistCoverOverride.contentMode = .scaleAspectFit
         btnPlaylistCoverOverride.setBackgroundImage(UIImage(named: _sysDefaultCoverOverrideImage), for: UIControlState.normal)
@@ -101,6 +101,7 @@ extension PlaylistEditViewController {
             if let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
                 btnPlaylistCoverOverride.setBackgroundImage(_image, for: UIControlState.normal)
                 btnPlaylistCoverOverride.setImage(UIImage(named: "icnSwitch_v1"), for: UIControlState.normal)
+                imgPlaylistCoverOrigin.alpha = _sysPlaylistCoverOriginInActiveAlpha
             }   else {
                 _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
             }
@@ -191,7 +192,7 @@ extension PlaylistEditViewController {
             
             playListInDb!.coverImagePathOverride = getSavedImageFileName(_imageDataCropped, String.random().md5())
             
-            imgPlaylistCoverOrigin.alpha = 0.65
+            imgPlaylistCoverOrigin.alpha = _sysPlaylistCoverOriginInActiveAlpha
             imagePickerSuccess = true
         }
         
