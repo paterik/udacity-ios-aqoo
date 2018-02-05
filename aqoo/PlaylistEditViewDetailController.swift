@@ -70,6 +70,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         var _currentName = playListInDb!.metaListInternalName
         
         CoreStore.perform(
+            
             asynchronous: { (transaction) -> Void in
                 
                 let playlistToUpdate = transaction.fetchOne(
@@ -126,6 +127,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                 UIAlertAction in
                 
                 CoreStore.perform(
+                    
                     asynchronous: { (transaction) -> Void in
                         
                         let playlistToUpdate = transaction.fetchOne(
@@ -134,7 +136,16 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                         
                         // deactivate isRadioVoted (old) flag from (old) playlist
                         if  playlistToUpdate != nil {
-                            playlistToUpdate!.isPlaylistRadioSelected = false
+                            
+                            if  clause.cs_keyPathString == internalFlags.PlaylistIsRadioLiked.rawValue {
+                                playlistToUpdate!.isPlaylistRadioSelected = false
+                                self.playListInDb!.isPlaylistRadioSelected = false
+                            }
+                            
+                            if  clause.cs_keyPathString == internalFlags.PlaylistIsStarVoted.rawValue {
+                                playlistToUpdate!.isPlaylistVotedByStar = false
+                                self.playListInDb!.isPlaylistVotedByStar = false
+                            }
                         }
                     },
                     completion: { _ in
