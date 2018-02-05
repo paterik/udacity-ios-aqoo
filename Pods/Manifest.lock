@@ -6,6 +6,7 @@ PODS:
     - pop
   - FoldingCell (3.0.1)
   - Kingfisher (4.6.1)
+  - Persei (3.1.1)
   - pop (1.0.10)
   - Reachability (3.2)
   - SnapKit (4.0.0)
@@ -16,7 +17,6 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
-  - YNDropDownMenu (3.0.1)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
@@ -25,10 +25,10 @@ DEPENDENCIES:
   - fluid-slider
   - FoldingCell
   - Kingfisher
+  - Persei (~> 3.0)
   - Reachability
   - SnapKit
   - Spotify-iOS-SDK
-  - YNDropDownMenu
 
 EXTERNAL SOURCES:
   CoreStore:
@@ -47,12 +47,12 @@ SPEC CHECKSUMS:
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
   FoldingCell: fb3e1ae5c220a7b108cf491b88d3349eb473c7d4
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
+  Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
-  YNDropDownMenu: 967ebe0c633ce8f40e8667574525aa230ba24560
 
-PODFILE CHECKSUM: bae875d2406247fb3ae5b470258eeddc671e0a2f
+PODFILE CHECKSUM: b168bd1147e77ead30ff4f93059ccc3302115955
 
 COCOAPODS: 1.4.0.beta.2

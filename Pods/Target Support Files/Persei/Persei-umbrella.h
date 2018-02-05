@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double YNDropDownMenuVersionNumber;
-FOUNDATION_EXPORT const unsigned char YNDropDownMenuVersionString[];
+FOUNDATION_EXPORT double PerseiVersionNumber;
+FOUNDATION_EXPORT const unsigned char PerseiVersionString[];
 

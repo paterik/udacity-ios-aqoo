@@ -9,7 +9,7 @@ def aq_ui
     pod 'FoldingCell'
     pod 'SnapKit'
     pod 'fluid-slider'
-    pod 'YNDropDownMenu'
+    pod 'Persei', '~> 3.0'
 end
 
 def aq_base
