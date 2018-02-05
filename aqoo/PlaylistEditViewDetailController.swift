@@ -35,6 +35,11 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         case PlaylistIsHidden = 4
     }
     
+    enum internalFlags: String {
+        case PlaylistIsStarVoted = "isPlaylistVotedByStar"
+        case PlaylistIsRadioLiked = "isPlaylistRadioSelected"
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -53,25 +58,165 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
-    // not working
+    // weazL :: bug_1002 - this won't be working ...
     func textViewDidChange(_ sender: UITextView) {
-     
-        print ("textView change detected ...")
         
         checkInputElementsForChanges()
     }
     
+    private func addNewFlagToPlaylist(_ playlistKeyProperty: String) {
+        
+        var _currentHash = playListInDb!.metaListHash
+        var _currentName = playListInDb!.metaListInternalName
+        
+        CoreStore.perform(
+            asynchronous: { (transaction) -> Void in
+                
+                let playlistToUpdate = transaction.fetchOne(
+                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _currentHash))
+                )
+                
+                if  playlistToUpdate != nil {
+                    
+                    if  playlistKeyProperty == internalFlags.PlaylistIsRadioLiked.rawValue {
+                        playlistToUpdate!.isPlaylistRadioSelected = true
+                        self.playListInDb!.isPlaylistRadioSelected = true
+                    }
+                    
+                    if  playlistKeyProperty == internalFlags.PlaylistIsStarVoted.rawValue {
+                        playlistToUpdate!.isPlaylistVotedByStar = true
+                        self.playListInDb!.isPlaylistVotedByStar = true
+                    }
+                }
+            },
+            completion: { _ in
+                
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : current radio-playlist [\(_currentName)] handled -> CHANGED")
+                }
+            }
+        )
+    }
+    
+    private func removeOldFlagFromPlaylist(
+       _ playListTarget: StreamPlayList,
+       _ switchElement: UISwitch!,
+       _ clause: ReferenceWritableKeyPath<StreamPlayList, Bool>
+       ) {
+        
+        var _playlistTargetHash = playListTarget.metaListHash
+        var _playlistTargetName = playListTarget.metaListInternalName
+        
+        //  ignore self-validation of current playlist and setOff switch actions
+        if  playListTarget.metaListHash == playListInDb!.metaListHash || !switchElement.isOn {
+            
+            return
+        }
+        
+        if  let _elementHint = switchElement.accessibilityHint {
+            let  alertController = UIAlertController(
+                 title: "Found Duplicate Usage of \(_elementHint)?",
+                 message: "You've already a playlist flagged for \"\(_elementHint)\"! Do you want to remove this flag from Playlist \"\(_playlistTargetName)\" and use this flag for \"\(playListInDb!.metaListInternalName)\" instead?",
+                
+                 preferredStyle: .alert
+            )
+        
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
+                
+                UIAlertAction in
+                
+                CoreStore.perform(
+                    asynchronous: { (transaction) -> Void in
+                        
+                        let playlistToUpdate = transaction.fetchOne(
+                            From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playlistTargetHash))
+                        )
+                        
+                        // deactivate isRadioVoted (old) flag from (old) playlist
+                        if  playlistToUpdate != nil {
+                            playlistToUpdate!.isPlaylistRadioSelected = false
+                        }
+                    },
+                    completion: { _ in
+                        
+                        // update key property for current (edited) playlist
+                        self.addNewFlagToPlaylist( clause.cs_keyPathString )
+                    }
+                )
+                
+                return
+            })
+            
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel) {
+                
+                UIAlertAction in
+                
+                // reset current switch and return to caller
+                switchElement.isOn = false; return
+            })
+            
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func validateDataForSingleBoolFlagPresence(
+        _ clause: ReferenceWritableKeyPath<StreamPlayList, Bool>,
+        _ switchElement: UISwitch!,
+        _ value: Bool) {
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> StreamPlayList? in
+                return transaction.fetchOne(From<StreamPlayList>().where(clause == value))
+            },
+            success: { (transactionPlaylist) in
+                
+                // a duplicate entry was found, handle this one first
+                if  transactionPlaylist != nil {
+                    self.removeOldFlagFromPlaylist (
+                        transactionPlaylist!,
+                        switchElement,
+                        clause
+                    )
+                    
+                } else {
+                    
+                    // no duplicate entry found, just update current playlist
+                    self.addNewFlagToPlaylist( clause.cs_keyPathString )
+                }
+            },
+            failure: { (error) in
+                self._handleErrorAsDialogMessage(
+                    "Error Validating Key-Value",
+                    "Oops! An error occured while validating playlist property from local database ..."
+                )
+            }
+        )
+    }
+    
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
+
+        // check db for any playlist currently flagged as starVoted
+        validateDataForSingleBoolFlagPresence(\StreamPlayList.isPlaylistVotedByStar, switchPlaylistIsStarVoted, true)
         
         // only one if this internal spotify flags are allowed!
-        switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsStarVoted.isOn
+        if  switchPlaylistIsRadioLiked.isOn {
+            switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsStarVoted.isOn
+        }
+        
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
     }
     
     @IBAction func switchAutoListLikedFromRadioChanged(_ sender: UISwitch) {
         
+        // check db for any playlist currently flagged as radioLiked
+        validateDataForSingleBoolFlagPresence(\StreamPlayList.isPlaylistRadioSelected, switchPlaylistIsRadioLiked, true)
+        
         // only one if this internal spotify flags are allowed!
-        switchPlaylistIsStarVoted.isOn = !switchPlaylistIsRadioLiked.isOn
+        if  switchPlaylistIsStarVoted.isOn {
+            switchPlaylistIsStarVoted.isOn = !switchPlaylistIsRadioLiked.isOn
+        }
+        
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
     }
     

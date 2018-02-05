@@ -135,6 +135,9 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
                     playlistToUpdate!.metaListInternalRating = _playListRating
+                    playlistToUpdate!.isPlaylistHidden = self.playListInDb!.isPlaylistHidden
+                    playlistToUpdate!.isPlaylistRadioSelected = self.playListInDb!.isPlaylistRadioSelected
+                    playlistToUpdate!.isPlaylistVotedByStar = self.playListInDb!.isPlaylistVotedByStar
                     playlistToUpdate!.coverImagePathOverride = self.playListInDb!.coverImagePathOverride
                     self.playListInDb = playlistToUpdate!
                 }
