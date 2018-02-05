@@ -437,24 +437,33 @@ extension PlaylistViewController {
         // don't override owners image url if allready set previously
         if playListInDb.ownerImageURL == userProfileImageURL { return }
         
-        CoreStore.perform(
+        do {
             
-            asynchronous: { (transaction) -> Void in
+            CoreStore.perform(
                 
+                asynchronous: { (transaction) -> Void in
+                    playListInDb.ownerImageURL = userProfileImageURL
+                },
+                completion: { _ in
+                    
+                    self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
+                        userProfileUserName,
+                        userProfileImageURL
+                    )
+                }
+            )
+            
+        } catch {
+            
+            if debugMode == true {
                 // weazL :: bug_1001 : sometimes my app will crash here unexpected
                 /*  expression produced error: error: /var/folders/ht/_s8btd0x1nz1t35lsf6ymmqc0000gn/T/expr2-f4ea92..swift:1:112: error: use of undeclared type 'CoreStore' - Swift._DebuggerSupport.stringForPrintObject(Swift.UnsafePointer<Swift.Optional<(hasChanges: Swift.Bool, error: CoreStore.CoreStoreError?)>>(bitPattern: 0x120c70850)!.pointee) */
                 
-                playListInDb.ownerImageURL = userProfileImageURL
-            },
-            
-            completion: { _ in
-                
-                self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
-                    userProfileUserName,
-                    userProfileImageURL
-                )
+                print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
             }
-        )
+            
+            return
+        }
     }
     
     func handlePlaylistDbCacheCoreData (
