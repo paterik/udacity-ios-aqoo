@@ -78,7 +78,7 @@ class PlaylistViewController: BaseViewController,
     var playListMenuOwnerFilters: MenuView!
     
     var playListBasicFilterItems = [MenuItem]()
-    var playlistOwnerFilterItems = [MenuItem]()
+    var playListOwnerFilterItems = [MenuItem]()
     
     //
     // MARK: Class Method Overloads
@@ -92,6 +92,7 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
+        // setupUITableOwnerMenuView()
     }
     
     override func viewWillAppear(_ animated: Bool) {

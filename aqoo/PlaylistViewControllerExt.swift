@@ -47,7 +47,7 @@ extension PlaylistViewController {
  
         // generate internal menu items instances (act as basic filters)
         playListBasicFilterItems.removeAll()
-        playlistOwnerFilterItems.removeAll()
+        playListOwnerFilterItems.removeAll()
         
         for index in 1...8 {
             var basicFilterItem = MenuItem(
@@ -67,20 +67,15 @@ extension PlaylistViewController {
         playListMenuBasicFilters.backgroundColor = UIColor(netHex: 0x222222)
         playListMenuBasicFilters.contentHeight = 75.0
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
-        // playListMenuBasicFilters.items = playListBasicFilterItems
-        // self.tableView.addSubview(self.playListMenuBasicFilters)
     }
     
-    /*func setupUITableOwnerMenuView() {
-        
-        return
-            
+    func setupUITableOwnerMenuView() {
+
         playListMenuOwnerFilters = MenuView()
         playListMenuOwnerFilters.backgroundColor = UIColor(netHex: 0x222222)
         playListMenuOwnerFilters.contentHeight = 75.0
         playListMenuOwnerFilters.delegate = self as! MenuViewDelegate
-        playListMenuOwnerFilters.selectedIndex = 0
-    }*/
+    }
 
     func setupUITableView() {
         
@@ -151,12 +146,16 @@ extension PlaylistViewController {
                     
                     if let _rawImage = image {
                         self._userProfilesCachedForFilter = self._userProfilesCachedForFilter + 1
-                        print ("_ caching image for user: \(self._userProfilesCachedForFilter)/\(self._userProfilesHandledWithImages.count) -> \(_userName) ")
+                        print ("_ caching: \(self._userProfilesCachedForFilter)/\(self._userProfilesHandledWithImages.count) \(_userName) ")
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
+                        // .kf.tinted(with: UIColor(netHex: 0x1ED760)
+                        var profileImage = _rawImage.kf.resize(to: CGSize(width: 75, height: 75))
+                        var fxImage = profileImage.kf.tinted(with: UIColor(netHex: 0x1ED760))
+                        
                         var ownerFilterItem = MenuItem(
-                            image : _rawImage,
-                            highlightedImage : _rawImage
+                            image : profileImage,
+                            highlightedImage : fxImage
                         )
                         
                         ownerFilterItem.backgroundColor = UIColor(netHex: 0x222222)
@@ -168,6 +167,12 @@ extension PlaylistViewController {
                         
                         if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
                             self.playListMenuBasicFilters.items = self.playListBasicFilterItems
+                            
+                            // reorder menu items
+                            
+                            // ---
+                            
+                            // add menu as final step
                             self.tableView.addSubview(self.playListMenuBasicFilters)
                         }
                     }
@@ -226,9 +231,6 @@ extension PlaylistViewController {
             
             spotifyClient.playlistsInCache = _playListCache
 
-            // add filter menu 001 as playlistMenu
-            // tableView.addSubview(playListMenuBasicFilters)
-            
             // tableView.refreshTable()
             tableView.reloadData()
             
