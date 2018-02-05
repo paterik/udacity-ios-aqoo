@@ -69,11 +69,16 @@ class PlaylistViewController: BaseViewController,
     var _userProfilesHandledWithImages = [String: String]()
     var _userProfilesInPlaylists = [String]()
     var _userProfilesInPlaylistsUnique = [String]()
+    var _userProfilesCachedForFilter : Int = 0
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistChanged: Bool?
     
-    var menu: MenuView!
+    var playListMenuBasicFilters: MenuView!
+    var playListMenuOwnerFilters: MenuView!
+    
+    var playListBasicFilterItems = [MenuItem]()
+    var playlistOwnerFilterItems = [MenuItem]()
     
     //
     // MARK: Class Method Overloads
@@ -86,7 +91,7 @@ class PlaylistViewController: BaseViewController,
         setupUICacheProcessor()
         setupUIEventObserver()
         setupUITableView()
-        setupUITableMenuView()
+        setupUITableBasicMenuView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
