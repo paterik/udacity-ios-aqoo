@@ -13,11 +13,12 @@ import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
 import Photos
+import Persei
 
 class PlaylistViewController: BaseViewController,
                               UITableViewDataSource,
                               UITableViewDelegate,
-                              PlaylistEditViewDetailDelegate {
+                              PlaylistEditViewDetailDelegate, MenuViewDelegate {
     
     //
     // MARK: Class IBOutlet definitions
@@ -72,6 +73,8 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistChanged: Bool?
     
+    var menu: MenuView!
+    
     //
     // MARK: Class Method Overloads
     //
@@ -83,6 +86,7 @@ class PlaylistViewController: BaseViewController,
         setupUICacheProcessor()
         setupUIEventObserver()
         setupUITableView()
+        setupUITableMenuView()
     }
     
     override func viewWillAppear(_ animated: Bool) {

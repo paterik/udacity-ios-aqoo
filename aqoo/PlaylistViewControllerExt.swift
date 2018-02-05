@@ -12,6 +12,7 @@ import SnapKit
 import CoreStore
 import CryptoSwift
 import Kingfisher
+import Persei
 
 extension PlaylistViewController {
     
@@ -38,6 +39,39 @@ extension PlaylistViewController {
         )
     }
     
+    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
+        // model = model.next()
+    }
+    
+    func setupUITableMenuView() {
+ 
+        var items = [MenuItem]()
+        for index in 1...6 {
+            var item = MenuItem(
+                image : UIImage(named: "mnu_pl_fltr_icn_\(index)")!,
+                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(index)")!
+            )
+            
+            item.backgroundColor = UIColor(netHex: 0x222222)
+            item.highlightedBackgroundColor = UIColor(netHex: 0x222222)
+            item.shadowColor = UIColor(netHex: 0x222222)
+            
+            items.append(item)
+        }
+        
+        menu = {
+            
+            let menu = MenuView()
+                menu.backgroundColor = UIColor(netHex: 0x222222)
+                menu.delegate = self as! MenuViewDelegate
+                menu.items = items
+            
+            return menu
+        }()
+        
+        tableView.addSubview(menu)
+    }
+
     func setupUITableView() {
         
         //
@@ -126,6 +160,9 @@ extension PlaylistViewController {
         }
     }
     
+    //
+    // weazL :: main listView logic, place for filter handling
+    //
     @objc func setupUILoadExtendedPlaylists() {
         
         //
@@ -134,7 +171,7 @@ extension PlaylistViewController {
         //
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>()
-                    .orderBy(.descending(\.owner))
+                    .orderBy(.descending(\StreamPlayList.metaListInternalRating))
                     .where(\StreamPlayList.provider == _defaultStreamingProvider)
             )
         {
