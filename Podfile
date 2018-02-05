@@ -9,6 +9,7 @@ def aq_ui
     pod 'FoldingCell'
     pod 'SnapKit'
     pod 'fluid-slider'
+    pod 'YNDropDownMenu'
 end
 
 def aq_base

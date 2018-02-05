@@ -16,6 +16,7 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
+  - YNDropDownMenu (3.0.1)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - Reachability
   - SnapKit
   - Spotify-iOS-SDK
+  - YNDropDownMenu
 
 EXTERNAL SOURCES:
   CoreStore:
@@ -49,7 +51,8 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
+  YNDropDownMenu: 967ebe0c633ce8f40e8667574525aa230ba24560
 
-PODFILE CHECKSUM: 01ed80a992b40b50bcf173d551de7c89f3137b72
+PODFILE CHECKSUM: bae875d2406247fb3ae5b470258eeddc671e0a2f
 
 COCOAPODS: 1.4.0.beta.2
