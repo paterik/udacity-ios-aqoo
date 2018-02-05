@@ -44,6 +44,8 @@ class PlaylistViewController: BaseViewController,
     let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
     let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
     let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
+    let _sysDefaultRadioLikedCoverImage = "imgUITblPlaylistIsRadio_v1"
+    let _sysDefaultStarVotedCoverImage = "imgUITblPlaylistIsStarRated_v1"
     let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
     let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
@@ -143,6 +145,7 @@ class PlaylistViewController: BaseViewController,
         var _usedCoverImageURL: URL?
         var _noCoverImageAvailable: Bool = true
         var _noCoverOverrideImageAvailable: Bool = true
+        var _noCoverSetForInternal: Bool = false
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.metaOwnerName = playlistCacheData.owner
@@ -164,18 +167,18 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewPlaylistIsMine.isHidden = false
         }
 
-        if (playlistCacheData.ownerImageURL == nil || playlistCacheData.ownerImageURL == "") {
+        if  playlistCacheData.ownerImageURL == nil || playlistCacheData.ownerImageURL == "" {
             playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
         }   else {
             handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
         }
         
-        if playlistCacheData.largestImageURL != nil {
+        if  playlistCacheData.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistCacheData.largestImageURL!)
             _noCoverImageAvailable = false
         }
         
-        if playlistCacheData.smallestImageURL != nil {
+        if  playlistCacheData.smallestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistCacheData.smallestImageURL!)
             _noCoverImageAvailable = false
         }
@@ -184,7 +187,21 @@ class PlaylistViewController: BaseViewController,
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
         
-        if _noCoverOverrideImageAvailable == false {
+        // set internal flag covers for "isRadio" playlists
+        if  playlistCacheData.isPlaylistRadioSelected {
+            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultRadioLikedCoverImage)
+            playlistCell.imageViewPlaylistIsMine.isHidden = true
+           _noCoverSetForInternal = true
+        }
+        
+        // set internal flag covers for "isStarVoted" playlists
+        if  playlistCacheData.isPlaylistVotedByStar {
+            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultStarVotedCoverImage)
+            playlistCell.imageViewPlaylistIsMine.isHidden = true
+           _noCoverSetForInternal = true
+        }
+        
+        if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if let _image = getImageByFileName(playlistCacheData.coverImagePathOverride!) {
                 playlistCell.imageViewPlaylistCover.image = _image
             }   else {
@@ -192,8 +209,8 @@ class PlaylistViewController: BaseViewController,
             }
         }
         
-        // set spotify cover image only if no cover image override available and at least one cover image are found
-        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true {
+        // set spotify cover image only if no cover image override available, no internalFlag found and at least one cover image are found
+        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             playlistCell.imageViewPlaylistCover.kf.setImage(
                 with: URL(string: playlistCacheData.largestImageURL!),
                 placeholder: UIImage(named: _sysDefaultCoverImage),
