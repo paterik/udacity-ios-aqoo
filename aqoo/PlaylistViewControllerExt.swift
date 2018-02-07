@@ -47,15 +47,8 @@ extension PlaylistViewController {
  
         // generate internal menu items instances (act as basic filters)
         playListBasicFilterItems.removeAll()
-        playListOwnerFilterItems.removeAll()
         
-        for (index, itemIndex) in [
-            filterBy.PlaylistBestRated.rawValue,
-            filterBy.PlaylistTitleAlphabetical.rawValue,
-            filterBy.PlaylistNumberOfTracks.rawValue,
-            filterBy.PlaylistMostListenend.rawValue,
-            filterBy.PlaylistHidden.rawValue,
-            ].enumerated() {
+        for (index, itemIndex) in playlistFilterConfig.enumerated() {
             
             var basicFilterItem = MenuItem(
                 image : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)")!,
@@ -131,7 +124,7 @@ extension PlaylistViewController {
     // will be used as primary filter logic (pre)processor
     func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
         
-        playListMenuBasicFilters.items = _menuItemsPrepared
+        playListMenuBasicFilters.items = menuItems
         
         tableView.addSubview(playListMenuBasicFilters)
     }
@@ -164,7 +157,7 @@ extension PlaylistViewController {
                         self._userProfilesCachedForFilter += 1
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
-                        var profileImage = _rawImage.kf.resize(to: CGSize(width: 75, height: 75))
+                        var profileImage = _rawImage.kf.resize(to: self._sysPlaylistFilterOwnerImageSize)
                         var ownerFilterItem = MenuItem(
                             image : profileImage,
                             highlightedImage : profileImage
