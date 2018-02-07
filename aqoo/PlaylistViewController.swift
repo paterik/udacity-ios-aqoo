@@ -266,8 +266,8 @@ class PlaylistViewController: BaseViewController,
        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
         if playlistCell.metaPlaylistInDb == nil {
             _handleErrorAsDialogMessage(
-                "Error Loading Local Playlist",
-                "This local playlist [index: \(indexPath.row)] is not found in your cache context!"
+                "Error Loading Playlist Cache",
+                "This local playlist [index: \(indexPath.row)] is not found in your cache api call!"
             )
             
             return []
@@ -279,7 +279,7 @@ class PlaylistViewController: BaseViewController,
         if playlistCell.metaPlayListInCloud == nil {
             _handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
-                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' is not found in your spotify cloud context!"
+                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' is not found in spotify api call!"
             )
             
             return []
@@ -305,7 +305,9 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                print ("TBL_ACTION_DETECTED : Hide")
+                if self.debugMode == true {
+                    print ("TBL_ACTION_DETECTED : Hide")
+                }
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -315,7 +317,9 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnShowPlaylist_v2"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                print ("TBL_ACTION_DETECTED : ShowDetails")
+                if self.debugMode == true {
+                    print ("TBL_ACTION_DETECTED : ShowDetails")
+                }
         }
         
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
