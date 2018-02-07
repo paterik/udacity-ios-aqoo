@@ -19,6 +19,7 @@
 		B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
+		B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */; };
 		B1A3D2461F8E3B660098330D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A3D2451F8E3B660098330D /* String.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
 		B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620491F700D820093CAEF /* LoginViewController.swift */; };
@@ -80,6 +81,7 @@
 		B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailControllerExt.swift; sourceTree = "<group>"; };
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFilterMenuItem.swift; sourceTree = "<group>"; };
 		B1A3D2451F8E3B660098330D /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A620471F700D820093CAEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		B1891D4B1FA74CAE009E463C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
+				B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */,
 				B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,

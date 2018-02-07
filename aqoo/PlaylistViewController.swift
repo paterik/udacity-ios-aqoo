@@ -58,6 +58,21 @@ class PlaylistViewController: BaseViewController,
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
 
+    // predefine filter index as 'readably' value-index and blacklist some of my filters
+    enum filterBy: Int {
+        
+        case PlaylistLastUpdated = 1
+        case PlaylistTitleAlphabetical = 2
+        case PlaylistNumberOfTracks = 3
+        case PlaylistMostListenend = 4
+        case PlaylistBestRated = 5
+        case PlaylistHidden = 6
+        case PlaylistMostShared = 7
+        case PlaylistMostFollower = 8
+    };  let  filterBlacklistItems = [1, 7, 8]
+    
+    
+    
     //
     // MARK: Class Variables
     //
@@ -92,7 +107,6 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
-        // setupUITableOwnerMenuView()
     }
     
     override func viewWillAppear(_ animated: Bool) {

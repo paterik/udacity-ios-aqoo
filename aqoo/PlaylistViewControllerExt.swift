@@ -49,10 +49,17 @@ extension PlaylistViewController {
         playListBasicFilterItems.removeAll()
         playListOwnerFilterItems.removeAll()
         
-        for index in 1...8 {
+        for (index, itemIndex) in [
+            filterBy.PlaylistBestRated.rawValue,
+            filterBy.PlaylistTitleAlphabetical.rawValue,
+            filterBy.PlaylistNumberOfTracks.rawValue,
+            filterBy.PlaylistMostListenend.rawValue,
+            filterBy.PlaylistHidden.rawValue,
+            ].enumerated() {
+            
             var basicFilterItem = MenuItem(
-                image : UIImage(named: "mnu_pl_fltr_icn_\(index)")!,
-                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(index)_hl")!
+                image : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)")!,
+                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)_hl")!
             )
             
             basicFilterItem.backgroundColor = UIColor(netHex: 0x222222)
@@ -121,6 +128,14 @@ extension PlaylistViewController {
         )
     }
     
+    // will be used as primary filter logic (pre)processor
+    func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
+        
+        playListMenuBasicFilters.items = _menuItemsPrepared
+        
+        tableView.addSubview(playListMenuBasicFilters)
+    }
+    
     func setupUILoadUserProfileImages(notification: Notification) {
         
         guard let userInfo = notification.userInfo,
@@ -145,17 +160,14 @@ extension PlaylistViewController {
                     (image, error, url, data) in
                     
                     if let _rawImage = image {
-                        self._userProfilesCachedForFilter = self._userProfilesCachedForFilter + 1
-                        print ("_ caching: \(self._userProfilesCachedForFilter)/\(self._userProfilesHandledWithImages.count) \(_userName) ")
+                        
+                        self._userProfilesCachedForFilter += 1
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
-                        // .kf.tinted(with: UIColor(netHex: 0x1ED760)
                         var profileImage = _rawImage.kf.resize(to: CGSize(width: 75, height: 75))
-                        var fxImage = profileImage.kf.tinted(with: UIColor(netHex: 0x1ED760))
-                        
                         var ownerFilterItem = MenuItem(
                             image : profileImage,
-                            highlightedImage : fxImage
+                            highlightedImage : profileImage
                         )
                         
                         ownerFilterItem.backgroundColor = UIColor(netHex: 0x222222)
@@ -164,16 +176,9 @@ extension PlaylistViewController {
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
-                        
+                        // final user profile image handled? good init/load filterMenu now
                         if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
-                            self.playListMenuBasicFilters.items = self.playListBasicFilterItems
-                            
-                            // reorder menu items
-                            
-                            // ---
-                            
-                            // add menu as final step
-                            self.tableView.addSubview(self.playListMenuBasicFilters)
+                            self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
                         }
                     }
                 }
