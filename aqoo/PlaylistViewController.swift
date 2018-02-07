@@ -51,6 +51,9 @@ class PlaylistViewController: BaseViewController,
     let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
+    let _sysPlaylistFilterColorShadow = UIColor(netHex: 0x191919)
+    let _sysPlaylistFilterColorHighlight = UIColor(netHex: 0x191919)
+    let _sysPlaylistFilterColorBackground = UIColor(netHex: 0x222222)
     
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30

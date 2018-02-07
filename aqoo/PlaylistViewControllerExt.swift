@@ -55,9 +55,9 @@ extension PlaylistViewController {
                 highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)_hl")!
             )
             
-            basicFilterItem.backgroundColor = UIColor(netHex: 0x222222)
-            basicFilterItem.highlightedBackgroundColor = UIColor(netHex: 0x191919)
-            basicFilterItem.shadowColor = UIColor(netHex: 0x191919)
+            basicFilterItem.backgroundColor = _sysPlaylistFilterColorBackground
+            basicFilterItem.highlightedBackgroundColor = _sysPlaylistFilterColorHighlight
+            basicFilterItem.shadowColor = _sysPlaylistFilterColorShadow
             
             playListBasicFilterItems.append(basicFilterItem)
         }
@@ -148,7 +148,11 @@ extension PlaylistViewController {
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
                 
                 // persisting user images by using an separate cache stack
-                ImageDownloader.default.downloadImage(with: URL(string: _userProfileImageURL)!, options: [], progressBlock: nil) {
+                ImageDownloader.default.downloadImage(
+                    with: URL(string: _userProfileImageURL)!,
+                    options: [],
+                    progressBlock: nil
+                ) {
                     
                     (image, error, url, data) in
                     
@@ -157,15 +161,21 @@ extension PlaylistViewController {
                         self._userProfilesCachedForFilter += 1
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
-                        var profileImage = _rawImage.kf.resize(to: self._sysPlaylistFilterOwnerImageSize)
-                        var ownerFilterItem = MenuItem(
-                            image : profileImage,
-                            highlightedImage : profileImage
+                        var profileImageMin = _rawImage.kf.resize(to: self._sysPlaylistFilterOwnerImageSize)
+                        var profileImageActive = profileImageMin
+                        var profileImageNormal = profileImageMin.kf.overlaying(
+                            with: UIColor(netHex: 0x222222),
+                            fraction: 0.55
                         )
                         
-                        ownerFilterItem.backgroundColor = UIColor(netHex: 0x222222)
-                        ownerFilterItem.highlightedBackgroundColor = UIColor(netHex: 0x191919)
-                        ownerFilterItem.shadowColor = UIColor(netHex: 0x191919)
+                        var ownerFilterItem = MenuItem(
+                            image : profileImageNormal,
+                            highlightedImage : profileImageActive
+                        )
+                        
+                        ownerFilterItem.backgroundColor = self._sysPlaylistFilterColorBackground
+                        ownerFilterItem.highlightedBackgroundColor = self._sysPlaylistFilterColorHighlight
+                        ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
