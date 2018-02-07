@@ -13,6 +13,7 @@ import CoreStore
 import CryptoSwift
 import Kingfisher
 import Persei
+import GradientLoadingBar
 
 extension PlaylistViewController {
     
@@ -106,6 +107,21 @@ extension PlaylistViewController {
         tableView.backgroundView = backgroundImgView
     }
     
+    func setupUIBase() {
+        
+        _playlistGradientLoadingBar = GradientLoadingBar(
+            height: 3,
+            durations: Durations(fadeIn: 1.0, fadeOut: 2.0, progress: 3.0),
+            gradientColorList: [
+                UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
+                UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
+            ],
+            onView: self.view
+        )
+        
+        _playlistGradientLoadingBar.show()
+    }
+    
     func setupUICacheProcessor() {
         
         ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024
@@ -121,12 +137,16 @@ extension PlaylistViewController {
         )
     }
     
-    // will be used as primary filter logic (pre)processor
+    //
+    // will be used as primary filter logic (pre)processor and the last method called in this scene
+    //
     func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
         
         playListMenuBasicFilters.items = menuItems
         
         tableView.addSubview(playListMenuBasicFilters)
+        
+        _playlistGradientLoadingBar.hide()
     }
     
     func setupUILoadUserProfileImages(notification: Notification) {

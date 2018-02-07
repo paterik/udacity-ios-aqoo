@@ -12,7 +12,7 @@ import CoreStore
 import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
-import Photos
+import GradientLoadingBar
 import Persei
 
 class PlaylistViewController: BaseViewController,
@@ -61,7 +61,7 @@ class PlaylistViewController: BaseViewController,
     
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
-
+    
     // predefine filter index as 'readably' value-index and blacklist some of my filters
     enum filterItem: Int {
         
@@ -90,7 +90,7 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistChanged: Bool?
-    
+    var _playlistGradientLoadingBar = GradientLoadingBar()
     var playListMenuBasicFilters: MenuView!
     var playListMenuOwnerFilters: MenuView!
     
@@ -111,6 +111,7 @@ class PlaylistViewController: BaseViewController,
         
         super.viewDidLoad()
         
+        setupUIBase()
         setupUICacheProcessor()
         setupUIEventObserver()
         setupUITableView()
