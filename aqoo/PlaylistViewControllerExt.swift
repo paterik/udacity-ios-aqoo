@@ -41,7 +41,11 @@ extension PlaylistViewController {
     }
     
     func menu(_ menu: MenuView, didSelectItemAt index: Int) {
+        
         // model = model.next()
+        if debugMode == true {
+            print ("_ filterIndex [\(index)] selected")
+        }
     }
     
     func setupUITableBasicMenuView() {
