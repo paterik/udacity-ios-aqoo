@@ -71,7 +71,6 @@ class BaseViewController: UIViewController {
         if let imageData = UIImageJPEGRepresentation(image, 1.0) {
             try? imageData.write(to: fileURL, options: .atomic)
             
-            print ("\n!!! \(fileName) !!!\n")
             return fileName
         }
         
