@@ -69,14 +69,6 @@ extension PlaylistViewController {
         playListMenuBasicFilters.contentHeight = 75.0
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
-    
-    func setupUITableOwnerMenuView() {
-
-        playListMenuOwnerFilters = MenuView()
-        playListMenuOwnerFilters.backgroundColor = UIColor(netHex: 0x222222)
-        playListMenuOwnerFilters.contentHeight = 75.0
-        playListMenuOwnerFilters.delegate = self as! MenuViewDelegate
-    }
 
     func setupUITableView() {
         
@@ -185,7 +177,7 @@ extension PlaylistViewController {
                         var profileImageActive = profileImageMin
                         var profileImageNormal = profileImageMin.kf.overlaying(
                             with: UIColor(netHex: 0x222222),
-                            fraction: 0.55
+                            fraction: 0.65
                         )
                         
                         var ownerFilterItem = MenuItem(
@@ -199,6 +191,7 @@ extension PlaylistViewController {
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
+                        
                         // final user profile image handled? good init/load filterMenu now
                         if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
                             self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
