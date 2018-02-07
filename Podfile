@@ -9,6 +9,7 @@ def aq_ui
     pod 'FoldingCell'
     pod 'SnapKit'
     pod 'fluid-slider'
+    pod 'GradientLoadingBar'
     pod 'Persei', '~> 3.0'
 end
 

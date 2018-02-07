@@ -54,15 +54,7 @@ open class FoldingCell: UITableViewCell {
         case close
     }
 
-    // MARK: life cicle
-
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+  // MARK: Life Cycle
 
     open override func awakeFromNib() {
         super.awakeFromNib()
@@ -88,7 +80,7 @@ open class FoldingCell: UITableViewCell {
 
         guard let foregroundViewTop = self.foregroundViewTop,
             let containerViewTop = self.containerViewTop else {
-            fatalError("set constratins outlets")
+            fatalError("set foregroundViewTop or containerViewTop outlets in storyboard")
         }
 
         containerViewTop.constant = foregroundViewTop.constant

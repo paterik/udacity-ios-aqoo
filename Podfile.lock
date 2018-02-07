@@ -4,7 +4,8 @@ PODS:
   - CryptoSwift (0.8.1)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.0.1)
+  - FoldingCell (3.0.2)
+  - GradientLoadingBar (1.1.9)
   - Kingfisher (4.6.1)
   - Persei (3.1.1)
   - pop (1.0.10)
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - CryptoSwift
   - fluid-slider
   - FoldingCell
+  - GradientLoadingBar
   - Kingfisher
   - Persei (~> 3.0)
   - Reachability
@@ -45,7 +47,8 @@ SPEC CHECKSUMS:
   CoreStore: a2c17c76d5e10272ded239ac1260b3b0456ccdd3
   CryptoSwift: 4b07d5b508c1eb67bfa314a727b705f8048a85de
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: fb3e1ae5c220a7b108cf491b88d3349eb473c7d4
+  FoldingCell: ec0b975ad8c06378c9a2905c83bf8216235a6a94
+  GradientLoadingBar: 903b340157956c72071d02c58f2bad44785f3bb9
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
@@ -53,6 +56,6 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
 
-PODFILE CHECKSUM: b168bd1147e77ead30ff4f93059ccc3302115955
+PODFILE CHECKSUM: e54b9c64b0b6b54bbab796ab0f5c8a0cc63ffe46
 
 COCOAPODS: 1.4.0.beta.2
