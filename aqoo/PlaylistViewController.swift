@@ -50,6 +50,7 @@ class PlaylistViewController: BaseViewController,
     let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
     let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
+    let _sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
     
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30
@@ -59,7 +60,7 @@ class PlaylistViewController: BaseViewController,
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
 
     // predefine filter index as 'readably' value-index and blacklist some of my filters
-    enum filterBy: Int {
+    enum filterItem: Int {
         
         case PlaylistLastUpdated = 1
         case PlaylistTitleAlphabetical = 2
@@ -70,8 +71,6 @@ class PlaylistViewController: BaseViewController,
         case PlaylistMostShared = 7
         case PlaylistMostFollower = 8
     };  let  filterBlacklistItems = [1, 7, 8]
-    
-    
     
     //
     // MARK: Class Variables
@@ -93,7 +92,13 @@ class PlaylistViewController: BaseViewController,
     var playListMenuOwnerFilters: MenuView!
     
     var playListBasicFilterItems = [MenuItem]()
-    var playListOwnerFilterItems = [MenuItem]()
+    var playlistFilterConfig = [
+        filterItem.PlaylistBestRated.rawValue,
+        filterItem.PlaylistTitleAlphabetical.rawValue,
+        filterItem.PlaylistNumberOfTracks.rawValue,
+        filterItem.PlaylistMostListenend.rawValue,
+        filterItem.PlaylistHidden.rawValue,
+    ]
     
     //
     // MARK: Class Method Overloads
