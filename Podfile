@@ -11,6 +11,8 @@ def aq_ui
     pod 'fluid-slider'
     pod 'GradientLoadingBar'
     pod 'Persei', '~> 3.0'
+    pod 'PKHUD', '~> 5.0'
+    pod 'NotificationBannerSwift'
 end
 
 def aq_base
