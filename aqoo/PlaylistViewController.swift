@@ -73,9 +73,7 @@ class PlaylistViewController: BaseViewController,
         case PlaylistHidden = 6
         case PlaylistMostShared = 7
         case PlaylistMostFollower = 8
-    }
-    
-    let playlistFilterMeta = [
+    };  let playlistFilterMeta = [
         
         filterItem.PlaylistBestRated.rawValue : [
             "title" : "Best Rated Playlists",
