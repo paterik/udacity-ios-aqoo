@@ -62,7 +62,27 @@ class PlaylistViewController: BaseViewController,
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
     
+    //
+    // MARK: Class Variables
+    //
+    
+    var _cellHeights = [CGFloat]()
+    var _defaultStreamingProvider: StreamProvider?
+    var _cacheTimer: Timer!
+    var _userProfilesHandled = [String]()
+    var _userProfilesHandledWithImages = [String: String]()
+    var _userProfilesInPlaylists = [String]()
+    var _userProfilesInPlaylistsUnique = [String]()
+    var _userProfilesCachedForFilter : Int = 0
+    var _playlistInCloudSelected: SPTPartialPlaylist?
+    var _playlistInCacheSelected: StreamPlayList?
+    var _playlistChanged: Bool?
+    var _playlistGradientLoadingBar = GradientLoadingBar()
+    var playListMenuBasicFilters: MenuView!
+    var playListBasicFilterItems = [MenuItem]()
+    
     // predefine filter index as 'readably' value-index and blacklist some of my filters
+    // including some additional meta information about title and description (so far)
     enum filterItem: Int {
         
         case PlaylistLastUpdated = 1
@@ -73,7 +93,7 @@ class PlaylistViewController: BaseViewController,
         case PlaylistHidden = 6
         case PlaylistMostShared = 7
         case PlaylistMostFollower = 8
-    };  let playlistFilterMeta = [
+    };  var  playlistFilterMeta = [
         
         filterItem.PlaylistBestRated.rawValue : [
             "title" : "Best Rated Playlists",
@@ -100,25 +120,6 @@ class PlaylistViewController: BaseViewController,
             "description" : "Thats your hidden playlists stack"
         ]
     ]
-    
-    //
-    // MARK: Class Variables
-    //
-    
-    var _cellHeights = [CGFloat]()
-    var _defaultStreamingProvider: StreamProvider?
-    var _cacheTimer: Timer!
-    var _userProfilesHandled = [String]()
-    var _userProfilesHandledWithImages = [String: String]()
-    var _userProfilesInPlaylists = [String]()
-    var _userProfilesInPlaylistsUnique = [String]()
-    var _userProfilesCachedForFilter : Int = 0
-    var _playlistInCloudSelected: SPTPartialPlaylist?
-    var _playlistInCacheSelected: StreamPlayList?
-    var _playlistChanged: Bool?
-    var _playlistGradientLoadingBar = GradientLoadingBar()
-    var playListMenuBasicFilters: MenuView!
-    var playListBasicFilterItems = [MenuItem]()
     
     //
     // MARK: Class Method Overloads
