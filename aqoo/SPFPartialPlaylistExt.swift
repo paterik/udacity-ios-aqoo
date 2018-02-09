@@ -14,7 +14,7 @@ extension SPTPartialPlaylist {
         
         return String(
             format: "%@:%D:%@:%@",
-            self.name,
+            self.name ?? self.uri.absoluteString,
             self.trackCount,
             "\(self.isPublic)",
             "\(self.isCollaborative)").md5()
