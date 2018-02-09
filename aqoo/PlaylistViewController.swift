@@ -88,7 +88,7 @@ class PlaylistViewController: BaseViewController,
         ],
         
         filterItem.PlaylistNumberOfTracks.rawValue : [
-            "title" : "Playlists Wth The Most Tracks",
+            "title" : "Playlists Delivering The Most Tracks",
             "description" : "Thats your playlists ordered by the most tracks"
         ],
         
