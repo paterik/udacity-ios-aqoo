@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeueExtras.ttc">
+            <string>HelveticaNeue-CondensedBold</string>
+        </array>
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Thin</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PlaylistFilterNotification" customModule="aqoo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FILTER_TITLE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujP-J6-vT1" userLabel="lbl_title">
+                    <rect key="frame" x="83" y="8" width="282" height="29"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblProfileDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-Tt-cd9" userLabel="img_default">
+                    <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="bjl-Hl-EW9"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FILTER_SUBTITLE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kd2-mk-4Lp" userLabel="lbl_subTitle">
+                    <rect key="frame" x="83" y="45" width="282" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="4FQ-XK-iZr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ujP-J6-vT1" secondAttribute="trailing" constant="10" id="8AH-Aq-AQx"/>
+                <constraint firstItem="kd2-mk-4Lp" firstAttribute="top" secondItem="ujP-J6-vT1" secondAttribute="bottom" constant="8" symbolic="YES" id="EHE-Yr-AXr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="kd2-mk-4Lp" secondAttribute="bottom" constant="7" id="GQ6-AN-B5s"/>
+                <constraint firstItem="ujP-J6-vT1" firstAttribute="trailing" secondItem="kd2-mk-4Lp" secondAttribute="trailing" id="Uxo-en-YDC"/>
+                <constraint firstItem="ujP-J6-vT1" firstAttribute="leading" secondItem="kcO-Tt-cd9" secondAttribute="trailing" constant="8" symbolic="YES" id="WvM-eN-MIl"/>
+                <constraint firstItem="kcO-Tt-cd9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y1p-K3-Z9b"/>
+                <constraint firstItem="ujP-J6-vT1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="ZmJ-TY-7vb"/>
+                <constraint firstItem="kcO-Tt-cd9" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="c2F-xL-bfu"/>
+                <constraint firstItem="kcO-Tt-cd9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="lv1-4Q-vLx"/>
+                <constraint firstItem="ujP-J6-vT1" firstAttribute="leading" secondItem="kd2-mk-4Lp" secondAttribute="leading" id="wkS-dn-ahU"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="imgViewNotificationDefault" destination="kcO-Tt-cd9" id="PnX-hr-mfB"/>
+                <outlet property="lblSubTitle" destination="kd2-mk-4Lp" id="MgH-CJ-GKG"/>
+                <outlet property="lblTitle" destination="ujP-J6-vT1" id="pu2-le-RhJ"/>
+            </connections>
+            <point key="canvasLocation" x="-116.5" y="-168.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
+    </resources>
+</document>
