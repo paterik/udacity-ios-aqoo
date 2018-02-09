@@ -17,7 +17,7 @@ import PKHUD
 import NotificationBannerSwift
 import GradientLoadingBar
 
-extension PlaylistViewController: NotificationBannerDelegate {
+extension PlaylistViewController {
     
     func setupUIEventObserver() {
         
@@ -40,30 +40,6 @@ extension PlaylistViewController: NotificationBannerDelegate {
             name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
         )
-    }
-    
-    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
-        
-        var filterTitle: String = "Playlist Loaded"
-        var filterDescription: String = "you can choose any filter from the top menu"
-        
-        for (_index, _filterMeta) in playlistFilterMeta.enumerated() {
-            if _index == index {
-                if  let _metaValue = _filterMeta.value as? [String: String] {
-                    if  let _metaTitle = _metaValue["title"] as? String {
-                        filterTitle = _metaTitle
-                    }
-                    
-                    if  let _metaDescription = _metaValue["description"] as? String {
-                        filterDescription = _metaDescription
-                    }
-                }
-                
-                break
-            }
-        }
-        
-        showFilterNotification ( filterTitle, filterDescription )
     }
     
     func setupUITableBasicMenuView() {
@@ -90,6 +66,53 @@ extension PlaylistViewController: NotificationBannerDelegate {
         playListMenuBasicFilters.backgroundColor = UIColor(netHex: 0x222222)
         playListMenuBasicFilters.contentHeight = 75.0
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
+    }
+    
+    /*
+     * the method will handle filter menu tap's and notification
+     *
+     **/
+    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
+        
+        var filterTitle: String = "Playlist Loaded"
+        var filterDescription: String = "you can choose any filter from the top menu"
+        
+        print (playlistFilterMeta)
+        
+        for (_index, _filterMeta) in playlistFilterMeta.enumerated() {
+            
+            if _index == index {
+                if  let _metaValue = _filterMeta.value as? [String: String] {
+                    // fetch filter title from config dictionary stack
+                    if  let _metaTitle = _metaValue["title"] as? String {
+                        filterTitle = _metaTitle
+                    }
+                    
+                    // fetch filter description/subTitle from dictionary stack
+                    if  let _metaDescription = _metaValue["description"] as? String {
+                        filterDescription = _metaDescription
+                    }
+                }
+                
+                break
+            }
+        }
+        
+        showFilterNotification ( filterTitle, filterDescription )
+    }
+    
+    func showFilterNotification(_ title: String, _ description: String ) {
+        
+        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+        
+        bannerView.lblTitle.text = title
+        bannerView.lblSubTitle.text = description
+        
+        let banner = NotificationBanner(customView: bannerView)
+        banner.duration = 0.965
+        banner.onTap = {
+            banner.dismiss()
+        };  banner.show(bannerPosition: .top)
     }
 
     func setupUITableView() {
@@ -136,19 +159,6 @@ extension PlaylistViewController: NotificationBannerDelegate {
         _playlistGradientLoadingBar.show()
     }
     
-    func showFilterNotification(_ title: String, _ description: String ) {
-        
-      let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
-
-        bannerView.lblTitle.text = title
-        bannerView.lblSubTitle.text = description
-        
-        let banner = NotificationBanner(customView: bannerView)
-            banner.duration = 1.125
-            banner.delegate = self
-            banner.show(bannerPosition: .bottom)
-    }
-    
     func setupUICacheProcessor() {
         
         ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024
@@ -192,6 +202,10 @@ extension PlaylistViewController: NotificationBannerDelegate {
         // all userProfiles handled? start refresh/enrichment cache process
         if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
             
+            var playlistFilterMetaKeyStart = 10
+            var playlistFilterMetaKeyNew = 0
+            var playlistFilterMeta = [Int: [String: String]]()
+            
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
                 
                 // persisting user images by using an separate cache stack
@@ -223,6 +237,18 @@ extension PlaylistViewController: NotificationBannerDelegate {
                         ownerFilterItem.backgroundColor = self._sysPlaylistFilterColorBackground
                         ownerFilterItem.highlightedBackgroundColor = self._sysPlaylistFilterColorHighlight
                         ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
+                        
+                        // extend previously set basic filter meta description block by profile meta
+                        playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
+                        /*self.playlistFilterMeta.update(other: [playlistFilterMetaKeyNew : [
+                            "title" : "All Playlists of User \(_userName)",
+                            "description" : "Thats all playlists of \(_userName)"
+                        ]])*/
+                        
+                        self.playlistFilterMeta = self.playlistFilterMeta.combinedWith(other: [playlistFilterMetaKeyNew : [
+                            "title" : "All Playlists of User \(_userName)",
+                            "description" : "Thats all playlists of \(_userName)"
+                            ]])
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
@@ -412,8 +438,7 @@ extension PlaylistViewController: NotificationBannerDelegate {
     
     func handlePlaylistCloudRefresh() {
         
-        if spotifyClient.isSpotifyTokenValid() {
-
+        if  spotifyClient.isSpotifyTokenValid() {
             loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
         } else {
@@ -872,21 +897,5 @@ extension PlaylistViewController: NotificationBannerDelegate {
         
         print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
         _playlistChanged = value
-    }
-    
-    internal func notificationBannerWillAppear(_ banner: BaseNotificationBanner) {
-        print("[NotificationBannerDelegate] Banner will appear")
-    }
-    
-    internal func notificationBannerDidAppear(_ banner: BaseNotificationBanner) {
-        print("[NotificationBannerDelegate] Banner did appear")
-    }
-    
-    internal func notificationBannerWillDisappear(_ banner: BaseNotificationBanner) {
-        print("[NotificationBannerDelegate] Banner will disappear")
-    }
-    
-    internal func notificationBannerDidDisappear(_ banner: BaseNotificationBanner) {
-        print("[NotificationBannerDelegate] Banner did disappear")
     }
 }
