@@ -73,7 +73,35 @@ class PlaylistViewController: BaseViewController,
         case PlaylistHidden = 6
         case PlaylistMostShared = 7
         case PlaylistMostFollower = 8
-    };  let  filterBlacklistItems = [1, 7, 8]
+    }
+    
+    let playlistFilterMeta = [
+        
+        filterItem.PlaylistBestRated.rawValue : [
+            "title" : "Best Rated Playlists",
+            "description" : "Thats your best rated playlists"
+        ],
+        
+        filterItem.PlaylistTitleAlphabetical.rawValue : [
+            "title" : "Alphabetical Ordered Playlist",
+            "description" : "Thats your playlists ordered alphabeticaly"
+        ],
+        
+        filterItem.PlaylistNumberOfTracks.rawValue : [
+            "title" : "Playlists Wth The Most Tracks",
+            "description" : "Thats your playlists ordered by the most tracks"
+        ],
+        
+        filterItem.PlaylistMostListenend.rawValue : [
+            "title" : "Playlists Mostly Listened",
+            "description" : "Thats your playlists you have listened the most"
+        ],
+        
+        filterItem.PlaylistHidden.rawValue : [
+            "title" : "Your Hidden Playlists",
+            "description" : "Thats your hidden playlists stack"
+        ]
+    ]
     
     //
     // MARK: Class Variables
@@ -92,16 +120,7 @@ class PlaylistViewController: BaseViewController,
     var _playlistChanged: Bool?
     var _playlistGradientLoadingBar = GradientLoadingBar()
     var playListMenuBasicFilters: MenuView!
-    var playListMenuOwnerFilters: MenuView!
-    
     var playListBasicFilterItems = [MenuItem]()
-    var playlistFilterConfig = [
-        filterItem.PlaylistBestRated.rawValue,
-        filterItem.PlaylistTitleAlphabetical.rawValue,
-        filterItem.PlaylistNumberOfTracks.rawValue,
-        filterItem.PlaylistMostListenend.rawValue,
-        filterItem.PlaylistHidden.rawValue,
-    ]
     
     //
     // MARK: Class Method Overloads

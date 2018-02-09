@@ -13,9 +13,11 @@ import CoreStore
 import CryptoSwift
 import Kingfisher
 import Persei
+import PKHUD
+import NotificationBannerSwift
 import GradientLoadingBar
 
-extension PlaylistViewController {
+extension PlaylistViewController: NotificationBannerDelegate {
     
     func setupUIEventObserver() {
         
@@ -42,10 +44,26 @@ extension PlaylistViewController {
     
     func menu(_ menu: MenuView, didSelectItemAt index: Int) {
         
-        // model = model.next()
-        if debugMode == true {
-            print ("_ filterIndex [\(index)] selected")
+        var filterTitle: String = "Playlist Loaded"
+        var filterDescription: String = "you can choose any filter from the top menu"
+        
+        for (_index, _filterMeta) in playlistFilterMeta.enumerated() {
+            if _index == index {
+                if  let _metaValue = _filterMeta.value as? [String: String] {
+                    if  let _metaTitle = _metaValue["title"] as? String {
+                        filterTitle = _metaTitle
+                    }
+                    
+                    if  let _metaDescription = _metaValue["description"] as? String {
+                        filterDescription = _metaDescription
+                    }
+                }
+                
+                break
+            }
         }
+        
+        showFilterNotification ( filterTitle, filterDescription )
     }
     
     func setupUITableBasicMenuView() {
@@ -53,11 +71,11 @@ extension PlaylistViewController {
         // generate internal menu items instances (act as basic filters)
         playListBasicFilterItems.removeAll()
         
-        for (index, itemIndex) in playlistFilterConfig.enumerated() {
+        for (index, itemIndex) in playlistFilterMeta.enumerated() {
             
             var basicFilterItem = MenuItem(
-                image : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)")!,
-                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex)_hl")!
+                image : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex.key)")!,
+                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex.key)_hl")!
             )
             
             basicFilterItem.backgroundColor = _sysPlaylistFilterColorBackground
@@ -116,6 +134,19 @@ extension PlaylistViewController {
         )
         
         _playlistGradientLoadingBar.show()
+    }
+    
+    func showFilterNotification(_ title: String, _ description: String ) {
+        
+      let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+
+        bannerView.lblTitle.text = title
+        bannerView.lblSubTitle.text = description
+        
+        let banner = NotificationBanner(customView: bannerView)
+            banner.duration = 1.125
+            banner.delegate = self
+            banner.show(bannerPosition: .bottom)
     }
     
     func setupUICacheProcessor() {
@@ -294,7 +325,7 @@ extension PlaylistViewController {
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
             if debugMode == true {
-                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ]")
+                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")
                 print ("playlist covers: \(playListInCloud.images.count) (alternativ covers)")
@@ -664,7 +695,7 @@ extension PlaylistViewController {
                     } else {
                         
                         // name (origin) , number of tracks or flags for public/collaborative changed? update list
-                        _playListInDb!.metaListNameOrigin = playListInCloud.name
+                        _playListInDb!.metaListNameOrigin = playListInCloud.name ?? playListInCloud.uri.absoluteString
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playListInDb!.isPublic = playListInCloud.isPublic
@@ -841,5 +872,21 @@ extension PlaylistViewController {
         
         print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
         _playlistChanged = value
+    }
+    
+    internal func notificationBannerWillAppear(_ banner: BaseNotificationBanner) {
+        print("[NotificationBannerDelegate] Banner will appear")
+    }
+    
+    internal func notificationBannerDidAppear(_ banner: BaseNotificationBanner) {
+        print("[NotificationBannerDelegate] Banner did appear")
+    }
+    
+    internal func notificationBannerWillDisappear(_ banner: BaseNotificationBanner) {
+        print("[NotificationBannerDelegate] Banner will disappear")
+    }
+    
+    internal func notificationBannerDidDisappear(_ banner: BaseNotificationBanner) {
+        print("[NotificationBannerDelegate] Banner did disappear")
     }
 }
