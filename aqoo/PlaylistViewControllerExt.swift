@@ -353,7 +353,7 @@ extension PlaylistViewController {
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
             if debugMode == true {
-                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name) ]")
+                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")
                 print ("playlist covers: \(playListInCloud.images.count) (alternativ covers)")
@@ -822,8 +822,17 @@ extension PlaylistViewController {
         
         if  debugMode == true {
             print ("dbg [playlist] : try to load provider [ \(tag) ]")
-            print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
-            print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
+            if  spotifyClient.playListHashesInCloud.count > 0 {
+                print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
+            }   else {
+                print ("dbg [playlist] : cache ➡ no playlists in cloud")
+            }
+            
+            if  spotifyClient.playListHashesInCache.count > 0 {
+                print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
+            }   else {
+                print ("dbg [playlist] : cache ➡ no playlists in cache")
+            }
         }
         
         CoreStore.perform(

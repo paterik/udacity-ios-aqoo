@@ -142,8 +142,6 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
-        
-        print (playlistFilterMeta)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -212,6 +210,7 @@ class PlaylistViewController: BaseViewController,
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
+        playlistCell.imageViewContentChangedManually.alpha = 0.475
         
         if playlistCacheData.coverImagePathOverride != nil {
             _noCoverOverrideImageAvailable = false
