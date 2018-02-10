@@ -13,7 +13,6 @@ import CoreStore
 import CryptoSwift
 import Kingfisher
 import Persei
-import PKHUD
 import NotificationBannerSwift
 import GradientLoadingBar
 
@@ -157,7 +156,7 @@ extension PlaylistViewController {
         // define our loading bar
         _playlistGradientLoadingBar = GradientLoadingBar(
             height: 3,
-            durations: Durations(fadeIn: 1.0, fadeOut: 2.0, progress: 3.0),
+            durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
                 UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
                 UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
@@ -193,7 +192,7 @@ extension PlaylistViewController {
         
         tableView.addSubview(playListMenuBasicFilters)
         
-        _playlistGradientLoadingBar.hide()
+       _playlistGradientLoadingBar.hide()
     }
     
     func setupUILoadUserProfileImages(notification: Notification) {
@@ -204,7 +203,7 @@ extension PlaylistViewController {
               let profileImageURLAvailable = userInfo["profileImageURLAvailable"] as? Bool,
               let date = userInfo["date"] as? Date else { return }
         
-        _userProfilesHandled.append(profileUser.canonicalUserName)
+       _userProfilesHandled.append(profileUser.canonicalUserName)
         if profileImageURLAvailable {
             _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
         }
@@ -248,8 +247,8 @@ extension PlaylistViewController {
                         
                         // extend previously set basic filter meta description block by profile filter description
                         self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
-                            "title" : "All Playlists of User \(_userName)",
-                            "description" : "Thats all playlists of \(_userName)",
+                            "title" : "All Playlists of \(_userName)",
+                            "description" : "Fetch all \(_userName)'s playlists",
                             "image_key" : -1
                         ]]
                         
@@ -290,7 +289,7 @@ extension PlaylistViewController {
     }
     
     //
-    // weazL :: main listView logic, place for filter handling
+    // weazL :: note_1001 : main listView logic, place for filter handling
     //
     @objc func setupUILoadExtendedPlaylists() {
         
