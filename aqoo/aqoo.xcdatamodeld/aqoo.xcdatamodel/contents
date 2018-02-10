@@ -10,6 +10,7 @@
         <attribute name="isPlaylistRadioSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistVotedByStar" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPublic" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isSpotify" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="largestImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaLastListenedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="metaListHash" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,6 +19,7 @@
         <attribute name="metaListInternalRating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListNameOrigin" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaMediaRessourcesArray" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
+        <attribute name="metaNumberOfPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayedCompletely" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayedPartly" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfShares" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -45,7 +47,7 @@
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="525"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="555"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

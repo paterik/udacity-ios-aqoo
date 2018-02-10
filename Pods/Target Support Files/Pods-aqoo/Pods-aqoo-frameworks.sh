@@ -124,6 +124,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spotify-iOS-SDK/Spotify.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftRandom/SwiftRandom.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/fluid-slider/fluid_slider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/pop/pop.framework"
 fi
@@ -141,6 +142,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spotify-iOS-SDK/Spotify.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftRandom/SwiftRandom.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/fluid-slider/fluid_slider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/pop/pop.framework"
 fi
