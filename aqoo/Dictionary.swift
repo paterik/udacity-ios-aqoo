@@ -8,17 +8,20 @@
 
 import Foundation
 
-/*extension Dictionary {
+extension Dictionary {
+    
+    static func += (lhs: inout Dictionary, rhs: Dictionary) {
+        
+        lhs.merge(rhs) { (_, new) in new }
+    }
     
     mutating func update(other:Dictionary) {
+        
         for (key,value) in other {
             self.updateValue(value, forKey:key)
         }
     }
-}*/
-
-extension Dictionary {
-    /// Return a new dictionary with values from `self` and `other`.  For duplicate keys, self wins.
+    
     func combinedWith( other: Dictionary<Key,Value>) -> Dictionary<Key,Value> {
         var other = other
         for (key, value) in self {
