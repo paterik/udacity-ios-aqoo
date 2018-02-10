@@ -43,20 +43,18 @@ extension PlaylistViewController {
     }
     
     func setupUITableBasicMenuView() {
- 
+
         var imageKey: Int = 0
         
-        playListBasicFilterItems.removeAll()
-        
-        // sort predefined playlistFilterMeta dictionary by key (desc)
-        var playlistFilterMetaOrdered = playlistFilterMeta.sorted(by: { $0.0 < $1.0 })
-      
-        for (index, _filterMeta) in playlistFilterMetaOrdered.enumerated() {
-
+        // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
+        for (index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
             if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
                 // fetch filter image key from config dictionary stack
                 if  let _metaImageKey = _metaValue["image_key"] as? Int {
-                    imageKey = _metaImageKey
+                    // ignore "unset" imageKeys (value: -1)
+                    if  imageKey == -1 { continue }
+                        imageKey = _metaImageKey
+                    // generate menu item now
                     var basicFilterItem = MenuItem(
                         image : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)")!,
                         highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)_hl")!
@@ -78,19 +76,16 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    /*
-     * the method will handle filter menu tap's and notification
-     *
-     **/
+    //
+    // the method will handle filter menu tap's and notification
+    //
     func menu(_ menu: MenuView, didSelectItemAt index: Int) {
         
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
         
-        // sort predefined playlistFilterMeta dictionary by key (desc)
-        var playlistFilterMetaOrdered = playlistFilterMeta.sorted(by: { $0.0 < $1.0 })
-        
-        for (_index, _filterMeta) in playlistFilterMetaOrdered.enumerated() {
+        // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
+        for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
             
             if _index == index {
                 if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
@@ -115,13 +110,12 @@ extension PlaylistViewController {
     func showFilterNotification(_ title: String, _ description: String ) {
         
         let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
-        
-        bannerView.lblTitle.text = title
-        bannerView.lblSubTitle.text = description
+            bannerView.lblTitle.text = title
+            bannerView.lblSubTitle.text = description
         
         let banner = NotificationBanner(customView: bannerView)
-        banner.duration = 0.965
-        banner.onTap = {
+            banner.duration = 0.9375
+            banner.onTap = {
             banner.dismiss()
         };  banner.show(bannerPosition: .top)
     }
@@ -157,6 +151,10 @@ extension PlaylistViewController {
     
     func setupUIBase() {
         
+        // cleanUp filter definition
+        playListBasicFilterItems.removeAll()
+        
+        // define our loading bar
         _playlistGradientLoadingBar = GradientLoadingBar(
             height: 3,
             durations: Durations(fadeIn: 1.0, fadeOut: 2.0, progress: 3.0),
@@ -167,6 +165,7 @@ extension PlaylistViewController {
             onView: self.view
         )
         
+        // and show loading bar now ...
         _playlistGradientLoadingBar.show()
     }
     
