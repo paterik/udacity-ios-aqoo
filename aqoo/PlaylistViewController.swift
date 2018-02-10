@@ -98,32 +98,32 @@ class PlaylistViewController: BaseViewController,
     var playlistFilterMeta = [
         
         0 : [
-            "title" : "Best Rated Playlists",
-            "description" : "Thats your best rated playlists",
+            "title" : "Top rated playlists",
+            "description" : "Your playlists ordered by rating",
             "image_key" : filterItem.PlaylistBestRated.rawValue
         ],
         
         1 : [
-            "title" : "Alphabetical Ordered Playlist",
-            "description" : "Thats your playlists ordered alphabeticaly",
+            "title" : "Playlists in alphabetical order",
+            "description" : "Your playlists in alphabetical order",
             "image_key" : filterItem.PlaylistTitleAlphabetical.rawValue
         ],
         
         2 : [
-            "title" : "Playlists Delivering The Most Tracks",
-            "description" : "Thats your playlists ordered by the most tracks",
+            "title" : "Playlists with the most tracks",
+            "description" : "Your playlists ordered by track count",
             "image_key" : filterItem.PlaylistNumberOfTracks.rawValue
         ],
         
         3 : [
-            "title" : "Playlists Mostly Listened",
-            "description" : "Thats your playlists you have listened the most",
+            "title" : "Playlists most frequently heard",
+            "description" : "Your playlists ordered by the number of times played",
             "image_key" : filterItem.PlaylistMostListenend.rawValue
         ],
         
         4 : [
-            "title" : "Your Hidden Playlists",
-            "description" : "Thats your hidden playlists stack",
+            "title" : "Your hidden playlists",
+            "description" : "Your hidden playlist stack",
             "image_key" : filterItem.PlaylistHidden.rawValue
         ]
     ]
