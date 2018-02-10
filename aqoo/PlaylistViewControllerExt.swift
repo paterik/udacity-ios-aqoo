@@ -47,7 +47,11 @@ extension PlaylistViewController {
         var imageKey: Int = 0
         
         playListBasicFilterItems.removeAll()
-        for (index, _filterMeta) in playlistFilterMeta.enumerated() {
+        
+        // sort predefined playlistFilterMeta dictionary by key (desc)
+        var playlistFilterMetaOrdered = playlistFilterMeta.sorted(by: { $0.0 < $1.0 })
+      
+        for (index, _filterMeta) in playlistFilterMetaOrdered.enumerated() {
 
             if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
                 // fetch filter image key from config dictionary stack
@@ -83,7 +87,10 @@ extension PlaylistViewController {
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
         
-        for (_index, _filterMeta) in playlistFilterMeta.enumerated() {
+        // sort predefined playlistFilterMeta dictionary by key (desc)
+        var playlistFilterMetaOrdered = playlistFilterMeta.sorted(by: { $0.0 < $1.0 })
+        
+        for (_index, _filterMeta) in playlistFilterMetaOrdered.enumerated() {
             
             if _index == index {
                 if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
@@ -206,9 +213,8 @@ extension PlaylistViewController {
         // all userProfiles handled? start refresh/enrichment cache process
         if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
             
-            var playlistFilterMetaKeyStart = 10
+            var playlistFilterMetaKeyStart = 4
             var playlistFilterMetaKeyNew = 0
-            var playlistFilterMeta = [Int: [String: String]]()
             
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
                 
@@ -242,13 +248,14 @@ extension PlaylistViewController {
                         ownerFilterItem.highlightedBackgroundColor = self._sysPlaylistFilterColorHighlight
                         ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
                         
-                        // extend previously set basic filter meta description block by profile meta
+                        // extend previously set basic filter meta description block by profile filter description
                         
-                        // playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
-                        /*self.playlistFilterMeta += [playlistFilterMetaKeyNew : [
+                        playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
+                        self.playlistFilterMeta += [playlistFilterMetaKeyNew : [
                             "title" : "All Playlists of User \(_userName)",
-                            "description" : "Thats all playlists of \(_userName)"
-                        ]]*/
+                            "description" : "Thats all playlists of \(_userName)",
+                            "image_key" : -1
+                        ]]
                         
                         /*self.playlistFilterMeta.update(other: [playlistFilterMetaKeyNew : [
                             "title" : "All Playlists of User \(_userName)",
