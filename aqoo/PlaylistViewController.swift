@@ -93,7 +93,9 @@ class PlaylistViewController: BaseViewController,
         case PlaylistHidden = 6
         case PlaylistMostShared = 7
         case PlaylistMostFollower = 8
-    };  var  playlistFilterMeta = [
+    }
+    
+    var playlistFilterMeta = [
         
         0 : [
             "title" : "Best Rated Playlists",
