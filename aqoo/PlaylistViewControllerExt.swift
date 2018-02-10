@@ -212,9 +212,8 @@ extension PlaylistViewController {
         
         // all userProfiles handled? start refresh/enrichment cache process
         if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
-            
-            var playlistFilterMetaKeyStart = 4
-            var playlistFilterMetaKeyNew = 0
+
+            let playlistFilterMetaKeyStart = self.playlistFilterMeta.count - 1
             
             for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
                 
@@ -236,7 +235,7 @@ extension PlaylistViewController {
                         var profileImageActive = profileImageMin
                         var profileImageNormal = profileImageMin.kf.overlaying(
                             with: UIColor(netHex: 0x222222),
-                            fraction: 0.65
+                            fraction: 0.675
                         )
                         
                         var ownerFilterItem = MenuItem(
@@ -249,23 +248,11 @@ extension PlaylistViewController {
                         ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
                         
                         // extend previously set basic filter meta description block by profile filter description
-                        
-                        playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
-                        self.playlistFilterMeta += [playlistFilterMetaKeyNew : [
+                        self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
                             "title" : "All Playlists of User \(_userName)",
                             "description" : "Thats all playlists of \(_userName)",
                             "image_key" : -1
                         ]]
-                        
-                        /*self.playlistFilterMeta.update(other: [playlistFilterMetaKeyNew : [
-                            "title" : "All Playlists of User \(_userName)",
-                            "description" : "Thats all playlists of \(_userName)"
-                        ]])*/
-                        
-                       /*self.playlistFilterMeta = self.playlistFilterMeta.combinedWith(other: [playlistFilterMetaKeyNew : [
-                            "title" : "All Playlists of User \(_userName)",
-                            "description" : "Thats all playlists of \(_userName)"
-                        ]])*/
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
