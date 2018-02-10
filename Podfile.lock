@@ -23,6 +23,7 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
+  - SwiftRandom (1.0.0)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - Reachability
   - SnapKit
   - Spotify-iOS-SDK
+  - SwiftRandom
 
 EXTERNAL SOURCES:
   CoreStore:
@@ -65,7 +67,8 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
+  SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
 
-PODFILE CHECKSUM: fd1101956e39e91ce122b428817dcfa0cf756650
+PODFILE CHECKSUM: 3d5262c7fedf5c6297bf9f3fd8699b241c2c67e4
 
 COCOAPODS: 1.4.0.beta.2

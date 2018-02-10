@@ -20,6 +20,7 @@ def aq_base
     pod 'Kingfisher'
     pod 'Spotify-iOS-SDK'
     pod 'Reachability'
+    pod 'SwiftRandom'
 end
 
 def aq_data

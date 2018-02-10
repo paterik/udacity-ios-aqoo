@@ -16,6 +16,7 @@ class BaseViewController: UIViewController {
     //
     
     let debugMode: Bool = true
+    let debugLoadFixtures: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let spotifyClient = SpotifyClient.sharedInstance

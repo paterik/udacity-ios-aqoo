@@ -638,10 +638,16 @@ extension PlaylistViewController {
         var _playListInDb: StreamPlayList?
         var _playListFingerprint: String!
         var _playlistIsMine: Bool!
+        var _playlistIsSpotify: Bool!
         var _ownerProfileImageURL: URL?
         var _ownerProfileImageStringURL: String! = ""
         var _currentUserName = spotifyClient.spfCurrentSession?.canonicalUsername
 
+        var _played = Int.random(1, 550) // 234
+        var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
+        var _playedCompletly = _played - _playedPartly // 54
+        var _shares = Int.random(0, 9) // 7
+        
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
@@ -658,19 +664,32 @@ extension PlaylistViewController {
                 )
                 
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
-                if _playListInDb == nil {
+                if  _playListInDb == nil {
                     
                     _playlistIsMine = false
                     if playListInCloud.owner.canonicalUserName == _currentUserName {
                         _playlistIsMine = true
+                    }
+                    
+                    _playlistIsSpotify = false
+                    if playListInCloud.owner.canonicalUserName == self._sysDefaultSpotifyUsername {
+                        _playlistIsSpotify = true
                     }
 
                     if  _ownerProfileImageURL != nil {
                         _ownerProfileImageStringURL = _ownerProfileImageURL!.absoluteString
                     }
                     
+                    if  self.debugLoadFixtures == true && self.debugMode == true {
+                        print ("--> \(_played) x played")
+                        print ("--> \(_playedPartly) x playedPartly")
+                        print ("--> \(_playedCompletly) x playedCompletly")
+                        print ("--> \(_shares) x shared")
+                    }
+                    
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
-
+                    
+                    _playListInDb!.createdAt = Date()
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
@@ -678,10 +697,22 @@ extension PlaylistViewController {
                     _playListInDb!.metaListNameOrigin = playListInCloud.name
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
-                    _playListInDb!.metaNumberOfShares = 0
                     
+                    _playListInDb!.metaNumberOfShares = 0
+                    if self.debugLoadFixtures == true {
+                        _playListInDb!.metaNumberOfShares = Int64(_shares)
+                    }
+                    
+                    _playListInDb!.metaNumberOfPlayed = 0
                     _playListInDb!.metaNumberOfPlayedPartly = 0
                     _playListInDb!.metaNumberOfPlayedCompletely = 0
+                    
+                    if self.debugLoadFixtures == true {
+                        _playListInDb!.metaNumberOfPlayed = Int64(_played)
+                        _playListInDb!.metaNumberOfPlayedPartly = Int64(_playedPartly)
+                        _playListInDb!.metaNumberOfPlayedCompletely = Int64(_playedCompletly)
+                    }
+                    
                     _playListInDb!.isPlaylistVotedByStar = false
                     _playListInDb!.isPlaylistRadioSelected = false
                     _playListInDb!.isHot = false
@@ -691,10 +722,9 @@ extension PlaylistViewController {
                     _playListInDb!.metaPreviouslyUpdatedManually = false
                     _playListInDb!.metaPreviouslyCreated = true
                     _playListInDb!.isMine = _playlistIsMine
+                    _playListInDb!.isSpotify = _playlistIsSpotify
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
-                    
-                    _playListInDb!.createdAt = Date()
                     
                     _playListInDb!.metaListInternalName = playListInCloud.name
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
