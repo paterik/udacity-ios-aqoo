@@ -13,6 +13,7 @@ import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
 import GradientLoadingBar
+import SwiftRandom
 import Persei
 
 class PlaylistViewController: BaseViewController,
@@ -81,7 +82,7 @@ class PlaylistViewController: BaseViewController,
     var playListMenuBasicFilters: MenuView!
     var playListBasicFilterItems = [MenuItem]()
     
-    // predefine filter index as 'readably' value-index and blacklist some of my filters
+    // predefined filter index as 'readably' value-index and blacklist some of my filters
     // including some additional meta information about title and description (so far)
     enum filterItem: Int {
         
@@ -208,6 +209,7 @@ class PlaylistViewController: BaseViewController,
         var _noCoverSetForInternal: Bool = false
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
+        playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
         
@@ -221,7 +223,7 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewContentChangedManually.isHidden = true
         }
         
-        if  playlistCacheData.isMine == false {
+        if  playlistCacheData.isSpotify == false {
             playlistCell.imageViewPlaylistIsMine.isHidden = true
         }   else {
             playlistCell.imageViewPlaylistIsMine.isHidden = false

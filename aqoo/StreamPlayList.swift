@@ -23,6 +23,7 @@ class StreamPlayList: NSManagedObject {
    
     @NSManaged var isHot: Bool
     @NSManaged var isMine: Bool
+    @NSManaged var isSpotify: Bool
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
     
@@ -45,6 +46,7 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
+    @NSManaged var metaNumberOfPlayed: Int64
     @NSManaged var metaNumberOfPlayedPartly: Int64
     @NSManaged var metaNumberOfPlayedCompletely: Int64
     
