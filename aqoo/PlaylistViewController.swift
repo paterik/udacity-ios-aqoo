@@ -95,29 +95,34 @@ class PlaylistViewController: BaseViewController,
         case PlaylistMostFollower = 8
     };  var  playlistFilterMeta = [
         
-        filterItem.PlaylistBestRated.rawValue : [
+        0 : [
             "title" : "Best Rated Playlists",
-            "description" : "Thats your best rated playlists"
+            "description" : "Thats your best rated playlists",
+            "image_key" : filterItem.PlaylistBestRated.rawValue
         ],
         
-        filterItem.PlaylistTitleAlphabetical.rawValue : [
+        1 : [
             "title" : "Alphabetical Ordered Playlist",
-            "description" : "Thats your playlists ordered alphabeticaly"
+            "description" : "Thats your playlists ordered alphabeticaly",
+            "image_key" : filterItem.PlaylistTitleAlphabetical.rawValue
         ],
         
-        filterItem.PlaylistNumberOfTracks.rawValue : [
+        2 : [
             "title" : "Playlists Delivering The Most Tracks",
-            "description" : "Thats your playlists ordered by the most tracks"
+            "description" : "Thats your playlists ordered by the most tracks",
+            "image_key" : filterItem.PlaylistNumberOfTracks.rawValue
         ],
         
-        filterItem.PlaylistMostListenend.rawValue : [
+        3 : [
             "title" : "Playlists Mostly Listened",
-            "description" : "Thats your playlists you have listened the most"
+            "description" : "Thats your playlists you have listened the most",
+            "image_key" : filterItem.PlaylistMostListenend.rawValue
         ],
         
-        filterItem.PlaylistHidden.rawValue : [
+        4 : [
             "title" : "Your Hidden Playlists",
-            "description" : "Thats your hidden playlists stack"
+            "description" : "Thats your hidden playlists stack",
+            "image_key" : filterItem.PlaylistHidden.rawValue
         ]
     ]
     
@@ -134,6 +139,8 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
+        
+        print (playlistFilterMeta)
     }
     
     override func viewWillAppear(_ animated: Bool) {
