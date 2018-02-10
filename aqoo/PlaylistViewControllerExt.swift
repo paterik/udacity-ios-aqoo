@@ -44,21 +44,27 @@ extension PlaylistViewController {
     
     func setupUITableBasicMenuView() {
  
-        // generate internal menu items instances (act as basic filters)
-        playListBasicFilterItems.removeAll()
+        var imageKey: Int = 0
         
-        for (index, itemIndex) in playlistFilterMeta.enumerated() {
-            
-            var basicFilterItem = MenuItem(
-                image : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex.key)")!,
-                highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(itemIndex.key)_hl")!
-            )
-            
-            basicFilterItem.backgroundColor = _sysPlaylistFilterColorBackground
-            basicFilterItem.highlightedBackgroundColor = _sysPlaylistFilterColorHighlight
-            basicFilterItem.shadowColor = _sysPlaylistFilterColorShadow
-            
-            playListBasicFilterItems.append(basicFilterItem)
+        playListBasicFilterItems.removeAll()
+        for (index, _filterMeta) in playlistFilterMeta.enumerated() {
+
+            if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
+                // fetch filter image key from config dictionary stack
+                if  let _metaImageKey = _metaValue["image_key"] as? Int {
+                    imageKey = _metaImageKey
+                    var basicFilterItem = MenuItem(
+                        image : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)")!,
+                        highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)_hl")!
+                    )
+                    
+                    basicFilterItem.backgroundColor = _sysPlaylistFilterColorBackground
+                    basicFilterItem.highlightedBackgroundColor = _sysPlaylistFilterColorHighlight
+                    basicFilterItem.shadowColor = _sysPlaylistFilterColorShadow
+                    
+                    playListBasicFilterItems.append(basicFilterItem)
+                }
+            }
         }
         
         // generate menu instance
@@ -77,12 +83,10 @@ extension PlaylistViewController {
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
         
-        print (playlistFilterMeta)
-        
         for (_index, _filterMeta) in playlistFilterMeta.enumerated() {
             
             if _index == index {
-                if  let _metaValue = _filterMeta.value as? [String: String] {
+                if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
                     // fetch filter title from config dictionary stack
                     if  let _metaTitle = _metaValue["title"] as? String {
                         filterTitle = _metaTitle
@@ -239,16 +243,22 @@ extension PlaylistViewController {
                         ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
                         
                         // extend previously set basic filter meta description block by profile meta
-                        playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
+                        
+                        // playlistFilterMetaKeyNew = playlistFilterMetaKeyStart + self._userProfilesCachedForFilter
+                        /*self.playlistFilterMeta += [playlistFilterMetaKeyNew : [
+                            "title" : "All Playlists of User \(_userName)",
+                            "description" : "Thats all playlists of \(_userName)"
+                        ]]*/
+                        
                         /*self.playlistFilterMeta.update(other: [playlistFilterMetaKeyNew : [
                             "title" : "All Playlists of User \(_userName)",
                             "description" : "Thats all playlists of \(_userName)"
                         ]])*/
                         
-                        self.playlistFilterMeta = self.playlistFilterMeta.combinedWith(other: [playlistFilterMetaKeyNew : [
+                       /*self.playlistFilterMeta = self.playlistFilterMeta.combinedWith(other: [playlistFilterMetaKeyNew : [
                             "title" : "All Playlists of User \(_userName)",
                             "description" : "Thats all playlists of \(_userName)"
-                            ]])
+                        ]])*/
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
