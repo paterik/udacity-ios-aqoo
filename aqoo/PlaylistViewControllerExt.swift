@@ -317,9 +317,6 @@ extension PlaylistViewController {
             }
             
             spotifyClient.playlistsInCache = _playListCache
-
-            // handle internal playlist positionioning
-            handleInternalPlaylistOrder()
             
             // tableView.refreshTable()
             tableView.reloadData()
@@ -327,7 +324,7 @@ extension PlaylistViewController {
         } else {
             
             /*
-             * no plylistdata found ... show welcome screen or tutorial instead (feature)
+             * no playlist data found ... show welcome screen or tutorial instead (feature)
              *
              */
         }
