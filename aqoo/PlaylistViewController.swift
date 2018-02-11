@@ -217,6 +217,8 @@ class PlaylistViewController: BaseViewController,
             _noCoverOverrideImageAvailable = false
         }
         
+        // weazL :: refactor_1001 : transfer those blocks into dedicated methods
+        
         if  playlistCacheData.metaPreviouslyUpdatedManually == true {
             playlistCell.imageViewContentChangedManually.isHidden = false
         }   else {
@@ -269,8 +271,6 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
             _noCoverSetForInternal = true
         }
-        
-        // imgUITblPlaylistIsWeekly_v1
         
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if let _image = getImageByFileName(playlistCacheData.coverImagePathOverride!) {

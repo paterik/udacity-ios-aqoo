@@ -299,7 +299,10 @@ extension PlaylistViewController {
         //
         if let _playListCache = CoreStore.fetchAll(
                 From<StreamPlayList>()
-                    .orderBy(.descending(\StreamPlayList.metaListInternalRating))
+                    .orderBy(.descending(\StreamPlayList.metaListInternalRating),
+                             .ascending(\StreamPlayList.isPlaylistRadioSelected),
+                             .ascending(\StreamPlayList.isPlaylistVotedByStar),
+                             .ascending(\StreamPlayList.isPlaylistYourWeekly))
                     .where(\StreamPlayList.provider == _defaultStreamingProvider)
             )
         {
@@ -315,6 +318,9 @@ extension PlaylistViewController {
             
             spotifyClient.playlistsInCache = _playListCache
 
+            // handle internal playlist positionioning
+            handleInternalPlaylistOrder()
+            
             // tableView.refreshTable()
             tableView.reloadData()
             
@@ -681,10 +687,10 @@ extension PlaylistViewController {
                     }
                     
                     if  self.debugLoadFixtures == true && self.debugMode == true {
-                        print ("--> \(_played) x played")
-                        print ("--> \(_playedPartly) x playedPartly")
-                        print ("--> \(_playedCompletly) x playedCompletly")
-                        print ("--> \(_shares) x shared")
+                        print ("fixture_load --> \(_played) x played")
+                        print ("fixture_load --> \(_playedPartly) x playedPartly")
+                        print ("fixture_load --> \(_playedCompletly) x playedCompletly")
+                        print ("fixture_load --> \(_shares) x shared")
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
