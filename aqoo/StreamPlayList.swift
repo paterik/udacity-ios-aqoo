@@ -12,7 +12,10 @@ import CryptoSwift
 class StreamPlayList: NSManagedObject {
     
     @NSManaged var owner: String
+    @NSManaged var ownerSharingURL: String
     @NSManaged var ownerImageURL: String
+    @NSManaged var ownerFollowerCount: Int64
+    
     @NSManaged var trackCount: Int32
     @NSManaged var playableURI: String
     @NSManaged var smallestImageURL: String?
