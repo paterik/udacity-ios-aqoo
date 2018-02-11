@@ -195,6 +195,9 @@ extension PlaylistViewController {
        _playlistGradientLoadingBar.hide()
     }
     
+    //
+    // weazL :: current_state
+    //
     func setupUILoadUserProfileImages(notification: Notification) {
         
         guard let userInfo = notification.userInfo,
@@ -206,6 +209,12 @@ extension PlaylistViewController {
        _userProfilesHandled.append(profileUser.canonicalUserName)
         if profileImageURLAvailable {
             _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
+        } else {
+            
+            print ("-----> no profile image found for user \(profileUser.canonicalUserName!)")
+            print ("       try to render customized userProfileImage from cononical username\n")
+            
+
         }
         
         // all userProfiles handled? start refresh/enrichment cache process
@@ -225,6 +234,8 @@ extension PlaylistViewController {
                     (image, error, url, data) in
                     
                     if let _rawImage = image {
+                        
+                        print ("-----> image for user \(_userName) downloaded successfully")
                         
                         self._userProfilesCachedForFilter += 1
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
@@ -259,6 +270,10 @@ extension PlaylistViewController {
                         if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
                             self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
                         }
+                        
+                    } else {
+                        
+                        print ("-----> unable to download image for user \(_userName)")
                     }
                 }
                 
@@ -274,6 +289,7 @@ extension PlaylistViewController {
                         self.handlePlaylistDbCacheOwnerProfileData(
                             _playlistInDb,
                             _userName,
+                            _userProfile,
                             _userProfileImageURL
                         )
                     }
@@ -313,7 +329,7 @@ extension PlaylistViewController {
                 print ("---------------------------------------------------------")
                 print ("\(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
                 print ("\(spotifyClient.playListHashesInCache.count - 1) playlists in db/cache")
-                print ("---------------------------------------------------------")
+                print ("---------------------------------------------------------\n")
             }
             
             spotifyClient.playlistsInCache = _playListCache
@@ -599,7 +615,8 @@ extension PlaylistViewController {
     func handlePlaylistDbCacheOwnerProfileData (
        _ playListInDb: StreamPlayList,
        _ userProfileUserName: String,
-       _ userProfileImageURL: String) {
+       _ userProfileImageURL: String,
+       _ userProfile: SPTUser) {
 
         // don't override owners image url if allready set previously
         if playListInDb.ownerImageURL == userProfileImageURL { return }
