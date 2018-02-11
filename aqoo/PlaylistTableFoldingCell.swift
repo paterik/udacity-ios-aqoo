@@ -22,7 +22,7 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var imageViewContentChangedManually: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
     
-    @IBOutlet weak var imageViewPlaylistIsMine: UIImageView!
+    @IBOutlet weak var imageViewPlaylistIsSpotify: UIImageView!
     
     @IBOutlet weak var lblPlaylistName: UILabel!
     @IBOutlet weak var lblPlaylistNameInDetail: UILabel!
