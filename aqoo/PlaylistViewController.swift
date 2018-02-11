@@ -48,6 +48,7 @@ class PlaylistViewController: BaseViewController,
     let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
     let _sysDefaultRadioLikedCoverImage = "imgUITblPlaylistIsRadio_v1"
     let _sysDefaultStarVotedCoverImage = "imgUITblPlaylistIsStarRated_v1"
+    let _sysDefaultWeeklyCoverImage = "imgUITblPlaylistIsWeekly_v1"
     let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
     let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
@@ -223,9 +224,9 @@ class PlaylistViewController: BaseViewController,
         }
         
         if  playlistCacheData.isSpotify == false {
-            playlistCell.imageViewPlaylistIsMine.isHidden = true
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }   else {
-            playlistCell.imageViewPlaylistIsMine.isHidden = false
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         }
 
         if  playlistCacheData.ownerImageURL == nil || playlistCacheData.ownerImageURL == "" {
@@ -251,16 +252,25 @@ class PlaylistViewController: BaseViewController,
         // set internal flag covers for "isRadio" playlists
         if  playlistCacheData.isPlaylistRadioSelected {
             playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultRadioLikedCoverImage)
-            playlistCell.imageViewPlaylistIsMine.isHidden = true
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
            _noCoverSetForInternal = true
         }
         
         // set internal flag covers for "isStarVoted" playlists
         if  playlistCacheData.isPlaylistVotedByStar {
             playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultStarVotedCoverImage)
-            playlistCell.imageViewPlaylistIsMine.isHidden = true
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
            _noCoverSetForInternal = true
         }
+        
+        // set internal flag covers for "isWeekly" playlists
+        if  playlistCacheData.isPlaylistYourWeekly {
+            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultWeeklyCoverImage)
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
+            _noCoverSetForInternal = true
+        }
+        
+        // imgUITblPlaylistIsWeekly_v1
         
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if let _image = getImageByFileName(playlistCacheData.coverImagePathOverride!) {
