@@ -1457,6 +1457,7 @@
                                         <accessibility key="accessibilityConfiguration" hint="Star Voted"/>
                                         <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <action selector="switchAutoListStarVotedChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="OXv-le-g92"/>
                                             <action selector="switchPlaylistIsWeeklyChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="4UL-fM-Wz2"/>
                                         </connections>
                                     </switch>
@@ -1476,6 +1477,9 @@
                                         <rect key="frame" x="20" y="254" width="51" height="31"/>
                                         <accessibility key="accessibilityConfiguration" hint="Liked from Radio"/>
                                         <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="switchAutoListLikedFromRadioChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="9PW-SY-5Co"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Liked from Radio&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVH-gw-A8w" userLabel="ui_playlist_is_liked_from_radio_label">
                                         <rect key="frame" x="77" y="254" width="242" height="16"/>
@@ -1497,7 +1501,7 @@
                                             <action selector="switchPlaylistIsWeeklyChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="oHA-5B-qUQ"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Playlist of the Week&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVm-08-Kxj" userLabel="ui_playlist_is_weekly_label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Discover Weekly&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVm-08-Kxj" userLabel="ui_playlist_is_weekly_label">
                                         <rect key="frame" x="77" y="308" width="242" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="c51-Zu-Cc5"/>
@@ -1516,6 +1520,9 @@
                                         <rect key="frame" x="20" y="363" width="51" height="31"/>
                                         <accessibility key="accessibilityConfiguration" hint="Hide Playlist"/>
                                         <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="switchActionHidePlaylistFromAllViewsChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="Pcf-bE-4Tt"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide this playlist from your aqoo lists" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Av5-DE-XCj" userLabel="ui_playlist_is_hidden_label">
                                         <rect key="frame" x="77" y="363" width="242" height="16"/>
