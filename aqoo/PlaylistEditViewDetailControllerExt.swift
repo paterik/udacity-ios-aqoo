@@ -33,6 +33,7 @@ extension PlaylistEditViewDetailController {
         
         switchPlaylistIsStarVoted.isOn = playListInDb!.isPlaylistVotedByStar
         switchPlaylistIsRadioLiked.isOn = playListInDb!.isPlaylistRadioSelected
+        switchPlaylistIsWeekly.isOn = playListInDb!.isPlaylistYourWeekly
         switchPlaylistIsHidden.isOn = playListInDb!.isPlaylistHidden
     }
     

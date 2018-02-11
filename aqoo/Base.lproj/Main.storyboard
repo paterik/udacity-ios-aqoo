@@ -325,7 +325,7 @@
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
                                             <outlet property="imageViewContentChangedManually" destination="v2e-jW-gyw" id="qi5-gr-gWX"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
-                                            <outlet property="imageViewPlaylistIsMine" destination="kWC-iX-15N" id="oe6-hx-Yzn"/>
+                                            <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="lblPlaylistMetaTrackCount" destination="Rzk-Wc-Tps" id="LIa-jC-TVe"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
@@ -481,12 +481,12 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="5ob-hj-G1c" userLabel="ui_action_next_page_button">
                                         <rect key="frame" x="20" y="537" width="315" height="40"/>
-                                        <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="VJ4-kl-Goa"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="NEXT PAGE">
+                                        <state key="normal" title="SHOW ME MORE">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1403,7 +1403,7 @@
                                         <rect key="frame" x="20" y="20" width="315" height="132"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="132" id="rWV-bY-TOg"/>
+                                            <constraint firstAttribute="height" constant="132" id="zdU-V2-uDL"/>
                                         </constraints>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
@@ -1412,7 +1412,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="playlist description" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gM4-cj-ubM" userLabel="ui_playlist_description_label">
                                         <rect key="frame" x="20" y="160" width="315" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="nYL-KY-UgI"/>
+                                            <constraint firstAttribute="height" constant="16" id="sYl-zl-bcx"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                         <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1422,73 +1422,11 @@
                                         <rect key="frame" x="20" y="153" width="315" height="5"/>
                                         <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnPlaylistIsVoted_v1" translatesAutoresizingMaskIntoConstraints="NO" id="cPv-4W-QGq" userLabel="ui_playlist_is_star_voted_by_user_image">
-                                        <rect key="frame" x="303" y="219" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="mLa-gf-U4c"/>
-                                        </constraints>
-                                    </imageView>
-                                    <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Sek-NY-yDz" userLabel="ui_playlist_is_star_voted_by_user_switch">
-                                        <rect key="frame" x="20" y="220" width="51" height="31"/>
-                                        <accessibility key="accessibilityConfiguration" hint="Star Voted"/>
-                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="switchAutoListStarVotedChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="0jG-cY-fgG"/>
-                                        </connections>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Star Voted&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIP-ci-zLM" userLabel="ui_playlist_is_star_voted_by_user_label">
-                                        <rect key="frame" x="77" y="227" width="218" height="16"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnPlaylistIsRadio_v1" translatesAutoresizingMaskIntoConstraints="NO" id="5Jm-bj-pSx" userLabel="ui_playlist_is_liked_from_radio_image">
-                                        <rect key="frame" x="303" y="268" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="Pav-1z-BgQ"/>
-                                        </constraints>
-                                    </imageView>
-                                    <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="p8T-jJ-zTI" userLabel="ui_playlist_is_liked_from_radio_switch">
-                                        <rect key="frame" x="20" y="274" width="51" height="31"/>
-                                        <accessibility key="accessibilityConfiguration" hint="Liked from Radio"/>
-                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="switchAutoListLikedFromRadioChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="yVO-88-blc"/>
-                                        </connections>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Liked from Radio&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rre-KB-YRJ" userLabel="ui_playlist_is_liked_from_radio_label">
-                                        <rect key="frame" x="77" y="280" width="218" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="can-xE-dS7"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnPlaylistIsHidden_v1" translatesAutoresizingMaskIntoConstraints="NO" id="ICo-7J-jyY" userLabel="ui_playlist_is_hidden_image">
-                                        <rect key="frame" x="303" y="324" width="32" height="32"/>
-                                    </imageView>
-                                    <switch opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wcr-4u-SQV" userLabel="ui_playlist_is_hidden_switch">
-                                        <rect key="frame" x="20" y="326" width="51" height="31"/>
-                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="switchActionHidePlaylistFromAllViewsChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="yU5-GI-bqn"/>
-                                        </connections>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide this playlist from your aqoo lists" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Kg-Xg-CCO" userLabel="ui_playlist_is_hidden_label">
-                                        <rect key="frame" x="77" y="332" width="218" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="jxT-qm-Nev"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="xPu-g0-cLe" userLabel="ui_action_reset_to_defaults_button">
                                         <rect key="frame" x="20" y="489" width="315" height="40"/>
-                                        <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="gGH-hv-QeA"/>
+                                            <constraint firstAttribute="height" constant="40" id="tBA-4g-r1W"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="RESET TO SPOTIFY DEFAULTS">
@@ -1503,7 +1441,7 @@
                                         <rect key="frame" x="20" y="537" width="315" height="40"/>
                                         <color key="backgroundColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="bLx-eA-XPm"/>
+                                            <constraint firstAttribute="height" constant="40" id="9gX-Vw-WHi"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="RESET STATISTICS">
@@ -1514,73 +1452,195 @@
                                             <action selector="btnSpotifyLogoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W0e-2F-Q24"/>
                                         </connections>
                                     </button>
+                                    <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Izh-RL-LiH" userLabel="ui_playlist_is_star_voted_by_user_switch">
+                                        <rect key="frame" x="20" y="200" width="51" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Star Voted"/>
+                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="switchPlaylistIsWeeklyChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="4UL-fM-Wz2"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Star Voted&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fed-ZU-mnn" userLabel="ui_playlist_is_star_voted_by_user_label">
+                                        <rect key="frame" x="77" y="201" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mark this one as generic spotify &quot;star voted&quot; playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWQ-xP-mCB" userLabel="ui_playlist_is_star_voted_by_user_label_description">
+                                        <rect key="frame" x="77" y="216" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TcA-4z-jwC" userLabel="ui_playlist_is_liked_from_radio_switch">
+                                        <rect key="frame" x="20" y="254" width="51" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Liked from Radio"/>
+                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Liked from Radio&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVH-gw-A8w" userLabel="ui_playlist_is_liked_from_radio_label">
+                                        <rect key="frame" x="77" y="254" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mark this one as generic spotify &quot;radio&quot; playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKD-d8-fgt" userLabel="ui_playlist_is_liked_from_radio_label_description">
+                                        <rect key="frame" x="77" y="269" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fBB-5u-mok" userLabel="ui_playlist_is_weekly_switch">
+                                        <rect key="frame" x="20" y="308" width="51" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Weekly Playlist"/>
+                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="switchPlaylistIsWeeklyChanged:" destination="rqx-iJ-BrN" eventType="valueChanged" id="oHA-5B-qUQ"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Playlist of the Week&quot; generic playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVm-08-Kxj" userLabel="ui_playlist_is_weekly_label">
+                                        <rect key="frame" x="77" y="308" width="242" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="c51-Zu-Cc5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mark this one as your generic spotify &quot;weekly&quot; playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9km-2V-7vU" userLabel="ui_playlist_is_weekly_description">
+                                        <rect key="frame" x="77" y="324" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lzi-Ui-VcS" userLabel="ui_playlist_is_hidden_switch">
+                                        <rect key="frame" x="20" y="363" width="51" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Hide Playlist"/>
+                                        <color key="onTintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide this playlist from your aqoo lists" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Av5-DE-XCj" userLabel="ui_playlist_is_hidden_label">
+                                        <rect key="frame" x="77" y="363" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="this flag hide your playlist from all of your lists" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZj-7B-Ht4" userLabel="ui_playlist_is_hidden_label_description">
+                                        <rect key="frame" x="77" y="378" width="242" height="16"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Rs-zb-8Kk" userLabel="ui_playlist_description_fx_line">
+                                        <rect key="frame" x="330" y="201" width="5" height="30"/>
+                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="5" id="7me-DD-gtP"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXe-rw-90E" userLabel="ui_playlist_description_fx_line">
+                                        <rect key="frame" x="330" y="255" width="5" height="30"/>
+                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rwx-B9-8no" userLabel="ui_playlist_description_fx_line">
+                                        <rect key="frame" x="330" y="309" width="5" height="30"/>
+                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvJ-fW-gPz" userLabel="ui_playlist_description_fx_line">
+                                        <rect key="frame" x="330" y="364" width="5" height="30"/>
+                                        <color key="backgroundColor" red="0.90588235289999997" green="0.0" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="swm-aG-u1C" secondAttribute="bottom" constant="18" id="0Ko-5F-JHq"/>
-                                    <constraint firstItem="cPv-4W-QGq" firstAttribute="leading" secondItem="RIP-ci-zLM" secondAttribute="trailing" constant="8" symbolic="YES" id="2LD-3f-enf"/>
-                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="leading" secondItem="gM4-cj-ubM" secondAttribute="leading" id="2y7-9M-YQd"/>
-                                    <constraint firstItem="Sek-NY-yDz" firstAttribute="leading" secondItem="p8T-jJ-zTI" secondAttribute="leading" id="4Hk-W8-F6o"/>
-                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="trailing" secondItem="gM4-cj-ubM" secondAttribute="trailing" id="53w-bD-Qum"/>
-                                    <constraint firstItem="RIP-ci-zLM" firstAttribute="leading" secondItem="rre-KB-YRJ" secondAttribute="leading" id="79C-4V-ZvR"/>
-                                    <constraint firstItem="ICo-7J-jyY" firstAttribute="top" secondItem="5Jm-bj-pSx" secondAttribute="bottom" constant="24" id="8Gv-wc-kAc"/>
-                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="trailing" secondItem="cPv-4W-QGq" secondAttribute="trailing" id="8m8-X7-gJn"/>
-                                    <constraint firstItem="rre-KB-YRJ" firstAttribute="top" secondItem="RIP-ci-zLM" secondAttribute="bottom" constant="37" id="Cte-UM-cGd"/>
-                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="top" secondItem="tZY-E4-Fii" secondAttribute="bottom" constant="8" symbolic="YES" id="FCG-hF-192"/>
-                                    <constraint firstItem="0Kg-Xg-CCO" firstAttribute="top" secondItem="rre-KB-YRJ" secondAttribute="bottom" constant="36" id="FEv-ay-582"/>
-                                    <constraint firstItem="5Jm-bj-pSx" firstAttribute="top" secondItem="cPv-4W-QGq" secondAttribute="bottom" constant="17" id="FPz-6y-B4p"/>
-                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="trailing" secondItem="Jhv-zD-5tQ" secondAttribute="trailing" id="IqH-90-jLm"/>
-                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="leading" secondItem="Sek-NY-yDz" secondAttribute="leading" id="JkO-53-o04"/>
-                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="top" secondItem="own-oI-oPy" secondAttribute="top" constant="20" id="KkF-LH-W7e"/>
-                                    <constraint firstItem="p8T-jJ-zTI" firstAttribute="leading" secondItem="Wcr-4u-SQV" secondAttribute="leading" id="Kkm-be-ADg"/>
-                                    <constraint firstItem="Sek-NY-yDz" firstAttribute="centerY" secondItem="RIP-ci-zLM" secondAttribute="centerY" id="N1J-yd-MQN"/>
-                                    <constraint firstItem="0Kg-Xg-CCO" firstAttribute="centerY" secondItem="ICo-7J-jyY" secondAttribute="centerY" id="Nn1-fp-AIE"/>
-                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="leading" secondItem="own-oI-oPy" secondAttribute="leading" constant="20" id="T0w-XP-5sh"/>
-                                    <constraint firstAttribute="trailing" secondItem="tZY-E4-Fii" secondAttribute="trailing" constant="20" id="UlE-RI-FHH"/>
-                                    <constraint firstItem="cPv-4W-QGq" firstAttribute="leading" secondItem="5Jm-bj-pSx" secondAttribute="leading" id="VgT-fH-OPp"/>
-                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="trailing" secondItem="swm-aG-u1C" secondAttribute="trailing" id="XDT-R8-B4b"/>
-                                    <constraint firstItem="p8T-jJ-zTI" firstAttribute="top" secondItem="Sek-NY-yDz" secondAttribute="bottom" constant="23" id="XYg-GB-yK2"/>
-                                    <constraint firstItem="RIP-ci-zLM" firstAttribute="centerY" secondItem="cPv-4W-QGq" secondAttribute="centerY" id="Y5i-U4-tcD"/>
-                                    <constraint firstItem="Wcr-4u-SQV" firstAttribute="leading" secondItem="xPu-g0-cLe" secondAttribute="leading" id="eJx-aO-pSD"/>
-                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="centerX" secondItem="own-oI-oPy" secondAttribute="centerX" id="eTw-e2-GYZ"/>
-                                    <constraint firstItem="Sek-NY-yDz" firstAttribute="bottom" secondItem="cPv-4W-QGq" secondAttribute="bottom" id="eqp-D8-7hQ"/>
-                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="top" secondItem="tZY-E4-Fii" secondAttribute="bottom" constant="1" id="evd-Tt-9Am"/>
-                                    <constraint firstItem="Wcr-4u-SQV" firstAttribute="top" secondItem="p8T-jJ-zTI" secondAttribute="bottom" constant="21" id="f40-3Z-Jm1"/>
-                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="top" secondItem="Jhv-zD-5tQ" secondAttribute="bottom" constant="2" id="fBS-mg-Ei3"/>
-                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="leading" secondItem="swm-aG-u1C" secondAttribute="leading" id="g7M-hu-bIb"/>
-                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="top" secondItem="own-oI-oPy" secondAttribute="top" constant="489" id="hOH-K5-q3d"/>
-                                    <constraint firstItem="5Jm-bj-pSx" firstAttribute="trailing" secondItem="ICo-7J-jyY" secondAttribute="trailing" id="hRC-eK-nyl"/>
-                                    <constraint firstItem="cPv-4W-QGq" firstAttribute="top" secondItem="gM4-cj-ubM" secondAttribute="bottom" constant="43" id="het-SQ-Frb"/>
-                                    <constraint firstItem="ICo-7J-jyY" firstAttribute="trailing" secondItem="xPu-g0-cLe" secondAttribute="trailing" id="inf-51-JQf"/>
-                                    <constraint firstItem="5Jm-bj-pSx" firstAttribute="leading" secondItem="rre-KB-YRJ" secondAttribute="trailing" constant="8" symbolic="YES" id="iuf-HA-2Qe"/>
-                                    <constraint firstItem="5Jm-bj-pSx" firstAttribute="leading" secondItem="ICo-7J-jyY" secondAttribute="leading" id="o7g-h2-Y9j"/>
-                                    <constraint firstItem="cPv-4W-QGq" firstAttribute="trailing" secondItem="5Jm-bj-pSx" secondAttribute="trailing" id="qqv-jK-JKZ"/>
-                                    <constraint firstItem="rre-KB-YRJ" firstAttribute="leading" secondItem="0Kg-Xg-CCO" secondAttribute="leading" id="ta0-Xf-ROj"/>
-                                    <constraint firstItem="RIP-ci-zLM" firstAttribute="leading" secondItem="Sek-NY-yDz" secondAttribute="trailing" constant="8" symbolic="YES" id="uMg-FK-mge"/>
-                                    <constraint firstItem="RIP-ci-zLM" firstAttribute="top" secondItem="gM4-cj-ubM" secondAttribute="bottom" constant="51" id="vLf-0r-vjd"/>
-                                    <constraint firstItem="ICo-7J-jyY" firstAttribute="leading" secondItem="0Kg-Xg-CCO" secondAttribute="trailing" constant="8" symbolic="YES" id="vq3-z3-9Gz"/>
-                                    <constraint firstItem="swm-aG-u1C" firstAttribute="top" secondItem="xPu-g0-cLe" secondAttribute="bottom" constant="8" symbolic="YES" id="xoH-Zd-g0d"/>
-                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="leading" secondItem="Jhv-zD-5tQ" secondAttribute="leading" id="zQl-cu-ohe"/>
+                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="trailing" secondItem="swm-aG-u1C" secondAttribute="trailing" id="04I-hM-dpJ"/>
+                                    <constraint firstItem="pKD-d8-fgt" firstAttribute="leading" secondItem="NVm-08-Kxj" secondAttribute="leading" id="15w-0E-2ZB"/>
+                                    <constraint firstItem="lzi-Ui-VcS" firstAttribute="centerY" secondItem="gvJ-fW-gPz" secondAttribute="centerY" id="2Mm-fl-Ys4"/>
+                                    <constraint firstItem="NVm-08-Kxj" firstAttribute="leading" secondItem="9km-2V-7vU" secondAttribute="leading" id="2m7-iv-fJ5"/>
+                                    <constraint firstItem="pKD-d8-fgt" firstAttribute="bottom" secondItem="XXe-rw-90E" secondAttribute="bottom" id="2t2-ir-3a7"/>
+                                    <constraint firstItem="6Rs-zb-8Kk" firstAttribute="trailing" secondItem="XXe-rw-90E" secondAttribute="trailing" id="2wP-jD-Z6r"/>
+                                    <constraint firstItem="Rwx-B9-8no" firstAttribute="leading" secondItem="gvJ-fW-gPz" secondAttribute="leading" id="3yU-jQ-1ho"/>
+                                    <constraint firstItem="XXe-rw-90E" firstAttribute="leading" secondItem="Rwx-B9-8no" secondAttribute="leading" id="4L0-jn-Q0I"/>
+                                    <constraint firstItem="fBB-5u-mok" firstAttribute="top" secondItem="NVm-08-Kxj" secondAttribute="top" id="5Wl-CS-V35"/>
+                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="leading" secondItem="gM4-cj-ubM" secondAttribute="leading" id="6ff-MC-1oV"/>
+                                    <constraint firstItem="KVH-gw-A8w" firstAttribute="trailing" secondItem="pKD-d8-fgt" secondAttribute="trailing" id="6nw-fQ-Swb"/>
+                                    <constraint firstItem="lzi-Ui-VcS" firstAttribute="bottom" secondItem="FZj-7B-Ht4" secondAttribute="bottom" id="7PH-1J-yAj"/>
+                                    <constraint firstItem="lzi-Ui-VcS" firstAttribute="leading" secondItem="xPu-g0-cLe" secondAttribute="leading" id="8QZ-r8-d3U"/>
+                                    <constraint firstItem="fBB-5u-mok" firstAttribute="leading" secondItem="lzi-Ui-VcS" secondAttribute="leading" id="AFN-lg-reL"/>
+                                    <constraint firstItem="swm-aG-u1C" firstAttribute="top" secondItem="xPu-g0-cLe" secondAttribute="bottom" constant="8" symbolic="YES" id="AM3-iP-fXe"/>
+                                    <constraint firstItem="NVm-08-Kxj" firstAttribute="trailing" secondItem="9km-2V-7vU" secondAttribute="trailing" id="Agx-Fx-COG"/>
+                                    <constraint firstItem="Rwx-B9-8no" firstAttribute="trailing" secondItem="gvJ-fW-gPz" secondAttribute="trailing" id="CzZ-bD-MxP"/>
+                                    <constraint firstAttribute="bottom" secondItem="swm-aG-u1C" secondAttribute="bottom" constant="18" id="Gf7-JU-pXS"/>
+                                    <constraint firstItem="KVH-gw-A8w" firstAttribute="top" secondItem="gWQ-xP-mCB" secondAttribute="bottom" constant="22" id="Idz-3E-2H6"/>
+                                    <constraint firstItem="Izh-RL-LiH" firstAttribute="bottom" secondItem="6Rs-zb-8Kk" secondAttribute="bottom" id="Is7-iL-Dm9"/>
+                                    <constraint firstItem="Fed-ZU-mnn" firstAttribute="leading" secondItem="Izh-RL-LiH" secondAttribute="trailing" constant="8" symbolic="YES" id="JNw-gT-QFp"/>
+                                    <constraint firstItem="gWQ-xP-mCB" firstAttribute="leading" secondItem="KVH-gw-A8w" secondAttribute="leading" id="JZS-B1-PFN"/>
+                                    <constraint firstItem="9km-2V-7vU" firstAttribute="top" secondItem="NVm-08-Kxj" secondAttribute="bottom" id="KKd-i9-tdM"/>
+                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="leading" secondItem="own-oI-oPy" secondAttribute="leading" constant="20" id="LEQ-uI-WSJ"/>
+                                    <constraint firstItem="pKD-d8-fgt" firstAttribute="top" secondItem="gWQ-xP-mCB" secondAttribute="bottom" constant="37" id="LG8-J2-QWo"/>
+                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="leading" secondItem="Izh-RL-LiH" secondAttribute="leading" id="M3H-qh-R1L"/>
+                                    <constraint firstItem="9km-2V-7vU" firstAttribute="trailing" secondItem="Av5-DE-XCj" secondAttribute="trailing" id="N1x-pg-HRr"/>
+                                    <constraint firstItem="FZj-7B-Ht4" firstAttribute="top" secondItem="9km-2V-7vU" secondAttribute="bottom" constant="38" id="NIR-vl-tqe"/>
+                                    <constraint firstItem="6Rs-zb-8Kk" firstAttribute="leading" secondItem="Fed-ZU-mnn" secondAttribute="trailing" constant="11" id="NhD-mx-3px"/>
+                                    <constraint firstItem="TcA-4z-jwC" firstAttribute="bottom" secondItem="pKD-d8-fgt" secondAttribute="bottom" id="ODM-TR-AIv"/>
+                                    <constraint firstItem="9km-2V-7vU" firstAttribute="leading" secondItem="Av5-DE-XCj" secondAttribute="leading" id="OIU-D8-lWY"/>
+                                    <constraint firstItem="gvJ-fW-gPz" firstAttribute="trailing" secondItem="xPu-g0-cLe" secondAttribute="trailing" id="OaL-ud-0jg"/>
+                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="leading" secondItem="Jhv-zD-5tQ" secondAttribute="leading" id="Qwz-g8-TvE"/>
+                                    <constraint firstItem="Izh-RL-LiH" firstAttribute="top" secondItem="gM4-cj-ubM" secondAttribute="bottom" constant="24" id="ROz-gO-Uhw"/>
+                                    <constraint firstItem="Av5-DE-XCj" firstAttribute="leading" secondItem="FZj-7B-Ht4" secondAttribute="leading" id="S2h-Cx-KSY"/>
+                                    <constraint firstItem="fBB-5u-mok" firstAttribute="bottom" secondItem="Rwx-B9-8no" secondAttribute="bottom" id="W9M-zd-tm4"/>
+                                    <constraint firstItem="lzi-Ui-VcS" firstAttribute="top" secondItem="fBB-5u-mok" secondAttribute="bottom" constant="24" id="X6i-ZW-cAh"/>
+                                    <constraint firstItem="fBB-5u-mok" firstAttribute="centerY" secondItem="Rwx-B9-8no" secondAttribute="centerY" id="XEQ-vb-mV0"/>
+                                    <constraint firstItem="TcA-4z-jwC" firstAttribute="leading" secondItem="fBB-5u-mok" secondAttribute="leading" id="XZd-tT-mEw"/>
+                                    <constraint firstItem="6Rs-zb-8Kk" firstAttribute="leading" secondItem="XXe-rw-90E" secondAttribute="leading" id="Xb5-5Q-aED"/>
+                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="top" secondItem="lzi-Ui-VcS" secondAttribute="bottom" constant="95" id="YBl-Zk-fot"/>
+                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="trailing" secondItem="Jhv-zD-5tQ" secondAttribute="trailing" id="amd-Hk-Ug6"/>
+                                    <constraint firstItem="Izh-RL-LiH" firstAttribute="centerY" secondItem="6Rs-zb-8Kk" secondAttribute="centerY" id="bJs-Mj-Rfd"/>
+                                    <constraint firstItem="KVH-gw-A8w" firstAttribute="leading" secondItem="pKD-d8-fgt" secondAttribute="leading" id="bdU-K0-FAl"/>
+                                    <constraint firstAttribute="trailing" secondItem="tZY-E4-Fii" secondAttribute="trailing" constant="20" id="cFD-co-Lrb"/>
+                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="top" secondItem="own-oI-oPy" secondAttribute="top" constant="20" id="cHe-2u-0xd"/>
+                                    <constraint firstItem="tZY-E4-Fii" firstAttribute="centerX" secondItem="own-oI-oPy" secondAttribute="centerX" id="d1N-QB-sbQ"/>
+                                    <constraint firstItem="xPu-g0-cLe" firstAttribute="leading" secondItem="swm-aG-u1C" secondAttribute="leading" id="dD6-bj-BjO"/>
+                                    <constraint firstItem="lzi-Ui-VcS" firstAttribute="top" secondItem="Av5-DE-XCj" secondAttribute="top" id="f43-Mw-SGK"/>
+                                    <constraint firstItem="gWQ-xP-mCB" firstAttribute="trailing" secondItem="KVH-gw-A8w" secondAttribute="trailing" id="gXF-TM-kxa"/>
+                                    <constraint firstItem="TcA-4z-jwC" firstAttribute="centerY" secondItem="XXe-rw-90E" secondAttribute="centerY" id="geH-Mu-Y22"/>
+                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="trailing" secondItem="6Rs-zb-8Kk" secondAttribute="trailing" id="gl6-hW-djE"/>
+                                    <constraint firstItem="Fed-ZU-mnn" firstAttribute="leading" secondItem="gWQ-xP-mCB" secondAttribute="leading" id="hSr-Wv-uX9"/>
+                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="top" secondItem="tZY-E4-Fii" secondAttribute="bottom" constant="8" symbolic="YES" id="hr1-a3-P0t"/>
+                                    <constraint firstItem="gM4-cj-ubM" firstAttribute="top" secondItem="Jhv-zD-5tQ" secondAttribute="bottom" constant="2" id="hyk-zj-qDg"/>
+                                    <constraint firstItem="Av5-DE-XCj" firstAttribute="top" secondItem="9km-2V-7vU" secondAttribute="bottom" constant="23" id="iJr-z9-Yz8"/>
+                                    <constraint firstItem="XXe-rw-90E" firstAttribute="trailing" secondItem="Rwx-B9-8no" secondAttribute="trailing" id="iTS-8H-qpP"/>
+                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="top" secondItem="tZY-E4-Fii" secondAttribute="bottom" constant="1" id="juH-aW-x2P"/>
+                                    <constraint firstItem="FZj-7B-Ht4" firstAttribute="bottom" secondItem="gvJ-fW-gPz" secondAttribute="bottom" id="kVd-um-ROC"/>
+                                    <constraint firstItem="Jhv-zD-5tQ" firstAttribute="trailing" secondItem="gM4-cj-ubM" secondAttribute="trailing" id="kWT-m3-J9p"/>
+                                    <constraint firstItem="gWQ-xP-mCB" firstAttribute="top" secondItem="gM4-cj-ubM" secondAttribute="bottom" constant="40" id="lsJ-cA-81k"/>
+                                    <constraint firstItem="fBB-5u-mok" firstAttribute="top" secondItem="TcA-4z-jwC" secondAttribute="bottom" constant="23" id="m6p-Y2-ggs"/>
+                                    <constraint firstItem="Av5-DE-XCj" firstAttribute="trailing" secondItem="FZj-7B-Ht4" secondAttribute="trailing" id="nXz-RI-CHj"/>
+                                    <constraint firstItem="Izh-RL-LiH" firstAttribute="leading" secondItem="TcA-4z-jwC" secondAttribute="leading" id="u4O-D5-STc"/>
+                                    <constraint firstItem="TcA-4z-jwC" firstAttribute="top" secondItem="Izh-RL-LiH" secondAttribute="bottom" constant="23" id="uYy-5I-llq"/>
+                                    <constraint firstItem="TcA-4z-jwC" firstAttribute="top" secondItem="KVH-gw-A8w" secondAttribute="top" id="vYE-9G-yWI"/>
+                                    <constraint firstItem="Fed-ZU-mnn" firstAttribute="trailing" secondItem="gWQ-xP-mCB" secondAttribute="trailing" id="yof-oq-vQi"/>
+                                    <constraint firstItem="Fed-ZU-mnn" firstAttribute="top" secondItem="6Rs-zb-8Kk" secondAttribute="top" id="zXD-k6-ubT"/>
+                                    <constraint firstItem="pKD-d8-fgt" firstAttribute="trailing" secondItem="NVm-08-Kxj" secondAttribute="trailing" id="ziX-GX-QtJ"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="d6x-uV-ktD" secondAttribute="trailing" id="59K-YW-bDA"/>
-                            <constraint firstItem="d6x-uV-ktD" firstAttribute="leading" secondItem="ypi-oO-O2a" secondAttribute="leading" id="CvS-oY-owV"/>
-                            <constraint firstItem="own-oI-oPy" firstAttribute="top" secondItem="d6x-uV-ktD" secondAttribute="bottom" id="arT-FX-cXF"/>
-                            <constraint firstItem="d6x-uV-ktD" firstAttribute="centerX" secondItem="own-oI-oPy" secondAttribute="centerX" id="dUS-MY-kgC"/>
-                            <constraint firstItem="d6x-uV-ktD" firstAttribute="top" secondItem="1At-S4-OMc" secondAttribute="bottom" id="gV7-gU-yPP"/>
-                            <constraint firstItem="own-oI-oPy" firstAttribute="leading" secondItem="ypi-oO-O2a" secondAttribute="leadingMargin" constant="-6" id="lSl-Pt-Dmu"/>
-                            <constraint firstItem="aIB-Rd-JCU" firstAttribute="top" secondItem="own-oI-oPy" secondAttribute="bottom" constant="8" symbolic="YES" id="mzz-YC-HOf"/>
+                            <constraint firstItem="d6x-uV-ktD" firstAttribute="top" secondItem="1At-S4-OMc" secondAttribute="bottom" id="3zW-f1-DZV"/>
+                            <constraint firstItem="own-oI-oPy" firstAttribute="top" secondItem="d6x-uV-ktD" secondAttribute="bottom" id="DkQ-0Z-Hza"/>
+                            <constraint firstAttribute="trailing" secondItem="d6x-uV-ktD" secondAttribute="trailing" id="Wka-pc-z6w"/>
+                            <constraint firstItem="aIB-Rd-JCU" firstAttribute="top" secondItem="own-oI-oPy" secondAttribute="bottom" constant="8" symbolic="YES" id="agh-50-642"/>
+                            <constraint firstItem="own-oI-oPy" firstAttribute="leading" secondItem="ypi-oO-O2a" secondAttribute="leadingMargin" constant="-6" id="cRF-tj-JyV"/>
+                            <constraint firstItem="d6x-uV-ktD" firstAttribute="leading" secondItem="ypi-oO-O2a" secondAttribute="leading" id="eEP-35-E1f"/>
+                            <constraint firstItem="d6x-uV-ktD" firstAttribute="centerX" secondItem="own-oI-oPy" secondAttribute="centerX" id="gvD-T4-sQo"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="inpPlaylistDescription" destination="tZY-E4-Fii" id="SAy-0l-5Wq"/>
                         <outlet property="navItemEditViewTitle" destination="qgT-z2-kvh" id="3rd-MI-5Sq"/>
-                        <outlet property="switchPlaylistIsHidden" destination="Wcr-4u-SQV" id="Ake-To-q9o"/>
-                        <outlet property="switchPlaylistIsRadioLiked" destination="p8T-jJ-zTI" id="c3x-TZ-D8c"/>
-                        <outlet property="switchPlaylistIsStarVoted" destination="Sek-NY-yDz" id="2Ei-lr-45j"/>
+                        <outlet property="switchPlaylistIsHidden" destination="lzi-Ui-VcS" id="fQr-gk-yED"/>
+                        <outlet property="switchPlaylistIsRadioLiked" destination="TcA-4z-jwC" id="qXP-pz-4h8"/>
+                        <outlet property="switchPlaylistIsStarVoted" destination="Izh-RL-LiH" id="jRi-Ro-TGN"/>
+                        <outlet property="switchPlaylistIsWeekly" destination="fBB-5u-mok" id="Oz0-y0-TfN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJ2-7T-4XD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1599,9 +1659,6 @@
         <image name="icnPLCellView" width="25" height="25"/>
         <image name="icnPLRefresh" width="25" height="25"/>
         <image name="icnPLTableView" width="25" height="25"/>
-        <image name="icnPlaylistIsHidden_v1" width="25" height="25"/>
-        <image name="icnPlaylistIsRadio_v1" width="25" height="25"/>
-        <image name="icnPlaylistIsVoted_v1" width="25" height="25"/>
         <image name="icnSave_v1" width="25" height="25"/>
         <image name="icnSetPauseMini_1" width="25" height="25"/>
         <image name="icnSetPlayNormal_0" width="25" height="25"/>

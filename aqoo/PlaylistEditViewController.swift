@@ -138,6 +138,7 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.isPlaylistHidden = self.playListInDb!.isPlaylistHidden
                     playlistToUpdate!.isPlaylistRadioSelected = self.playListInDb!.isPlaylistRadioSelected
                     playlistToUpdate!.isPlaylistVotedByStar = self.playListInDb!.isPlaylistVotedByStar
+                    playlistToUpdate!.isPlaylistYourWeekly = self.playListInDb!.isPlaylistYourWeekly
                     playlistToUpdate!.coverImagePathOverride = self.playListInDb!.coverImagePathOverride
                     self.playListInDb = playlistToUpdate!
                 }

@@ -18,7 +18,9 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     
     @IBOutlet var switchPlaylistIsStarVoted: UISwitch!
     @IBOutlet var switchPlaylistIsRadioLiked: UISwitch!
+    @IBOutlet var switchPlaylistIsWeekly: UISwitch!
     @IBOutlet var switchPlaylistIsHidden: UISwitch!
+    
     @IBOutlet var inpPlaylistDescription: UITextView!
     @IBOutlet var navItemEditViewTitle: UINavigationItem!
     
@@ -32,12 +34,15 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         case PlaylistDescription = 1
         case PlaylistIsStarVoted = 2
         case PlaylistIsRadioLiked = 3
-        case PlaylistIsHidden = 4
+        case PlaylistIsWeekly = 4
+        case PlaylistIsHidden = 5
     }
     
+    // db/schema properties for corresponding swithces
     enum internalFlags: String {
         case PlaylistIsStarVoted = "isPlaylistVotedByStar"
         case PlaylistIsRadioLiked = "isPlaylistRadioSelected"
+        case PlaylistIsWeekly = "isPlaylistYourWeekly"
     }
     
     override func viewDidLoad() {
@@ -68,7 +73,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         
         var _currentHash = playListInDb!.metaListHash
         var _currentName = playListInDb!.metaListInternalName
-        
+
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
@@ -88,12 +93,17 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                         playlistToUpdate!.isPlaylistVotedByStar = true
                         self.playListInDb!.isPlaylistVotedByStar = true
                     }
+                    
+                    if  playlistKeyProperty == internalFlags.PlaylistIsWeekly.rawValue {
+                        playlistToUpdate!.isPlaylistYourWeekly = true
+                        self.playListInDb!.isPlaylistYourWeekly = true
+                    }
                 }
             },
             completion: { _ in
                 
                 if  self.debugMode == true {
-                    print ("dbg [playlist] : current radio-playlist [\(_currentName)] handled -> CHANGED")
+                    print ("dbg [playlist] : current playlist [\(_currentName)] -> [\(playlistKeyProperty)] -> CHANGED")
                 }
             }
         )
@@ -145,6 +155,11 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                             if  clause.cs_keyPathString == internalFlags.PlaylistIsStarVoted.rawValue {
                                 playlistToUpdate!.isPlaylistVotedByStar = false
                                 self.playListInDb!.isPlaylistVotedByStar = false
+                            }
+                            
+                            if  clause.cs_keyPathString == internalFlags.PlaylistIsWeekly.rawValue {
+                                playlistToUpdate!.isPlaylistYourWeekly = false
+                                self.playListInDb!.isPlaylistYourWeekly = false
                             }
                         }
                     },
@@ -205,6 +220,23 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         )
     }
     
+    @IBAction func switchPlaylistIsWeeklyChanged(_ sender: UISwitch) {
+        // check db for any playlist currently flagged as starVoted
+        validateDataForSingleBoolFlagPresence(\StreamPlayList.isPlaylistYourWeekly, switchPlaylistIsWeekly, true)
+        
+        // only one if this internal spotify flags are allowed!
+        if  switchPlaylistIsRadioLiked.isOn {
+            switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsWeekly.isOn
+        }
+        
+        if  switchPlaylistIsStarVoted.isOn {
+            switchPlaylistIsStarVoted.isOn = !switchPlaylistIsWeekly.isOn
+        }
+        
+        checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistYourWeekly)
+    }
+    
+    
     @IBAction func switchAutoListStarVotedChanged(_ sender: UISwitch) {
 
         // check db for any playlist currently flagged as starVoted
@@ -213,6 +245,11 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         // only one if this internal spotify flags are allowed!
         if  switchPlaylistIsRadioLiked.isOn {
             switchPlaylistIsRadioLiked.isOn = !switchPlaylistIsStarVoted.isOn
+        }
+        
+        // only one if this internal spotify flags are allowed!
+        if  switchPlaylistIsWeekly.isOn {
+            switchPlaylistIsWeekly.isOn = !switchPlaylistIsStarVoted.isOn
         }
         
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistVotedByStar)
@@ -226,6 +263,11 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
         // only one if this internal spotify flags are allowed!
         if  switchPlaylistIsStarVoted.isOn {
             switchPlaylistIsStarVoted.isOn = !switchPlaylistIsRadioLiked.isOn
+        }
+        
+        // only one if this internal spotify flags are allowed!
+        if  switchPlaylistIsWeekly.isOn {
+            switchPlaylistIsWeekly.isOn = !switchPlaylistIsRadioLiked.isOn
         }
         
         checkSwitchElementsForChanges(sender, playListInDb!.isPlaylistRadioSelected)
@@ -244,6 +286,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
             playListInDb!.isPlaylistHidden = switchPlaylistIsHidden.isOn
             playListInDb!.isPlaylistRadioSelected = switchPlaylistIsRadioLiked.isOn
             playListInDb!.isPlaylistVotedByStar = switchPlaylistIsStarVoted.isOn
+            playListInDb!.isPlaylistYourWeekly = switchPlaylistIsWeekly.isOn
             playListInDb!.metaListInternalDescription = inpPlaylistDescription.text
             
             delegate.promoteToChanged( playListChanged )
