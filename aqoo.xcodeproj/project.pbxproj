@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */; };
+		B10198A92030EC4D00232EB6 /* AvatarClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198A82030EC4D00232EB6 /* AvatarClient.swift */; };
 		B119C20E201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */; };
 		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.release.xcconfig"; sourceTree = "<group>"; };
+		B10198A82030EC4D00232EB6 /* AvatarClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarClient.swift; sourceTree = "<group>"; };
 		B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailDelegate.swift; sourceTree = "<group>"; };
 		B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylists.swift; sourceTree = "<group>"; };
 		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 				670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B10198A72030EC3500232EB6 /* adorable.io */ = {
+			isa = PBXGroup;
+			children = (
+				B10198A82030EC4D00232EB6 /* AvatarClient.swift */,
+			);
+			name = adorable.io;
 			sourceTree = "<group>";
 		};
 		B119C20C201C75E5009B78BF /* delegates */ = {
@@ -338,6 +348,7 @@
 		B1D6A3911F90FE23006E1DBC /* clients */ = {
 			isa = PBXGroup;
 			children = (
+				B10198A72030EC3500232EB6 /* adorable.io */,
 				B1D6A3931F90FE3E006E1DBC /* google.com */,
 				B1D6A3921F90FE31006E1DBC /* spotify.com */,
 			);
@@ -722,6 +733,7 @@
 				B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,
 				B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */,
+				B10198A92030EC4D00232EB6 /* AvatarClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

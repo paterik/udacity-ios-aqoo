@@ -207,15 +207,11 @@ extension PlaylistViewController {
               let date = userInfo["date"] as? Date else { return }
         
        _userProfilesHandled.append(profileUser.canonicalUserName)
-        if profileImageURLAvailable {
-            _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURL.absoluteString
-        } else {
-            
-            print ("-----> no profile image found for user \(profileUser.canonicalUserName!)")
-            print ("       try to render customized userProfileImage from cononical username\n")
-            
-
-        }
+        
+        var profileImageURLFinal: String = "\(_sysDefaultAvatarFallbackURL)/\(profileUser.canonicalUserName!)"
+        if  profileImageURLAvailable {
+            profileImageURLFinal = profileImageURL.absoluteString
+        }; _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURLFinal
         
         // all userProfiles handled? start refresh/enrichment cache process
         if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
@@ -270,10 +266,6 @@ extension PlaylistViewController {
                         if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
                             self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
                         }
-                        
-                    } else {
-                        
-                        print ("-----> unable to download image for user \(_userName)")
                     }
                 }
                 
@@ -289,8 +281,8 @@ extension PlaylistViewController {
                         self.handlePlaylistDbCacheOwnerProfileData(
                             _playlistInDb,
                             _userName,
-                            _userProfile,
-                            _userProfileImageURL
+                            _userProfileImageURL,
+                            profileUser
                         )
                     }
                 }
@@ -627,6 +619,8 @@ extension PlaylistViewController {
                 
                 asynchronous: { (transaction) -> Void in
                     playListInDb.ownerImageURL = userProfileImageURL
+                    playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
+                    playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
                 },
                 completion: { _ in
                     

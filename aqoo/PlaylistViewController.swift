@@ -49,6 +49,7 @@ class PlaylistViewController: BaseViewController,
     let _sysDefaultRadioLikedCoverImage = "imgUITblPlaylistIsRadio_v1"
     let _sysDefaultStarVotedCoverImage = "imgUITblPlaylistIsStarRated_v1"
     let _sysDefaultWeeklyCoverImage = "imgUITblPlaylistIsWeekly_v1"
+    let _sysDefaultAvatarFallbackURL = "https://api.adorable.io/avatars/75"
     let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
     let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
