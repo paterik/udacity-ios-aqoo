@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */; };
+		B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */; };
+		B10198AD20381AE900232EB6 /* PlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */; };
+		B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */; };
 		B119C20E201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */; };
 		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
@@ -70,6 +73,9 @@
 
 /* Begin PBXFileReference section */
 		670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.release.xcconfig"; sourceTree = "<group>"; };
+		B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewController.swift; sourceTree = "<group>"; };
+		B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
+		B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewControllerExt.swift; sourceTree = "<group>"; };
 		B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailDelegate.swift; sourceTree = "<group>"; };
 		B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylists.swift; sourceTree = "<group>"; };
 		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
@@ -241,6 +247,7 @@
 				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
 				B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */,
 				B189D4F720165E7D005FC677 /* PlaylistEditViewDetailController.swift */,
+				B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */,
 			);
 			name = _playlists;
 			sourceTree = "<group>";
@@ -259,6 +266,7 @@
 				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
 				B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */,
 				B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */,
+				B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -462,6 +470,7 @@
 				B1BBECE91F92488D00BD9D39 /* PlaylistTableCell.xib */,
 				B1D4CE4B1F936A94005D8F50 /* PlaylistTableCell.swift */,
 				B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */,
+				B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */,
 				B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */,
 			);
 			name = partials;
@@ -716,7 +725,9 @@
 				B189D4F820165E7D005FC677 /* PlaylistEditViewDetailController.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */,
+				B10198AD20381AE900232EB6 /* PlaylistCollectionViewCell.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
+				B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */,
 				B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */,
 				B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */,
 				B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */,
@@ -729,6 +740,7 @@
 				B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */,
 				B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,
+				B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */,
 				B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
