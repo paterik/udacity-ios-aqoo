@@ -18,10 +18,6 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
     let coverCellImageCornerRadius: CGFloat = 4.0
     
     var _cacheTimer: Timer!
-    var _usedCoverImageURL: URL?
-    var _noCoverImageAvailable: Bool = true
-    var _noCoverOverrideImageAvailable: Bool = true
-    var _noCoverSetForInternal: Bool = false
     
     //
     // MARK: Class Method Overloads
@@ -30,10 +26,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
+
         setupUIBase()
     }
     
@@ -61,7 +54,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
     }
     
     //
-    // MARK: Class Delegate MEthod Overloads
+    // MARK: Class Delegate Method Overloads
     //
     
     @objc func collectionView(

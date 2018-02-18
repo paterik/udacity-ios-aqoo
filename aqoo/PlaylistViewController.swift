@@ -35,24 +35,21 @@ class PlaylistViewController: BaseViewController,
     let kCloseCellHeight: CGFloat = 100 // 90
     let kOpenCellHeight: CGFloat = 345 // 310
     let kRowsCount = 9999
+    let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
+    let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
+    let _sysCacheCheckInSeconds = 99
+    let _sysImgCacheInMb: UInt = 512
+    let _sysImgCacheRevalidateInDays: UInt = 30
+    let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
     
     //
     // MARK: Constants (normal)
     //
     
-    let _sysCacheCheckInSeconds = 99
-    
     let _sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
     let _sysPlaylistFilterColorShadow = UIColor(netHex: 0x191919)
     let _sysPlaylistFilterColorHighlight = UIColor(netHex: 0x191919)
     let _sysPlaylistFilterColorBackground = UIColor(netHex: 0x222222)
-    
-    let _sysImgCacheInMb: UInt = 512
-    let _sysImgCacheRevalidateInDays: UInt = 30
-    let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
-    
-    let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
-    let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
     
     //
     // MARK: Class Variables

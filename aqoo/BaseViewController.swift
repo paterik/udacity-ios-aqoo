@@ -45,6 +45,9 @@ class BaseViewController: UIViewController {
     let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
     
+    
+    
+    
     let metaDateTimeFormat = "dd.MM.Y hh:mm"
     
     //

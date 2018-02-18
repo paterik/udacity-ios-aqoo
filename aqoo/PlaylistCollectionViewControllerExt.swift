@@ -11,7 +11,9 @@ import UIKit
 extension PlaylistCollectionViewController {
  
     func setupUIBase() {
-        
+     
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     func handlePlaylistCache() {
