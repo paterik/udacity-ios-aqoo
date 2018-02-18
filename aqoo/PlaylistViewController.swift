@@ -70,8 +70,10 @@ class PlaylistViewController: BaseViewController,
     var playListMenuBasicFilters: MenuView!
     var playListBasicFilterItems = [MenuItem]()
     
+    //
     // predefined filter index as 'readably' value-index and blacklist some of my filters
     // including some additional meta information about title and description (so far)
+    //
     enum filterItem: Int {
         
         case PlaylistLastUpdated = 1
@@ -145,7 +147,9 @@ class PlaylistViewController: BaseViewController,
         
         super.viewWillDisappear(animated)
         
-        _cacheTimer.invalidate()
+        if  _cacheTimer != nil {
+            _cacheTimer.invalidate()
+        }
 
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
@@ -183,11 +187,15 @@ class PlaylistViewController: BaseViewController,
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
-        
-        let playlistCell = tableView.dequeueReusableCell(
+        guard let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListItem",
-            for: indexPath) as! PlaylistTableFoldingCell
+            for: indexPath) as? PlaylistTableFoldingCell else {
+                
+           _handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
+            return PlaylistTableFoldingCell()
+        }
+        
+        let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)

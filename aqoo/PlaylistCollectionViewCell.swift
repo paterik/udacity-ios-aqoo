@@ -11,4 +11,10 @@ import UIKit
 class PlaylistColletionViewCell: UICollectionViewCell {
     
     @IBOutlet var imageViewPlaylistCover: UIImageView!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageViewPlaylistCover.backgroundColor = UIColor(netHex: 0xff0000)
+        imageViewPlaylistCover.image = UIImage(named: "imgUITblProfileDefault_v1")
+    }
 }

@@ -48,7 +48,9 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         
         super.viewWillDisappear(animated)
         
-        _cacheTimer.invalidate()
+        if  _cacheTimer != nil {
+            _cacheTimer.invalidate()
+        }
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
@@ -68,10 +70,15 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
        _ collectionView: UICollectionView,
          cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
-        let playlistCell = collectionView.dequeueReusableCell(
+        guard let playlistCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: coverCellIdent,
-            for: indexPath) as! PlaylistColletionViewCell
+            for: indexPath) as? PlaylistColletionViewCell else {
+                
+           _handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
+            return UICollectionViewCell()
+        }
+
+        let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
         
         playlistCell.imageViewPlaylistCover = getCoverImageViewByCacheModel(
             playlistItem,

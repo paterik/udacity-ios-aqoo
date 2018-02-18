@@ -139,12 +139,14 @@ class BaseViewController: UIViewController {
             _noCoverSetForInternal = true
         }
         
+        // set user selected images for covers if available (and target is no internal playlist)
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
                 playlistCoverImageView.image = _image
             }
         }
         
+        // call kingfisher majic and place image using kf-methods now
         if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             playlistCoverImageView.kf.setImage(
                 with: _usedCoverImageURL,
