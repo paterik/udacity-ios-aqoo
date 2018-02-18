@@ -35,11 +35,7 @@ class PlaylistEditViewController: BaseViewController,
     // MARK: Constants (normal)
     //
     
-    let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
-    let _sysDefaultCoverOverrideImage = "imgUICoverOverrideDefault_v1"
-    let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
-    let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
-    let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
+
     let imagePickerController = UIImagePickerController()
     
     //

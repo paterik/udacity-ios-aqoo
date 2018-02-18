@@ -41,18 +41,7 @@ class PlaylistViewController: BaseViewController,
     //
     
     let _sysCacheCheckInSeconds = 99
-    let _sysDefaultProviderTag = "_spotify"
-    let _sysDefaultSpotifyUsername = "spotify"
-    let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
-    let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
-    let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
-    let _sysDefaultRadioLikedCoverImage = "imgUITblPlaylistIsRadio_v1"
-    let _sysDefaultStarVotedCoverImage = "imgUITblPlaylistIsStarRated_v1"
-    let _sysDefaultWeeklyCoverImage = "imgUITblPlaylistIsWeekly_v1"
-    let _sysDefaultAvatarFallbackURL = "https://api.adorable.io/avatars/75"
-    let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
-    let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
-    let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
+    
     let _sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
     let _sysPlaylistFilterColorShadow = UIColor(netHex: 0x191919)
     let _sysPlaylistFilterColorHighlight = UIColor(netHex: 0x191919)
@@ -197,101 +186,47 @@ class PlaylistViewController: BaseViewController,
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
+        let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
+        
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListItem",
             for: indexPath) as! PlaylistTableFoldingCell
-        
-        let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
-        
-        var _usedCoverImageURL: URL?
-        var _noCoverImageAvailable: Bool = true
-        var _noCoverOverrideImageAvailable: Bool = true
-        var _noCoverSetForInternal: Bool = false
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
         playlistCell.imageViewContentChangedManually.alpha = 0.475
+        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
+        playlistCell.durationsForExpandedState = _sysCellOpeningDurations
+        playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         
-        if playlistCacheData.coverImagePathOverride != nil {
-            _noCoverOverrideImageAvailable = false
-        }
-        
-        // weazL :: refactor_1001 : transfer those blocks into dedicated methods
-        
+        playlistCell.imageViewContentChangedManually.isHidden = true
         if  playlistCacheData.metaPreviouslyUpdatedManually == true {
             playlistCell.imageViewContentChangedManually.isHidden = false
-        }   else {
-            playlistCell.imageViewContentChangedManually.isHidden = true
         }
         
+        playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         if  playlistCacheData.isSpotify == false {
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
-        }   else {
-            playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         }
 
-        if  playlistCacheData.ownerImageURL == nil || playlistCacheData.ownerImageURL == "" {
-            playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
-        }   else {
+        playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
+        if  playlistCacheData.ownerImageURL != nil && playlistCacheData.ownerImageURL != "" {
             handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
         }
         
-        if  playlistCacheData.largestImageURL != nil {
-            _usedCoverImageURL = URL(string: playlistCacheData.largestImageURL!)
-            _noCoverImageAvailable = false
-        }
-        
-        if  playlistCacheData.smallestImageURL != nil {
-            _usedCoverImageURL = URL(string: playlistCacheData.smallestImageURL!)
-            _noCoverImageAvailable = false
-        }
-        
-        playlistCell.durationsForExpandedState = _sysCellOpeningDurations
-        playlistCell.durationsForCollapsedState = _sysCellClosingDurations
-        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
-        
-        // set internal flag covers for "isRadio" playlists
-        if  playlistCacheData.isPlaylistRadioSelected {
-            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultRadioLikedCoverImage)
+        // ignore "spotify label" for all internal playlist 
+        if  playlistCacheData.isPlaylistVotedByStar == true ||
+            playlistCacheData.isPlaylistRadioSelected == true ||
+            playlistCacheData.isPlaylistYourWeekly == true  {
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
-           _noCoverSetForInternal = true
         }
         
-        // set internal flag covers for "isStarVoted" playlists
-        if  playlistCacheData.isPlaylistVotedByStar {
-            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultStarVotedCoverImage)
-            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
-           _noCoverSetForInternal = true
-        }
-        
-        // set internal flag covers for "isWeekly" playlists
-        if  playlistCacheData.isPlaylistYourWeekly {
-            playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultWeeklyCoverImage)
-            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
-            _noCoverSetForInternal = true
-        }
-        
-        if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
-            if let _image = getImageByFileName(playlistCacheData.coverImagePathOverride!) {
-                playlistCell.imageViewPlaylistCover.image = _image
-            }   else {
-               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
-            }
-        }
-        
-        // set spotify cover image only if no cover image override available, no internalFlag found and at least one cover image are found
-        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
-            playlistCell.imageViewPlaylistCover.kf.setImage(
-                with: URL(string: playlistCacheData.largestImageURL!),
-                placeholder: UIImage(named: _sysDefaultCoverImage),
-                options: [
-                    .transition(.fade(0.2)),
-                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
-                ]
-            )
-        }
+        playlistCell.imageViewPlaylistCover = getCoverImageViewByCacheModel(
+            playlistCacheData,
+            playlistCell.imageViewPlaylistCover
+        )
         
         return playlistCell
     }

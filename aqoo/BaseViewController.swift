@@ -8,6 +8,7 @@
 
 import UIKit
 import Spotify
+import Kingfisher
 
 class BaseViewController: UIViewController {
     
@@ -23,10 +24,26 @@ class BaseViewController: UIViewController {
     let notifier = SPFEventNotifier()
     
     let segueIdentPlayListPage = "showAllUserPlaylists"
-    
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
-    
     let _randomStringRange: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    
+    let _sysDefaultCoverImage = "imgUITblPlaylistDefault_v1"
+    let _sysDefaultRadioLikedCoverImage = "imgUITblPlaylistIsRadio_v1"
+    let _sysDefaultStarVotedCoverImage = "imgUITblPlaylistIsStarRated_v1"
+    let _sysDefaultWeeklyCoverImage = "imgUITblPlaylistIsWeekly_v1"
+    let _sysDefaultCoverOverrideImage = "imgUICoverOverrideDefault_v1"
+    let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
+    let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
+    
+    let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
+    let _sysDefaultProviderTag = "_spotify"
+    let _sysDefaultSpotifyUsername = "spotify"
+    let _sysDefaultAvatarFallbackURL = "https://api.adorable.io/avatars/75"
+    let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
+    let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
+    let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
+    let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
+    let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
     
     let metaDateTimeFormat = "dd.MM.Y hh:mm"
     
@@ -80,5 +97,62 @@ class BaseViewController: UIViewController {
         _handleErrorAsDialogMessage("IO Error (Write)", "unable to save image data to your device")
         
         return nil
+    }
+    
+    func getCoverImageViewByCacheModel(
+       _ playlistItem: StreamPlayList,
+       _ playlistCoverImageView: UIImageView) -> UIImageView {
+        
+        var _usedCoverImageURL: URL?
+        var _noCoverImageAvailable: Bool = true
+        var _noCoverOverrideImageAvailable: Bool = true
+        var _noCoverSetForInternal: Bool = false
+        
+        if  playlistItem.largestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistItem.largestImageURL!)
+            _noCoverImageAvailable = false
+        }
+        
+        if  playlistItem.smallestImageURL != nil {
+            _usedCoverImageURL = URL(string: playlistItem.smallestImageURL!)
+            _noCoverImageAvailable = false
+        }
+        
+        // set internal flag covers for "isRadio" playlists
+        if  playlistItem.isPlaylistRadioSelected {
+            playlistCoverImageView.image = UIImage(named: _sysDefaultRadioLikedCoverImage)
+            _noCoverSetForInternal = true
+        }
+        
+        // set internal flag covers for "isStarVoted" playlists
+        if  playlistItem.isPlaylistVotedByStar {
+            playlistCoverImageView.image = UIImage(named: _sysDefaultStarVotedCoverImage)
+            _noCoverSetForInternal = true
+        }
+        
+        // set internal flag covers for "isWeekly" playlists
+        if  playlistItem.isPlaylistYourWeekly {
+            playlistCoverImageView.image = UIImage(named: _sysDefaultWeeklyCoverImage)
+            _noCoverSetForInternal = true
+        }
+        
+        if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
+            if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
+                playlistCoverImageView.image = _image
+            }
+        }
+        
+        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
+            playlistCoverImageView.kf.setImage(
+                with: _usedCoverImageURL,
+                placeholder: UIImage(named: _sysDefaultCoverImage),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
+                ]
+            )
+        }
+        
+        return playlistCoverImageView
     }
 }
