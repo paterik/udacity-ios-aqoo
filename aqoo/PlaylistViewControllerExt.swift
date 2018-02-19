@@ -203,7 +203,8 @@ extension PlaylistViewController {
     //
     // weazL :: current_state
     //
-    @objc func setupUILoadUserProfileImages(notification: Notification) {
+    @objc
+    func setupUILoadUserProfileImages(notification: Notification) {
         
         guard let userInfo = notification.userInfo,
               let profileUser = userInfo["profileUser"] as? SPTUser,
@@ -304,7 +305,8 @@ extension PlaylistViewController {
     //
     // weazL :: note_1001 : main listView logic, place for filter handling
     //
-    @objc func setupUILoadExtendedPlaylists() {
+    @objc
+    func setupUILoadExtendedPlaylists() {
         
         //
         // primary fetch request for all local cached/enriched playlist data which will
@@ -343,7 +345,8 @@ extension PlaylistViewController {
         }
     }
     
-    @objc func setupUILoadCloudPlaylists() {
+    @objc
+    func setupUILoadCloudPlaylists() {
         
         var _playListFingerprint: String!
         var _progress: Float! = 0.0
@@ -390,7 +393,8 @@ extension PlaylistViewController {
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
      */
-    @objc func handleCacheTimerEvent() {
+    @objc
+    func handleCacheTimerEvent() {
         
         ImageCache.default.calculateDiskCacheSize { size in
             print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")

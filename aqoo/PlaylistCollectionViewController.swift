@@ -52,17 +52,16 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         if  _cacheTimer != nil {
             _cacheTimer.invalidate()
         }
-        
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     //
     // MARK: Class Delegate Method Overloads
     //
     
-    @objc func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int) -> Int {
+    @objc
+    func collectionView(
+       _ collectionView: UICollectionView,
+         numberOfItemsInSection section: Int) -> Int {
         
         return spotifyClient.playlistsInCache.count
     }
@@ -79,14 +78,16 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
             return UICollectionViewCell()
         }
         
+        // load corresponding playlistItem based on current indexPath.row of collectionViewCell
         let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
-            playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
-            // playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
-            playlistCell.lblPlaylistName.text = playlistItem.metaListInternalName
-        
+        // set default cover image using makeLetterAvatar vendor library call
+        playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
+        // set final cover image based on current playlist model and corresponding imageView
         let coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCell.imageViewPlaylistCover )
-            playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        if  coverImageBlock.view != nil {
             playlistCell.imageCacheKey = coverImageBlock.key
+            playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        }
         
         return playlistCell
     }
@@ -98,10 +99,11 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         print("Cell [\(indexPath.row)] selected")
     }
     
-    @objc func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    @objc
+    func collectionView(
+       _ collectionView: UICollectionView,
+         layout collectionViewLayout: UICollectionViewLayout,
+         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         var collectionCellWidth: CGFloat!
         var collectionCellHeight: CGFloat!

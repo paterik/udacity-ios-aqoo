@@ -9,7 +9,8 @@
 import UIKit
 import WebKit
 
-@objc protocol WebViewControllerDelegate {
+@objc
+protocol WebViewControllerDelegate {
     func webViewControllerDidFinish(_ controller: WebViewController)
     @objc optional func webViewController(_ controller: WebViewController, didCompleteInitialLoad didLoadSuccessfully: Bool)
 }
@@ -37,7 +38,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         webView.loadRequest(initialRequest)
     }
     
-    @objc func done() {
+    @objc
+    func done() {
         
         delegate?.webViewControllerDidFinish(self)
         presentingViewController?.dismiss(animated: true)

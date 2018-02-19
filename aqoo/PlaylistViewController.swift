@@ -151,8 +151,6 @@ class PlaylistViewController: BaseViewController,
         if  _cacheTimer != nil {
             _cacheTimer.invalidate()
         }
-
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -198,7 +196,7 @@ class PlaylistViewController: BaseViewController,
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
         
-        playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
+        
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
@@ -230,13 +228,14 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
         
-        let coverImageBlock = getCoverImageViewByCacheModel(
-            playlistCacheData,
-            playlistCell.imageViewPlaylistCover
-        )
-        
-        playlistCell.imageViewPlaylistCover = coverImageBlock.view
-        playlistCell.imageCacheKey = coverImageBlock.key
+        // set default cover image using makeLetterAvatar vendor library call
+        playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
+        // set final cover image based on current playlist model and corresponding imageView
+        let coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCover )
+        if  coverImageBlock.view != nil {
+            playlistCell.imageCacheKey = coverImageBlock.key
+            playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        }
         
         return playlistCell
     }

@@ -131,7 +131,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="99P-xc-4WF">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
@@ -211,7 +211,7 @@
                                                             <rect key="frame" x="98" y="66" width="35" height="16"/>
                                                             <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="35" id="BMi-uT-IUt"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="BMi-uT-IUt"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1302,6 +1302,14 @@
                     <tabBarItem key="tabBarItem" title="" image="icnPLCellView" selectedImage="icnPLCellView" id="EQj-TX-Mv8"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gcC-nm-zsu">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="nVm-oZ-we2" kind="relationship" relationship="rootViewController" id="jEy-VO-Va0"/>
@@ -1318,7 +1326,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wLf-Vh-9ib" userLabel="ui_cover_collection_view">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.098039215690000001" green="0.098039215690000001" blue="0.098039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cM5-ui-JhB" userLabel="ui_cover_collection_flow_layout">
                             <size key="itemSize" width="100" height="100"/>
@@ -1338,29 +1346,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-vO-I7s" userLabel="ui_lbl_playlistName">
-                                            <rect key="frame" x="0.0" y="76" width="100" height="24"/>
-                                            <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="top" id="3Xt-LS-9jV"/>
-                                    <constraint firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="7xO-nX-Ds8"/>
-                                    <constraint firstAttribute="trailing" secondItem="3Kc-bP-YdH" secondAttribute="trailing" id="D8F-IN-ZcP"/>
-                                    <constraint firstItem="MUS-vO-I7s" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="topMargin" constant="68" id="I7X-Eq-wUy"/>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="MUS-vO-I7s" secondAttribute="leading" id="Kfy-hg-tPQ"/>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="trailing" secondItem="MUS-vO-I7s" secondAttribute="trailing" id="XsS-ef-VCD"/>
-                                    <constraint firstItem="MUS-vO-I7s" firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="Zmy-ab-KCl"/>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="7mc-Im-RL5" secondAttribute="leading" id="lOD-Gl-MpK"/>
+                                    <constraint firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="1Qb-zH-rnl"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="7mc-Im-RL5" secondAttribute="leading" id="6FC-tn-lPd"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Kc-bP-YdH" secondAttribute="trailing" id="XiW-52-a0W"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="top" id="oCJ-x6-4Z2"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageViewPlaylistCover" destination="3Kc-bP-YdH" id="gIR-A9-Alv"/>
-                                    <outlet property="lblPlaylistName" destination="MUS-vO-I7s" id="jDl-XI-I9l"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -1371,7 +1366,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Playlists" id="zSr-jq-wUe" userLabel="ui_nav_playlists_main">
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="lpw-L7-3pj" userLabel="btnRefreshPlaylist">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
