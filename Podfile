@@ -19,12 +19,9 @@ def aq_base
     pod 'CryptoSwift'
     pod 'Kingfisher'
     pod 'Spotify-iOS-SDK'
+    pod 'LetterAvatarKit'
     pod 'Reachability'
     pod 'SwiftRandom'
-end
-
-def aq_dev
-    pod 'LetterAvatarKit'
 end
 
 def aq_data
@@ -35,5 +32,4 @@ target 'aqoo' do
     aq_ui
     aq_base
     aq_data
-    aq_dev
 end
