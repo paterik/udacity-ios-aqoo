@@ -12,8 +12,8 @@ import Kingfisher
 class PlaylistColletionViewCell: UICollectionViewCell {
     
     @IBOutlet var imageViewPlaylistCover: UIImageView!
-    
-    @IBOutlet var lblPlaylistName: UILabel!
+    @IBOutlet var imageViewPlaylistIsSpotify: UIView!
+    @IBOutlet var lblPlaylistMetaTrackCount: UILabel!
     
     var imageCacheKey: String?
     

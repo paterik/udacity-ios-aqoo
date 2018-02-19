@@ -284,12 +284,14 @@ extension PlaylistViewController {
                     
                     // update cache entity for this user, add userProfileImageURL (using external function)
                     for (_, _playlistInDb) in _playListCache.enumerated() {
-                        self.handlePlaylistDbCacheOwnerProfileData(
-                            _playlistInDb,
-                            _userName,
-                            _userProfileImageURL,
-                            profileUser
-                        )
+                        DispatchQueue.main.async {
+                            self.handlePlaylistDbCacheOwnerProfileData(
+                                _playlistInDb,
+                                _userName,
+                                _userProfileImageURL,
+                                profileUser
+                            )
+                        }
                     }
                 }
             }

@@ -80,6 +80,17 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         
         // load corresponding playlistItem based on current indexPath.row of collectionViewCell
         let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
+        
+        playlistCell.lblPlaylistMetaTrackCount.text = String(playlistItem.trackCount)
+        // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
+        playlistCell.imageViewPlaylistIsSpotify.isHidden = false
+        if  playlistItem.isSpotify == false ||
+            playlistItem.isPlaylistVotedByStar == true ||
+            playlistItem.isPlaylistRadioSelected == true ||
+            playlistItem.isPlaylistYourWeekly == true {
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
+        }
+        
         // set default cover image using makeLetterAvatar vendor library call
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
         // set final cover image based on current playlist model and corresponding imageView

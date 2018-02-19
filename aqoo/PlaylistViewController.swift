@@ -211,21 +211,18 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewContentChangedManually.isHidden = false
         }
         
+        // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
         playlistCell.imageViewPlaylistIsSpotify.isHidden = false
-        if  playlistCacheData.isSpotify == false {
+        if  playlistCacheData.isSpotify == false ||
+            playlistCacheData.isPlaylistVotedByStar == true ||
+            playlistCacheData.isPlaylistRadioSelected == true ||
+            playlistCacheData.isPlaylistYourWeekly == true {
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
 
         playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
         if  playlistCacheData.ownerImageURL != nil && playlistCacheData.ownerImageURL != "" {
             handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
-        }
-        
-        // ignore "spotify label" for all internal playlist 
-        if  playlistCacheData.isPlaylistVotedByStar == true ||
-            playlistCacheData.isPlaylistRadioSelected == true ||
-            playlistCacheData.isPlaylistYourWeekly == true  {
-            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
         
         // set default cover image using makeLetterAvatar vendor library call
