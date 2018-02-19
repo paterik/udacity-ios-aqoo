@@ -80,15 +80,13 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         }
         
         let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
-        
-        playlistCell.lblPlaylistName.text = playlistItem.metaListInternalName
-        playlistCell.playlistName = playlistItem.metaListInternalName
+            playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
+            // playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
+            playlistCell.lblPlaylistName.text = playlistItem.metaListInternalName
         
         let coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCell.imageViewPlaylistCover )
-        playlistCell.imageViewPlaylistCover = coverImageBlock.view
-        playlistCell.imageCacheKey = coverImageBlock.key
-        
-        // playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
+            playlistCell.imageViewPlaylistCover = coverImageBlock.view
+            playlistCell.imageCacheKey = coverImageBlock.key
         
         return playlistCell
     }

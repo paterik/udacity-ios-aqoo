@@ -13,6 +13,7 @@ import Kingfisher
 import FoldingCell
 import BGTableViewRowActionWithImage
 import GradientLoadingBar
+import LetterAvatarKit
 import SwiftRandom
 import Persei
 
@@ -197,15 +198,16 @@ class PlaylistViewController: BaseViewController,
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
         
+        playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
-        playlistCell.imageViewContentChangedManually.alpha = 0.475
-        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
+        
         playlistCell.durationsForExpandedState = _sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         
+        playlistCell.imageViewContentChangedManually.alpha = 0.475
         playlistCell.imageViewContentChangedManually.isHidden = true
         if  playlistCacheData.metaPreviouslyUpdatedManually == true {
             playlistCell.imageViewContentChangedManually.isHidden = false
