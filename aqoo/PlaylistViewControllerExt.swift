@@ -173,9 +173,10 @@ extension PlaylistViewController {
         ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024
         ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
         ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds
-        
-        ImageCache.default.calculateDiskCacheSize { size in
-            print("\n=== used kingfisher cache disk size in bytes: \(size)\n")
+        if  debugMode == true {
+            ImageCache.default.calculateDiskCacheSize { size in
+                print("\n=== used kingfisher cache disk size in bytes: \(size)\n")
+            }
         }
         
         _cacheTimer = Timer.scheduledTimer(
@@ -202,7 +203,7 @@ extension PlaylistViewController {
     //
     // weazL :: current_state
     //
-    func setupUILoadUserProfileImages(notification: Notification) {
+    @objc func setupUILoadUserProfileImages(notification: Notification) {
         
         guard let userInfo = notification.userInfo,
               let profileUser = userInfo["profileUser"] as? SPTUser,
@@ -389,7 +390,7 @@ extension PlaylistViewController {
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
      */
-    func handleCacheTimerEvent() {
+    @objc func handleCacheTimerEvent() {
         
         ImageCache.default.calculateDiskCacheSize { size in
             print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
@@ -635,8 +636,10 @@ extension PlaylistViewController {
                 
                 asynchronous: { (transaction) -> Void in
                     playListInDb.ownerImageURL = userProfileImageURL
-                    playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
                     playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
+                    if  userProfile.sharingURL != nil {
+                        playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
+                    }
                 },
                 completion: { (result) -> Void in
                     

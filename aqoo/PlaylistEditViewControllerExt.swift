@@ -119,7 +119,7 @@ extension PlaylistEditViewController {
         handleSaveChangesButton(false)
     }
     
-    func checkInputPlaylistRatingChanged() {
+    @objc func checkInputPlaylistRatingChanged() {
         
         playListChanged = false
         if inpPlaylistRatingSlider.fraction != CGFloat(playListInDb!.metaListInternalRating) {
