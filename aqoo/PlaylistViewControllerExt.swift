@@ -174,6 +174,10 @@ extension PlaylistViewController {
         ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
         ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds
         
+        ImageCache.default.calculateDiskCacheSize { size in
+            print("\n=== used kingfisher cache disk size in bytes: \(size)\n")
+        }
+        
         _cacheTimer = Timer.scheduledTimer(
             timeInterval: TimeInterval(_sysCacheCheckInSeconds),
             target: self,

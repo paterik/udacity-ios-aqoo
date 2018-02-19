@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import LetterAvatarKit
 
 class PlaylistCollectionViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -80,10 +81,14 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         
         let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
         
-        playlistCell.imageViewPlaylistCover = getCoverImageViewByCacheModel(
-            playlistItem,
-            playlistCell.imageViewPlaylistCover
-        )
+        playlistCell.lblPlaylistName.text = playlistItem.metaListInternalName
+        playlistCell.playlistName = playlistItem.metaListInternalName
+        
+        let coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCell.imageViewPlaylistCover )
+        playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        playlistCell.imageCacheKey = coverImageBlock.key
+        
+        // playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
         
         return playlistCell
     }

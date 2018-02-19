@@ -45,9 +45,6 @@ class BaseViewController: UIViewController {
     let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
     
-    
-    
-    
     let metaDateTimeFormat = "dd.MM.Y hh:mm"
     
     //
@@ -68,6 +65,7 @@ class BaseViewController: UIViewController {
     }
     
     var getDocumentsUrl: URL {
+        
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
     
@@ -80,7 +78,7 @@ class BaseViewController: UIViewController {
             
             return UIImage(data: imageData)
             
-        } catch {
+        }   catch {
             
             _handleErrorAsDialogMessage("IO Error (Read)", "\(error.localizedDescription)")
         }
@@ -104,9 +102,10 @@ class BaseViewController: UIViewController {
     
     func getCoverImageViewByCacheModel(
        _ playlistItem: StreamPlayList,
-       _ playlistCoverImageView: UIImageView) -> UIImageView {
+       _ playlistCoverImageView: UIImageView) -> (view: UIImageView, key: String?) {
         
         var _usedCoverImageURL: URL?
+        var _usedCoverImageCacheKey: String?
         var _noCoverImageAvailable: Bool = true
         var _noCoverOverrideImageAvailable: Bool = true
         var _noCoverSetForInternal: Bool = false
@@ -146,18 +145,47 @@ class BaseViewController: UIViewController {
             }
         }
         
-        // call kingfisher majic and place image using kf-methods now
+        // call kingfisher majic and place coverImage using kf-methods (including cache loading) for playlistCover images
         if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
-            playlistCoverImageView.kf.setImage(
-                with: _usedCoverImageURL,
-                placeholder: UIImage(named: _sysDefaultCoverImage),
-                options: [
-                    .transition(.fade(0.2)),
-                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
-                ]
-            )
+            
+            _usedCoverImageCacheKey = _usedCoverImageURL!.absoluteString
+            
+            ImageCache.default.retrieveImage(forKey: "\(_usedCoverImageURL!)", options: nil) {
+                image, cacheType in
+                if  let _cacheImage = image {
+                    
+                    playlistCoverImageView.image = _cacheImage
+                    
+                    if  self.debugMode == true {
+                        // print("--- Image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
+                        // print("--- key: \(_usedCoverImageURL!)\n")
+                    }
+                    
+                }   else {
+                    playlistCoverImageView.kf.setImage(
+                        with: _usedCoverImageURL,
+                        placeholder: UIImage(named: self._sysDefaultCoverImage),
+                        options: [
+                            .transition(.fade(0.2)),
+                            .processor(ResizingImageProcessor(referenceSize: self._sysPlaylistCoverImageSize))
+                        ],
+                        completionHandler: {
+                            (image, error, cacheType, imageUrl) in
+                            
+                            if  image != nil {
+                                ImageCache.default.store(image!, forKey: imageUrl!.absoluteString)
+                            }
+                        }
+                    )
+                    
+                    if  self.debugMode == true {
+                        // print("--- Image doesn't exist in cache, corresponding cache entry was created")
+                        // print("--- key: \(_usedCoverImageURL!)\n")
+                    }
+                }
+            }
         }
         
-        return playlistCoverImageView
+        return (view: playlistCoverImageView, key: _usedCoverImageCacheKey)
     }
 }

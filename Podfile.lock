@@ -7,6 +7,7 @@ PODS:
   - FoldingCell (3.0.3)
   - GradientLoadingBar (1.1.9)
   - Kingfisher (4.6.2)
+  - LetterAvatarKit (1.1.2)
   - MarqueeLabel/Swift (3.1.4)
   - NotificationBannerSwift (1.6.1):
     - MarqueeLabel/Swift
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - FoldingCell
   - GradientLoadingBar
   - Kingfisher
+  - LetterAvatarKit
   - NotificationBannerSwift
   - Persei (~> 3.0)
   - PKHUD (~> 5.0)
@@ -59,6 +61,7 @@ SPEC CHECKSUMS:
   FoldingCell: 76ce5d1ddba34c6d25548b473b7b51585e992da0
   GradientLoadingBar: 903b340157956c72071d02c58f2bad44785f3bb9
   Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
+  LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
   NotificationBannerSwift: 1fc2955381e6eb26d958ba32160fc41721b9b689
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
@@ -69,6 +72,6 @@ SPEC CHECKSUMS:
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
 
-PODFILE CHECKSUM: 3d5262c7fedf5c6297bf9f3fd8699b241c2c67e4
+PODFILE CHECKSUM: b703ca2113b0f01f18e5c4dcbfaa144df6b20dc0
 
 COCOAPODS: 1.4.0.beta.2

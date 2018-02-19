@@ -1338,16 +1338,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUS-vO-I7s" userLabel="ui_lbl_playlistName">
+                                            <rect key="frame" x="0.0" y="76" width="100" height="24"/>
+                                            <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="7mc-Im-RL5" secondAttribute="leading" id="DCS-hl-Vlc"/>
-                                    <constraint firstAttribute="trailing" secondItem="3Kc-bP-YdH" secondAttribute="trailing" id="i43-Ar-sZ4"/>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="top" id="uRV-W2-uXx"/>
-                                    <constraint firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="vwZ-NP-hye"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="top" id="3Xt-LS-9jV"/>
+                                    <constraint firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="7xO-nX-Ds8"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Kc-bP-YdH" secondAttribute="trailing" id="D8F-IN-ZcP"/>
+                                    <constraint firstItem="MUS-vO-I7s" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="topMargin" constant="68" id="I7X-Eq-wUy"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="MUS-vO-I7s" secondAttribute="leading" id="Kfy-hg-tPQ"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="trailing" secondItem="MUS-vO-I7s" secondAttribute="trailing" id="XsS-ef-VCD"/>
+                                    <constraint firstItem="MUS-vO-I7s" firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="Zmy-ab-KCl"/>
+                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="7mc-Im-RL5" secondAttribute="leading" id="lOD-Gl-MpK"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageViewPlaylistCover" destination="3Kc-bP-YdH" id="gIR-A9-Alv"/>
+                                    <outlet property="lblPlaylistName" destination="MUS-vO-I7s" id="jDl-XI-I9l"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

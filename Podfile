@@ -23,6 +23,10 @@ def aq_base
     pod 'SwiftRandom'
 end
 
+def aq_dev
+    pod 'LetterAvatarKit'
+end
+
 def aq_data
     pod 'CoreStore', :git => 'https://github.com/JohnEstropia/CoreStore.git', :branch => 'prototype/Swift_4_0'
 end
@@ -31,4 +35,5 @@ target 'aqoo' do
     aq_ui
     aq_base
     aq_data
+    aq_dev
 end

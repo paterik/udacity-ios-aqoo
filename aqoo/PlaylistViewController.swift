@@ -228,10 +228,13 @@ class PlaylistViewController: BaseViewController,
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
         
-        playlistCell.imageViewPlaylistCover = getCoverImageViewByCacheModel(
+        let coverImageBlock = getCoverImageViewByCacheModel(
             playlistCacheData,
             playlistCell.imageViewPlaylistCover
         )
+        
+        playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        playlistCell.imageCacheKey = coverImageBlock.key
         
         return playlistCell
     }
