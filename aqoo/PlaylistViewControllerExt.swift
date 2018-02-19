@@ -651,7 +651,11 @@ extension PlaylistViewController {
             
             if debugMode == true {
                 // weazL :: bug_1001 : sometimes my app will crash here unexpected
-                /*  expression produced error: error: /var/folders/ht/_s8btd0x1nz1t35lsf6ymmqc0000gn/T/expr2-f4ea92..swift:1:112: error: use of undeclared type 'CoreStore' - Swift._DebuggerSupport.stringForPrintObject(Swift.UnsafePointer<Swift.Optional<(hasChanges: Swift.Bool, error: CoreStore.CoreStoreError?)>>(bitPattern: 0x120c70850)!.pointee) */
+                /*  expression produced error: error: /var/folders/ht/_s8btd0x1nz1t35lsf6ymmqc0000gn/T/expr2-f4ea92..swift:1:112: error: use of undeclared type 'CoreStore' - Swift._DebuggerSupport.stringForPrintObject(Swift.UnsafePointer<Swift.Optional<(hasChanges: Swift.Bool, error: CoreStore.CoreStoreError?)>>(bitPattern: 0x120c70850)!.pointee)
+                 
+                 - will be hopefully fetched/handled by reslut handler in completion section of line 641-647 now :)
+                 
+                 */
                 
                 print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
             }
@@ -673,6 +677,10 @@ extension PlaylistViewController {
         var _ownerProfileImageStringURL: String! = ""
         var _currentUserName = spotifyClient.spfCurrentSession?.canonicalUsername
 
+        //
+        // prepare some devMode relavant meta-data for single playlists here to simulate
+        // played, playedParty, playedCompletly and number of shares during development
+        //
         var _played = Int.random(1, 550) // 234
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
@@ -729,18 +737,19 @@ extension PlaylistViewController {
                     _playListInDb!.metaNumberOfUpdates = 0
                     
                     _playListInDb!.metaNumberOfShares = 0
-                    if self.debugLoadFixtures == true {
-                        _playListInDb!.metaNumberOfShares = Int64(_shares)
-                    }
-                    
                     _playListInDb!.metaNumberOfPlayed = 0
                     _playListInDb!.metaNumberOfPlayedPartly = 0
                     _playListInDb!.metaNumberOfPlayedCompletely = 0
                     
+                    //
+                    // activate simulated meta values for single playlist entries during loadUp
+                    // on devMode (debugLoadFixtures) - will be removed on release
+                    //
                     if self.debugLoadFixtures == true {
                         _playListInDb!.metaNumberOfPlayed = Int64(_played)
                         _playListInDb!.metaNumberOfPlayedPartly = Int64(_playedPartly)
                         _playListInDb!.metaNumberOfPlayedCompletely = Int64(_playedCompletly)
+                        _playListInDb!.metaNumberOfShares = Int64(_shares)
                     }
                     
                     _playListInDb!.isPlaylistVotedByStar = false
