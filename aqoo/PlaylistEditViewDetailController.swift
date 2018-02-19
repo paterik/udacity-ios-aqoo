@@ -100,10 +100,14 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                     }
                 }
             },
-            completion: { _ in
+            completion: { (result) -> Void in
                 
-                if  self.debugMode == true {
-                    print ("dbg [playlist] : current playlist [\(_currentName)] -> [\(playlistKeyProperty)] -> CHANGED")
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : current playlist [\(_currentName)] -> [\(playlistKeyProperty)] -> CHANGED")
+                    }
                 }
             }
         )
@@ -163,10 +167,14 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                             }
                         }
                     },
-                    completion: { _ in
+                    completion: { (result) -> Void in
                         
-                        // update key property for current (edited) playlist
-                        self.addNewFlagToPlaylist( clause.cs_keyPathString )
+                        switch result {
+                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .success(let userInfo):
+                            // update key property for current (edited) playlist
+                            self.addNewFlagToPlaylist( clause.cs_keyPathString )
+                        }
                     }
                 )
                 

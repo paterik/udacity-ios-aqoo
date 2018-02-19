@@ -430,10 +430,18 @@ extension PlaylistViewController {
             
             CoreStore.perform(
                 asynchronous: { (transaction) -> Void in transaction.deleteAll(From<StreamPlayList>()) },
-                completion:   { _ in print ("dbg [playlist] : cache ➡ local db cache removed") }
+                completion: { (result) -> Void in
+                    
+                    switch result {
+                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .success(let userInfo):
+                        if  self.debugMode == true {
+                            self.handlePlaylistCloudRefresh()
+                            print ("dbg [playlist] : cache ➡ local db cache removed")
+                        }
+                    }
+                }
             )
-            
-            self.handlePlaylistCloudRefresh()
         }
         
         let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
@@ -510,10 +518,14 @@ extension PlaylistViewController {
                         );  transaction.delete(orphanPlaylist)
                     },
                     
-                    completion: { _ in
-                        
-                        if self.debugMode == true {
-                            print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> REMOVED")
+                    completion: { (result) -> Void in
+                    
+                        switch result {
+                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .success(let userInfo):
+                            if self.debugMode == true {
+                                print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> REMOVED")
+                            }
                         }
                     }
                 )
@@ -622,12 +634,16 @@ extension PlaylistViewController {
                     playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
                     playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
                 },
-                completion: { _ in
+                completion: { (result) -> Void in
                     
-                    self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
-                        userProfileUserName,
-                        userProfileImageURL
-                    )
+                    switch result {
+                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .success(let userInfo):
+                        self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
+                            userProfileUserName,
+                            userProfileImageURL
+                        )
+                    }
                 }
             )
             
@@ -785,17 +801,20 @@ extension PlaylistViewController {
                 // last step - handle playlist media data, using vendor functionality (kingfisher cache)
                 _playListInDb = self.handlePlaylistDbCacheMediaData(_playListInDb!, playListInCloud)
             },
-            
-            completion: { _ in
+            completion: { (result) -> Void in
                 
-                // save handled hashed in separate collection
-                self.spotifyClient.playListHashesInCloud.append(_playListFingerprint)
-                
-                // evaluate list extension completion and execute event signal after final cache item was handled
-                if playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    // save handled hashed in separate collection
+                    self.spotifyClient.playListHashesInCloud.append(_playListFingerprint)
                     
-                    self.handlePlaylistDbCacheCoreDataOrphans()
-                    self.handlePlaylistProfileEnrichtment()
+                    // evaluate list extension completion and execute event signal after final cache item was handled
+                    if playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
+                        
+                        self.handlePlaylistDbCacheCoreDataOrphans()
+                        self.handlePlaylistProfileEnrichtment()
+                    }
                 }
             }
         )

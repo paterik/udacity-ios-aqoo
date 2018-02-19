@@ -77,7 +77,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
            _handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
             return UICollectionViewCell()
         }
-
+        
         let playlistItem = spotifyClient.playlistsInCache[indexPath.row]
         
         playlistCell.imageViewPlaylistCover = getCoverImageViewByCacheModel(

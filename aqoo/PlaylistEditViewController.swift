@@ -139,10 +139,14 @@ class PlaylistEditViewController: BaseViewController,
                     self.playListInDb = playlistToUpdate!
                 }
             },
-            completion: { _ in
-
-                self.handleSaveChangesButton( false )
-                self.btnExitEditViewAction( self )
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    self.handleSaveChangesButton( false )
+                    self.btnExitEditViewAction( self )
+                }
             }
         )
     }
