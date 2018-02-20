@@ -73,8 +73,7 @@ class PlaylistViewController: BaseViewController,
     var playListBasicFilterItems = [MenuItem]()
     
     //
-    // predefined filter index as 'readably' value-index and blacklist some of my filters
-    // including some additional meta information about title and description (so far)
+    // all predefined filter indices as 'readably' value
     //
     enum filterItem: Int {
         
@@ -88,6 +87,10 @@ class PlaylistViewController: BaseViewController,
         case PlaylistMostFollower = 8
     }
     
+    //
+    // primary used filter context including title, description, imageKey
+    // and corresponding FetchChainBuilder (query)
+    //
     var playlistFilterMeta = [
         
         0 : [
@@ -107,7 +110,7 @@ class PlaylistViewController: BaseViewController,
             "description" : "Your playlists in alphabetical order",
             "image_key" : filterItem.PlaylistTitleAlphabetical.rawValue,
             "query" : From<StreamPlayList>().orderBy(
-                .descending(\StreamPlayList.metaListInternalName),
+                .ascending(\StreamPlayList.metaListInternalName),
                 .ascending(\StreamPlayList.isPlaylistRadioSelected),
                 .ascending(\StreamPlayList.isPlaylistVotedByStar),
                 .ascending(\StreamPlayList.isPlaylistYourWeekly)

@@ -102,7 +102,7 @@ extension PlaylistViewController {
                     }
                     
                     if  let _metaOrderKey = _metaValue["query"] as? FetchChainBuilder<StreamPlayList> {
-                        handleFilterFromMenu( _metaOrderKey )
+                        handleTableFilterByFetchChainQuery( _metaOrderKey )
                     }
                 }
                 
@@ -113,12 +113,13 @@ extension PlaylistViewController {
         showFilterNotification ( filterTitle, filterDescription )
     }
     
-    func handleFilterFromMenu(
+    func handleTableFilterByFetchChainQuery(
        _ filterChainQuery: FetchChainBuilder<StreamPlayList>) {
-
-        print ("dbg [playlist] : filter ➡ detected")
         
         if  let _playListFilterResults = CoreStore.fetchAll(filterChainQuery) {
+            if _playListFilterResults.count == 0 {
+                HUD.flash(.label("NOTHING FOUND"), delay: 2.0)
+            }
             
             spotifyClient.playlistsInCache = _playListFilterResults
             tableView.reloadData()
@@ -342,40 +343,16 @@ extension PlaylistViewController {
         
         //
         // primary fetch request for all local cached/enriched playlist data which will
-        // be finally shown in our tableView
+        // be finally shown in our tableView (using same filter based method as inside
+        // our direct filter call actions
         //
-        if let _playListCache = CoreStore.fetchAll(
-                From<StreamPlayList>()
-                    .orderBy(.descending(\StreamPlayList.metaListInternalRating),
-                             .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                             .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                             .ascending(\StreamPlayList.isPlaylistYourWeekly))
-                    .where(\StreamPlayList.provider == _defaultStreamingProvider)
-            )
-        {
-            
-            if debugMode == true {
-                
-                print ("\ncache: (re)evaluated, tableView will be refreshed now ...")
-                print ("---------------------------------------------------------")
-                print ("\(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
-                print ("\(spotifyClient.playListHashesInCache.count - 1) playlists in db/cache")
-                print ("---------------------------------------------------------\n")
-            }
-            
-            spotifyClient.playlistsInCache = _playListCache
-            
-            // tableView.refreshTable()
-            tableView.reloadData()
-            
-        } else {
-            
-            HUD.flash(.label("LOADING AQOO"), delay: 2.0)
-            
-            /*
-             * no playlist data found ... show welcome screen or tutorial instead (feature)
-             */
-        }
+        
+        handleTableFilterByFetchChainQuery (From<StreamPlayList>()
+            .orderBy(.descending(\StreamPlayList.metaListInternalRating),
+                     .ascending(\StreamPlayList.isPlaylistRadioSelected),
+                     .ascending(\StreamPlayList.isPlaylistVotedByStar),
+                     .ascending(\StreamPlayList.isPlaylistYourWeekly))
+            .where(\StreamPlayList.provider == _defaultStreamingProvider))
     }
     
     @objc
