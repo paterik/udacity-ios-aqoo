@@ -265,7 +265,10 @@ extension PlaylistViewController {
                         self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
                             "title": "All Playlists of \(_userName)",
                             "description": "Fetch all \(_userName)'s playlists",
-                            "image_key": -1
+                            "image_key": -1,
+                            "order_key" : \StreamPlayList.owner,
+                            "order_key_only" : true,
+                            "order_keep_globals" : false
                         ]]
                         
                         // extend previously set basic filter items by user profiles
@@ -292,6 +295,7 @@ extension PlaylistViewController {
                     //
                     for (_, playlistInDb) in _playListCache.enumerated() {
                         
+                        // ignore self owned image profiles (already fetched)
                         if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
 
                         DispatchQueue.main.async {
