@@ -53,7 +53,7 @@ extension PlaylistViewController {
                     // ignore "unset" imageKeys (value: -1)
                     if  imageKey == -1 { continue }
                         imageKey = _metaImageKey
-                    // generate menu item now
+                    // generate menu items for basic filter calls
                     var basicFilterItem = MenuItem(
                         image : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)")!,
                         highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)_hl")!
@@ -237,8 +237,6 @@ extension PlaylistViewController {
                     
                     if let _rawImage = image {
                         
-                        print ("-----> image for user \(_userName) downloaded successfully")
-                        
                         self._userProfilesCachedForFilter += 1
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
@@ -260,9 +258,9 @@ extension PlaylistViewController {
                         
                         // extend previously set basic filter meta description block by profile filter description
                         self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
-                            "title" : "All Playlists of \(_userName)",
-                            "description" : "Fetch all \(_userName)'s playlists",
-                            "image_key" : -1
+                            "title": "All Playlists of \(_userName)",
+                            "description": "Fetch all \(_userName)'s playlists",
+                            "image_key": -1
                         ]]
                         
                         // extend previously set basic filter items by user profiles
@@ -281,16 +279,23 @@ extension PlaylistViewController {
                         (\StreamPlayList.provider == _defaultStreamingProvider) &&
                         (\StreamPlayList.owner    == _userName))
                     ) {
-                    
-                    // update cache entity for this user, add userProfileImageURL (using external function)
-                    for (_, _playlistInDb) in _playListCache.enumerated() {
+
+                    //
+                    // update cache entity for this user, add userProfileImageURL and dispatch queue
+                    // using side-thread to prevent known async write-through issues inside coreStore
+                    // async-db-calls.
+                    //
+                    for (_, playlistInDb) in _playListCache.enumerated() {
+                        
+                        if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
+
                         DispatchQueue.main.async {
-                            self.handlePlaylistDbCacheOwnerProfileData(
-                                _playlistInDb,
-                                _userName,
-                                _userProfileImageURL,
-                                profileUser
-                            )
+                            self.handlePlaylistDbCacheOwnerProfileData([
+                                "playlist": playlistInDb,
+                                "userProfileName": _userName,
+                                "userProfileImageURL": _userProfileImageURL,
+                                "userProfileData": profileUser
+                            ])
                         }
                     }
                 }
@@ -628,14 +633,13 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistDbCacheOwnerProfileData (
-       _ playListInDb: StreamPlayList,
-       _ userProfileUserName: String,
-       _ userProfileImageURL: String,
-       _ userProfile: SPTUser) {
+        _ payload: [String: Any]) {
 
-        // don't override owners image url if allready set previously
-        if playListInDb.ownerImageURL == userProfileImageURL { return }
-        
+        guard let userProfile = payload["userProfileData"] as? SPTUser,
+              let userProfileImageURL = payload["userProfileImageURL"] as? String,
+              let userProfileUserName = payload["userProfileName"] as? String,
+              let playListInDb = payload["playlist"] as? StreamPlayList else { return }
+
         do {
             
             CoreStore.perform(
@@ -662,14 +666,7 @@ extension PlaylistViewController {
             
         } catch {
             
-            if debugMode == true {
-                // weazL :: bug_1001 : sometimes my app will crash here unexpected
-                /*  expression produced error: error: /var/folders/ht/_s8btd0x1nz1t35lsf6ymmqc0000gn/T/expr2-f4ea92..swift:1:112: error: use of undeclared type 'CoreStore' - Swift._DebuggerSupport.stringForPrintObject(Swift.UnsafePointer<Swift.Optional<(hasChanges: Swift.Bool, error: CoreStore.CoreStoreError?)>>(bitPattern: 0x120c70850)!.pointee)
-                 
-                 - will be hopefully fetched/handled by reslut handler in completion section of line 641-647 now :)
-                 
-                 */
-                
+            if  debugMode == true {
                 print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
             }
             
