@@ -83,12 +83,14 @@ extension PlaylistViewController {
         
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
+        var filterOrderKey: FetchChainBuilder<StreamPlayList>?
         
         // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
         for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
             
             if _index == index {
                 if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
+                    
                     // fetch filter title from config dictionary stack
                     if  let _metaTitle = _metaValue["title"] as? String {
                         filterTitle = _metaTitle
@@ -98,6 +100,10 @@ extension PlaylistViewController {
                     if  let _metaDescription = _metaValue["description"] as? String {
                         filterDescription = _metaDescription
                     }
+                    
+                    if  let _metaOrderKey = _metaValue["query"] as? FetchChainBuilder<StreamPlayList> {
+                        handleFilterFromMenu( _metaOrderKey )
+                    }
                 }
                 
                 break
@@ -105,6 +111,18 @@ extension PlaylistViewController {
         }
         
         showFilterNotification ( filterTitle, filterDescription )
+    }
+    
+    func handleFilterFromMenu(
+       _ filterChainQuery: FetchChainBuilder<StreamPlayList>) {
+
+        print ("dbg [playlist] : filter ➡ detected")
+        
+        if  let _playListFilterResults = CoreStore.fetchAll(filterChainQuery) {
+            
+            spotifyClient.playlistsInCache = _playListFilterResults
+            tableView.reloadData()
+        }
     }
     
     func showFilterNotification(_ title: String, _ description: String ) {
@@ -266,9 +284,7 @@ extension PlaylistViewController {
                             "title": "All Playlists of \(_userName)",
                             "description": "Fetch all \(_userName)'s playlists",
                             "image_key": -1,
-                            "order_key" : \StreamPlayList.owner,
-                            "order_key_only" : true,
-                            "order_keep_globals" : false
+                            "query" : From<StreamPlayList>().where(\StreamPlayList.owner == _userName)
                         ]]
                         
                         // extend previously set basic filter items by user profiles
