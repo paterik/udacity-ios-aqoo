@@ -8,11 +8,11 @@
 
 import UIKit
 import Spotify
-import SnapKit
+import Persei
+import PKHUD
 import CoreStore
 import CryptoSwift
 import Kingfisher
-import Persei
 import NotificationBannerSwift
 import GradientLoadingBar
 
@@ -21,6 +21,7 @@ extension PlaylistViewController {
     func setupUIEventObserver() {
         
         _playlistChanged = false
+        _playlistChangedItem = nil
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadUserProfileImages),
@@ -50,7 +51,7 @@ extension PlaylistViewController {
             if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
                 // fetch filter image key from config dictionary stack
                 if  let _metaImageKey = _metaValue["image_key"] as? Int {
-                    // ignore "unset" imageKeys (value: -1)
+                    // ignore "unset" image keys (value: -1)
                     if  imageKey == -1 { continue }
                         imageKey = _metaImageKey
                     // generate menu items for basic filter calls
@@ -127,7 +128,7 @@ extension PlaylistViewController {
         // had a playlist containing more than 9999 songs -> still looking for alt.
         // logic implementation here 🤔
         //
-        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
+       _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
         
         tableView.estimatedRowHeight = kCloseCellHeight
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -149,6 +150,10 @@ extension PlaylistViewController {
     }
     
     func setupUIBase() {
+        
+        // prepare main HUD settings
+        HUD.dimsBackground = true
+        HUD.allowsInteraction = false
         
         // cleanUp filter definition
         playListBasicFilterItems.removeAll()
@@ -345,9 +350,10 @@ extension PlaylistViewController {
             
         } else {
             
+            HUD.flash(.label("LOADING AQOO"), delay: 2.0)
+            
             /*
              * no playlist data found ... show welcome screen or tutorial instead (feature)
-             *
              */
         }
     }
@@ -358,10 +364,10 @@ extension PlaylistViewController {
         var _playListFingerprint: String!
         var _progress: Float! = 0.0
         
-        // clear internal cache for playlists and user profiles
+        // clear internal cache for playlists
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
-        
+        // clear internal cache for user profiles
         _userProfilesHandledWithImages = [:]
         _userProfilesHandled = []
         _userProfilesInPlaylistsUnique = []
@@ -491,14 +497,17 @@ extension PlaylistViewController {
         // unify current userProfile array, remove double entries
         _userProfilesInPlaylistsUnique = Array(Set(_userProfilesInPlaylists))
         
-        if debugMode == true {
+        if  debugMode == true {
             print ("dbg [playlist] : enrich playlists by adding \(_userProfilesInPlaylistsUnique.count) user profiles")
             print ("dbg [playlist] : playlist profiles ➡ \(_userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
         for (_, _profileUserName) in _userProfilesInPlaylistsUnique.enumerated() {
             
-            print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
+            if  debugMode == true {
+                print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
+            }
+            
             spotifyClient.getUserProfileImageURLByUserName(
                 _profileUserName, spotifyClient.spfCurrentSession!.accessToken!
             )
@@ -521,7 +530,7 @@ extension PlaylistViewController {
                 }
             
                 // kill all obsolete / orphan cache entries
-                if debugMode == true {
+                if  debugMode == true {
                     print ("dbg [playlist] : [\(playlist.metaListInternalName)] orphan flagged for removal")
                 }
                 
@@ -539,7 +548,7 @@ extension PlaylistViewController {
                         switch result {
                         case .failure(let error): if self.debugMode == true { print (error) }
                         case .success(let userInfo):
-                            if self.debugMode == true {
+                            if  self.debugMode == true {
                                 print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> REMOVED")
                             }
                         }
@@ -644,6 +653,7 @@ extension PlaylistViewController {
             
             CoreStore.perform(
                 
+                // weazL :: bug_1001 - sometimes this async process will terminate my app
                 asynchronous: { (transaction) -> Void in
                     playListInDb.ownerImageURL = userProfileImageURL
                     playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
@@ -785,7 +795,7 @@ extension PlaylistViewController {
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
                     
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> CREATED")
                     }
                 
@@ -794,7 +804,7 @@ extension PlaylistViewController {
                  
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
-                        if self.debugMode == true {
+                        if  self.debugMode == true {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> NO_CHANGES")
                         }
                         
@@ -811,7 +821,7 @@ extension PlaylistViewController {
                         _playListInDb!.metaPreviouslyUpdated = true
                         _playListInDb!.metaPreviouslyCreated = false
                         
-                        if self.debugMode == true {
+                        if  self.debugMode == true {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> UPDATED")
                         }
                     }
@@ -859,10 +869,8 @@ extension PlaylistViewController {
     
     func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
         
-        for (_, _playlistInCloud) in spotifyClient.playlistsInCloud.enumerated() {
-            
+        for _playlistInCloud in spotifyClient.playlistsInCloud {
             if  playlistInDb.getMD5FingerPrint() == _playlistInCloud.getMD5FingerPrint() {
-                
                 return _playlistInCloud
             }
         }
@@ -900,7 +908,7 @@ extension PlaylistViewController {
             success: { (transactionProvider) in
                 
                 if transactionProvider != nil {
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [playlist] : provider [\(tag)] successfully loaded, fetching playlists now")
                     }
                     
@@ -983,12 +991,15 @@ extension PlaylistViewController {
     
     func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
         
-        print ("dbg [delegate] : value transmitted -> PlaylistViewControllerExt :: playlistItem == [\(playlistItem.metaListInternalName)]")
+        if  self.debugMode == true {
+            print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
+        }; _playlistChangedItem = playlistItem
     }
     
     func promoteToChanged(_ value: Bool) {
         
-        print ("dbg [delegate] : value changed -> PlaylistViewControllerExt :: playlistChanged == \(value)")
-        _playlistChanged = value
+        if  self.debugMode == true {
+            print ("dbg [delegate] : PlaylistViewControllerExt::playlistChanged = \(value)")
+        }; _playlistChanged = value
     }
 }

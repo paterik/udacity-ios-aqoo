@@ -67,6 +67,7 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistChanged: Bool?
+    var _playlistChangedItem: StreamPlayList?
     var _playlistGradientLoadingBar = GradientLoadingBar()
     var playListMenuBasicFilters: MenuView!
     var playListBasicFilterItems = [MenuItem]()
