@@ -100,6 +100,27 @@ class BaseViewController: UIViewController {
         return nil
     }
     
+    func getInternalCoverImageNameByCacheModel(
+       _ playlistItem: StreamPlayList) -> String? {
+        
+        // set internal flag covers for "isRadio" playlists
+        if  playlistItem.isPlaylistRadioSelected {
+            return _sysDefaultRadioLikedCoverImage
+        }
+        
+        // set internal flag covers for "isStarVoted" playlists
+        if  playlistItem.isPlaylistVotedByStar {
+            return _sysDefaultStarVotedCoverImage
+        }
+        
+        // set internal flag covers for "isWeekly" playlists
+        if  playlistItem.isPlaylistYourWeekly {
+            return _sysDefaultWeeklyCoverImage
+        }
+        
+        return nil
+    }
+    
     func getCoverImageViewByCacheModel(
        _ playlistItem: StreamPlayList,
        _ playlistCoverImageView: UIImageView) -> (view: UIImageView, key: String?) {
@@ -110,55 +131,47 @@ class BaseViewController: UIViewController {
         var _noCoverOverrideImageAvailable: Bool = true
         var _noCoverSetForInternal: Bool = false
         
+        // try to bound cover image using largestImageURL
         if  playlistItem.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistItem.largestImageURL!)
             _noCoverImageAvailable = false
+            if self.debugMode == true { print ("--- use large cover for [\(playlistItem.metaListInternalName)]") }
         }
         
-        if  playlistItem.smallestImageURL != nil {
+        // no large image found? try smallestImageURL instead
+        if  playlistItem.smallestImageURL != nil && _noCoverImageAvailable == true {
             _usedCoverImageURL = URL(string: playlistItem.smallestImageURL!)
             _noCoverImageAvailable = false
+            if self.debugMode == true { print ("--- use small cover for [\(playlistItem.metaListInternalName)]") }
         }
         
-        // set internal flag covers for "isRadio" playlists
-        if  playlistItem.isPlaylistRadioSelected {
-            playlistCoverImageView.image = UIImage(named: _sysDefaultRadioLikedCoverImage)
+        // is playlist item part of internal playlist selection? Take internal cover instead
+        if  let _imageName = getInternalCoverImageNameByCacheModel(playlistItem) {
+            playlistCoverImageView.image = UIImage(named: _imageName)
             _noCoverSetForInternal = true
+            if self.debugMode == true { print ("--- use internal cover for [\(playlistItem.metaListInternalName)]") }
         }
         
-        // set internal flag covers for "isStarVoted" playlists
-        if  playlistItem.isPlaylistVotedByStar {
-            playlistCoverImageView.image = UIImage(named: _sysDefaultStarVotedCoverImage)
-            _noCoverSetForInternal = true
-        }
-        
-        // set internal flag covers for "isWeekly" playlists
-        if  playlistItem.isPlaylistYourWeekly {
-            playlistCoverImageView.image = UIImage(named: _sysDefaultWeeklyCoverImage)
-            _noCoverSetForInternal = true
-        }
-        
-        // set user selected images for covers if available (and target is no internal playlist)
+        // set user selected images for covers if available (on non-internal playlist only)
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
                 playlistCoverImageView.image = _image
+                if self.debugMode == true { print ("--- use cover override for [\(playlistItem.metaListInternalName)]") }
             }
         }
         
         // call kingfisher majic and place coverImage using kf-methods (including cache loading) for playlistCover images
-        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
-            
+        if  _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             _usedCoverImageCacheKey = _usedCoverImageURL!.absoluteString
             
             ImageCache.default.retrieveImage(forKey: "\(_usedCoverImageURL!)", options: nil) {
+                
                 image, cacheType in
                 if  let _cacheImage = image {
-                    
                     playlistCoverImageView.image = _cacheImage
-                    
                     if  self.debugMode == true {
-                        // print("--- Image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
-                        // print("--- key: \(_usedCoverImageURL!)\n")
+                        print("--- KFC :: image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
+                        print("--- KFC :: key = [\(_usedCoverImageURL!)]\n")
                     }
                     
                 }   else {
@@ -179,8 +192,8 @@ class BaseViewController: UIViewController {
                     )
                     
                     if  self.debugMode == true {
-                        // print("--- Image doesn't exist in cache, corresponding cache entry was created")
-                        // print("--- key: \(_usedCoverImageURL!)\n")
+                        print("--- KFC :: image doesn't exist in cache, corresponding cache entry was created")
+                        print("--- KFC :: key = [\(_usedCoverImageURL!)]\n")
                     }
                 }
             }
