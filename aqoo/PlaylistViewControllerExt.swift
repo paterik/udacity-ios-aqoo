@@ -119,6 +119,9 @@ extension PlaylistViewController {
         if  let _playListFilterResults = CoreStore.fetchAll(filterChainQuery) {
             if _playListFilterResults.count == 0 {
                 HUD.flash(.label("NOTHING FOUND"), delay: 2.0)
+                // feature: user will be informed using a simple dialog
+                // - do you want to load your playlist by one of your favorite filters instead?
+                // - filter1, filter2 or filter3 ...
             }
             
             spotifyClient.playlistsInCache = _playListFilterResults
@@ -144,8 +147,8 @@ extension PlaylistViewController {
         //
         // thats a bit "majic" here, we've to prepare our table/cell struture by
         // a minimum of countable cells (as preCache) this will be work until someone
-        // had a playlist containing more than 9999 songs -> still looking for alt.
-        // logic implementation here 🤔
+        // had a playlist containing more than 9999 playlists -> still looking for an
+        // alternative logic implementation here 🤔
         //
        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
         
