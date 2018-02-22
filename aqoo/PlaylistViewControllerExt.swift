@@ -421,6 +421,7 @@ extension PlaylistViewController {
         // clear internal cache for playlists
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
+        
         // clear internal cache for user profiles
         _userProfilesHandledWithImages = [:]
         _userProfilesHandled = []
@@ -438,7 +439,7 @@ extension PlaylistViewController {
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
-            if debugMode == true {
+            if  debugMode == true {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName!)")

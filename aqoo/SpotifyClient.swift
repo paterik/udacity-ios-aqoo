@@ -180,7 +180,7 @@ class SpotifyClient: SPFClientPlaylists {
     
     func getDefaultPlaylistImageByUserPhoto(_ session: SPTSession) {
         
-        if debugMode == true {
+        if  debugMode == true {
             print ("dbg [session] : fetch current user image using corresponding api call")
         }
         
@@ -200,7 +200,7 @@ class SpotifyClient: SPFClientPlaylists {
                     self.spfUserDefaultImage = image!
                     self.spfUserDefaultImageUrl = url!
                     
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [session] : imageUrl of currentUser is \(url!.absoluteString)")
                     }
                 }
