@@ -45,6 +45,7 @@ class PlaylistEditViewController: BaseViewController,
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
+    var playlistChangedItem: StreamPlayList?
     var imagePickerSuccess: Bool = false
     var inputsListenForChanges = [Any]()
     var delegate: PlaylistEditViewDetailDelegate?

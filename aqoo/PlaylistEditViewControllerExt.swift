@@ -103,7 +103,7 @@ extension PlaylistEditViewController {
                 btnPlaylistCoverOverride.setImage(UIImage(named: "icnSwitch_v1"), for: UIControlState.normal)
                 imgPlaylistCoverOrigin.alpha = _sysPlaylistCoverOriginInActiveAlpha
             }   else {
-                _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
             }
         }
     }
@@ -209,7 +209,6 @@ extension PlaylistEditViewController {
         
         imagePickerSuccess = false
         
-        
         dismiss(animated: true, completion: nil)
     }
     
@@ -222,13 +221,16 @@ extension PlaylistEditViewController {
     func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
         
         let _identifier = playlistItem.metaListInternalName
-        print ("dbg [delegate] : value transmitted -> PlaylistEditViewControllerExt :: playlistItem == [\(_identifier)]")
+        if  self.debugMode == true {
+            print ("dbg [delegate] : PlaylistEditViewControllerExt::playlistItem = [\(_identifier)]")
+        };  playlistChangedItem = playlistItem
     }
     
     func promoteToChanged(_ value: Bool) {
         
-        print ("dbg [delegate] : value changed -> PlaylistEditViewControllerExt :: playlistChanged == \(value)")
-        handleSaveChangesButton( value )
-        playListChanged = value
+        if  self.debugMode == true {
+            print ("dbg [delegate] : PlaylistEditViewControllerExt::playlistChanged = \(value)")
+        };  playListChanged = value
+            handleSaveChangesButton( value )
     }
 }
