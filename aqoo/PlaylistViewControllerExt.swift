@@ -83,7 +83,9 @@ extension PlaylistViewController {
         
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
-        var filterOrderKey: FetchChainBuilder<StreamPlayList>?
+        var filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey?
+        var filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>?
+        var filterQueryUseDefaults: Bool = false
         
         // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
         for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
@@ -101,8 +103,16 @@ extension PlaylistViewController {
                         filterDescription = _metaDescription
                     }
                     
-                    if  let _metaOrderKey = _metaValue["query"] as? FetchChainBuilder<StreamPlayList> {
-                        handleTableFilterByFetchChainQuery( _metaOrderKey )
+                    if  let _metaQueryUseDefaults = _metaValue["query_use_defaults"] as? Bool {
+                        filterQueryUseDefaults = Bool(_metaQueryUseDefaults)
+                    }
+                    
+                    if  let _metaQueryOrderBy = _metaValue["query_order_by"] as? OrderBy<StreamPlayList>.SortKey {
+                        filterQueryOrderByClause = _metaQueryOrderBy
+                    }
+                    
+                    if  let _metaQueryWhere = _metaValue["query_override"] as? FetchChainBuilder<StreamPlayList> {
+                        filterQueryFetchChainBuilder = _metaQueryWhere
                     }
                 }
                 
@@ -111,22 +121,65 @@ extension PlaylistViewController {
         }
         
         showFilterNotification ( filterTitle, filterDescription )
+        handleTableFilterByFetchChainQuery(
+            filterQueryOrderByClause,
+            filterQueryFetchChainBuilder,
+            filterQueryUseDefaults
+        )
     }
     
     func handleTableFilterByFetchChainQuery(
-       _ filterChainQuery: FetchChainBuilder<StreamPlayList>) {
+         _ filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey? = nil,
+         _ filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>? = nil,
+         _ filterQueryUseDefaults: Bool = false ) {
         
-        if  let _playListFilterResults = CoreStore.fetchAll(filterChainQuery) {
-            if _playListFilterResults.count == 0 {
-                HUD.flash(.label("NOTHING FOUND"), delay: 2.0)
-                // feature: user will be informed using a simple dialog
-                // - do you want to load your playlist by one of your favorite filters instead?
-                // - filter1, filter2 or filter3 ...
+        var filterQueryOrderBy = OrderBy<StreamPlayList>()
+        var filterQueryResults = [StreamPlayList]()
+        
+        if  filterQueryOrderByClause == nil &&
+            filterQueryFetchChainBuilder == nil {
+            if  self.debugMode == true {
+                print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter list aborted!")
+                
+                return
+            }
+        }
+        
+        if  filterQueryOrderByClause != nil {
+            filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
+            if  filterQueryUseDefaults == true {
+                filterQueryOrderBy  = OrderBy( .ascending(\StreamPlayList.isPlaylistRadioSelected) )
+                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistVotedByStar) )
+                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistYourWeekly) )
+                filterQueryOrderBy += OrderBy<StreamPlayList>( filterQueryOrderByClause! )
+            }
+        }
+        
+        if  filterQueryFetchChainBuilder != nil {
+            if  let _playListFilterResults = CoreStore.fetchAll( filterQueryFetchChainBuilder! ) {
+                filterQueryResults = _playListFilterResults
             }
             
-            spotifyClient.playlistsInCache = _playListFilterResults
-            tableView.reloadData()
+        }   else {
+            if  let _playListFilterResults = CoreStore.fetchAll( From<StreamPlayList>(), filterQueryOrderBy ) {
+                filterQueryResults = _playListFilterResults
+            }
         }
+        
+        if  filterQueryResults.count > 0 {
+            // reset table cache and reload table view only on existing (countable) results
+            spotifyClient.playlistsInCache = filterQueryResults
+            
+        }   else {
+            HUD.flash(.label("NOTHING FOUND"), delay: 2.0)
+            spotifyClient.playlistsInCache = []
+            
+            // feature: user will be informed using a simple dialog
+            // - do you want to load your playlist by one of your favorite filters instead?
+            // - filter1, filter2 or filter3 ...
+        }
+        
+        tableView.reloadData()
     }
     
     func showFilterNotification(_ title: String, _ description: String ) {
@@ -288,7 +341,8 @@ extension PlaylistViewController {
                             "title": "All Playlists of \(_userName)",
                             "description": "Fetch all \(_userName)'s playlists",
                             "image_key": -1,
-                            "query" : From<StreamPlayList>().where(\StreamPlayList.owner == _userName)
+                            "query_use_defaults" : false,
+                            "query_override" : From<StreamPlayList>().where(\StreamPlayList.owner == _userName)
                         ]]
                         
                         // extend previously set basic filter items by user profiles
@@ -347,15 +401,12 @@ extension PlaylistViewController {
         //
         // primary fetch request for all local cached/enriched playlist data which will
         // be finally shown in our tableView (using same filter based method as inside
-        // our direct filter call actions
+        // our direct filter call actions (user rating filter as default)
         //
         
-        handleTableFilterByFetchChainQuery (From<StreamPlayList>()
-            .orderBy(.descending(\StreamPlayList.metaListInternalRating),
-                     .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                     .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                     .ascending(\StreamPlayList.isPlaylistYourWeekly))
-            .where(\StreamPlayList.provider == _defaultStreamingProvider))
+        handleTableFilterByFetchChainQuery (
+            OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating)
+        )
     }
     
     @objc
@@ -398,7 +449,7 @@ extension PlaylistViewController {
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
         
-        if debugMode == true {
+        if  debugMode == true {
             print ("\napi handling for playlists endpoint finalized\n\n==\n")
         }
     }
@@ -409,8 +460,10 @@ extension PlaylistViewController {
     @objc
     func handleCacheTimerEvent() {
         
-        ImageCache.default.calculateDiskCacheSize { size in
-            print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
+        if  self.debugMode == true {
+            ImageCache.default.calculateDiskCacheSize { size in
+                print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
+            }
         };  handlePlaylistCloudRefresh()
     }
     
@@ -424,7 +477,10 @@ extension PlaylistViewController {
         
         let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
             
-            print ("dbg [playlist] : cache ➡ cleanUp local image cache")
+            if  self.debugMode == true {
+                print ("dbg [playlist] : cache ➡ cleanUp local image cache")
+            }
+            
             ImageCache.default.clearMemoryCache()
             ImageCache.default.clearDiskCache()
             
@@ -436,7 +492,7 @@ extension PlaylistViewController {
                 
                 success: { (transactionPlaylists) in
                     
-                    if transactionPlaylists?.isEmpty == false {
+                    if  transactionPlaylists?.isEmpty == false && self.debugMode == true {
                         print ("dbg [playlist] : cache ➡ cleanUp local db cache, \(transactionPlaylists!.count - 1) rows will be removed")
                     }
                 },

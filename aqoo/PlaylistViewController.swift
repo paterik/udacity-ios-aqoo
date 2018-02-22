@@ -97,55 +97,40 @@ class PlaylistViewController: BaseViewController,
             "title" : "Top rated playlists",
             "description" : "Your playlists ordered by rating",
             "image_key" : filterItem.PlaylistBestRated.rawValue,
-            "query" : From<StreamPlayList>().orderBy(
-                .descending(\StreamPlayList.metaListInternalRating),
-                .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                .ascending(\StreamPlayList.isPlaylistYourWeekly)
-            )
+            "query_use_defaults" : true,
+            "query_order_by" : OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating)
         ],
         
         1 : [
             "title" : "Playlists in alphabetical order",
             "description" : "Your playlists in alphabetical order",
             "image_key" : filterItem.PlaylistTitleAlphabetical.rawValue,
-            "query" : From<StreamPlayList>().orderBy(
-                .ascending(\StreamPlayList.metaListInternalName),
-                .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                .ascending(\StreamPlayList.isPlaylistYourWeekly)
-            )
+            "query_use_defaults" : true,
+            "query_order_by" : OrderBy<StreamPlayList>.SortKey.ascending(\StreamPlayList.metaListInternalName)
         ],
         
         2 : [
             "title" : "Playlists with the most tracks",
             "description" : "Your playlists ordered by track count",
             "image_key" : filterItem.PlaylistNumberOfTracks.rawValue,
-            "query" : From<StreamPlayList>().orderBy(
-                .descending(\StreamPlayList.trackCount),
-                .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                .ascending(\StreamPlayList.isPlaylistYourWeekly)
-            )
+            "query_use_defaults" : true,
+            "query_order_by" : OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.trackCount)
         ],
         
         3 : [
             "title" : "Playlists most frequently heard",
             "description" : "Your playlists ordered by the number of times played",
             "image_key" : filterItem.PlaylistMostListenend.rawValue,
-            "query" : From<StreamPlayList>().orderBy(
-                .descending(\StreamPlayList.metaNumberOfPlayed),
-                .ascending(\StreamPlayList.isPlaylistRadioSelected),
-                .ascending(\StreamPlayList.isPlaylistVotedByStar),
-                .ascending(\StreamPlayList.isPlaylistYourWeekly)
-            )
+            "query_use_defaults" : true,
+            "query_order_by" : OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaNumberOfPlayed)
         ],
         
         4 : [
             "title" : "Your hidden playlists",
             "description" : "Your hidden playlist stack",
             "image_key" : filterItem.PlaylistHidden.rawValue,
-            "query" : From<StreamPlayList>().where(\StreamPlayList.isPlaylistHidden == true)
+            "query_use_defaults" : false,
+            "query_override" : From<StreamPlayList>().where(\StreamPlayList.isPlaylistHidden == true)
         ]
     ]
     
