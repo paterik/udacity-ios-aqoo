@@ -156,6 +156,10 @@ extension PlaylistViewController {
                 filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistYourWeekly) )
                 filterQueryOrderBy += OrderBy<StreamPlayList>( filterQueryOrderByClause! )
             }
+            
+            print (filterQueryOrderByClause)
+            print ("---")
+            print (filterQueryOrderBy)
         }
         
         if  filterQueryFetchChainBuilder != nil {
@@ -407,7 +411,9 @@ extension PlaylistViewController {
         //
         
         handleTableFilterByFetchChainQuery (
-            OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating)
+            OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating),
+            nil,
+            true
         )
     }
     
