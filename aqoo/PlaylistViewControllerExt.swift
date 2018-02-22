@@ -151,15 +151,10 @@ extension PlaylistViewController {
         if  filterQueryOrderByClause != nil {
             filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
             if  filterQueryUseDefaults == true {
-                filterQueryOrderBy  = OrderBy( .ascending(\StreamPlayList.isPlaylistRadioSelected) )
+                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistRadioSelected) )
                 filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistVotedByStar) )
                 filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistYourWeekly) )
-                filterQueryOrderBy += OrderBy<StreamPlayList>( filterQueryOrderByClause! )
             }
-            
-            print (filterQueryOrderByClause)
-            print ("---")
-            print (filterQueryOrderBy)
         }
         
         if  filterQueryFetchChainBuilder != nil {
