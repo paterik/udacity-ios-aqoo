@@ -103,14 +103,17 @@ extension PlaylistViewController {
                         filterDescription = _metaDescription
                     }
                     
-                    if  let _metaQueryUseDefaults = _metaValue["query_use_defaults"] as? Bool {
-                        filterQueryUseDefaults = Bool(_metaQueryUseDefaults)
+                    // fetch 'order-by' query enforce-default-order flag from dictionary stack
+                    if  let _metaQueryUseDefaults = _metaValue["query_order_use_defaults"] as? Bool {
+                        filterQueryUseDefaults = _metaQueryUseDefaults
                     }
                     
+                    // fetch base 'order-by' query sortKeys from dictionary stack
                     if  let _metaQueryOrderBy = _metaValue["query_order_by"] as? OrderBy<StreamPlayList>.SortKey {
                         filterQueryOrderByClause = _metaQueryOrderBy
                     }
                     
+                    // fetch base 'where' query override statement from dictionary stack
                     if  let _metaQueryWhere = _metaValue["query_override"] as? FetchChainBuilder<StreamPlayList> {
                         filterQueryFetchChainBuilder = _metaQueryWhere
                     }
@@ -234,7 +237,7 @@ extension PlaylistViewController {
         playListBasicFilterItems.removeAll()
         
         // define our loading bar
-        _playlistGradientLoadingBar = GradientLoadingBar(
+       _playlistGradientLoadingBar = GradientLoadingBar(
             height: 3,
             durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
@@ -274,7 +277,6 @@ extension PlaylistViewController {
     func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
         
         playListMenuBasicFilters.items = menuItems
-        
         tableView.addSubview(playListMenuBasicFilters)
         
        _playlistGradientLoadingBar.hide()
@@ -341,22 +343,22 @@ extension PlaylistViewController {
                             "title": "All Playlists of \(_userName)",
                             "description": "Fetch all \(_userName)'s playlists",
                             "image_key": -1,
-                            "query_use_defaults" : false,
-                            "query_override" : From<StreamPlayList>().where(\StreamPlayList.owner == _userName)
+                            "query_override": From<StreamPlayList>().where(\StreamPlayList.owner == _userName),
+                            "query_order_use_defaults": false
                         ]]
                         
                         // extend previously set basic filter items by user profiles
                         self.playListBasicFilterItems.append(ownerFilterItem)
                         
                         // final user profile image handled? good init/load filterMenu now
-                        if (self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count) {
+                        if  self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count {
                             self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
                         }
                     }
                 }
                 
                 // fetch all known playlists for corresponding (profile available) user
-                if let _playListCache = CoreStore.defaultStack.fetchAll(
+                if  let _playListCache = CoreStore.defaultStack.fetchAll(
                     From<StreamPlayList>().where(
                         (\StreamPlayList.provider == _defaultStreamingProvider) &&
                         (\StreamPlayList.owner    == _userName))
