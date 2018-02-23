@@ -124,10 +124,58 @@ extension PlaylistViewController {
         }
         
         showFilterNotification ( filterTitle, filterDescription )
+        handleConfigTableFilterPersistance ( Int16 (index), _defaultStreamingProvider!.tag )
         handleTableFilterByFetchChainQuery(
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
             filterQueryUseDefaults
+        )
+    }
+    
+    func handleConfigTableFilterPersistance(
+       _ filterKey: Int16 = 0,
+       _ filterProviderTag: String = "_spotify") {
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                var _configProvider = transaction.fetchOne(
+                    From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
+                )
+                
+                var _configKeyRow = transaction.fetchOne(
+                    From<AppConfig>().where(\AppConfig.provider == _configProvider)
+                )
+                
+                // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
+                if  _configKeyRow == nil {
+                    _configKeyRow = transaction.create(Into<AppConfig>()) as AppConfig
+                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.createdAt = Date()
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
+                    }
+                    
+                }   else {
+                    
+                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.updatedAt = Date()
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
+                    }
+                }
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo): break
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ persisted successfully")
+                    }
+                }
+            }
         )
     }
     
@@ -855,7 +903,7 @@ extension PlaylistViewController {
                         print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> CREATED")
                     }
                 
-                // 
+                //
                 // playlist cache entry found in local db? Check for changes by comparing both fingerprints
                 // and update corresponding cache value (local db entry) on any kind of fingerprint mismatch
                 //
