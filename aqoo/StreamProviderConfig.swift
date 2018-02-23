@@ -1,5 +1,5 @@
 //
-//  AppConfig.swift
+//  StreamProviderConfig.swift
 //  aqoo
 //
 //  Created by Patrick Paechnatz on 23.02.18.
@@ -9,7 +9,7 @@
 import CoreStore
 import CryptoSwift
 
-class AppConfig: NSManagedObject {
+class StreamProviderConfig: NSManagedObject {
     
     @NSManaged var defaultPlaylistTableFilterKey: Int16
     @NSManaged var createdAt: Date?

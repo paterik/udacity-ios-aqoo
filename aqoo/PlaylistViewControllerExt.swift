@@ -124,7 +124,7 @@ extension PlaylistViewController {
         }
         
         showFilterNotification ( filterTitle, filterDescription )
-        handleConfigTableFilterPersistance ( Int16 (index), _defaultStreamingProvider!.tag )
+        setConfigTableFilterKeyByProviderTag ( Int16 (index), _defaultStreamingProvider!.tag )
         handleTableFilterByFetchChainQuery(
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
@@ -132,7 +132,7 @@ extension PlaylistViewController {
         )
     }
     
-    func handleConfigTableFilterPersistance(
+    func setConfigTableFilterKeyByProviderTag(
        _ filterKey: Int16 = 0,
        _ filterProviderTag: String = "_spotify") {
         
@@ -145,12 +145,12 @@ extension PlaylistViewController {
                 )
                 
                 var _configKeyRow = transaction.fetchOne(
-                    From<AppConfig>().where(\AppConfig.provider == _configProvider)
+                    From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
                 )
                 
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if  _configKeyRow == nil {
-                    _configKeyRow = transaction.create(Into<AppConfig>()) as AppConfig
+                    _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
                     _configKeyRow!.createdAt = Date()
                     if  self.debugMode == true {
