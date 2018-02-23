@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AppConfig" representedClassName=".AppConfig" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="defaultPlaylistTableFilterKey" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
+    </entity>
     <entity name="StreamPlayList" representedClassName=".StreamPlayList" syncable="YES">
         <attribute name="coverImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -47,10 +53,12 @@
         <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="configs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppConfig" inverseName="provider" inverseEntity="AppConfig" syncable="YES"/>
         <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamPlayList" inverseName="provider" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <elements>
         <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="600"/>
-        <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="AppConfig" positionX="-63" positionY="135" width="128" height="105"/>
     </elements>
 </model>

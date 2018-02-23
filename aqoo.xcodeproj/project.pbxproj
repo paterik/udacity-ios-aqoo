@@ -32,6 +32,7 @@
 		B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A620531F700D820093CAEF /* LaunchScreen.storyboard */; };
 		B1A620601F700D820093CAEF /* aqooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6205F1F700D820093CAEF /* aqooTests.swift */; };
 		B1A6206B1F700D820093CAEF /* aqooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6206A1F700D820093CAEF /* aqooUITests.swift */; };
+		B1A7E0262040C0B100A9805C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A7E0252040C0B100A9805C /* AppConfig.swift */; };
 		B1B8DD22202E189A008CE9EB /* PlaylistFilterNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B8DD21202E189A008CE9EB /* PlaylistFilterNotification.xib */; };
 		B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */; };
 		B1B8DD26202E1EE3008CE9EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD25202E1EE3008CE9EB /* UIView.swift */; };
@@ -107,6 +108,7 @@
 		B1A620661F700D820093CAEF /* aqooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aqooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A6206A1F700D820093CAEF /* aqooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aqooUITests.swift; sourceTree = "<group>"; };
 		B1A6206C1F700D820093CAEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1A7E0252040C0B100A9805C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		B1B8DD21202E189A008CE9EB /* PlaylistFilterNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistFilterNotification.xib; sourceTree = "<group>"; };
 		B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistFilterNotification.swift; sourceTree = "<group>"; };
 		B1B8DD25202E1EE3008CE9EB /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				B1D6A3961F910F74006E1DBC /* extension */,
 				B1BD1EE71F778621001FC294 /* StreamPlayList.swift */,
 				B1BD1EE91F778646001FC294 /* StreamProvider.swift */,
+				B1A7E0252040C0B100A9805C /* AppConfig.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */,
 				B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */,
 				B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */,
+				B1A7E0262040C0B100A9805C /* AppConfig.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,
 				B1D4CE4C1F936A94005D8F50 /* PlaylistTableCell.swift in Sources */,
