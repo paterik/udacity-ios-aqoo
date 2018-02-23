@@ -173,7 +173,7 @@ extension PlaylistViewController {
             spotifyClient.playlistsInCache = filterQueryResults
             
         }   else {
-            HUD.flash(.label("NOTHING FOUND"), delay: 2.0)
+            HUD.flash(.label("no playlists"), delay: 2.0)
             spotifyClient.playlistsInCache = []
             
             // feature: user will be informed using a simple dialog
@@ -360,7 +360,7 @@ extension PlaylistViewController {
                 if  let _playListCache = CoreStore.defaultStack.fetchAll(
                     From<StreamPlayList>().where(
                         (\StreamPlayList.provider == _defaultStreamingProvider) &&
-                        (\StreamPlayList.owner    == _userName))
+                        (\StreamPlayList.owner == _userName))
                     ) {
 
                     //
@@ -451,10 +451,6 @@ extension PlaylistViewController {
             }
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
-        }
-        
-        if  debugMode == true {
-            print ("\napi handling for playlists endpoint finalized\n\n==\n")
         }
     }
 
@@ -562,7 +558,7 @@ extension PlaylistViewController {
             print ("dbg [playlist] : playlist profiles ➡ \(_userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
-        for (_, _profileUserName) in _userProfilesInPlaylistsUnique.enumerated() {
+        for _profileUserName in _userProfilesInPlaylistsUnique {
             
             if  debugMode == true {
                 print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
@@ -580,7 +576,7 @@ extension PlaylistViewController {
             From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
         ) {
             
-            for (_, playlist) in _playListCache.enumerated() {
+            for playlist in _playListCache {
                 
                 // ignore all known / identical playlists
                 if spotifyClient.playListHashesInCloud.contains(playlist.metaListHash) {
@@ -642,7 +638,7 @@ extension PlaylistViewController {
         //
         if playlistInDb.largestImageURL == nil && playlistInDb.smallestImageURL == nil {
             
-            for (index, coverImageAlt) in playListInCloud.images.enumerated() {
+            for coverImageAlt in playListInCloud.images {
                 if let _coverImageAlt = coverImageAlt as? SPTImage {
                     if _coverImageAlt.size != CGSize(width: 0, height: 0) {
                         playlistInDb.smallestImageURL = _coverImageAlt.imageURL.absoluteString
@@ -859,7 +855,10 @@ extension PlaylistViewController {
                         print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> CREATED")
                     }
                 
-                // playlist cache entry found in local db? Check for changes and may update corresponding cache value ...
+                // 
+                // playlist cache entry found in local db? Check for changes by comparing both fingerprints
+                // and update corresponding cache value (local db entry) on any kind of fingerprint mismatch
+                //
                 } else {
                  
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
