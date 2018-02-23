@@ -42,6 +42,13 @@ extension PlaylistViewController {
         )
     }
     
+    func setupSYSConfig() {
+        
+        var key = getConfigTableFilterKeyByProviderTag()
+        
+        print ("=== \(key) ===")
+    }
+    
     func setupUITableBasicMenuView() {
 
         var imageKey: Int = 0
@@ -124,12 +131,33 @@ extension PlaylistViewController {
         }
         
         showFilterNotification ( filterTitle, filterDescription )
-        setConfigTableFilterKeyByProviderTag ( Int16 (index), _defaultStreamingProvider!.tag )
+        setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
         handleTableFilterByFetchChainQuery(
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
             filterQueryUseDefaults
         )
+    }
+    
+    func getConfigTableFilterKeyByProviderTag(
+       _ filterProviderTag: String = "_spotify") -> Int {
+        
+        var _configProvider = CoreStore.fetchOne(
+            From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
+        )
+        
+        var _configKeyRowRaw = CoreStore.fetchOne(
+            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider!)
+        )
+        
+        if  let _configKeyRow = CoreStore.fetchOne(
+            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
+            ) as? StreamProviderConfig {
+            
+            return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
+        }
+        
+        return 0
     }
     
     func setConfigTableFilterKeyByProviderTag(
@@ -152,6 +180,8 @@ extension PlaylistViewController {
                 if  _configKeyRow == nil {
                     _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.isGlobal = false // this config will be provider dependent
+                    _configKeyRow!.provider = _configProvider!
                     _configKeyRow!.createdAt = Date()
                     if  self.debugMode == true {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
@@ -160,6 +190,7 @@ extension PlaylistViewController {
                 }   else {
                     
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.provider = _configProvider!
                     _configKeyRow!.updatedAt = Date()
                     if  self.debugMode == true {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
@@ -253,6 +284,7 @@ extension PlaylistViewController {
         // had a playlist containing more than 9999 playlists -> still looking for an
         // alternative logic implementation here 🤔
         //
+        
        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
         
         tableView.estimatedRowHeight = kCloseCellHeight

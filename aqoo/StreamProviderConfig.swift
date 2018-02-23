@@ -14,5 +14,6 @@ class StreamProviderConfig: NSManagedObject {
     @NSManaged var defaultPlaylistTableFilterKey: Int16
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
+    @NSManaged var isGlobal: Bool
     @NSManaged var provider: StreamProvider?
 }

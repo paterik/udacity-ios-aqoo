@@ -53,12 +53,13 @@
     <entity name="StreamProviderConfig" representedClassName=".StreamProviderConfig" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="defaultPlaylistTableFilterKey" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isGlobal" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
         <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="600"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="105"/>
+        <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
     </elements>
 </model>

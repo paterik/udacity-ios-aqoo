@@ -147,6 +147,8 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
+        
+        setupSYSConfig()
     }
     
     override func viewWillAppear(_ animated: Bool) {
