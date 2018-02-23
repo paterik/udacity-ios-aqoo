@@ -132,9 +132,9 @@ extension PlaylistViewController {
     }
     
     func handleTableFilterByFetchChainQuery(
-         _ filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey? = nil,
-         _ filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>? = nil,
-         _ filterQueryUseDefaults: Bool = false ) {
+       _ filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey? = nil,
+       _ filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>? = nil,
+       _ filterQueryUseDefaults: Bool = false ) {
         
         var filterQueryOrderBy = OrderBy<StreamPlayList>()
         var filterQueryResults = [StreamPlayList]()
@@ -142,7 +142,7 @@ extension PlaylistViewController {
         if  filterQueryOrderByClause == nil &&
             filterQueryFetchChainBuilder == nil {
             if  self.debugMode == true {
-                print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter list aborted!")
+                print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter process aborted!")
                 
                 return
             }
