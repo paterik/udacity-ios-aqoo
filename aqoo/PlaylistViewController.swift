@@ -88,6 +88,17 @@ class PlaylistViewController: BaseViewController,
     }
     
     //
+    // this weight presets will be used for order internal playlist order
+    //
+    enum filterInternalWeight: Int {
+        
+        case PlaylistYourWeekly = 9999
+        case PlaylistRadioLiked = 9998
+        case PlaylistStarRated = 9997
+        case Default = 0
+    }
+    
+    //
     // primary used filter context including title, description, imageKey
     // and corresponding FetchChainBuilder (query)
     //
