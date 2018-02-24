@@ -84,7 +84,7 @@ extension PlaylistViewController {
     }
     
     //
-    // the method will handle filter menu tap's and notification
+    // this method will handle main filter menu tap events and notification
     //
     func menu(_ menu: MenuView, didSelectItemAt index: Int) {
         
@@ -130,8 +130,11 @@ extension PlaylistViewController {
             }
         }
         
-        showFilterNotification ( filterTitle, filterDescription )
+        // persist current filter to provider based playlist
         setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
+        // show notification for user about current filter set
+        showFilterNotification ( filterTitle, filterDescription )
+        // call specific filter action corresponding to current filter-item menu selection
         handleTableFilterByFetchChainQuery(
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
@@ -142,14 +145,12 @@ extension PlaylistViewController {
     func getConfigTableFilterKeyByProviderTag(
        _ filterProviderTag: String = "_spotify") -> Int {
         
+        // prefetch stream provider entity to select corresponding config by lines below ...
         var _configProvider = CoreStore.fetchOne(
             From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
         )
         
-        var _configKeyRowRaw = CoreStore.fetchOne(
-            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider!)
-        )
-        
+        // try to fetch config value object by given provider entity ...
         if  let _configKeyRow = CoreStore.fetchOne(
             From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
             ) as? StreamProviderConfig {
@@ -168,15 +169,17 @@ extension PlaylistViewController {
             
             asynchronous: { (transaction) -> Void in
                 
+                // prefetch stream provider entity again to select corresponding config by lines below ...
                 var _configProvider = transaction.fetchOne(
                     From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
                 )
                 
+                // try to fetch config value object by given provider entity ...
                 var _configKeyRow = transaction.fetchOne(
                     From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
                 )
                 
-                // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
+                // stream provider config entry in local db not available or not fetchable yet? Create a new one ...
                 if  _configKeyRow == nil {
                     _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
@@ -186,7 +189,8 @@ extension PlaylistViewController {
                     if  self.debugMode == true {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
                     }
-                    
+                
+                // stream provider config available? ... update corresponding property (so filterKey in this case)
                 }   else {
                     
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
