@@ -258,8 +258,7 @@ extension PlaylistViewController {
         }   else {
             HUD.flash(.label("no playlists"), delay: 2.0)
             spotifyClient.playlistsInCache = []
-            
-            // feature: user will be informed using a simple dialog
+            // weazL :: feature_1001 : user will be informed using a simple dialog
             // - do you want to load your playlist by one of your favorite filters instead?
             // - filter1, filter2 or filter3 ...
         }
@@ -282,11 +281,10 @@ extension PlaylistViewController {
 
     func setupUITableView() {
         
-        //
-        // thats a bit "majic" here, we've to prepare our table/cell struture by
-        // a minimum of countable cells (as preCache) this will be work until someone
-        // had a playlist containing more than 9999 playlists -> still looking for an
-        // alternative logic implementation here 🤔
+        // weazL :: feature_1002 : thats a bit "majic" here, we've to prepare our
+        // table/cell struture by a minimum of countable cells (as preCache) this
+        // will be work until someone had a playlist containing more than 9999
+        // playlists -> still looking for an alternative logic implementation here 🤔
         //
         
        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
@@ -365,9 +363,6 @@ extension PlaylistViewController {
        _playlistGradientLoadingBar.hide()
     }
     
-    //
-    // weazL :: current_state
-    //
     @objc
     func setupUILoadUserProfileImages(notification: Notification) {
         
@@ -452,7 +447,7 @@ extension PlaylistViewController {
                     // using side-thread to prevent known async write-through issues inside coreStore
                     // async-db-calls.
                     //
-                    for (_, playlistInDb) in _playListCache.enumerated() {
+                    for playlistInDb in _playListCache {
                         
                         // ignore self owned image profiles (already fetched)
                         if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
