@@ -58,6 +58,14 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaPreviouslyUpdated: Bool
     @NSManaged var metaPreviouslyCreated: Bool
     
+    //
+    // this property will be used as "override" for all order-by presets
+    // to select-down (or select-up) a group of specific entities (e.g.
+    // internal playlists like 'weekly', 'star voted' or 'liked from radio')
+    // this will be result in bottom-/top-only rows for those internals ...
+    //
+    @NSManaged var metaWeight: Int32
+    
     @NSManaged var provider: StreamProvider?
     
     func getMD5FingerPrint() -> String {

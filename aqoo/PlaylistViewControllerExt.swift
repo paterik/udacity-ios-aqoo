@@ -46,7 +46,7 @@ extension PlaylistViewController {
         
         var key = getConfigTableFilterKeyByProviderTag()
         
-        print ("=== \(key) ===")
+        print ("=== config_load :: KEY ➡ [FILTER_INDEX = (\(filterKey))] ===")
     }
     
     func setupUITableBasicMenuView() {
