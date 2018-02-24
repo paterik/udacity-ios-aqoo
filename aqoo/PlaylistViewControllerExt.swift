@@ -44,7 +44,7 @@ extension PlaylistViewController {
     
     func setupSYSConfig() {
         
-        var key = getConfigTableFilterKeyByProviderTag()
+        var filterKey = getConfigTableFilterKeyByProviderTag()
         
         print ("=== config_load :: KEY ➡ [FILTER_INDEX = (\(filterKey))] ===")
     }
