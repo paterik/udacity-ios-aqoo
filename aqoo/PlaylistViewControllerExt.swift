@@ -207,7 +207,7 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo): break
                     if  self.debugMode == true {
-                        print ("dbg [playlist] : config_key ➡ persisted successfully")
+                        print ("dbg [playlist] : config_key ➡ finaly persisted")
                     }
                 }
             }
