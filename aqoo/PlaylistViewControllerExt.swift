@@ -43,10 +43,7 @@ extension PlaylistViewController {
     }
     
     func setupSYSConfig() {
-        
-        var filterKey = getConfigTableFilterKeyByProviderTag()
-        
-        print ("=== config_load :: KEY ➡ [FILTER_INDEX = (\(filterKey))] ===")
+        print ("=== config_load :: KEY ➡ [TEST_VALUE : 1] ===")
     }
     
     func setupUITableBasicMenuView() {
@@ -83,11 +80,13 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    //
-    // this method will handle main filter menu tap events and notification
-    //
-    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
-        
+    func getFilterBlockByIndex(_ index : Int) -> (
+         String,
+         String,
+         OrderBy<StreamPlayList>.SortKey?,
+         FetchChainBuilder<StreamPlayList>?,
+         Bool) {
+            
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
         var filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey?
@@ -129,16 +128,32 @@ extension PlaylistViewController {
                 break
             }
         }
-        
-        // persist current filter to provider based playlist
-        setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
-        // show notification for user about current filter set
-        showFilterNotification ( filterTitle, filterDescription )
-        // call specific filter action corresponding to current filter-item menu selection
-        handleTableFilterByFetchChainQuery(
+            
+        return (
+            filterTitle,
+            filterDescription,
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
             filterQueryUseDefaults
+        )
+    }
+    
+    //
+    // this method will handle main filter menu tap events and notification
+    //
+    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
+        
+        // fetch logical filterBlock by key selection index
+        let filterBlock = getFilterBlockByIndex( index )
+        // persist current filter to provider based playlist
+        setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
+        // show notification for user about current filter set
+        showFilterNotification ( filterBlock.0, filterBlock.1 )
+        // call specific filter action corresponding to current filter-item menu selection
+        handleTableFilterByFetchChainQuery(
+            filterBlock.2,
+            filterBlock.3,
+            filterBlock.4
         )
     }
     
@@ -155,7 +170,12 @@ extension PlaylistViewController {
             From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
             ) as? StreamProviderConfig {
             
-            return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
+            let filterKey = Int ( _configKeyRow.defaultPlaylistTableFilterKey )
+            if  debugMode == true {
+                print ("=== config_load :: KEY ➡ [FILTER_INDEX = (\(filterKey))] ===")
+            }
+            
+            return filterKey
         }
         
         return 0
@@ -357,9 +377,14 @@ extension PlaylistViewController {
     //
     func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
         
+        // finale item allocation for our filterMenu
         playListMenuBasicFilters.items = menuItems
         tableView.addSubview(playListMenuBasicFilters)
         
+        // updated selected index based on given persisted filterKey
+        playListMenuBasicFilters.selectedIndex = getConfigTableFilterKeyByProviderTag()
+        
+        // finalize the preload process, hide loading bar now ...
        _playlistGradientLoadingBar.hide()
     }
     
@@ -478,16 +503,13 @@ extension PlaylistViewController {
     @objc
     func setupUILoadExtendedPlaylists() {
         
-        //
-        // primary fetch request for all local cached/enriched playlist data which will
-        // be finally shown in our tableView (using same filter based method as inside
-        // our direct filter call actions (user rating filter as default)
-        //
-        
-        handleTableFilterByFetchChainQuery (
-            OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating),
-            nil,
-            true
+        // fetch logical filterBlock by key selection index
+        let filterBlock = getFilterBlockByIndex( getConfigTableFilterKeyByProviderTag() )
+        // call specific filter action corresponding to current filter-item menu selection
+        handleTableFilterByFetchChainQuery(
+            filterBlock.2,
+            filterBlock.3,
+            filterBlock.4
         )
     }
     
