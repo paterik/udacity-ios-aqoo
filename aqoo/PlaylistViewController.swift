@@ -109,7 +109,7 @@ class PlaylistViewController: BaseViewController,
             "description": "Your playlists ordered by rating",
             "image_key": filterItem.PlaylistBestRated.rawValue,
             "query_order_by": OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating),
-            "query_order_use_defaults": true,
+            "query_order_use_internals": true,
         ],
         
         1 : [
@@ -117,7 +117,7 @@ class PlaylistViewController: BaseViewController,
             "description": "Your playlists in alphabetical order",
             "image_key": filterItem.PlaylistTitleAlphabetical.rawValue,
             "query_order_by": OrderBy<StreamPlayList>.SortKey.ascending(\StreamPlayList.metaListInternalName),
-            "query_order_use_defaults": true,
+            "query_order_use_internals": true,
         ],
         
         2 : [
@@ -125,7 +125,7 @@ class PlaylistViewController: BaseViewController,
             "description": "Your playlists ordered by track count",
             "image_key": filterItem.PlaylistNumberOfTracks.rawValue,
             "query_order_by": OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.trackCount),
-            "query_order_use_defaults": true,
+            "query_order_use_internals": true,
         ],
         
         3 : [
@@ -133,7 +133,7 @@ class PlaylistViewController: BaseViewController,
             "description": "Your playlists ordered by the number of times played",
             "image_key": filterItem.PlaylistMostListenend.rawValue,
             "query_order_by": OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaNumberOfPlayed),
-            "query_order_use_defaults": true,
+            "query_order_use_internals": true,
         ],
         
         4 : [
@@ -141,7 +141,7 @@ class PlaylistViewController: BaseViewController,
             "description": "Your hidden playlist stack",
             "image_key": filterItem.PlaylistHidden.rawValue,
             "query_override": From<StreamPlayList>().where(\StreamPlayList.isPlaylistHidden == true),
-            "query_order_use_defaults": false,
+            "query_order_use_internals": false,
         ]
     ]
     

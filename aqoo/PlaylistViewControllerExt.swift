@@ -111,7 +111,7 @@ extension PlaylistViewController {
                     }
                     
                     // fetch 'order-by' query enforce-default-order flag from dictionary stack
-                    if  let _metaQueryUseDefaults = _metaValue["query_order_use_defaults"] as? Bool {
+                    if  let _metaQueryUseDefaults = _metaValue["query_order_use_internals"] as? Bool {
                         filterQueryUseDefaults = _metaQueryUseDefaults
                     }
                     
@@ -423,7 +423,7 @@ extension PlaylistViewController {
                             "description": "Fetch all \(_userName)'s playlists",
                             "image_key": -1,
                             "query_override": From<StreamPlayList>().where(\StreamPlayList.owner == _userName),
-                            "query_order_use_defaults": false
+                            "query_order_use_internals": false
                         ]]
                         
                         // extend previously set basic filter items by user profiles
