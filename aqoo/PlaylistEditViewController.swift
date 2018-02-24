@@ -137,6 +137,23 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.isPlaylistVotedByStar = self.playListInDb!.isPlaylistVotedByStar
                     playlistToUpdate!.isPlaylistYourWeekly = self.playListInDb!.isPlaylistYourWeekly
                     playlistToUpdate!.coverImagePathOverride = self.playListInDb!.coverImagePathOverride
+                    
+                    //
+                    // add some special order weight values for internal playlists
+                    //
+                    
+                    if  playlistToUpdate!.isPlaylistRadioSelected == true {
+                        playlistToUpdate!.metaWeight = filterInternalWeight.PlaylistRadioLiked.rawValue
+                    }
+                    
+                    if  playlistToUpdate!.isPlaylistVotedByStar == true {
+                        playlistToUpdate!.metaWeight = filterInternalWeight.PlaylistStarRated.rawValue
+                    }
+                    
+                    if  playlistToUpdate!.isPlaylistYourWeekly == true {
+                        playlistToUpdate!.metaWeight = filterInternalWeight.PlaylistYourWeekly.rawValue
+                    }
+                    
                     self.playListInDb = playlistToUpdate!
                 }
             },

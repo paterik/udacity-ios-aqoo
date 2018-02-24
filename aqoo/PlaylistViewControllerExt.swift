@@ -43,7 +43,7 @@ extension PlaylistViewController {
     }
     
     func setupSYSConfig() {
-        print ("=== config_load :: KEY ➡ [TEST_VALUE : 1] ===")
+        // print ("=== config_load :: KEY ➡ [TEST_VALUE : 1] ===")
     }
     
     func setupUITableBasicMenuView() {
@@ -254,9 +254,7 @@ extension PlaylistViewController {
         if  filterQueryOrderByClause != nil {
             filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
             if  filterQueryUseDefaults == true {
-                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistRadioSelected) )
-                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistVotedByStar) )
-                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.isPlaylistYourWeekly) )
+                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.metaWeight) )
             }
         }
         
@@ -941,6 +939,7 @@ extension PlaylistViewController {
                     _playListInDb!.isSpotify = _playlistIsSpotify
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
+                    _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
                     
                     _playListInDb!.metaListInternalName = playListInCloud.name
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(

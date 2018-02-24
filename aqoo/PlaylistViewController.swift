@@ -73,32 +73,6 @@ class PlaylistViewController: BaseViewController,
     var playListBasicFilterItems = [MenuItem]()
     
     //
-    // all predefined filter indices as 'readably' value
-    //
-    enum filterItem: Int {
-        
-        case PlaylistLastUpdated = 1
-        case PlaylistTitleAlphabetical = 2
-        case PlaylistNumberOfTracks = 3
-        case PlaylistMostListenend = 4
-        case PlaylistBestRated = 5
-        case PlaylistHidden = 6
-        case PlaylistMostShared = 7
-        case PlaylistMostFollower = 8
-    }
-    
-    //
-    // this weight presets will be used for order internal playlist order
-    //
-    enum filterInternalWeight: Int {
-        
-        case PlaylistYourWeekly = 9999
-        case PlaylistRadioLiked = 9998
-        case PlaylistStarRated = 9997
-        case Default = 0
-    }
-    
-    //
     // primary used filter context including title, description, imageKey
     // and corresponding FetchChainBuilder (query)
     //
@@ -244,6 +218,7 @@ class PlaylistViewController: BaseViewController,
             playlistCacheData.isPlaylistVotedByStar == true ||
             playlistCacheData.isPlaylistRadioSelected == true ||
             playlistCacheData.isPlaylistYourWeekly == true {
+            
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
 
