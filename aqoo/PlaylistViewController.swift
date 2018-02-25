@@ -227,18 +227,22 @@ class PlaylistViewController: BaseViewController,
             handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
         }
         
-        // set default cover image using makeLetterAvatar vendor library call
+        // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
         playlistCell.imageViewPlaylistCoverInDetail.image = playlistCell.imageViewPlaylistCover.image
+        
         // set final cover image based on current playlist model and corresponding imageView
-        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCover )
+        var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
+        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCoverView)
         if  coverImageBlock.view != nil {
+            
+            // set image cover in foldingCell normal view and set cacheKey
             playlistCell.imageCacheKey = coverImageBlock.key
-            playlistCell.imageViewPlaylistCover = coverImageBlock.view
-        };  coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCoverInDetail )
-        if  coverImageBlock.view != nil {
-            playlistCell.imageCacheKey = coverImageBlock.key
-            playlistCell.imageViewPlaylistCoverInDetail = coverImageBlock.view
+            playlistCoverView = coverImageBlock.view
+            
+            // set image cover in foldingCell detail view, using the same technics as used in normalView
+            playlistCoverView = playlistCell.imageViewPlaylistCoverInDetail
+            playlistCoverView = getCoverImageViewByCacheModel(playlistCacheData, playlistCoverView).view
         }
         
         return playlistCell
@@ -345,8 +349,17 @@ class PlaylistViewController: BaseViewController,
         }
     }
     
-    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) { }
-    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) { }
+    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
+        if  let playlistCell = pCell as? PlaylistTableFoldingCell {
+            let viewToAnimate = playlistCell.imageViewPlaylistCoverInDetail!
+        }
+    }
+    
+    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
+        if  let playlistCell = pCell as? PlaylistTableFoldingCell {
+            let viewToAnimate = playlistCell.imageViewPlaylistCoverInDetail!
+        }
+    }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
         

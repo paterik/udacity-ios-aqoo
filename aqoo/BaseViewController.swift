@@ -18,6 +18,7 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
+    let debugKFCMode: Bool = false
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let spotifyClient = SpotifyClient.sharedInstance
@@ -161,28 +162,28 @@ class BaseViewController: UIViewController {
         if  playlistItem.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistItem.largestImageURL!)
             _noCoverImageAvailable = false
-            if self.debugMode == true { print ("--- use large cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true { print ("--- use large cover for [\(playlistItem.metaListInternalName)]") }
         }
         
         // no large image found? try smallestImageURL instead
         if  playlistItem.smallestImageURL != nil && _noCoverImageAvailable == true {
             _usedCoverImageURL = URL(string: playlistItem.smallestImageURL!)
             _noCoverImageAvailable = false
-            if self.debugMode == true { print ("--- use small cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true { print ("--- use small cover for [\(playlistItem.metaListInternalName)]") }
         }
         
         // check playlist item is part of internal playlist selection - take internal cover on match
         if  let _imageName = getInternalCoverImageNameByCacheModel(playlistItem) {
             playlistCoverImageView.image = UIImage(named: _imageName)
             _noCoverSetForInternal = true
-            if self.debugMode == true { print ("--- use internal cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true { print ("--- use internal cover for [\(playlistItem.metaListInternalName)]") }
         }
         
         // set user selected images for covers if available (on non-internal playlist only)
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
                 playlistCoverImageView.image = _image
-                if self.debugMode == true { print ("--- use cover override for [\(playlistItem.metaListInternalName)]") }
+                if self.debugKFCMode == true { print ("--- use cover override for [\(playlistItem.metaListInternalName)]") }
             }
         }
         
@@ -195,7 +196,7 @@ class BaseViewController: UIViewController {
                 image, cacheType in
                 if  let _cacheImage = image {
                     playlistCoverImageView.image = _cacheImage
-                    if  self.debugMode == true {
+                    if  self.debugKFCMode == true {
                         print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
                         print("--- KFC :: image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
                         print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
@@ -217,7 +218,7 @@ class BaseViewController: UIViewController {
                             }
                             
                             if error != nil {
-                                if  self.debugMode == true {
+                                if  self.debugKFCMode == true {
                                     print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
                                     print("--- KFC :: image couldn't handled successfully")
                                     print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
@@ -228,7 +229,7 @@ class BaseViewController: UIViewController {
                         }
                     )
                     
-                    if  self.debugMode == true {
+                    if  self.debugKFCMode == true {
                         print("\n--- KFC :: image doesn't exist in cache, corresponding cache entry was created")
                         print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
                     }

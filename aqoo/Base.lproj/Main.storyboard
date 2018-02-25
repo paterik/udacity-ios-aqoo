@@ -262,30 +262,29 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
                                                             <rect key="frame" x="0.0" y="0.0" width="355" height="135"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XyL-Rk-Hzf" userLabel="ui_view_content_001_left">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
-                                                                    <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="HGO-lT-TFa" userLabel="ui_img_playlistCover">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
-                                                                            <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        </imageView>
-                                                                    </subviews>
-                                                                    <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPi-Z5-2Zt" userLabel="ui_lbl_playlistName">
+                                                                    <rect key="frame" x="98" y="8" width="249" height="20"/>
                                                                     <constraints>
-                                                                        <constraint firstItem="HGO-lT-TFa" firstAttribute="top" secondItem="XyL-Rk-Hzf" secondAttribute="top" id="D9j-4H-HTb"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="HGO-lT-TFa" secondAttribute="trailing" id="fzK-gx-MaH"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="HGO-lT-TFa" secondAttribute="bottom" id="rg5-mp-CWg"/>
-                                                                        <constraint firstItem="HGO-lT-TFa" firstAttribute="leading" secondItem="XyL-Rk-Hzf" secondAttribute="leading" id="wot-hS-Oyh"/>
+                                                                        <constraint firstAttribute="height" constant="20" id="GfJ-YU-mUZ"/>
                                                                     </constraints>
-                                                                </view>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="HGO-lT-TFa" userLabel="ui_img_playlistCover">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                                    <color key="backgroundColor" red="0.90588235289999997" green="0.0" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstItem="XyL-Rk-Hzf" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="2Rd-Zu-iik"/>
-                                                                <constraint firstAttribute="trailing" secondItem="XyL-Rk-Hzf" secondAttribute="trailing" constant="265" id="Ko7-ze-whH"/>
-                                                                <constraint firstItem="XyL-Rk-Hzf" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="QkN-81-CA7"/>
-                                                                <constraint firstAttribute="bottom" secondItem="XyL-Rk-Hzf" secondAttribute="bottom" constant="45" id="vtO-Rc-vPh"/>
+                                                                <constraint firstAttribute="trailing" secondItem="cPi-Z5-2Zt" secondAttribute="trailing" constant="8" id="Fnq-1g-AX1"/>
+                                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="8" symbolic="YES" id="GQG-sw-kha"/>
+                                                                <constraint firstItem="HGO-lT-TFa" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="QKT-nj-ue3"/>
+                                                                <constraint firstItem="HGO-lT-TFa" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="aL2-8L-p1F"/>
+                                                                <constraint firstAttribute="bottom" secondItem="HGO-lT-TFa" secondAttribute="bottom" constant="45" id="gtB-CZ-OuU"/>
+                                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" constant="8" id="tdu-K1-StB"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
@@ -304,23 +303,23 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="uEm-L6-f0N" secondAttribute="trailing" id="1LB-sG-5d3"/>
                                                         <constraint firstItem="vfi-s7-Zxw" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="255" identifier="yPosition" id="1Rb-qN-UX9"/>
                                                         <constraint firstItem="vfi-s7-Zxw" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="2Gz-we-YaL"/>
                                                         <constraint firstAttribute="trailing" secondItem="Wic-g1-BMa" secondAttribute="trailing" id="3D8-KR-IvE"/>
                                                         <constraint firstAttribute="trailing" secondItem="vfi-s7-Zxw" secondAttribute="trailing" id="3wa-vj-XwG"/>
-                                                        <constraint firstItem="Wic-g1-BMa" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="bottom" id="485-76-GCN"/>
-                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" id="AVa-Vk-BPY"/>
+                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" id="497-U8-PZZ"/>
                                                         <constraint firstAttribute="bottom" secondItem="vfi-s7-Zxw" secondAttribute="bottom" constant="10" id="GwX-0J-vNX"/>
                                                         <constraint firstItem="vfi-s7-Zxw" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="bottom" id="Nv9-Es-d7Z"/>
                                                         <constraint firstAttribute="height" constant="310" id="OQP-Ih-h7a"/>
-                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="RI7-bF-TOL"/>
                                                         <constraint firstItem="2de-as-ZwF" firstAttribute="top" secondItem="Wic-g1-BMa" secondAttribute="bottom" id="Rq8-ZA-3lI"/>
+                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="leading" secondItem="Wic-g1-BMa" secondAttribute="leading" id="SjC-NG-5AW"/>
+                                                        <constraint firstItem="Wic-g1-BMa" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="bottom" id="TJP-O9-Nic"/>
                                                         <constraint firstAttribute="trailing" secondItem="2de-as-ZwF" secondAttribute="trailing" id="TgD-t9-4gE"/>
                                                         <constraint firstItem="Wic-g1-BMa" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="aof-w5-u8M"/>
                                                         <constraint firstItem="2de-as-ZwF" firstAttribute="leading" secondItem="lIF-EV-Fgk" secondAttribute="leading" id="bbE-dX-YgO"/>
                                                         <constraint firstItem="Wic-g1-BMa" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="135" identifier="yPosition" id="cXz-HP-Dt8"/>
                                                         <constraint firstItem="2de-as-ZwF" firstAttribute="top" secondItem="lIF-EV-Fgk" secondAttribute="top" constant="210" identifier="yPosition" id="wc7-0g-8gm"/>
+                                                        <constraint firstItem="uEm-L6-f0N" firstAttribute="trailing" secondItem="Wic-g1-BMa" secondAttribute="trailing" id="xnz-7U-o8K"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -328,6 +327,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="ZR1-8l-W4s" secondAttribute="trailing" constant="10" id="63M-5H-Hn1"/>
                                                 <constraint firstAttribute="trailing" secondItem="lIF-EV-Fgk" secondAttribute="trailing" constant="10" id="81N-iz-lh0"/>
+                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="108" id="Gba-yI-b65"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="ap7-4r-n1J"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="10" identifier="ForegroundViewTop" id="l1t-UW-mH7"/>
                                                 <constraint firstItem="lIF-EV-Fgk" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="nWe-uc-Gc4"/>
