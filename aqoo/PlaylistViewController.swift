@@ -229,11 +229,16 @@ class PlaylistViewController: BaseViewController,
         
         // set default cover image using makeLetterAvatar vendor library call
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
+        playlistCell.imageViewPlaylistCoverInDetail.image = playlistCell.imageViewPlaylistCover.image
         // set final cover image based on current playlist model and corresponding imageView
-        let coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCover )
+        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCover )
         if  coverImageBlock.view != nil {
             playlistCell.imageCacheKey = coverImageBlock.key
             playlistCell.imageViewPlaylistCover = coverImageBlock.view
+        };  coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCell.imageViewPlaylistCoverInDetail )
+        if  coverImageBlock.view != nil {
+            playlistCell.imageCacheKey = coverImageBlock.key
+            playlistCell.imageViewPlaylistCoverInDetail = coverImageBlock.view
         }
         
         return playlistCell
@@ -287,9 +292,9 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                if  self.debugMode == true {
-                    print ("TBL_ACTION_DETECTED : Hide")
-                }
+            if  self.debugMode == true {
+                print ("TBL_ACTION_DETECTED : Hide")
+            }
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -299,9 +304,9 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnShowPlaylist_v2"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                if  self.debugMode == true {
-                    print ("TBL_ACTION_DETECTED : ShowDetails")
-                }
+            if  self.debugMode == true {
+                print ("TBL_ACTION_DETECTED : ShowDetails")
+            }
         }
         
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
@@ -341,7 +346,6 @@ class PlaylistViewController: BaseViewController,
     }
     
     func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) { }
-    
     func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) { }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {

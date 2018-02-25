@@ -261,7 +261,32 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEm-L6-f0N" userLabel="ui_view_content_001">
                                                             <rect key="frame" x="0.0" y="0.0" width="355" height="135"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XyL-Rk-Hzf" userLabel="ui_view_content_001_left">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                                    <subviews>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="HGO-lT-TFa" userLabel="ui_img_playlistCover">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                                            <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        </imageView>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="HGO-lT-TFa" firstAttribute="top" secondItem="XyL-Rk-Hzf" secondAttribute="top" id="D9j-4H-HTb"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="HGO-lT-TFa" secondAttribute="trailing" id="fzK-gx-MaH"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="HGO-lT-TFa" secondAttribute="bottom" id="rg5-mp-CWg"/>
+                                                                        <constraint firstItem="HGO-lT-TFa" firstAttribute="leading" secondItem="XyL-Rk-Hzf" secondAttribute="leading" id="wot-hS-Oyh"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="XyL-Rk-Hzf" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="2Rd-Zu-iik"/>
+                                                                <constraint firstAttribute="trailing" secondItem="XyL-Rk-Hzf" secondAttribute="trailing" constant="265" id="Ko7-ze-whH"/>
+                                                                <constraint firstItem="XyL-Rk-Hzf" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="QkN-81-CA7"/>
+                                                                <constraint firstAttribute="bottom" secondItem="XyL-Rk-Hzf" secondAttribute="bottom" constant="45" id="vtO-Rc-vPh"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="135" width="355" height="75"/>
@@ -326,6 +351,7 @@
                                             <outlet property="foregroundViewTop" destination="l1t-UW-mH7" id="cnM-Qd-347"/>
                                             <outlet property="imageViewContentChangedManually" destination="v2e-jW-gyw" id="qi5-gr-gWX"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
+                                            <outlet property="imageViewPlaylistCoverInDetail" destination="HGO-lT-TFa" id="ypK-XA-OPz"/>
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="lblPlaylistMetaTrackCount" destination="Rzk-Wc-Tps" id="LIa-jC-TVe"/>
@@ -1294,7 +1320,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOV-zE-kWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5972" y="-174"/>
+            <point key="canvasLocation" x="3561" y="-860"/>
         </scene>
         <!--NavigationControllerPLCellView-->
         <scene sceneID="kdu-Z7-SaA">
