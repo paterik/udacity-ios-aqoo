@@ -1172,7 +1172,6 @@ extension PlaylistViewController {
         if playlistTableFoldingCell == nil { return }
         
         playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
-        setPlaylistPlayMode( playlistTableFoldingCell!.metaPlaylistInDb!, playMode.Default.rawValue )
         
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
