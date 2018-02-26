@@ -1146,11 +1146,34 @@ extension PlaylistViewController {
         )
     }
     
+    //
+    // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected [..] more precisely
+    //
+    func handlePlaylistCellObjectsByTapAction(_ button: UIButton) {
+        
+        guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell })
+        else
+        {
+            _handleErrorAsDialogMessage(
+                "Error Handling Playback Controls",
+                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by our palyback events!"
+            )
+            
+            return
+        }
+        
+        _playlistInCellSelected = _cell
+        _playlistInCacheSelected = _cell.metaPlaylistInDb!
+    }
+    
     func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
 
         if playlistTableFoldingCell == nil { return }
         
-        playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
+        print ("!!! RESET [\(playlistTableFoldingCell!.metaPlaylistInDb!.metaListInternalName)] !!!")
+        
+        // playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
+        setPlaylistPlayMode( playlistTableFoldingCell!.metaPlaylistInDb!, playMode.Default.rawValue )
         
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
@@ -1172,10 +1195,10 @@ extension PlaylistViewController {
             //
             
             if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
-                print ("\n=== another cell try to play music now ===")
+                print ("\n=== another cell try to play music now ===\n")
                 print ("    old: \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
-                print ("    new: \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)")
-                print ("==========================================")
+                print ("    new: \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
+                print ("==========================================\n")
                 resetPlayModeControls( _playlistInCellSelectedInPlayMode )
             }
             

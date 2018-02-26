@@ -374,11 +374,7 @@ class PlaylistViewController: BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in
-            if  self.debugMode == true {
-                print ("_ opening cell done")
-            }
-        })
+        },  completion: { (Bool) -> Void in })
     }
     
     func animateFoldingCellClose(_ pDuration: TimeInterval) {
@@ -389,11 +385,7 @@ class PlaylistViewController: BaseViewController,
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             
-        },  completion: { (Bool) -> Void in
-            if  self.debugMode == true {
-                print ("_ closing cell done")
-            }
-        })
+        },  completion: { (Bool) -> Void in })
     }
     
     //
@@ -411,89 +403,59 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnPlayRepeatModeAction(_ button: UIButton) {
         
-        if  _playlistInCacheSelected != nil {
-            _playlistInCacheSelected!.toggleRepeatPlayMode()
-            if _playlistInCacheSelected!.inRepeatPlayMode == true {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
-                
-                //
-                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
-                // and (re)bound primary model objects now!
-                //
-                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
-                    
-                    _playlistInCellSelected  = _cell
-                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
-                }
-                
-            }   else {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-            }
-            
-            togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
-            
-            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        handlePlaylistCellObjectsByTapAction( button )
+        
+        _playlistInCacheSelected!.toggleRepeatPlayMode()
+        
+        if _playlistInCacheSelected!.inRepeatPlayMode == true {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
+        }   else {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
         }
+        
+        togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
+        
+        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayShuffleModeAction(_ button: UIButton) {
         
-        if  _playlistInCacheSelected != nil {
-            _playlistInCacheSelected!.toggleShufflePlayMode()
-            if _playlistInCacheSelected!.inShufflePlayMode == true {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
-                
-                //
-                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
-                // and (re)bound primary model objects now!
-                //
-                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
-                    
-                    _playlistInCellSelected  = _cell
-                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
-                }
-                
-            }   else {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-            }
-            
-            togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
-            
-            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        handlePlaylistCellObjectsByTapAction( button )
+        
+        _playlistInCacheSelected!.toggleShufflePlayMode()
+        
+        if _playlistInCacheSelected!.inShufflePlayMode == true {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
+        }   else {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
         }
+        
+        togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+        
+        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
 
-        if  _playlistInCacheSelected != nil {
-            _playlistInCacheSelected!.toggleNormalPlayMode()
-            if _playlistInCacheSelected!.inNormalPlayMode == true {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
-
-                //
-                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
-                // and (re)bound primary model objects now!
-                //
-                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
-                 
-                    _playlistInCellSelected  = _cell
-                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
-                }
-                
-            }   else {
-                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-            }
-           
-            togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
-            
-            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        handlePlaylistCellObjectsByTapAction( button )
+    
+        _playlistInCacheSelected!.toggleNormalPlayMode()
+    
+        if _playlistInCacheSelected!.inNormalPlayMode == true {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
+        }   else {
+            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
         }
+       
+        togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
+        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+        
+        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
