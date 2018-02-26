@@ -260,7 +260,7 @@ class PlaylistViewController: BaseViewController,
        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
         if playlistCell.metaPlaylistInDb == nil {
             _handleErrorAsDialogMessage(
-                "Error Loading Playlist Cache",
+                "Error Loading Cache Playlist",
                 "This local playlist [index: \(indexPath.row)] is not found in your cache api call!"
             )
             
@@ -269,11 +269,10 @@ class PlaylistViewController: BaseViewController,
         
        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         playlistCell.metaPlayListInCloud = _playlistInCloudSelected
-        
         if playlistCell.metaPlayListInCloud == nil {
             _handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
-                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' is not found in spotify api call!"
+                "The local playlist [index: \(indexPath.row)] is not found in spotify api call!"
             )
             
             return []
@@ -356,7 +355,7 @@ class PlaylistViewController: BaseViewController,
 
         if  let playlistCell = pCell as? PlaylistTableFoldingCell {
             _playlistInCacheSelected = playlistCell.metaPlaylistInDb
-            _playlistInCloudSelected = playlistCell.metaPlayListInCloud
+            _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
             _playlistInCellSelected = playlistCell
         }
     }
@@ -416,6 +415,7 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
+       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayShuffleModeAction(_ button: UIButton) {
@@ -433,6 +433,7 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
@@ -450,6 +451,7 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {

@@ -1147,7 +1147,7 @@ extension PlaylistViewController {
     }
     
     //
-    // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected [..] more precisely
+    // try to find corresponding PlaylistTableFoldingCell object to update _playlistInCellSelected [..] more precisely
     //
     func handlePlaylistCellObjectsByTapAction(_ button: UIButton) {
         
@@ -1164,7 +1164,7 @@ extension PlaylistViewController {
         
         _playlistInCellSelected = _cell
         _playlistInCacheSelected = _cell.metaPlaylistInDb!
-        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
     }
     
     func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
