@@ -80,32 +80,17 @@ class StreamPlayList: NSManagedObject {
 
 extension StreamPlayList {
 
-    func toggleShufflePlayMode() {
-        
-        shufflePlayMode = !shufflePlayMode
-        normalPlayMode  = false
-        repeatPlayMode  = false
-    };  var inShufflePlayMode: Bool {
+    var inShufflePlayMode: Bool {
         get { return shufflePlayMode }
         set { shufflePlayMode = newValue }
     }
     
-    func toggleNormalPlayMode() {
-        
-        normalPlayMode  = !normalPlayMode
-        shufflePlayMode = false
-        repeatPlayMode  = false
-    };  var inNormalPlayMode: Bool {
+    var inNormalPlayMode: Bool {
         get { return normalPlayMode }
         set { normalPlayMode = newValue }
     }
     
-    func toggleRepeatPlayMode() {
-        
-        repeatPlayMode  = !repeatPlayMode
-        shufflePlayMode = false
-        normalPlayMode  = false
-    };  var inRepeatPlayMode: Bool {
+    var inRepeatPlayMode: Bool {
         get { return repeatPlayMode }
         set { repeatPlayMode = newValue }
     }

@@ -1189,9 +1189,9 @@ extension PlaylistViewController {
         if  active == true {
             
             if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
-                print ("\n=== another cell try to play music now ===\n")
-                print ("    OLD : \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
-                print ("    NEW : \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
+                print ("\n=== Another Cell Try To Play Music Now ===\n")
+                print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
+                print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
                 // resetPlayModeControls( _playlistInCellSelectedInPlayMode )
             }
