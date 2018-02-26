@@ -35,6 +35,8 @@ class PlaylistViewController: BaseViewController,
     
     let kCloseCellHeight: CGFloat = 100 // 90
     let kOpenCellHeight: CGFloat = 345 // 310
+    let kOpenCellduration: Double = 0.5125
+    let kCloseCellDuration: Double = 0.1275
     let kRowsCount = 9999
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
@@ -314,34 +316,50 @@ class PlaylistViewController: BaseViewController,
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
     }
     
+    func handleClosePlaylistCell(_ cell: PlaylistTableFoldingCell) {
+        
+        if  let playlistTable = cell.superview as? UITableView {
+            let indexPath = playlistTable.indexPath(for: cell)
+            
+           _cellHeights[indexPath!.row] = kCloseCellHeight
+           
+            animateFoldingCellClose(kCloseCellDuration)
+            cell.selectedAnimation(false, animated: true, completion: { () -> Void in
+                self.animateFoldingCellContentClose(self.kCloseCellDuration, pCell: cell)
+            })
+        }
+    }
+    
+    func handleOpenPlaylistCell(_ cell: PlaylistTableFoldingCell) {
+        
+        if  let playlistTable = cell.superview as? UITableView {
+            let indexPath = playlistTable.indexPath(for: cell)
+            
+           _cellHeights[indexPath!.row] = kOpenCellHeight
+            
+            animateFoldingCell(kOpenCellduration)
+            animateFoldingCellContentOpen(kOpenCellduration, pCell: cell)
+            
+            cell.selectedAnimation(true, animated: true, completion: nil)
+        }
+    }
+    
     func tableView(
        _ tableView: UITableView,
          didSelectRowAt indexPath: IndexPath) {
         
-        guard case let cell as FoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else { return }
+        guard case let cell as PlaylistTableFoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else { return }
         if cell.isAnimating() { return }
         
         let isCellOpening = _cellHeights[indexPath.row] == kCloseCellHeight
         let isCellClosing = !isCellOpening
-        
-        var duration = 0.0
 
         if  isCellOpening == true {
-           _cellHeights[indexPath.row] = kOpenCellHeight; duration = 0.5125
-            
-            animateFoldingCell(duration)
-            animateFoldingCellContentOpen(duration, pCell: cell)
-            
-            cell.selectedAnimation(true, animated: true, completion: nil)
+            handleOpenPlaylistCell(cell)
         }
         
         if  isCellClosing == true {
-           _cellHeights[indexPath.row] = kCloseCellHeight; duration = 0.1275
-            
-            animateFoldingCellClose(duration)
-            cell.selectedAnimation(false, animated: true, completion: { () -> Void in
-                self.animateFoldingCellContentClose(duration, pCell: cell)
-            })
+            handleClosePlaylistCell(cell)
         }
     }
     

@@ -1166,6 +1166,7 @@ extension PlaylistViewController {
         _playlistInCacheSelected = _cell.metaPlaylistInDb!
         _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         
+        // majic : now decide based on tapped-button what action should provide into business logic
         handlePlaylistControlActionByButton( button )
     }
     
@@ -1225,7 +1226,7 @@ extension PlaylistViewController {
             default: return
         }
         
-        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
@@ -1237,6 +1238,8 @@ extension PlaylistViewController {
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
+        
+        handleClosePlaylistCell( playlistTableFoldingCell! )
     }
     
     func togglePlayModeControls(
