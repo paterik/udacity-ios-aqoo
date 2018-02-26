@@ -38,7 +38,7 @@ class PlaylistViewController: BaseViewController,
     let kRowsCount = 9999
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
-    let _sysCacheCheckInSeconds = 99
+    let _sysCacheCheckInSeconds = 3600
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30
     let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
@@ -416,8 +416,6 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
-        
-        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayShuffleModeAction(_ button: UIButton) {
@@ -435,8 +433,6 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
-        
-        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
@@ -454,8 +450,6 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
-        
-        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {

@@ -1164,6 +1164,7 @@ extension PlaylistViewController {
         
         _playlistInCellSelected = _cell
         _playlistInCacheSelected = _cell.metaPlaylistInDb!
+        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
@@ -1172,7 +1173,7 @@ extension PlaylistViewController {
         
         print ("!!! RESET [\(playlistTableFoldingCell!.metaPlaylistInDb!.metaListInternalName)] !!!")
         
-        // playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
+        playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
         setPlaylistPlayMode( playlistTableFoldingCell!.metaPlaylistInDb!, playMode.Default.rawValue )
         
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
@@ -1194,13 +1195,13 @@ extension PlaylistViewController {
             //      active ones that will currently play stuff
             //
             
-            if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
+            /*if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
                 print ("\n=== another cell try to play music now ===\n")
                 print ("    old: \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
                 print ("    new: \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
                 resetPlayModeControls( _playlistInCellSelectedInPlayMode )
-            }
+            }*/
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.normal)
@@ -1225,7 +1226,10 @@ extension PlaylistViewController {
                 
                 switch result {
                 case .failure(let error): if self.debugMode == true { print (error) }
-                case .success(let userInfo): if self.debugMode == true { print ("dbg [playlist] : playmode updated to [\(newPlayMode)]") }
+                case .success(let userInfo):
+                    if self.debugMode == true {
+                        print ("dbg [playlist] : playMode for [\(playListInDb.metaListInternalName)] updated to [\(newPlayMode)]")
+                    }
                 }
             }
         )
@@ -1254,7 +1258,7 @@ extension PlaylistViewController {
                         case  .success(let userInfo):
                             
                             if  self.debugMode == true {
-                                print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> PLAY_FLAG_REMOVED\n")
+                                print ("dbg [playlist] : playFlag for [\(playListInDb.metaListInternalName)] removed")
                             }
                         }
                     }
