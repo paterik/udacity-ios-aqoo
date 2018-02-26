@@ -75,15 +75,15 @@ class BaseViewController: UIViewController {
     }
     
     //
-    // our available playmodes for (cell) items in playlist
+    // our available playmodes for (cell) items in playlist. This
+    // enum values will also stand for corresponding button tags!
     //
-    
     enum playMode: Int16 {
         
+        case Default = 0
         case PlayNormal = 1
         case PlayShuffle = 2
         case PlayRepeatAll = 3
-        case Default = 0
     }
     
     //

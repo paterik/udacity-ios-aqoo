@@ -394,65 +394,19 @@ class PlaylistViewController: BaseViewController,
         }
     }
     
-    @IBAction func btnPlayRepeatModeAction(_ button: UIButton) {
-        
-        handlePlaylistCellObjectsByTapAction( button )
-        
-       _playlistInCacheSelected!.inRepeatPlayMode = false
-        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
-           _playlistInCacheSelected!.inRepeatPlayMode = true
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
-        }   else {
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-        }
-        
-        togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
-        
-       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+    @IBAction func btnPlayRepeatModeAction(_ playModeControlBtn: UIButton) {
+
+        handlePlaylistCellObjectsByTapAction( playModeControlBtn )
     }
     
-    @IBAction func btnPlayShuffleModeAction(_ button: UIButton) {
+    @IBAction func btnPlayShuffleModeAction(_ playModeControlBtn: UIButton) {
         
-        handlePlaylistCellObjectsByTapAction( button )
-        
-       _playlistInCacheSelected!.inShufflePlayMode = false
-        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayShuffle.rawValue {
-           _playlistInCacheSelected!.inShufflePlayMode = true
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
-        }   else {
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-        }
-        
-        togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
-        
-       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        handlePlaylistCellObjectsByTapAction( playModeControlBtn )
     }
     
-    @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
-
-        // handle business objects behind this cell action click
-        handlePlaylistCellObjectsByTapAction( button )
-
-        // determine click state of "normal play mode" and persist state in cache (db)
-       _playlistInCacheSelected!.inNormalPlayMode = false
-        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayNormal.rawValue {
-           _playlistInCacheSelected!.inNormalPlayMode = true
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
-        }   else {
-            setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
-        }
-       
-        // handle optical effects for this playmode (normal-play)
-        togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
-        togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+    @IBAction func btnPlayNormalModeAction(_ playModeControlBtn: UIButton) {
         
-        // dev/dbg issue ...
-       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        handlePlaylistCellObjectsByTapAction( playModeControlBtn )
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {

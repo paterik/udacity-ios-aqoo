@@ -1165,6 +1165,67 @@ extension PlaylistViewController {
         _playlistInCellSelected = _cell
         _playlistInCacheSelected = _cell.metaPlaylistInDb!
         _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        
+        handlePlaylistControlActionByButton( button )
+    }
+    
+    func handlePlaylistControlActionByButton(_ button: UIButton) {
+        
+        _playlistInCacheSelected!.inRepeatPlayMode = false
+        _playlistInCacheSelected!.inShufflePlayMode = false
+        _playlistInCacheSelected!.inNormalPlayMode = false
+        
+        switch Int16 ( button.tag ) {
+            
+            case playMode.PlayRepeatAll.rawValue:
+                
+                if _playlistInCacheSelected!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
+                   _playlistInCacheSelected!.inRepeatPlayMode = true
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
+                }   else {
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
+                }
+                
+                togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,  "icnSetPlayNormal" )
+                
+                break
+            
+            case playMode.PlayShuffle.rawValue:
+                
+                if _playlistInCacheSelected!.currentPlayMode != playMode.PlayShuffle.rawValue {
+                   _playlistInCacheSelected!.inShufflePlayMode = true
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
+                }   else {
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
+                }
+                
+                togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+                
+                break
+            
+            case playMode.PlayNormal.rawValue:
+                
+                if _playlistInCacheSelected!.currentPlayMode != playMode.PlayNormal.rawValue {
+                   _playlistInCacheSelected!.inNormalPlayMode = true
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
+                }   else {
+                    setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
+                }
+                
+                togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+                
+                break
+            
+            default: return
+        }
+        
+        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
