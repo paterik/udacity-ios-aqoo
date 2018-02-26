@@ -1171,8 +1171,6 @@ extension PlaylistViewController {
 
         if playlistTableFoldingCell == nil { return }
         
-        print ("!!! RESET [\(playlistTableFoldingCell!.metaPlaylistInDb!.metaListInternalName)] !!!")
-        
         playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
         setPlaylistPlayMode( playlistTableFoldingCell!.metaPlaylistInDb!, playMode.Default.rawValue )
         
@@ -1193,7 +1191,7 @@ extension PlaylistViewController {
                 print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
                 print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
-                // resetPlayModeControls( _playlistInCellSelectedInPlayMode )
+                resetPlayModeControls( _playlistInCellSelectedInPlayMode )
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
