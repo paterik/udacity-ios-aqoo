@@ -1188,20 +1188,13 @@ extension PlaylistViewController {
         
         if  active == true {
             
-            // another cell will become active-playlist in playMode?
-            //
-            // bug: on any other open cell, the system cant evaluate the previously active one you have to
-            //      check last used cell by another function (may be iterate through all open cells and find
-            //      active ones that will currently play stuff
-            //
-            
-            /*if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
+            if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
                 print ("\n=== another cell try to play music now ===\n")
-                print ("    old: \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
-                print ("    new: \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
+                print ("    OLD : \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
+                print ("    NEW : \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
-                resetPlayModeControls( _playlistInCellSelectedInPlayMode )
-            }*/
+                // resetPlayModeControls( _playlistInCellSelectedInPlayMode )
+            }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.normal)
