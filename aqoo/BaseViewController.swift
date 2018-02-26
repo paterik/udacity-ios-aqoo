@@ -75,6 +75,18 @@ class BaseViewController: UIViewController {
     }
     
     //
+    // our available playmodes for (cell) items in playlist
+    //
+    
+    enum playMode: Int16 {
+        
+        case PlayNormal = 1
+        case PlayShuffle = 2
+        case PlayRepeatAll = 3
+        case Default = 0
+    }
+    
+    //
     // MARK: Base Methods
     //
     

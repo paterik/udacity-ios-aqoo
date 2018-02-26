@@ -425,6 +425,7 @@
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="lblPlaylistMetaTrackCount" destination="Rzk-Wc-Tps" id="LIa-jC-TVe"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
+                                            <outlet property="lblPlaylistNameInDetail" destination="cPi-Z5-2Zt" id="SHp-04-E39"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

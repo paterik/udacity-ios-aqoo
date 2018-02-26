@@ -54,6 +54,11 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaNumberOfPlayedPartly: Int64
     @NSManaged var metaNumberOfPlayedCompletely: Int64
     
+    //
+    // this property will be used as playmode flag for currently played playlists
+    //
+    @NSManaged var currentPlayMode: Int16
+    
     @NSManaged var metaPreviouslyUpdatedManually: Bool
     @NSManaged var metaPreviouslyUpdated: Bool
     @NSManaged var metaPreviouslyCreated: Bool
@@ -71,22 +76,16 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaWeight: Int32
     
     @NSManaged var provider: StreamProvider?
-    
-    func resetPlayMode() {
-        
-        normalPlayMode  = false
-        repeatPlayMode  = false
-        shufflePlayMode = false
-    }
-    
+}
+
+extension StreamPlayList {
+
     func toggleShufflePlayMode() {
         
         shufflePlayMode = !shufflePlayMode
         normalPlayMode  = false
         repeatPlayMode  = false
-    }
-    
-    var inShufflePlayMode: Bool {
+    };  var inShufflePlayMode: Bool {
         get { return shufflePlayMode }
         set { shufflePlayMode = newValue }
     }
@@ -96,9 +95,7 @@ class StreamPlayList: NSManagedObject {
         normalPlayMode  = !normalPlayMode
         shufflePlayMode = false
         repeatPlayMode  = false
-    }
-    
-    var inNormalPlayMode: Bool {
+    };  var inNormalPlayMode: Bool {
         get { return normalPlayMode }
         set { normalPlayMode = newValue }
     }
@@ -108,15 +105,20 @@ class StreamPlayList: NSManagedObject {
         repeatPlayMode  = !repeatPlayMode
         shufflePlayMode = false
         normalPlayMode  = false
-    }
-    
-    var inRepeatPlayMode: Bool {
+    };  var inRepeatPlayMode: Bool {
         get { return repeatPlayMode }
         set { repeatPlayMode = newValue }
     }
     
-    func getMD5FingerPrint() -> String {
+    func resetAllPlayModes() {
+        
+        normalPlayMode  = false
+        repeatPlayMode  = false
+        shufflePlayMode = false
+    }
     
+    func getMD5FingerPrint() -> String {
+        
         return String(
             format: "%@:%D:%@:%@",
             self.metaListNameOrigin,
@@ -124,9 +126,6 @@ class StreamPlayList: NSManagedObject {
             "\(self.isPublic)",
             "\(self.isCollaborative)").md5()
     }
-}
-
-extension StreamPlayList {
     
     var images: [String] {
         get { return metaMediaRessourcesArray as? Array<String> ?? [] }

@@ -937,6 +937,7 @@ extension PlaylistViewController {
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
                     _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
+                    _playListInDb!.currentPlayMode = playMode.Default.rawValue // (0: no-action)
                     
                     _playListInDb!.metaListInternalName = playListInCloud.name
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
@@ -1149,7 +1150,7 @@ extension PlaylistViewController {
 
         if playlistTableFoldingCell == nil { return }
         
-        playlistTableFoldingCell!.metaPlaylistInDb!.resetPlayMode()
+        playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
         
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
@@ -1169,8 +1170,12 @@ extension PlaylistViewController {
             //      check last used cell by another function (may be iterate through all open cells and find
             //      active ones that will currently play stuff
             //
-            if _playlistInCellSelectedInPlayMode != _playlistInCellSelected {
-                print ("=== another cell try to play music now ===")
+            
+            if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
+                print ("\n=== another cell try to play music now ===")
+                print ("    old: \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
+                print ("    new: \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)")
+                print ("==========================================")
                 resetPlayModeControls( _playlistInCellSelectedInPlayMode )
             }
             
@@ -1184,6 +1189,54 @@ extension PlaylistViewController {
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.selected)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.highlighted)
             button.backgroundColor = UIColor.clear
+        }
+    }
+    
+    func setPlaylistPlayMode(_ playListInDb: StreamPlayList, _ newPlayMode: Int16) {
+        
+        // update given playlist, set correspoding playmode now!
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in playListInDb.currentPlayMode = newPlayMode },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo): if self.debugMode == true { print ("dbg [playlist] : playmode updated to [\(newPlayMode)]") }
+                }
+            }
+        )
+        
+        // fetch all (other) playlists with any playmode not equal '0' (not-played) and reset them now!
+        if  let _playListPlayModeCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayList>().where(
+                (\StreamPlayList.provider == _defaultStreamingProvider) &&
+                (\StreamPlayList.metaListHash != playListInDb.metaListHash) &&
+                (\StreamPlayList.currentPlayMode != playMode.Default.rawValue))
+            ) as? [StreamPlayList] {
+            
+            for playlist in _playListPlayModeCache {
+                
+                CoreStore.perform(
+                    
+                    asynchronous: { (transaction) -> Void in
+                        
+                        playlist.currentPlayMode = playMode.Default.rawValue
+                    },
+                    
+                    completion: { (result) -> Void in
+                        
+                        switch result {
+                        case  .failure(let error): if self.debugMode == true { print (error) }
+                        case  .success(let userInfo):
+                            
+                            if  self.debugMode == true {
+                                print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> PLAY_FLAG_REMOVED\n")
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
     

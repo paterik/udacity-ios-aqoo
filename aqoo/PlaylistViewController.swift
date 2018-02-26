@@ -201,6 +201,7 @@ class PlaylistViewController: BaseViewController,
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
         
         playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
+        playlistCell.lblPlaylistNameInDetail.text = playlistCacheData.metaListInternalName
         playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
         playlistCell.metaOwnerName = playlistCacheData.owner
         playlistCell.metaPlaylistInDb = playlistCacheData
@@ -412,15 +413,26 @@ class PlaylistViewController: BaseViewController,
         
         if  _playlistInCacheSelected != nil {
             _playlistInCacheSelected!.toggleRepeatPlayMode()
-            
-            togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button,  "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
-            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
-            
-            if  debugMode == true {
-                print ("dbg [playlist] : play ➡ [repeat] - \(_playlistInCacheSelected!.metaListInternalName)")
-                print ("\(_playlistInCacheSelected!.inRepeatPlayMode)\n")
+            if _playlistInCacheSelected!.inRepeatPlayMode == true {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
+                
+                //
+                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
+                // and (re)bound primary model objects now!
+                //
+                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
+                    
+                    _playlistInCellSelected  = _cell
+                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
+                }
+                
+            }   else {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
             }
+            
+            togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
             
             _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
         }
@@ -430,17 +442,28 @@ class PlaylistViewController: BaseViewController,
         
         if  _playlistInCacheSelected != nil {
             _playlistInCacheSelected!.toggleShufflePlayMode()
-            
-            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+            if _playlistInCacheSelected!.inShufflePlayMode == true {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
+                
+                //
+                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
+                // and (re)bound primary model objects now!
+                //
+                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
+                    
+                    _playlistInCellSelected  = _cell
+                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
+                }
+                
+            }   else {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
+            }
             
             togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
             togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
             
-            if  debugMode == true {
-                print ("dbg [playlist] : play ➡ [shuffle] - \(_playlistInCacheSelected!.metaListInternalName)")
-                print ("\(_playlistInCacheSelected!.inRepeatPlayMode)\n")
-            }
+            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
         }
     }
     
@@ -448,17 +471,28 @@ class PlaylistViewController: BaseViewController,
 
         if  _playlistInCacheSelected != nil {
             _playlistInCacheSelected!.toggleNormalPlayMode()
-            
-            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
-            
+            if _playlistInCacheSelected!.inNormalPlayMode == true {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
+
+                //
+                // try to find corresponding PlaylistTableFoldingCell to update _playlistInCellSelected more instinctly
+                // and (re)bound primary model objects now!
+                //
+                if let _cell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell }) as? PlaylistTableFoldingCell {
+                 
+                    _playlistInCellSelected  = _cell
+                    _playlistInCacheSelected = _cell.metaPlaylistInDb!
+                }
+                
+            }   else {
+                setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
+            }
+           
             togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
             togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
             
-            if  debugMode == true {
-                print ("dbg [playlist] : play ➡ [normal] - \(_playlistInCacheSelected!.metaListInternalName)")
-                print ("\(_playlistInCacheSelected!.inNormalPlayMode)\n")
-            }
+            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
         }
     }
     

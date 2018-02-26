@@ -10,6 +10,34 @@ import UIKit
 
 extension UIView {
     
+    var ancestors: AnyIterator<UIView> {
+        var current: UIView = self
+        
+        return AnyIterator<UIView> {
+            guard let parent = current.superview else {
+                return nil
+            }
+            current = parent
+            return parent
+            
+        }
+    }
+
+    class func getAllSubviews<T: UIView>(view: UIView) -> [T] {
+        return view.subviews.flatMap { subView -> [T] in
+            var result = getAllSubviews(view: subView) as [T]
+            if let view = subView as? T {
+                result.append(view)
+            }
+            return result
+        }
+    }
+    
+    func getAllSubviews<T: UIView>() -> [T] {
+        return UIView.getAllSubviews(view: self) as [T]
+    }
+    
+    
     public class func fromNib() -> Self {
         
         return fromNib(nibName: nil)
