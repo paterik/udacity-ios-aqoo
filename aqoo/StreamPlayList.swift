@@ -58,6 +58,10 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaPreviouslyUpdated: Bool
     @NSManaged var metaPreviouslyCreated: Bool
     
+    private var shufflePlayMode: Bool = false
+    private var normalPlayMode: Bool = false
+    private var repeatPlayMode: Bool = false
+    
     //
     // this property will be used as "override" for all order-by presets
     // to select-down (or select-up) a group of specific entities (e.g.
@@ -67,6 +71,49 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaWeight: Int32
     
     @NSManaged var provider: StreamProvider?
+    
+    func resetPlayMode() {
+        
+        normalPlayMode  = false
+        repeatPlayMode  = false
+        shufflePlayMode = false
+    }
+    
+    func toggleShufflePlayMode() {
+        
+        shufflePlayMode = !shufflePlayMode
+        normalPlayMode  = false
+        repeatPlayMode  = false
+    }
+    
+    var inShufflePlayMode: Bool {
+        get { return shufflePlayMode }
+        set { shufflePlayMode = newValue }
+    }
+    
+    func toggleNormalPlayMode() {
+        
+        normalPlayMode  = !normalPlayMode
+        shufflePlayMode = false
+        repeatPlayMode  = false
+    }
+    
+    var inNormalPlayMode: Bool {
+        get { return normalPlayMode }
+        set { normalPlayMode = newValue }
+    }
+    
+    func toggleRepeatPlayMode() {
+        
+        repeatPlayMode  = !repeatPlayMode
+        shufflePlayMode = false
+        normalPlayMode  = false
+    }
+    
+    var inRepeatPlayMode: Bool {
+        get { return repeatPlayMode }
+        set { repeatPlayMode = newValue }
+    }
     
     func getMD5FingerPrint() -> String {
     

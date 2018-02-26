@@ -42,10 +42,6 @@ extension PlaylistViewController {
         )
     }
     
-    func setupSYSConfig() {
-        // print ("=== config_load :: KEY ➡ [TEST_VALUE : 1] ===")
-    }
-    
     func setupUITableBasicMenuView() {
 
         var imageKey: Int = 0
@@ -810,6 +806,7 @@ extension PlaylistViewController {
                 
                 // weazL :: bug_1001 - sometimes this async process will terminate my app
                 asynchronous: { (transaction) -> Void in
+                    
                     playListInDb.ownerImageURL = userProfileImageURL
                     playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
                     if  userProfile.sharingURL != nil {
@@ -1146,6 +1143,48 @@ extension PlaylistViewController {
                 )
             }
         )
+    }
+    
+    func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
+
+        if playlistTableFoldingCell == nil { return }
+        
+        playlistTableFoldingCell!.metaPlaylistInDb!.resetPlayMode()
+        
+        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
+        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
+        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
+    }
+    
+    func togglePlayModeControls(
+       _ active: Bool,
+       _ button: UIButton,
+       _ imageNamePrefix: String ) {
+        
+        if  active == true {
+            
+            // another cell will become active-playlist in playMode?
+            //
+            // bug: on any other open cell, the system cant evaluate the previously active one you have to
+            //      check last used cell by another function (may be iterate through all open cells and find
+            //      active ones that will currently play stuff
+            //
+            if _playlistInCellSelectedInPlayMode != _playlistInCellSelected {
+                print ("=== another cell try to play music now ===")
+                resetPlayModeControls( _playlistInCellSelectedInPlayMode )
+            }
+            
+            button.backgroundColor = UIColor(netHex: 0x1ED761)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.normal)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.selected)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.highlighted)
+            
+        }   else {
+            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.normal)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.selected)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.highlighted)
+            button.backgroundColor = UIColor.clear
+        }
     }
     
     func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {

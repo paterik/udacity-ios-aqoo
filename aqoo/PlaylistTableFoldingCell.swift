@@ -61,20 +61,9 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var btnPlaylistEdit: UIButton!
     @IBOutlet weak var btnPlaylistShowDetail: UIButton!
     
-    @IBOutlet weak var btnPlaylistPlayNormal: UIButton!
-    @IBOutlet weak var btnPlaylistPlayLoop: UIButton!
-    @IBOutlet weak var btnPlaylistPlayShuffle: UIButton!
+    @IBOutlet weak var btnPlayRepeatMode: UIButton!
+    @IBOutlet weak var btnPlayShuffleMode: UIButton!
+    @IBOutlet weak var btnPlayNormalMode: UIButton!
     
     @IBOutlet weak var cbxPlaylistTaggedAsFavorite: UISwitch!
-    
-    /*override func animationDuration(
-        _ itemIndex: NSInteger,
-          type:AnimationType)-> TimeInterval {
-
-        // [0.33, 0.26, 0.26]
-        // [0.2725, 0.2075, 0.1875]
-        let durations = [0.0, 0.0, 0.0]
-        
-        return durations[itemIndex]
-    }*/
 }

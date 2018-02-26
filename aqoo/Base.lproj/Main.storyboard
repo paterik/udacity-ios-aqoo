@@ -276,14 +276,80 @@
                                                                     <color key="backgroundColor" red="0.90588235289999997" green="0.0" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </imageView>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_user_01" translatesAutoresizingMaskIntoConstraints="NO" id="SQY-Ji-lBH" userLabel="ui_img_owner">
+                                                                    <rect key="frame" x="98" y="50" width="40" height="40"/>
+                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="QXd-Ot-I3g"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="q6O-It-wCw"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-lr-Cw9" userLabel="ui_btn_playlistPlayNormal">
+                                                                    <rect key="frame" x="307" y="50" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="lvz-CR-BqL"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="yww-q9-XB5"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <state key="normal" image="icnSetPlayNormal_0">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <state key="selected" image="icnSetPlayNormal_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <state key="highlighted" image="icnSetPlayNormal_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <connections>
+                                                                        <action selector="btnPlayNormalModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="aVs-GA-Ngs"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vg2-rF-yc1" userLabel="ui_btn_playlistPlayShuffle">
+                                                                    <rect key="frame" x="259" y="50" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="470-dv-e8t"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="XIs-d4-hkx"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                                                    <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <state key="normal" image="icnSetPlayShuffle_0">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <state key="selected" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <state key="highlighted" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <connections>
+                                                                        <action selector="btnPlayShuffleModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="ZGr-hJ-Doq"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hle-Ag-3Vb" userLabel="ui_btn_playlistPlayRepeat">
+                                                                    <rect key="frame" x="211" y="50" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="99y-o7-c12"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="gGG-LA-abd"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                                                    <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <state key="normal" image="icnSetPlayRepeatAll_0">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <state key="selected" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <state key="highlighted" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                                                    <connections>
+                                                                        <action selector="btnPlayRepeatModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="uX5-i5-6BA"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="cPi-Z5-2Zt" secondAttribute="trailing" constant="8" id="Fnq-1g-AX1"/>
                                                                 <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="8" symbolic="YES" id="GQG-sw-kha"/>
+                                                                <constraint firstAttribute="bottom" secondItem="vg2-rF-yc1" secondAttribute="bottom" constant="45" id="IO6-Vj-A2F"/>
+                                                                <constraint firstItem="2vx-lr-Cw9" firstAttribute="leading" secondItem="vg2-rF-yc1" secondAttribute="trailing" constant="8" id="JNu-30-huT"/>
+                                                                <constraint firstAttribute="bottom" secondItem="SQY-Ji-lBH" secondAttribute="bottom" constant="45" id="K9Q-jD-tRZ"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Hle-Ag-3Vb" secondAttribute="bottom" constant="45" id="Nl9-aw-H4X"/>
+                                                                <constraint firstItem="SQY-Ji-lBH" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="8" id="PCG-6f-qQd"/>
+                                                                <constraint firstAttribute="trailing" secondItem="2vx-lr-Cw9" secondAttribute="trailing" constant="8" id="Pxc-Ie-YaP"/>
                                                                 <constraint firstItem="HGO-lT-TFa" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="QKT-nj-ue3"/>
+                                                                <constraint firstAttribute="bottom" secondItem="2vx-lr-Cw9" secondAttribute="bottom" constant="45" id="UeZ-RM-ihd"/>
                                                                 <constraint firstItem="HGO-lT-TFa" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" id="aL2-8L-p1F"/>
                                                                 <constraint firstAttribute="bottom" secondItem="HGO-lT-TFa" secondAttribute="bottom" constant="45" id="gtB-CZ-OuU"/>
+                                                                <constraint firstItem="vg2-rF-yc1" firstAttribute="leading" secondItem="Hle-Ag-3Vb" secondAttribute="trailing" constant="8" id="i4K-dh-Eqd"/>
                                                                 <constraint firstItem="cPi-Z5-2Zt" firstAttribute="top" secondItem="uEm-L6-f0N" secondAttribute="top" constant="8" id="tdu-K1-StB"/>
                                                             </constraints>
                                                         </view>
@@ -345,6 +411,9 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="btnPlayNormalMode" destination="2vx-lr-Cw9" id="Viu-R0-0zv"/>
+                                            <outlet property="btnPlayRepeatMode" destination="Hle-Ag-3Vb" id="c9l-g5-31s"/>
+                                            <outlet property="btnPlayShuffleMode" destination="vg2-rF-yc1" id="OW1-RL-qig"/>
                                             <outlet property="containerView" destination="lIF-EV-Fgk" id="lP9-sv-qmC"/>
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
@@ -1747,6 +1816,7 @@
         <image name="icnCellFXIsMine_v1" width="32" height="32"/>
         <image name="icnCellFXTrackCount_v3" width="32" height="32"/>
         <image name="icnCellFXTrackCount_v4" width="25" height="25"/>
+        <image name="icnCtrlsGreenboxBK_v1" width="127" height="127"/>
         <image name="icnDelete_v1" width="25" height="25"/>
         <image name="icnExitView_v1" width="25" height="25"/>
         <image name="icnFavoriteOn_v1" width="25" height="25"/>
@@ -1758,7 +1828,9 @@
         <image name="icnSetPlayNormal_0" width="25" height="25"/>
         <image name="icnSetPlayNormal_1" width="25" height="25"/>
         <image name="icnSetPlayRepeatAll_0" width="25" height="25"/>
+        <image name="icnSetPlayRepeatAll_1" width="25" height="25"/>
         <image name="icnSetPlayShuffle_0" width="25" height="25"/>
+        <image name="icnSetPlayShuffle_1" width="25" height="25"/>
         <image name="icnSettings_v1" width="25" height="25"/>
         <image name="icnShareContent_v2" width="25" height="25"/>
         <image name="icnShowPlaylist_v1" width="25" height="25"/>

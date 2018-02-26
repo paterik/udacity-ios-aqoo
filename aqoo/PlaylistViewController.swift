@@ -66,6 +66,8 @@ class PlaylistViewController: BaseViewController,
     var _userProfilesCachedForFilter : Int = 0
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
+    var _playlistInCellSelected: PlaylistTableFoldingCell?
+    var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
     var _playlistChanged: Bool?
     var _playlistChangedItem: StreamPlayList?
     var _playlistGradientLoadingBar = GradientLoadingBar()
@@ -133,7 +135,7 @@ class PlaylistViewController: BaseViewController,
         setupUITableView()
         setupUITableBasicMenuView()
         
-        setupSYSConfig()
+        // setupSYSConfig()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -328,7 +330,7 @@ class PlaylistViewController: BaseViewController,
         
         var duration = 0.0
 
-        if isCellOpening {
+        if isCellOpening == true {
             
            _cellHeights[indexPath.row] = kOpenCellHeight; duration = 0.5125
             
@@ -338,7 +340,7 @@ class PlaylistViewController: BaseViewController,
             cell.selectedAnimation(true, animated: true, completion: nil)
         }
         
-        if isCellClosing {
+        if isCellClosing == true {
             
            _cellHeights[indexPath.row] = kCloseCellHeight; duration = 0.1275
             
@@ -350,15 +352,17 @@ class PlaylistViewController: BaseViewController,
     }
     
     func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
+
         if  let playlistCell = pCell as? PlaylistTableFoldingCell {
-            let viewToAnimate = playlistCell.imageViewPlaylistCoverInDetail!
+            _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+            _playlistInCloudSelected = playlistCell.metaPlayListInCloud
+            _playlistInCellSelected = playlistCell
         }
     }
     
     func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
-        if  let playlistCell = pCell as? PlaylistTableFoldingCell {
-            let viewToAnimate = playlistCell.imageViewPlaylistCoverInDetail!
-        }
+        
+        if let playlistCell = pCell as? PlaylistTableFoldingCell { }
     }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
@@ -401,6 +405,60 @@ class PlaylistViewController: BaseViewController,
             handlePlaylistCacheCleanUp()
         }   else {
             handlePlaylistCloudRefresh()
+        }
+    }
+    
+    @IBAction func btnPlayRepeatModeAction(_ button: UIButton) {
+        
+        if  _playlistInCacheSelected != nil {
+            _playlistInCacheSelected!.toggleRepeatPlayMode()
+            
+            togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button,  "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+            
+            if  debugMode == true {
+                print ("dbg [playlist] : play ➡ [repeat] - \(_playlistInCacheSelected!.metaListInternalName)")
+                print ("\(_playlistInCacheSelected!.inRepeatPlayMode)\n")
+            }
+            
+            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+        }
+    }
+    
+    @IBAction func btnPlayShuffleModeAction(_ button: UIButton) {
+        
+        if  _playlistInCacheSelected != nil {
+            _playlistInCacheSelected!.toggleShufflePlayMode()
+            
+            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+            
+            togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+            
+            if  debugMode == true {
+                print ("dbg [playlist] : play ➡ [shuffle] - \(_playlistInCacheSelected!.metaListInternalName)")
+                print ("\(_playlistInCacheSelected!.inRepeatPlayMode)\n")
+            }
+        }
+    }
+    
+    @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
+
+        if  _playlistInCacheSelected != nil {
+            _playlistInCacheSelected!.toggleNormalPlayMode()
+            
+            _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
+            
+            togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+            
+            if  debugMode == true {
+                print ("dbg [playlist] : play ➡ [normal] - \(_playlistInCacheSelected!.metaListInternalName)")
+                print ("\(_playlistInCacheSelected!.inNormalPlayMode)\n")
+            }
         }
     }
     
