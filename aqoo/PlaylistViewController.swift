@@ -262,9 +262,7 @@ class PlaylistViewController: BaseViewController,
             _handleErrorAsDialogMessage(
                 "Error Loading Cache Playlist",
                 "This local playlist [index: \(indexPath.row)] is not found in your cache api call!"
-            )
-            
-            return []
+            );   return []
         }
         
        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
@@ -273,9 +271,7 @@ class PlaylistViewController: BaseViewController,
             _handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
                 "The local playlist [index: \(indexPath.row)] is not found in spotify api call!"
-            )
-            
-            return []
+            );   return []
         }
         
         // prevent cell row actions on open cell views (unfolded cells)
@@ -299,7 +295,7 @@ class PlaylistViewController: BaseViewController,
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
             if  self.debugMode == true {
-                print ("TBL_ACTION_DETECTED : Hide")
+                print ("TBL_ACTION_DETECTED : Hide (not-imlemented-yet!)")
             }
         }
         
@@ -311,7 +307,7 @@ class PlaylistViewController: BaseViewController,
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
             if  self.debugMode == true {
-                print ("TBL_ACTION_DETECTED : ShowDetails")
+                print ("TBL_ACTION_DETECTED : ShowDetails (not-imlemented-yet!)")
             }
         }
         
@@ -330,8 +326,7 @@ class PlaylistViewController: BaseViewController,
         
         var duration = 0.0
 
-        if isCellOpening == true {
-            
+        if  isCellOpening == true {
            _cellHeights[indexPath.row] = kOpenCellHeight; duration = 0.5125
             
             animateFoldingCell(duration)
@@ -340,8 +335,7 @@ class PlaylistViewController: BaseViewController,
             cell.selectedAnimation(true, animated: true, completion: nil)
         }
         
-        if isCellClosing == true {
-            
+        if  isCellClosing == true {
            _cellHeights[indexPath.row] = kCloseCellHeight; duration = 0.1275
             
             animateFoldingCellClose(duration)
@@ -354,9 +348,9 @@ class PlaylistViewController: BaseViewController,
     func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
 
         if  let playlistCell = pCell as? PlaylistTableFoldingCell {
-            _playlistInCacheSelected = playlistCell.metaPlaylistInDb
-            _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
-            _playlistInCellSelected = playlistCell
+           _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+           _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+           _playlistInCellSelected = playlistCell
         }
     }
     
@@ -404,9 +398,9 @@ class PlaylistViewController: BaseViewController,
         
         handlePlaylistCellObjectsByTapAction( button )
         
-        _playlistInCacheSelected!.toggleRepeatPlayMode()
-        
-        if _playlistInCacheSelected!.inRepeatPlayMode == true {
+       _playlistInCacheSelected!.inRepeatPlayMode = false
+        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
+           _playlistInCacheSelected!.inRepeatPlayMode = true
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayRepeatAll.rawValue )
         }   else {
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
@@ -415,6 +409,7 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode, "icnSetPlayNormal" )
+        
        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
@@ -422,9 +417,9 @@ class PlaylistViewController: BaseViewController,
         
         handlePlaylistCellObjectsByTapAction( button )
         
-        _playlistInCacheSelected!.toggleShufflePlayMode()
-        
-        if _playlistInCacheSelected!.inShufflePlayMode == true {
+       _playlistInCacheSelected!.inShufflePlayMode = false
+        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayShuffle.rawValue {
+           _playlistInCacheSelected!.inShufflePlayMode = true
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayShuffle.rawValue )
         }   else {
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
@@ -433,24 +428,30 @@ class PlaylistViewController: BaseViewController,
         togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+        
        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
     @IBAction func btnPlayNormalModeAction(_ button: UIButton) {
 
+        // handle business objects behind this cell action click
         handlePlaylistCellObjectsByTapAction( button )
-    
-        _playlistInCacheSelected!.toggleNormalPlayMode()
-    
-        if _playlistInCacheSelected!.inNormalPlayMode == true {
+
+        // determine click state of "normal play mode" and persist state in cache (db)
+       _playlistInCacheSelected!.inNormalPlayMode = false
+        if _playlistInCacheSelected!.currentPlayMode != playMode.PlayNormal.rawValue {
+           _playlistInCacheSelected!.inNormalPlayMode = true
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.PlayNormal.rawValue )
         }   else {
             setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
         }
        
+        // handle optical effects for this playmode (normal-play)
         togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
         togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+        
+        // dev/dbg issue ...
        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
