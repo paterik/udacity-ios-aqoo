@@ -70,6 +70,7 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistInCellSelected: PlaylistTableFoldingCell?
     var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
+    var _playlistInCellsOpened = [PlaylistTableFoldingCell]()
     var _playlistChanged: Bool?
     var _playlistChangedItem: StreamPlayList?
     var _playlistGradientLoadingBar = GradientLoadingBar()
@@ -330,10 +331,13 @@ class PlaylistViewController: BaseViewController,
         }
     }
     
-    func handleOpenPlaylistCell(_ cell: PlaylistTableFoldingCell) {
+    func handleOpenPlaylistCell(_ cell: PlaylistTableFoldingCell, _ indexRow: Int) {
         
         if  let playlistTable = cell.superview as? UITableView {
             let indexPath = playlistTable.indexPath(for: cell)
+            
+            cell.metaIdentKey = "\(indexRow)"
+            _playlistInCellsOpened.append(cell)
             
            _cellHeights[indexPath!.row] = kOpenCellHeight
             
@@ -350,12 +354,12 @@ class PlaylistViewController: BaseViewController,
         
         guard case let cell as PlaylistTableFoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else { return }
         if cell.isAnimating() { return }
-        
+
         let isCellOpening = _cellHeights[indexPath.row] == kCloseCellHeight
         let isCellClosing = !isCellOpening
 
         if  isCellOpening == true {
-            handleOpenPlaylistCell(cell)
+            handleOpenPlaylistCell(cell, indexPath.row)
         }
         
         if  isCellClosing == true {
