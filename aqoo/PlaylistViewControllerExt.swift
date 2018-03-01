@@ -751,20 +751,24 @@ extension PlaylistViewController {
         
         if  userName == _sysDefaultSpotifyUsername {
             playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
+            playlistCell.imageViewPlaylistOwnerInDetail.image = playlistCell.imageViewPlaylistOwner.image
         }   else {
             let _profileImageProcessor = ResizingImageProcessor(
                  referenceSize: _sysUserProfileImageSize)
                 .append(another: RoundCornerImageProcessor(cornerRadius: _sysUserProfileImageCRadiusInDeg))
                 .append(another: BlackWhiteProcessor())
             
-            playlistCell.imageViewPlaylistOwner.isHidden = false
             playlistCell.imageViewPlaylistOwner.kf.setImage(
                 with: URL(string: userProfileImageURL),
                 placeholder: UIImage(named: _sysDefaultUserProfileImage),
-                options: [
-                    .transition(.fade(0.2)),
-                    .processor(_profileImageProcessor)
-                ]
+                options: [.transition(.fade(0.2)), .processor(_profileImageProcessor)],
+                completionHandler: {
+                    (image, error, cacheType, imageUrl) in
+                    
+                    if  image != nil {
+                        playlistCell.imageViewPlaylistOwnerInDetail.image = image
+                    }
+                }
             )
         }
     }

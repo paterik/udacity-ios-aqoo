@@ -278,7 +278,6 @@
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_user_01" translatesAutoresizingMaskIntoConstraints="NO" id="SQY-Ji-lBH" userLabel="ui_img_owner">
                                                                     <rect key="frame" x="98" y="50" width="40" height="40"/>
-                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="40" id="QXd-Ot-I3g"/>
                                                                         <constraint firstAttribute="width" constant="40" id="q6O-It-wCw"/>
@@ -427,6 +426,7 @@
                                             <outlet property="imageViewPlaylistCoverInDetail" destination="HGO-lT-TFa" id="ypK-XA-OPz"/>
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
+                                            <outlet property="imageViewPlaylistOwnerInDetail" destination="SQY-Ji-lBH" id="JSL-Uh-hLY"/>
                                             <outlet property="lblPlaylistMetaTrackCount" destination="Rzk-Wc-Tps" id="LIa-jC-TVe"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                             <outlet property="lblPlaylistNameInDetail" destination="cPi-Z5-2Zt" id="SHp-04-E39"/>

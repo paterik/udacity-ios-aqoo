@@ -17,14 +17,12 @@ class PlaylistTableFoldingCell: FoldingCell {
     var metaPlaylistInDb: StreamPlayList?
     var metaPlayListInCloud: SPTPartialPlaylist?
     var imageCacheKey: String?
-    
-    
-    
-    @IBOutlet weak var lblDebugRowNumber: UILabel!
+
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!
     @IBOutlet weak var imageViewContentChangedManually: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
+    @IBOutlet weak var imageViewPlaylistOwnerInDetail: UIImageView!
     
     @IBOutlet weak var imageViewPlaylistIsSpotify: UIImageView!
     

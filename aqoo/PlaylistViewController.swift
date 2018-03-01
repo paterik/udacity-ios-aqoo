@@ -7,15 +7,15 @@
 //
 
 import UIKit
+import Persei
 import Spotify
 import CoreStore
 import Kingfisher
 import FoldingCell
-import BGTableViewRowActionWithImage
-import GradientLoadingBar
-import LetterAvatarKit
 import SwiftRandom
-import Persei
+import LetterAvatarKit
+import GradientLoadingBar
+import BGTableViewRowActionWithImage
 
 class PlaylistViewController: BaseViewController,
                               UITableViewDataSource,
@@ -40,7 +40,7 @@ class PlaylistViewController: BaseViewController,
     let kRowsCount = 9999
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
-    let _sysCacheCheckInSeconds = 3600
+    let _sysCacheCheckInSeconds = 3600 // 1h
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30
     let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
@@ -79,7 +79,7 @@ class PlaylistViewController: BaseViewController,
     
     //
     // primary used filter context including title, description, imageKey
-    // and corresponding FetchChainBuilder (query)
+    // and corresponding FetchChainBuilder-Call for CoreStore (lazy query)
     //
     var playlistFilterMeta = [
         
@@ -162,9 +162,10 @@ class PlaylistViewController: BaseViewController,
         if segue.identifier == "showPlaylistEditView" {
             
             let editViewController = segue.destination as! PlaylistEditViewController
-                editViewController.playListInDb = _playlistInCacheSelected!
-                editViewController.playListInCloud = _playlistInCloudSelected!
-                editViewController.delegate = self
+            
+            editViewController.playListInDb = _playlistInCacheSelected!
+            editViewController.playListInCloud = _playlistInCloudSelected!
+            editViewController.delegate = self
         }
     }
     
@@ -190,14 +191,9 @@ class PlaylistViewController: BaseViewController,
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let playlistCell = tableView.dequeueReusableCell(
+        let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListItem",
-            for: indexPath) as? PlaylistTableFoldingCell else {
-                
-           _handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
-                
-            return PlaylistTableFoldingCell()
-        }
+            for: indexPath) as! PlaylistTableFoldingCell
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
         
@@ -341,8 +337,8 @@ class PlaylistViewController: BaseViewController,
         
         // is cell currently opening
         if  _cellHeights[indexPath.row] == kCloseCellHeight {
+            // reset (cached) cell height to closed version of this cell
             _cellHeights[indexPath.row] = kOpenCellHeight
-            
             // enrich cell-opended object and append this object to my opened-cells array
             cell.metaIndexPathRow = indexPath.row
             // cache selected cells
