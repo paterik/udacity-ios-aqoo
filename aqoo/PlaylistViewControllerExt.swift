@@ -1267,7 +1267,7 @@ extension PlaylistViewController {
     
     func setPlaylistPlayMode(_ playListInDb: StreamPlayList, _ newPlayMode: Int16) {
         
-        // update given playlist, set correspoding playmode now!
+        // update given playlist - set correspoding playmode now!
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in playListInDb.currentPlayMode = newPlayMode },
