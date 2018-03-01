@@ -1224,18 +1224,16 @@ extension PlaylistViewController {
     
     func resetPlayModeControls() {
 
+        var duration = 0.0
+        
         // iterate through all openend cells and close them now
         for _playlistCell in _playlistInCellsOpened {
-            
-            if _playlistCell == _playlistInCellSelected { continue }
             
             _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
             
             togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,   "icnSetPlayNormal" )
             togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode,  "icnSetPlayShuffle" )
-            
-            // handleClosePlaylistCell( _playlistCell )
         }
     }
     
@@ -1251,7 +1249,7 @@ extension PlaylistViewController {
                 print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
                 print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
-                // resetPlayModeControls()
+                resetPlayModeControls()
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
