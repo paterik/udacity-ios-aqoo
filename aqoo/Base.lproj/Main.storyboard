@@ -414,6 +414,10 @@
                                             <outlet property="btnPlayNormalMode" destination="2vx-lr-Cw9" id="Viu-R0-0zv"/>
                                             <outlet property="btnPlayRepeatMode" destination="Hle-Ag-3Vb" id="c9l-g5-31s"/>
                                             <outlet property="btnPlayShuffleMode" destination="vg2-rF-yc1" id="OW1-RL-qig"/>
+                                            <outlet property="cViewCellOpenContentRowFirst" destination="uEm-L6-f0N" id="aX8-11-p35"/>
+                                            <outlet property="cViewCellOpenContentRowFourth" destination="vfi-s7-Zxw" id="bwF-cL-ePl"/>
+                                            <outlet property="cViewCellOpenContentRowSecond" destination="Wic-g1-BMa" id="P5s-jC-VZK"/>
+                                            <outlet property="cViewCellOpenContentRowThird" destination="2de-as-ZwF" id="eP0-yP-weI"/>
                                             <outlet property="containerView" destination="lIF-EV-Fgk" id="lP9-sv-qmC"/>
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>

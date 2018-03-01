@@ -76,12 +76,7 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    func getFilterBlockByIndex(_ index : Int) -> (
-         String,
-         String,
-         OrderBy<StreamPlayList>.SortKey?,
-         FetchChainBuilder<StreamPlayList>?,
-         Bool) {
+    func getFilterBlockByIndex(_ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool) {
             
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
@@ -303,8 +298,8 @@ extension PlaylistViewController {
         
        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
         
-        tableView.estimatedRowHeight = kCloseCellHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        // tableView.estimatedRowHeight = kCloseCellHeight
+        // tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -1097,9 +1092,7 @@ extension PlaylistViewController {
             _handleErrorAsDialogMessage(
                 "Error Loading Provider",
                 "Oops! The provider '\(provider.name)' isn't supported yet ..."
-            )
-            
-            return
+            );  return
         }
         
         // first of all fetch new playlists from api for comparision
@@ -1157,9 +1150,7 @@ extension PlaylistViewController {
             _handleErrorAsDialogMessage(
                 "Error Handling Playback Controls",
                 "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by our palyback events!"
-            )
-            
-            return
+            );  return
         }
         
         _playlistInCellSelected = _cell
@@ -1229,28 +1220,20 @@ extension PlaylistViewController {
        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
-    func resetPlayModeControls(_ playlistTableFoldingCell: PlaylistTableFoldingCell?) {
+    func resetPlayModeControls() {
 
-        if playlistTableFoldingCell == nil { return }
-        
-        playlistTableFoldingCell!.metaPlaylistInDb!.resetAllPlayModes()
-        
-        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
-        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayNormalMode,   "icnSetPlayNormal" )
-        togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
-        
-        handleClosePlaylistCell( playlistTableFoldingCell! )
-        
-        for playlistCell in _playlistInCellsOpened {
+        // iterate through all openend cells and close them now
+        for _playlistCell in _playlistInCellsOpened {
             
-            if playlistCell == _playlistInCellSelected { continue }
+            if _playlistCell == _playlistInCellSelected { continue }
             
-            handleClosePlaylistCell( playlistCell )
+            _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
             
+            togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,   "icnSetPlayNormal" )
+            togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode,  "icnSetPlayShuffle" )
+            handleClosePlaylistCell( _playlistCell )
         }
-        
-        // _playlistInCellsOpened = []
-        
     }
     
     func togglePlayModeControls(
@@ -1265,7 +1248,7 @@ extension PlaylistViewController {
                 print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
                 print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
-                resetPlayModeControls( _playlistInCellSelectedInPlayMode )
+                resetPlayModeControls()
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)

@@ -343,6 +343,7 @@ class PlaylistViewController: BaseViewController,
 
             // enrich cell-opended object and append this object to my opened-cells array
             cell.metaIndexPathRow = indexPath!.row
+            cell.cViewCellOpenContentRowFirst.isHidden = false
            _playlistInCellsOpened.append(cell)
             
            _cellHeights[indexPath!.row] = kOpenCellHeight
