@@ -311,7 +311,6 @@ class PlaylistViewController: BaseViewController,
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
     }
     
-    
     func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     
         guard case let cell as PlaylistTableFoldingCell = cell else { return }
@@ -336,27 +335,27 @@ class PlaylistViewController: BaseViewController,
         var duration = 0.0
         
         // is cell currently opening
-        if  _cellHeights[indexPath.row] == kCloseCellHeight {
-            // reset (cached) cell height to closed version of this cell
-            _cellHeights[indexPath.row] = kOpenCellHeight
-            // enrich cell-opended object and append this object to my opened-cells array
+        if _cellHeights[indexPath.row] == kCloseCellHeight {
+           _cellHeights[indexPath.row] = kOpenCellHeight
+            
             cell.metaIndexPathRow = indexPath.row
-            // cache selected cells
-            _playlistInCellSelected  = cell
-            _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
-            _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
-            // append opened cell to openend-cell-queue
-            _playlistInCellsOpened.append(_playlistInCellSelected!)
-            // open cell finally
             cell.unfold(true, animated: true, completion: nil); duration = kOpenCellDuration // 0.5
             
+           _playlistInCellSelected  = cell
+           _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
+           _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+            
+            // add opened cell to current-opened-cell-stack
+           _playlistInCellsOpened.append(_playlistInCellSelected!)
+            
         }   else {
-            // cell is in closing mode
-            _cellHeights[indexPath.row] = kCloseCellHeight
-            // remove closing cell from openend-cell-queue
-            _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
-            // close cell finally
+            
+           _cellHeights[indexPath.row] = kCloseCellHeight
+            
             cell.unfold(false, animated: true, completion: nil); duration = kCloseCellDuration // 0.8
+            
+            // remove closed cell from current-opened-cell-stack
+           _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
         }
         
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
