@@ -12,7 +12,7 @@ import Spotify
 
 class PlaylistTableFoldingCell: FoldingCell {
     
-    var metaIdentKey: String?
+    var metaIndexPathRow: Int?
     var metaOwnerName: String?
     var metaPlaylistInDb: StreamPlayList?
     var metaPlayListInCloud: SPTPartialPlaylist?

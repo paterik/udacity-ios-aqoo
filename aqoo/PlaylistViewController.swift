@@ -322,8 +322,13 @@ class PlaylistViewController: BaseViewController,
         if  let playlistTable = cell.superview as? UITableView {
             let indexPath = playlistTable.indexPath(for: cell)
             
-           _cellHeights[indexPath!.row] = kCloseCellHeight
-           
+            // handle cell height for closing cells and additionally remove object from my opened-cells array
+            if  indexPath == nil {
+               _cellHeights[cell.metaIndexPathRow!] = kCloseCellHeight
+            }   else {
+               _cellHeights[indexPath!.row] = kCloseCellHeight
+            }; _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
+            
             animateFoldingCellClose(kCloseCellDuration)
             cell.selectedAnimation(false, animated: true, completion: { () -> Void in
                 self.animateFoldingCellContentClose(self.kCloseCellDuration, pCell: cell)
@@ -335,9 +340,10 @@ class PlaylistViewController: BaseViewController,
         
         if  let playlistTable = cell.superview as? UITableView {
             let indexPath = playlistTable.indexPath(for: cell)
-            
-            cell.metaIdentKey = "\(indexRow)"
-            _playlistInCellsOpened.append(cell)
+
+            // enrich cell-opended object and append this object to my opened-cells array
+            cell.metaIndexPathRow = indexPath!.row
+           _playlistInCellsOpened.append(cell)
             
            _cellHeights[indexPath!.row] = kOpenCellHeight
             
@@ -378,6 +384,7 @@ class PlaylistViewController: BaseViewController,
     
     func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
         
+        // not used yet ...
         if let playlistCell = pCell as? PlaylistTableFoldingCell { }
     }
     

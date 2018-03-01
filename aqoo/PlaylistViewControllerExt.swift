@@ -1240,6 +1240,17 @@ extension PlaylistViewController {
         togglePlayModeControls( false, playlistTableFoldingCell!.btnPlayShuffleMode,  "icnSetPlayShuffle" )
         
         handleClosePlaylistCell( playlistTableFoldingCell! )
+        
+        for playlistCell in _playlistInCellsOpened {
+            
+            if playlistCell == _playlistInCellSelected { continue }
+            
+            handleClosePlaylistCell( playlistCell )
+            
+        }
+        
+        // _playlistInCellsOpened = []
+        
     }
     
     func togglePlayModeControls(
