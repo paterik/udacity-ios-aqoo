@@ -6,7 +6,7 @@ PODS:
     - pop
   - FoldingCell (3.0.3)
   - GradientLoadingBar (1.1.9)
-  - Kingfisher (4.6.2)
+  - Kingfisher (4.6.3)
   - LetterAvatarKit (1.1.2)
   - MarqueeLabel/Swift (3.1.4)
   - NotificationBannerSwift (1.6.1):
@@ -60,7 +60,7 @@ SPEC CHECKSUMS:
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
   FoldingCell: 76ce5d1ddba34c6d25548b473b7b51585e992da0
   GradientLoadingBar: 903b340157956c72071d02c58f2bad44785f3bb9
-  Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
+  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
   NotificationBannerSwift: 1fc2955381e6eb26d958ba32160fc41721b9b689
