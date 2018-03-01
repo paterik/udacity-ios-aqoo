@@ -303,6 +303,8 @@ extension PlaylistViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = kCloseCellHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         let backgroundImgView : UIImageView! = UIImageView(frame: view.bounds)
         
@@ -1232,7 +1234,8 @@ extension PlaylistViewController {
             togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,   "icnSetPlayNormal" )
             togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode,  "icnSetPlayShuffle" )
-            handleClosePlaylistCell( _playlistCell )
+            
+            // handleClosePlaylistCell( _playlistCell )
         }
     }
     
@@ -1248,7 +1251,7 @@ extension PlaylistViewController {
                 print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
                 print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
-                resetPlayModeControls()
+                // resetPlayModeControls()
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)

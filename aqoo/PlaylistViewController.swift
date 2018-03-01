@@ -35,7 +35,7 @@ class PlaylistViewController: BaseViewController,
     
     let kCloseCellHeight: CGFloat = 100 // 90
     let kOpenCellHeight: CGFloat = 345 // 310
-    let kOpenCellduration: Double = 0.5125
+    let kOpenCellDuration: Double = 0.5125
     let kCloseCellDuration: Double = 0.1275
     let kRowsCount = 9999
     let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
@@ -137,8 +137,6 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
-        
-        // setupSYSConfig()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -317,41 +315,17 @@ class PlaylistViewController: BaseViewController,
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
     }
     
-    func handleClosePlaylistCell(_ cell: PlaylistTableFoldingCell) {
-        
-        if  let playlistTable = cell.superview as? UITableView {
-            let indexPath = playlistTable.indexPath(for: cell)
-            
-            // handle cell height for closing cells and additionally remove object from my opened-cells array
-            if  indexPath == nil {
-               _cellHeights[cell.metaIndexPathRow!] = kCloseCellHeight
-            }   else {
-               _cellHeights[indexPath!.row] = kCloseCellHeight
-            }; _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
-            
-            animateFoldingCellClose(kCloseCellDuration)
-            cell.selectedAnimation(false, animated: true, completion: { () -> Void in
-                self.animateFoldingCellContentClose(self.kCloseCellDuration, pCell: cell)
-            })
-        }
-    }
     
-    func handleOpenPlaylistCell(_ cell: PlaylistTableFoldingCell, _ indexRow: Int) {
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    
+        guard case let cell as PlaylistTableFoldingCell = cell else { return }
         
-        if  let playlistTable = cell.superview as? UITableView {
-            let indexPath = playlistTable.indexPath(for: cell)
-
-            // enrich cell-opended object and append this object to my opened-cells array
-            cell.metaIndexPathRow = indexPath!.row
-            cell.cViewCellOpenContentRowFirst.isHidden = false
-           _playlistInCellsOpened.append(cell)
-            
-           _cellHeights[indexPath!.row] = kOpenCellHeight
-            
-            animateFoldingCell(kOpenCellduration)
-            animateFoldingCellContentOpen(kOpenCellduration, pCell: cell)
-            
-            cell.selectedAnimation(true, animated: true, completion: nil)
+        cell.backgroundColor = .clear
+        
+        if _cellHeights[indexPath.row] == kCloseCellHeight {
+            cell.unfold(false, animated: false, completion: nil)
+        }   else {
+            cell.unfold(true, animated: false, completion: nil)
         }
     }
     
@@ -360,33 +334,39 @@ class PlaylistViewController: BaseViewController,
          didSelectRowAt indexPath: IndexPath) {
         
         guard case let cell as PlaylistTableFoldingCell = tableView.cellForRow(at: indexPath as IndexPath) else { return }
+       
         if cell.isAnimating() { return }
-
-        let isCellOpening = _cellHeights[indexPath.row] == kCloseCellHeight
-        let isCellClosing = !isCellOpening
-
-        if  isCellOpening == true {
-            handleOpenPlaylistCell(cell, indexPath.row)
+        
+        var duration = 0.0
+        
+        // is cell currently opening
+        if  _cellHeights[indexPath.row] == kCloseCellHeight {
+            _cellHeights[indexPath.row] = kOpenCellHeight
+            
+            // enrich cell-opended object and append this object to my opened-cells array
+            cell.metaIndexPathRow = indexPath.row
+            // cache selected cells
+            _playlistInCellSelected  = cell
+            _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
+            _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+            // append opened cell to openend-cell-queue
+            _playlistInCellsOpened.append(_playlistInCellSelected!)
+            // open cell finally
+            cell.unfold(true, animated: true, completion: nil); duration = kOpenCellDuration // 0.5
+            
+        }   else {
+            // cell is in closing mode
+            _cellHeights[indexPath.row] = kCloseCellHeight
+            // remove closing cell from openend-cell-queue
+            _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
+            // close cell finally
+            cell.unfold(false, animated: true, completion: nil); duration = kCloseCellDuration // 0.8
         }
         
-        if  isCellClosing == true {
-            handleClosePlaylistCell(cell)
-        }
-    }
-    
-    func animateFoldingCellContentOpen(_ pDuration: TimeInterval, pCell: FoldingCell) {
-
-        if  let playlistCell = pCell as? PlaylistTableFoldingCell {
-           _playlistInCacheSelected = playlistCell.metaPlaylistInDb
-           _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
-           _playlistInCellSelected = playlistCell
-        }
-    }
-    
-    func animateFoldingCellContentClose(_ pDuration: TimeInterval, pCell: FoldingCell) {
-        
-        // not used yet ...
-        if let playlistCell = pCell as? PlaylistTableFoldingCell { }
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        },  completion: nil)
     }
     
     func animateFoldingCell(_ pDuration: TimeInterval) {
