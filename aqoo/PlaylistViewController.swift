@@ -229,7 +229,7 @@ class PlaylistViewController: BaseViewController,
         }
         
         // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
-        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverOverrideImage)
+        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
         playlistCell.imageViewPlaylistCoverInDetail.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
         
         // set final cover image based on current playlist model and corresponding imageView
