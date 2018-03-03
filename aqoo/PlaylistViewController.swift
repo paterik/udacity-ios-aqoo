@@ -249,6 +249,10 @@ class PlaylistViewController: BaseViewController,
             playlistCoverDetailView = coverImageBlock.detailView
         }
         
+        playlistCell.hViewPlaylistPlayModeIndicator.hidesWhenStopped = true
+        playlistCell.hViewPlaylistPlayModeIndicator.tintColor = UIColor(netHex: 0x1ED760)
+        playlistCell.hViewPlaylistPlayModeIndicator.state = .stopped
+        
         return playlistCell
     }
     

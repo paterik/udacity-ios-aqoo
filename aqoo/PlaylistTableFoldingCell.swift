@@ -24,7 +24,6 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var imageViewContentChangedManually: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwnerInDetail: UIImageView!
-    
     @IBOutlet weak var imageViewPlaylistIsSpotify: UIImageView!
     
     @IBOutlet weak var lblPlaylistName: UILabel!
@@ -41,6 +40,7 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var lblPlaylistMetaTrackCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaPlayCount: UILabel!
     
+    @IBOutlet weak var hViewPlaylistPlayModeIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var hViewCellNormalCategoryFrame: UIView!
     @IBOutlet weak var hViewCellOpenCategoryFrameFirst: UIView!
     @IBOutlet weak var hViewCellOpenCategoryFrameSecond: UIView!
@@ -66,6 +66,8 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var btnPlayRepeatMode: UIButton!
     @IBOutlet weak var btnPlayShuffleMode: UIButton!
     @IBOutlet weak var btnPlayNormalMode: UIButton!
-    
-    @IBOutlet weak var cbxPlaylistTaggedAsFavorite: UISwitch!
+
+    var state: PlaylistMusicIndicatorViewState = .stopped {
+        didSet { hViewPlaylistPlayModeIndicator.state = state }
+    }
 }

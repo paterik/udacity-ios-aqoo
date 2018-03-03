@@ -1244,6 +1244,7 @@ extension PlaylistViewController {
         for _playlistCell in _playlistInCellsInPlayMode {
             
             _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
+            _playlistCell.state = .stopped
             
             togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,  _playlistCell, "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,  _playlistCell, "icnSetPlayNormal" )
@@ -1266,7 +1267,7 @@ extension PlaylistViewController {
                 print ("==========================================\n")
                 resetPlayModeControls()
                 // remove reseted cell from current-cells-in-playmode-stack
-                _playlistInCellsInPlayMode.index(of: playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
+               _playlistInCellsInPlayMode.index(of: playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
@@ -1274,8 +1275,9 @@ extension PlaylistViewController {
             button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: [UIControlState.selected, UIControlState.highlighted])
             
             // add active (in-playmode) cell to current-cells-in-playmode-stack (if this object doesn't exist in queue)
-            if  _playlistInCellsInPlayMode.contains(playlistCell) == false {
-                _playlistInCellsInPlayMode.append( playlistCell )
+            if _playlistInCellsInPlayMode.contains(playlistCell) == false {
+               _playlistInCellsInPlayMode.append( playlistCell )
+                playlistCell.state = .playing
             }
             
         }   else {
