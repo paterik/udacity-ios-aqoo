@@ -98,11 +98,11 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         let coverImageBlock = getCoverImageViewByCacheModel(
             playlistItem,
             playlistCell.imageViewPlaylistCover,
-            nil
+            playlistCell.imageViewPlaylistCover
         )
         
         if  coverImageBlock.detailView != nil {
-            playlistCell.imageCacheKey = coverImageBlock.normalViewCacheKey
+            playlistCell.imageCacheKey = coverImageBlock.detailViewCacheKey
             playlistCell.imageViewPlaylistCover = coverImageBlock.detailView
         }
         

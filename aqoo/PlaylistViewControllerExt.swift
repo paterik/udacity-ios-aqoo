@@ -200,12 +200,13 @@ extension PlaylistViewController {
                 )
                 
                 // stream provider config entry in local db not available or not fetchable yet? Create a new one ...
-                if  _configKeyRow == nil {
-                    _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
-                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
-                    _configKeyRow!.isGlobal = false // this config will be provider dependent
-                    _configKeyRow!.provider = _configProvider!
-                    _configKeyRow!.createdAt = Date()
+                if _configKeyRow == nil {
+                   _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
+                   _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                   _configKeyRow!.isGlobal = false // this config will be provider dependent
+                   _configKeyRow!.provider = _configProvider!
+                   _configKeyRow!.createdAt = Date()
+                    
                     if  self.debugMode == true {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
                     }
@@ -213,9 +214,10 @@ extension PlaylistViewController {
                 // stream provider config available? ... update corresponding property (so filterKey in this case)
                 }   else {
                     
-                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
-                    _configKeyRow!.provider = _configProvider!
-                    _configKeyRow!.updatedAt = Date()
+                   _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                   _configKeyRow!.provider = _configProvider!
+                   _configKeyRow!.updatedAt = Date()
+                    
                     if  self.debugMode == true {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
                     }
@@ -277,7 +279,7 @@ extension PlaylistViewController {
             HUD.flash(.label("no playlists"), delay: 2.0)
             spotifyClient.playlistsInCache = []
             // weazL :: feature_1001 : user will be informed using a simple dialog
-            // - do you want to load your playlist by one of your favorite filters instead?
+            // - do you want to load your playlist using one of your favorite filters instead?
             // - filter1, filter2 or filter3 ...
         }
         
@@ -306,12 +308,8 @@ extension PlaylistViewController {
         // table/cell struture by a minimum of countable cells (as preCache) this
         // will be work until someone had a playlist containing more than 9999
         // playlists -> still looking for an alternative logic implementation here 🤔
-        //
         
        _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
-        
-        // tableView.estimatedRowHeight = kCloseCellHeight
-        // tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -324,7 +322,7 @@ extension PlaylistViewController {
         backgroundImgView.clipsToBounds = true
         backgroundImgView.layoutIfNeeded()
         
-        // backgroundImgView.image = UIImage(named: "img_aqoo_wp_07")
+        //backgroundImgView.image = UIImage(named: "img_aqoo_wp_05")
         backgroundImgView.backgroundColor = UIColor(netHex: 0x222222)
         backgroundImgView.center = view.center
         
@@ -475,6 +473,7 @@ extension PlaylistViewController {
                     // using side-thread to prevent known async write-through issues inside coreStore
                     // async-db-calls.
                     //
+                    
                     for playlistInDb in _playListCache {
                         
                         // ignore self owned image profiles (already fetched)
@@ -527,10 +526,10 @@ extension PlaylistViewController {
         spotifyClient.playListHashesInCache = []
         
         // clear internal cache for user profiles
-        _userProfilesHandledWithImages = [:]
-        _userProfilesHandled = []
-        _userProfilesInPlaylistsUnique = []
-        _userProfilesInPlaylists = []
+       _userProfilesHandledWithImages = [:]
+       _userProfilesHandled = []
+       _userProfilesInPlaylistsUnique = []
+       _userProfilesInPlaylists = []
 
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
@@ -682,14 +681,12 @@ extension PlaylistViewController {
             
             for playlist in _playListCache {
                 
-                // ignore all known / identical playlists
                 if spotifyClient.playListHashesInCloud.contains(playlist.metaListHash) {
                    spotifyClient.playListHashesInCache.append(playlist.metaListHash)
                    
                    continue
                 }
-            
-                // kill all obsolete / orphan cache entries
+
                 if  debugMode == true {
                     print ("dbg [playlist] : [\(playlist.metaListInternalName)] orphan flagged for removal")
                 }
@@ -740,6 +737,7 @@ extension PlaylistViewController {
         // in future verseion I'll pick up some random band image from flickr if nothing
         // where found (feature)
         //
+        
         if playlistInDb.largestImageURL == nil && playlistInDb.smallestImageURL == nil {
             
             for coverImageAlt in playListInCloud.images {
@@ -866,6 +864,7 @@ extension PlaylistViewController {
         // prepare some devMode relavant meta-data for single playlists here to simulate
         // played, playedParty, playedCompletly and number of shares during development
         //
+        
         var _played = Int.random(1, 550) // 234
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
@@ -886,17 +885,18 @@ extension PlaylistViewController {
                     From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
                 )
                 
+                _playlistIsMine = false
+                _playlistIsSpotify = false
+                
                 // playlist cache entry in local db not available or not fetchable yet? Create a new one ...
                 if  _playListInDb == nil {
                     
-                    _playlistIsMine = false
-                    if playListInCloud.owner.canonicalUserName == _currentUserName {
-                        _playlistIsMine = true
+                    if  playListInCloud.owner.canonicalUserName == _currentUserName {
+                       _playlistIsMine = true
                     }
                     
-                    _playlistIsSpotify = false
-                    if playListInCloud.owner.canonicalUserName == self._sysDefaultSpotifyUsername {
-                        _playlistIsSpotify = true
+                    if  playListInCloud.owner.canonicalUserName == self._sysDefaultSpotifyUsername {
+                       _playlistIsSpotify = true
                     }
 
                     if  _ownerProfileImageURL != nil {
@@ -970,7 +970,8 @@ extension PlaylistViewController {
                 // playlist cache entry found in local db? Check for changes by comparing both fingerprints
                 // and update corresponding cache value (local db entry) on any kind of fingerprint mismatch
                 //
-                } else {
+                    
+                }   else {
                  
                     if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
                         
@@ -978,7 +979,7 @@ extension PlaylistViewController {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> NO_CHANGES")
                         }
                         
-                    } else {
+                    }   else {
                         
                         // name (origin) , number of tracks or flags for public/collaborative changed? update list
                         _playListInDb!.metaListNameOrigin = playListInCloud.name ?? playListInCloud.uri.absoluteString
@@ -1030,9 +1031,7 @@ extension PlaylistViewController {
         if playlistInDb.updatedAt != nil {
             _updatedDateString = getDateAsString(playlistInDb.updatedAt!)
             _updatedMetaString = ", updated on \(_updatedDateString)"
-        }
-        
-        _createdDateString = getDateAsString(playlistInDb.createdAt!)
+        };  _createdDateString = getDateAsString(playlistInDb.createdAt!)
         
         return "This playlist \"\(playlistInCloud.name!)\" is owned by \(playlistInCloud.owner.canonicalUserName!), was firstly seen on \(_createdDateString) \(_updatedMetaString) and can be found in spotify at \(playlistInCloud.playableUri.absoluteString)"
     }
@@ -1049,21 +1048,6 @@ extension PlaylistViewController {
     }
     
     func loadProvider (_ tag: String) {
-        
-        if  debugMode == true {
-            print ("dbg [playlist] : try to load provider [ \(tag) ]")
-            if  spotifyClient.playListHashesInCloud.count > 0 {
-                print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCloud.count - 1) playlists in cloud")
-            }   else {
-                print ("dbg [playlist] : cache ➡ no playlists in cloud")
-            }
-            
-            if  spotifyClient.playListHashesInCache.count > 0 {
-                print ("dbg [playlist] : cache ➡ \(spotifyClient.playListHashesInCache.count - 1) playlists in cache\n")
-            }   else {
-                print ("dbg [playlist] : cache ➡ no playlists in cache")
-            }
-        }
         
         CoreStore.perform(
             
@@ -1179,11 +1163,13 @@ extension PlaylistViewController {
         handlePlaylistControlActionByButton( button, _cell )
     }
     
-    func handlePlaylistControlActionByButton(_ button: UIButton, _ playlistCell: PlaylistTableFoldingCell) {
+    func handlePlaylistControlActionByButton(
+       _ button: UIButton,
+       _ playlistCell: PlaylistTableFoldingCell) {
         
-        _playlistInCacheSelected!.inRepeatPlayMode = false
-        _playlistInCacheSelected!.inShufflePlayMode = false
-        _playlistInCacheSelected!.inNormalPlayMode = false
+       _playlistInCacheSelected!.inRepeatPlayMode = false
+       _playlistInCacheSelected!.inShufflePlayMode = false
+       _playlistInCacheSelected!.inNormalPlayMode = false
         
         switch Int16 ( button.tag ) {
             
@@ -1234,10 +1220,9 @@ extension PlaylistViewController {
             
             default:
                 
-                playlistCell.imageViewPlaylistIsPlaying.isHidden = true
-                playlistCell.state = .stopped
+                togglePlayModeIcons( playlistCell, false )
             
-                return
+                break
         }
 
        _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
@@ -1245,17 +1230,39 @@ extension PlaylistViewController {
     
     func resetPlayModeControls() {
 
-        // iterate through all openend cells and reset playMode controls
-        for _playlistCell in _playlistInCellsInPlayMode {
+        // iterate through all cells-in-playmode and reset corresponding controls
+        for (index, playlistCell) in _playlistInCellsInPlayMode.enumerated() {
             
-            _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
-            _playlistCell.imageViewPlaylistIsPlaying.isHidden = true
-            _playlistCell.state = .stopped
+            togglePlayModeIcons( playlistCell, false )
             
-            togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,  _playlistCell, "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,  _playlistCell, "icnSetPlayNormal" )
-            togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode, _playlistCell, "icnSetPlayShuffle" )
+            print ("                 resetPlayModeControls #\(index), \(playlistCell.metaPlaylistInDb!.metaListInternalName)")
+            
+            togglePlayModeControls( false, playlistCell.btnPlayRepeatMode,  playlistCell, "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, playlistCell.btnPlayNormalMode,  playlistCell, "icnSetPlayNormal" )
+            togglePlayModeControls( false, playlistCell.btnPlayShuffleMode, playlistCell, "icnSetPlayShuffle" )
+            
+            playlistCell.metaPlaylistInDb!.resetAllPlayModes()
         }
+    }
+    
+    func handlePlaylistInCellsInPlayMode(_ playlistCell: PlaylistTableFoldingCell) {
+        
+        var _inputHash = playlistCell.metaPlaylistInDb!.getMD5FingerPrint()
+        
+        for (index, _playlistCell) in _playlistInCellsInPlayMode.enumerated() {
+            
+            var _title = _playlistCell.metaPlaylistInDb!.metaListInternalName
+            if  _playlistCell.metaPlaylistInDb!.getMD5FingerPrint() == _inputHash {
+                 print ("                 remove playlistCell [\(_title)] from _playlistInCellsInPlayMode cache [index=\(index)]")
+                _playlistInCellsInPlayMode.index(of: _playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
+                
+                 return
+            }
+        }
+        
+        print ("                 indexing \(playlistCell.metaPlaylistInDb!.metaListInternalName) [size=\(_playlistInCellsInPlayMode.count)]")
+        
+       _playlistInCellsInPlayMode.append( playlistCell )
     }
     
     func togglePlayModeControls(
@@ -1264,41 +1271,43 @@ extension PlaylistViewController {
        _ playlistCell: PlaylistTableFoldingCell,
        _ imageNamePrefix: String ) {
         
+        // user activate a specific playMode?
         if  active == true {
             
             if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
-                print ("\n=== Another Cell Try To Play Music Now ===\n")
-                print ("💀 \(_playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.metaListInternalName)")
-                print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
-                print ("==========================================\n")
                 resetPlayModeControls()
-                // remove reseted cell from current-cells-in-playmode-stack
-               _playlistInCellsInPlayMode.index(of: playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
             }
+            
+            handlePlaylistInCellsInPlayMode( playlistCell )
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.normal)
             button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: [UIControlState.selected, UIControlState.highlighted])
             
-            // add active (in-playmode) cell to current-cells-in-playmode-stack (if this object doesn't exist in queue)
-            if _playlistInCellsInPlayMode.contains(playlistCell) == false {
-               _playlistInCellsInPlayMode.append( playlistCell )
-                playlistCell.imageViewPlaylistIsPlaying.isHidden = false
-                playlistCell.state = .playing
-            }
-            
+        // user|system deactivate the running playmode
         }   else {
-            
-            playlistCell.imageViewPlaylistIsPlaying.isHidden = true
-            playlistCell.state = .stopped
             
             button.backgroundColor = UIColor.clear
             button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.normal)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: [UIControlState.selected, UIControlState.highlighted])
+        };  togglePlayModeIcons( playlistCell, active )
+    }
+    
+    func togglePlayModeIcons(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ active: Bool) {
+        
+        playlistCell.imageViewPlaylistIsPlaying.isHidden = !active
+        playlistCell.state = .stopped
+        if  active == true {
+            playlistCell.state = .playing
         }
     }
     
-    func setPlaylistPlayMode(_ playlistCell: PlaylistTableFoldingCell, _ playListInDb: StreamPlayList, _ newPlayMode: Int16) {
+    func setPlaylistPlayMode(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playListInDb: StreamPlayList,
+       _ newPlayMode: Int16) {
  
         // update given playlist - set correspoding playmode now!
         CoreStore.perform(
