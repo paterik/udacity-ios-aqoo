@@ -1235,8 +1235,6 @@ extension PlaylistViewController {
             
             togglePlayModeIcons( playlistCell, false )
             
-            print ("                 resetPlayModeControls #\(index), \(playlistCell.metaPlaylistInDb!.metaListInternalName)")
-            
             togglePlayModeControls( false, playlistCell.btnPlayRepeatMode,  playlistCell, "icnSetPlayRepeatAll" )
             togglePlayModeControls( false, playlistCell.btnPlayNormalMode,  playlistCell, "icnSetPlayNormal" )
             togglePlayModeControls( false, playlistCell.btnPlayShuffleMode, playlistCell, "icnSetPlayShuffle" )
@@ -1253,15 +1251,13 @@ extension PlaylistViewController {
             
             var _title = _playlistCell.metaPlaylistInDb!.metaListInternalName
             if  _playlistCell.metaPlaylistInDb!.getMD5FingerPrint() == _inputHash {
-                 print ("                 remove playlistCell [\(_title)] from _playlistInCellsInPlayMode cache [index=\(index)]")
                 _playlistInCellsInPlayMode.index(of: _playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
-                
+                 // exit method after handling cache cleanUp!
                  return
             }
         }
         
-        print ("                 indexing \(playlistCell.metaPlaylistInDb!.metaListInternalName) [size=\(_playlistInCellsInPlayMode.count)]")
-        
+        // add parem-given playlistCell to cells-in-playmode cache
        _playlistInCellsInPlayMode.append( playlistCell )
     }
     
@@ -1302,6 +1298,9 @@ extension PlaylistViewController {
         if  active == true {
             playlistCell.state = .playing
         }
+        
+        // we've to handle all unfolded-cell playMode icons inside this method !!!
+        
     }
     
     func setPlaylistPlayMode(

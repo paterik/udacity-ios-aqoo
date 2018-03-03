@@ -253,6 +253,11 @@ class PlaylistViewController: BaseViewController,
         playlistCell.hViewPlaylistPlayModeIndicator.tintColor = UIColor(netHex: 0x1ED760)
         playlistCell.hViewPlaylistPlayModeIndicator.state = .stopped
         
+        togglePlayModeIcons( playlistCell, false )
+        if playlistCell.metaPlaylistInDb!.currentPlayMode != 0 {
+           togglePlayModeIcons( playlistCell, true )
+        }
+        
         return playlistCell
     }
     
