@@ -226,9 +226,20 @@
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="opP-hR-wJg" userLabel="ui_view_contentState" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                            <rect key="frame" x="98" y="46" width="15" height="15"/>
+                                                            <rect key="frame" x="115" y="46" width="15" height="15"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="1NZ-Nl-hXq"/>
+                                                                <constraint firstAttribute="height" constant="15" id="ZGD-uC-P9i"/>
+                                                            </constraints>
                                                         </view>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnSetPlayMini_1" translatesAutoresizingMaskIntoConstraints="NO" id="TvP-5j-vWs" userLabel="ui_img_contentStatePlaying">
+                                                            <rect key="frame" x="95" y="46" width="15" height="15"/>
+                                                            <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="sam-lJ-MU3"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -237,12 +248,14 @@
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="top" secondItem="ZR1-8l-W4s" secondAttribute="top" constant="8" id="3bh-sa-NyC"/>
                                                         <constraint firstAttribute="trailing" secondItem="sob-eI-eHt" secondAttribute="trailing" constant="326" id="6Ru-4Y-cfl"/>
                                                         <constraint firstItem="pK2-6a-rSX" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" id="7rV-5p-jgq"/>
-                                                        <constraint firstItem="opP-hR-wJg" firstAttribute="trailing" secondItem="v2e-jW-gyw" secondAttribute="trailing" id="9IU-Vs-Kwk"/>
+                                                        <constraint firstItem="TvP-5j-vWs" firstAttribute="top" secondItem="v2e-jW-gyw" secondAttribute="bottom" constant="20" id="CTk-WJ-5jN"/>
                                                         <constraint firstItem="ck0-hi-RIH" firstAttribute="leading" secondItem="Rzk-Wc-Tps" secondAttribute="trailing" constant="1" id="EM2-ON-SUN"/>
-                                                        <constraint firstItem="opP-hR-wJg" firstAttribute="leading" secondItem="Rzk-Wc-Tps" secondAttribute="leading" id="O8O-hw-Swu"/>
+                                                        <constraint firstItem="Rzk-Wc-Tps" firstAttribute="top" secondItem="opP-hR-wJg" secondAttribute="bottom" constant="5" id="Ker-qh-Q0P"/>
                                                         <constraint firstItem="lvd-FW-jux" firstAttribute="top" secondItem="NOb-wp-Paj" secondAttribute="bottom" constant="14" id="OjX-pe-U63"/>
                                                         <constraint firstItem="v2e-jW-gyw" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="8" symbolic="YES" id="QTd-oO-Jjv"/>
+                                                        <constraint firstItem="TvP-5j-vWs" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="5" id="Raa-Gq-Nvx"/>
                                                         <constraint firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" constant="8" id="SND-p6-Q62"/>
+                                                        <constraint firstItem="opP-hR-wJg" firstAttribute="leading" secondItem="TvP-5j-vWs" secondAttribute="trailing" constant="5" id="Tnc-Wp-Peg"/>
                                                         <constraint firstItem="Rzk-Wc-Tps" firstAttribute="leading" secondItem="v2e-jW-gyw" secondAttribute="leading" id="UB3-8L-jtM"/>
                                                         <constraint firstAttribute="bottom" secondItem="sob-eI-eHt" secondAttribute="bottom" constant="-2" id="VeI-8H-tj8"/>
                                                         <constraint firstItem="Rzk-Wc-Tps" firstAttribute="top" secondItem="NOb-wp-Paj" secondAttribute="bottom" constant="38" id="XiS-d6-Hy5"/>
@@ -255,9 +268,8 @@
                                                         <constraint firstAttribute="bottom" secondItem="ck0-hi-RIH" secondAttribute="bottom" constant="7" id="oBl-wv-ohy"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="121" id="r0k-mX-Ixd"/>
                                                         <constraint firstItem="sob-eI-eHt" firstAttribute="leading" secondItem="ZR1-8l-W4s" secondAttribute="leading" constant="-3" id="rba-cj-iIT"/>
+                                                        <constraint firstItem="Rzk-Wc-Tps" firstAttribute="top" secondItem="TvP-5j-vWs" secondAttribute="bottom" constant="5" id="rbb-jL-pOD"/>
                                                         <constraint firstItem="Rzk-Wc-Tps" firstAttribute="bottom" secondItem="lvd-FW-jux" secondAttribute="bottom" id="t1C-am-72Z"/>
-                                                        <constraint firstItem="opP-hR-wJg" firstAttribute="top" secondItem="v2e-jW-gyw" secondAttribute="bottom" constant="20" id="tgn-4j-S8z"/>
-                                                        <constraint firstItem="Rzk-Wc-Tps" firstAttribute="top" secondItem="opP-hR-wJg" secondAttribute="bottom" constant="5" id="uCC-yi-JGd"/>
                                                         <constraint firstItem="NOb-wp-Paj" firstAttribute="leading" secondItem="pK2-6a-rSX" secondAttribute="trailing" constant="31" id="uMe-NH-gho"/>
                                                         <constraint firstItem="lvd-FW-jux" firstAttribute="bottom" secondItem="ZR1-8l-W4s" secondAttribute="bottomMargin" id="v2n-ii-coC"/>
                                                         <constraint firstItem="v2e-jW-gyw" firstAttribute="centerY" secondItem="NOb-wp-Paj" secondAttribute="centerY" id="vLZ-Rx-NcQ"/>
@@ -433,6 +445,7 @@
                                             <outlet property="imageViewContentChangedManually" destination="v2e-jW-gyw" id="qi5-gr-gWX"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
                                             <outlet property="imageViewPlaylistCoverInDetail" destination="HGO-lT-TFa" id="ypK-XA-OPz"/>
+                                            <outlet property="imageViewPlaylistIsPlaying" destination="TvP-5j-vWs" id="gjm-2c-Zsq"/>
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="imageViewPlaylistOwnerInDetail" destination="SQY-Ji-lBH" id="JSL-Uh-hLY"/>
@@ -1839,6 +1852,7 @@
         <image name="icnPLTableView" width="25" height="25"/>
         <image name="icnSave_v1" width="25" height="25"/>
         <image name="icnSetPauseMini_1" width="25" height="25"/>
+        <image name="icnSetPlayMini_1" width="25" height="25"/>
         <image name="icnSetPlayNormal_0" width="25" height="25"/>
         <image name="icnSetPlayNormal_1" width="25" height="25"/>
         <image name="icnSetPlayRepeatAll_0" width="25" height="25"/>

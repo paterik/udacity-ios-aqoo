@@ -25,6 +25,7 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwnerInDetail: UIImageView!
     @IBOutlet weak var imageViewPlaylistIsSpotify: UIImageView!
+    @IBOutlet weak var imageViewPlaylistIsPlaying: UIImageView!
     
     @IBOutlet weak var lblPlaylistName: UILabel!
     @IBOutlet weak var lblPlaylistNameInDetail: UILabel!
@@ -68,6 +69,9 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var btnPlayNormalMode: UIButton!
 
     var state: PlaylistMusicIndicatorViewState = .stopped {
-        didSet { hViewPlaylistPlayModeIndicator.state = state }
+        
+        didSet {
+            hViewPlaylistPlayModeIndicator.state = state
+        }
     }
 }

@@ -1244,6 +1244,7 @@ extension PlaylistViewController {
         for _playlistCell in _playlistInCellsInPlayMode {
             
             _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
+            _playlistCell.imageViewPlaylistIsPlaying.isHidden = true
             _playlistCell.state = .stopped
             
             togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,  _playlistCell, "icnSetPlayRepeatAll" )
@@ -1277,6 +1278,7 @@ extension PlaylistViewController {
             // add active (in-playmode) cell to current-cells-in-playmode-stack (if this object doesn't exist in queue)
             if _playlistInCellsInPlayMode.contains(playlistCell) == false {
                _playlistInCellsInPlayMode.append( playlistCell )
+                playlistCell.imageViewPlaylistIsPlaying.isHidden = false
                 playlistCell.state = .playing
             }
             
