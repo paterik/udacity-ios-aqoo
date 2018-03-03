@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
-    let debugKFCMode: Bool = false
+    let debugKFCMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let spotifyClient = SpotifyClient.sharedInstance
@@ -162,7 +162,8 @@ class BaseViewController: UIViewController {
     
     func getCoverImageViewByCacheModel(
        _ playlistItem: StreamPlayList,
-       _ playlistCoverImageView: UIImageView) -> (view: UIImageView, key: String?) {
+       _ playlistCoverImageView: UIImageView,
+       _ playlistCoverImageDetailView: UIImageView?) -> (normalView: UIImageView, detailView: UIImageView?, key: String?) {
         
         var _usedCoverImageURL: URL?
         var _usedCoverImageCacheKey: String?
@@ -203,52 +204,69 @@ class BaseViewController: UIViewController {
         if  _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             _usedCoverImageCacheKey = _usedCoverImageURL!.absoluteString
             
-            ImageCache.default.retrieveImage(forKey: "\(_usedCoverImageURL!)", options: nil) {
+            handleCoverImageByCache(
+                playlistItem,
+                playlistCoverImageView,
+               _usedCoverImageURL!,
+               _usedCoverImageCacheKey!,
+                [
+                    .transition(.fade(0.2)),
+                    .processor(ResizingImageProcessor(referenceSize: self._sysPlaylistCoverImageSize))
+                ]
+            )
+        }
+        
+        return (normalView: playlistCoverImageView, detailView: playlistCoverImageDetailView, key: _usedCoverImageCacheKey)
+    }
+    
+    func handleCoverImageByCache(
+       _ playlistItem: StreamPlayList,
+       _ coverImageView: UIImageView,
+       _ coverImageURL: URL,
+       _ coverCacheKey: String,
+       _ coverOptions: KingfisherOptionsInfo? = nil) {
+        
+        ImageCache.default.retrieveImage(forKey: "\(coverCacheKey)", options: nil) {
+            
+            image, cacheType in
+            
+            // cover image already cached?
+            if  let _cacheImage = image {
                 
-                image, cacheType in
-                if  let _cacheImage = image {
-                    playlistCoverImageView.image = _cacheImage
-                    if  self.debugKFCMode == true {
-                        print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
-                        print("--- KFC :: image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
-                        print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
-                    }
-                    
-                }   else {
-                    playlistCoverImageView.kf.setImage(
-                        with: _usedCoverImageURL,
-                        placeholder: UIImage(named: self._sysDefaultCoverImage),
-                        options: [
-                            .transition(.fade(0.2)),
-                            .processor(ResizingImageProcessor(referenceSize: self._sysPlaylistCoverImageSize))
-                        ],
-                        completionHandler: {
-                            (image, error, cacheType, imageUrl) in
-                            
-                            if  image != nil {
-                                ImageCache.default.store(image!, forKey: imageUrl!.absoluteString)
-                            }
-                            
-                            if error != nil {
-                                if  self.debugKFCMode == true {
-                                    print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
-                                    print("--- KFC :: image couldn't handled successfully")
-                                    print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
-                                    print("--- KFC :: cache_type = [\(cacheType)]")
-                                    print("--- KFC :: error = \(error.debugDescription)")
-                                }
-                            }
+                coverImageView.image = _cacheImage
+                if  self.debugKFCMode == true {
+                    print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
+                    print("--- KFC :: image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
+                    print("--- KFC :: image_key = [\(coverCacheKey)]")
+                }
+                
+            // no cached version for cover image found? retrieve coverImage now ...
+            }   else {
+                coverImageView.kf.setImage(
+                    with: coverImageURL,
+                    placeholder: UIImage(named: self._sysDefaultCoverImage),
+                    options: coverOptions,
+                    completionHandler: {
+                        (image, error, cacheType, imageUrl) in
+                        
+                        if  image != nil {
+                            ImageCache.default.store(image!, forKey: imageUrl!.absoluteString)
                         }
-                    )
-                    
-                    if  self.debugKFCMode == true {
-                        print("\n--- KFC :: image doesn't exist in cache, corresponding cache entry was created")
-                        print("--- KFC :: image_key = [\(_usedCoverImageURL!)]")
+                        
+                        if error != nil {
+                            self._handleErrorAsDialogMessage(
+                                "Error Persisting Cover Image Cache",
+                                "unable to persist current image cover to local cache [\(cacheType)]: \(error.debugDescription) "
+                            )
+                        }
                     }
+                )
+                
+                if  self.debugKFCMode == true {
+                    print("\n--- KFC :: image doesn't exist in cache, corresponding cache entry was created")
+                    print("--- KFC :: image_key = [\(coverImageURL)]")
                 }
             }
         }
-        
-        return (view: playlistCoverImageView, key: _usedCoverImageCacheKey)
     }
 }

@@ -71,6 +71,7 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCellSelected: PlaylistTableFoldingCell?
     var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
     var _playlistInCellsOpened = [PlaylistTableFoldingCell]()
+    var _playlistInCellsInPlayMode = [PlaylistTableFoldingCell]()
     var _playlistChanged: Bool?
     var _playlistChangedItem: StreamPlayList?
     var _playlistGradientLoadingBar = GradientLoadingBar()
@@ -229,20 +230,21 @@ class PlaylistViewController: BaseViewController,
         
         // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
-        playlistCell.imageViewPlaylistCoverInDetail.image = playlistCell.imageViewPlaylistCover.image
         
         // set final cover image based on current playlist model and corresponding imageView
         var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
-        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCoverView)
-        if  coverImageBlock.view != nil {
-            
-            // set image cover in foldingCell normal view and set cacheKey
+        var playlistCoverDetailView: UIImageView! = playlistCell.imageViewPlaylistCoverInDetail
+        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCoverView, playlistCoverDetailView)
+        
+        // set image cover in foldingCell normalView and set corresponding cacheKey
+        if  coverImageBlock.normalView != nil {
             playlistCell.imageCacheKey = coverImageBlock.key
-            playlistCoverView = coverImageBlock.view
-            
-            // set image cover in foldingCell detail view, using the same technics as used in normalView
-            playlistCoverView = playlistCell.imageViewPlaylistCoverInDetail
-            playlistCoverView = getCoverImageViewByCacheModel(playlistCacheData, playlistCoverView).view
+            playlistCoverView = coverImageBlock.normalView
+        }
+        
+        // set image cover in foldingCell detailView and set cacheKey
+        if  coverImageBlock.detailView != nil {
+            playlistCoverDetailView = coverImageBlock.detailView
         }
         
         return playlistCell

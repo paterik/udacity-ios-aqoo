@@ -94,10 +94,14 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         // set default cover image using makeLetterAvatar vendor library call
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
         // set final cover image based on current playlist model and corresponding imageView
-        let coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCell.imageViewPlaylistCover )
-        if  coverImageBlock.view != nil {
+        let coverImageBlock = getCoverImageViewByCacheModel(
+            playlistItem,
+            playlistCell.imageViewPlaylistCover,
+            nil
+        )
+        if  coverImageBlock.detailView != nil {
             playlistCell.imageCacheKey = coverImageBlock.key
-            playlistCell.imageViewPlaylistCover = coverImageBlock.view
+            playlistCell.imageViewPlaylistCover = coverImageBlock.detailView
         }
         
         return playlistCell

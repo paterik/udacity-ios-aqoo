@@ -1164,10 +1164,10 @@ extension PlaylistViewController {
         _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         
         // majic : now decide based on tapped-button what action should provide into business logic
-        handlePlaylistControlActionByButton( button )
+        handlePlaylistControlActionByButton( button, _cell )
     }
     
-    func handlePlaylistControlActionByButton(_ button: UIButton) {
+    func handlePlaylistControlActionByButton(_ button: UIButton, _ playlistCell: PlaylistTableFoldingCell) {
         
         _playlistInCacheSelected!.inRepeatPlayMode = false
         _playlistInCacheSelected!.inShufflePlayMode = false
@@ -1184,9 +1184,9 @@ extension PlaylistViewController {
                     setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
                 }
                 
-                togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, "icnSetPlayRepeatAll" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,  "icnSetPlayNormal" )
+                togglePlayModeControls( _playlistInCacheSelected!.inRepeatPlayMode, button, playlistCell, "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, playlistCell, "icnSetPlayShuffle" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,  playlistCell, "icnSetPlayNormal" )
                 
                 break
             
@@ -1199,9 +1199,9 @@ extension PlaylistViewController {
                     setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
                 }
                 
-                togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, "icnSetPlayShuffle" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   "icnSetPlayNormal" )
+                togglePlayModeControls( _playlistInCacheSelected!.inShufflePlayMode, button, playlistCell, "icnSetPlayShuffle" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,   playlistCell, "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayNormalMode,   playlistCell, "icnSetPlayNormal" )
                 
                 break
             
@@ -1214,9 +1214,9 @@ extension PlaylistViewController {
                     setPlaylistPlayMode( _playlistInCacheSelected!, playMode.Default.rawValue )
                 }
                 
-                togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, "icnSetPlayNormal" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  "icnSetPlayRepeatAll" )
-                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, "icnSetPlayShuffle" )
+                togglePlayModeControls( _playlistInCacheSelected!.inNormalPlayMode, button, playlistCell, "icnSetPlayNormal" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayRepeatMode,  playlistCell, "icnSetPlayRepeatAll" )
+                togglePlayModeControls( false, _playlistInCellSelected!.btnPlayShuffleMode, playlistCell, "icnSetPlayShuffle" )
                 
                 break
             
@@ -1228,22 +1228,21 @@ extension PlaylistViewController {
     
     func resetPlayModeControls() {
 
-        var duration = 0.0
-        
-        // iterate through all openend cells and close them now
-        for _playlistCell in _playlistInCellsOpened {
+        // iterate through all openend cells and reset playMode controls
+        for _playlistCell in _playlistInCellsInPlayMode {
             
             _playlistCell.metaPlaylistInDb!.resetAllPlayModes()
             
-            togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,   "icnSetPlayRepeatAll" )
-            togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,   "icnSetPlayNormal" )
-            togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode,  "icnSetPlayShuffle" )
+            togglePlayModeControls( false, _playlistCell.btnPlayRepeatMode,  _playlistCell, "icnSetPlayRepeatAll" )
+            togglePlayModeControls( false, _playlistCell.btnPlayNormalMode,  _playlistCell, "icnSetPlayNormal" )
+            togglePlayModeControls( false, _playlistCell.btnPlayShuffleMode, _playlistCell, "icnSetPlayShuffle" )
         }
     }
     
     func togglePlayModeControls(
        _ active: Bool,
        _ button: UIButton,
+       _ playlistCell: PlaylistTableFoldingCell,
        _ imageNamePrefix: String ) {
         
         if  active == true {
@@ -1254,18 +1253,24 @@ extension PlaylistViewController {
                 print ("🔥 \(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)\n")
                 print ("==========================================\n")
                 resetPlayModeControls()
+                // remove reseted cell from current-cells-in-playmode-stack
+                _playlistInCellsInPlayMode.index(of: playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
             }
             
             button.backgroundColor = UIColor(netHex: 0x1ED761)
             button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.normal)
-            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.selected)
-            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.highlighted)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: [UIControlState.selected, UIControlState.highlighted])
+            
+            // add active (in-playmode) cell to current-cells-in-playmode-stack (if this object doesn't exist in queue)
+            if  _playlistInCellsInPlayMode.contains(playlistCell) == false {
+                _playlistInCellsInPlayMode.append( playlistCell )
+            }
             
         }   else {
-            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.normal)
-            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.selected)
-            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: UIControlState.highlighted)
+            
             button.backgroundColor = UIColor.clear
+            button.setImage(UIImage(named : "\(imageNamePrefix)_0"), for: UIControlState.normal)
+            button.setImage(UIImage(named : "\(imageNamePrefix)_1"), for: [UIControlState.selected, UIControlState.highlighted])
         }
     }
     
