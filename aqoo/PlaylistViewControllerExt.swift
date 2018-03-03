@@ -76,19 +76,27 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    func getFilterBlockByIndex(_ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool) {
+    func getFilterBlockByIndex(_ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
             
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
         var filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey?
         var filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>?
         var filterQueryUseDefaults: Bool = false
+        var filterImageKey: Int?
         
         // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
         for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
             
             if _index == index {
                 if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
+                    
+                    // fetch filter image key from config dictionary stack
+                    if  let _metaImageKey = _metaValue["image_key"] as? Int {
+                        if  _metaImageKey != -1 {
+                            filterImageKey = _metaImageKey
+                        }
+                    }
                     
                     // fetch filter title from config dictionary stack
                     if  let _metaTitle = _metaValue["title"] as? String {
@@ -125,7 +133,8 @@ extension PlaylistViewController {
             filterDescription,
             filterQueryOrderByClause,
             filterQueryFetchChainBuilder,
-            filterQueryUseDefaults
+            filterQueryUseDefaults,
+            filterImageKey
         )
     }
     
@@ -139,7 +148,7 @@ extension PlaylistViewController {
         // persist current filter to provider based playlist
         setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
         // show notification for user about current filter set
-        showFilterNotification ( filterBlock.0, filterBlock.1 )
+        showFilterNotification ( filterBlock.0, filterBlock.1, filterBlock.5 )
         // call specific filter action corresponding to current filter-item menu selection
         handleTableFilterByFetchChainQuery(
             filterBlock.2,
@@ -275,11 +284,14 @@ extension PlaylistViewController {
         tableView.reloadData()
     }
     
-    func showFilterNotification(_ title: String, _ description: String ) {
+    func showFilterNotification(_ title: String, _ description: String, _ imageKey: Int? ) {
         
         let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
             bannerView.lblTitle.text = title
             bannerView.lblSubTitle.text = description
+        if  imageKey != nil {
+            bannerView.imgViewNotificationDefault.image = UIImage(named: "mnu_pl_fltr_icn_\(imageKey!)_nfo")
+        }
         
         let banner = NotificationBanner(customView: bannerView)
             banner.duration = 0.9375
