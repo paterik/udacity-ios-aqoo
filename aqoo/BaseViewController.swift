@@ -205,8 +205,8 @@ class BaseViewController: UIViewController {
         // call kingfisher majic and place coverImage using kf-methods (including cache loading) for playlistCover images
         if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             
-           _usedNormalCoverImageCacheKey = String(format: "_normal::%@", _usedCoverImageURL!.absoluteString).md5()
-           _usedDetailCoverImageCacheKey = String(format: "_detail::%@", _usedCoverImageURL!.absoluteString).md5()
+           _usedNormalCoverImageCacheKey = String(format: "c1::%@", _usedCoverImageURL!.absoluteString).md5()
+           _usedDetailCoverImageCacheKey = String(format: "c2::%@", _usedCoverImageURL!.absoluteString).md5()
             
             // normal cell view cover image handler
             handleCoverImageByCache(
@@ -216,7 +216,10 @@ class BaseViewController: UIViewController {
                _usedNormalCoverImageCacheKey!,
                 [
                     .transition(.fade(0.1875)),
-                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
+                    .processor(
+                        ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize)
+                            .append(another: BlackWhiteProcessor()
+                    ))
                 ]
             )
             
@@ -228,11 +231,7 @@ class BaseViewController: UIViewController {
                    _usedCoverImageURL!,
                    _usedDetailCoverImageCacheKey!,
                     [
-                        .processor(
-                            ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize)
-                                .append(another: BlackWhiteProcessor()
-                                .append(another: OverlayImageProcessor(overlay: UIColor(netHex: 0x1ED760), fraction: 0.5)
-                        )))
+                        .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
                     ]
                 )
             }
