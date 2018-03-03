@@ -230,6 +230,7 @@ class PlaylistViewController: BaseViewController,
         
         // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
         playlistCell.imageViewPlaylistCover.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
+        playlistCell.imageViewPlaylistCoverInDetail.image = playlistCell.imageViewPlaylistCover.image
         
         // set final cover image based on current playlist model and corresponding imageView
         var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
@@ -238,12 +239,13 @@ class PlaylistViewController: BaseViewController,
         
         // set image cover in foldingCell normalView and set corresponding cacheKey
         if  coverImageBlock.normalView != nil {
-            playlistCell.imageCacheKey = coverImageBlock.key
+            playlistCell.imageCacheKeyNormalView = coverImageBlock.normalViewCacheKey
             playlistCoverView = coverImageBlock.normalView
         }
         
         // set image cover in foldingCell detailView and set cacheKey
         if  coverImageBlock.detailView != nil {
+            playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
             playlistCoverDetailView = coverImageBlock.detailView
         }
         

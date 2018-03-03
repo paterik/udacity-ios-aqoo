@@ -16,7 +16,8 @@ class PlaylistTableFoldingCell: FoldingCell {
     var metaOwnerName: String?
     var metaPlaylistInDb: StreamPlayList?
     var metaPlayListInCloud: SPTPartialPlaylist?
-    var imageCacheKey: String?
+    var imageCacheKeyNormalView: String?
+    var imageCacheKeyDetailView: String?
 
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!

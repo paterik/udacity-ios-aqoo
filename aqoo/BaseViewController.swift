@@ -163,10 +163,12 @@ class BaseViewController: UIViewController {
     func getCoverImageViewByCacheModel(
        _ playlistItem: StreamPlayList,
        _ playlistCoverImageView: UIImageView,
-       _ playlistCoverImageDetailView: UIImageView?) -> (normalView: UIImageView, detailView: UIImageView?, key: String?) {
+       _ playlistCoverImageDetailView: UIImageView?)
+         -> (normalView: UIImageView, detailView: UIImageView?, normalViewCacheKey: String?, detailViewCacheKey: String?) {
         
         var _usedCoverImageURL: URL?
-        var _usedCoverImageCacheKey: String?
+        var _usedNormalCoverImageCacheKey: String?
+        var _usedDetailCoverImageCacheKey: String?
         var _noCoverImageAvailable: Bool = true
         var _noCoverOverrideImageAvailable: Bool = true
         var _noCoverSetForInternal: Bool = false
@@ -201,22 +203,47 @@ class BaseViewController: UIViewController {
         }
         
         // call kingfisher majic and place coverImage using kf-methods (including cache loading) for playlistCover images
-        if  _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
-            _usedCoverImageCacheKey = _usedCoverImageURL!.absoluteString
+        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
             
+           _usedNormalCoverImageCacheKey = String(format: "_normal::%@", _usedCoverImageURL!.absoluteString).md5()
+           _usedDetailCoverImageCacheKey = String(format: "_detail::%@", _usedCoverImageURL!.absoluteString).md5()
+            
+            // normal cell view cover image handler
             handleCoverImageByCache(
                 playlistItem,
                 playlistCoverImageView,
                _usedCoverImageURL!,
-               _usedCoverImageCacheKey!,
+               _usedNormalCoverImageCacheKey!,
                 [
-                    .transition(.fade(0.2)),
-                    .processor(ResizingImageProcessor(referenceSize: self._sysPlaylistCoverImageSize))
+                    .transition(.fade(0.1875)),
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
                 ]
             )
+            
+            // detail cell view cover image handler
+            if  playlistCoverImageDetailView != nil {
+                handleCoverImageByCache(
+                    playlistItem,
+                    playlistCoverImageDetailView!,
+                   _usedCoverImageURL!,
+                   _usedDetailCoverImageCacheKey!,
+                    [
+                        .processor(
+                            ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize)
+                                .append(another: BlackWhiteProcessor()
+                                .append(another: OverlayImageProcessor(overlay: UIColor(netHex: 0x1ED760), fraction: 0.5)
+                        )))
+                    ]
+                )
+            }
         }
         
-        return (normalView: playlistCoverImageView, detailView: playlistCoverImageDetailView, key: _usedCoverImageCacheKey)
+        return (
+            normalView: playlistCoverImageView,
+            detailView: playlistCoverImageDetailView,
+            normalViewCacheKey: _usedNormalCoverImageCacheKey,
+            detailViewCacheKey: _usedDetailCoverImageCacheKey
+        )
     }
     
     func handleCoverImageByCache(
@@ -250,7 +277,7 @@ class BaseViewController: UIViewController {
                         (image, error, cacheType, imageUrl) in
                         
                         if  image != nil {
-                            ImageCache.default.store(image!, forKey: imageUrl!.absoluteString)
+                            ImageCache.default.store(image!, forKey: coverCacheKey)
                         }
                         
                         if error != nil {
@@ -264,7 +291,7 @@ class BaseViewController: UIViewController {
                 
                 if  self.debugKFCMode == true {
                     print("\n--- KFC :: image doesn't exist in cache, corresponding cache entry was created")
-                    print("--- KFC :: image_key = [\(coverImageURL)]")
+                    print("--- KFC :: image_key = [\(coverCacheKey)]")
                 }
             }
         }
