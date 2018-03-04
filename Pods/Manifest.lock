@@ -9,7 +9,7 @@ PODS:
   - Kingfisher (4.6.3)
   - LetterAvatarKit (1.1.2)
   - MarqueeLabel/Swift (3.1.4)
-  - NotificationBannerSwift (1.6.1):
+  - NotificationBannerSwift (1.6.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - Persei (3.1.1)
@@ -63,7 +63,7 @@ SPEC CHECKSUMS:
   Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
-  NotificationBannerSwift: 1fc2955381e6eb26d958ba32160fc41721b9b689
+  NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
