@@ -70,7 +70,6 @@ class PlaylistViewController: BaseViewController,
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistInCellSelected: PlaylistTableFoldingCell?
     var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
-    var _playlistInCellsOpened = [PlaylistTableFoldingCell]()
     var _playlistInCellsInPlayMode = [PlaylistTableFoldingCell]()
     var _playlistChanged: Bool?
     var _playlistChangedItem: StreamPlayList?
@@ -358,17 +357,11 @@ class PlaylistViewController: BaseViewController,
            _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
            _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
             
-            // add opened cell to current-opened-cell-stack
-           _playlistInCellsOpened.append(_playlistInCellSelected!)
-            
         }   else {
             
            _cellHeights[indexPath.row] = kCloseCellHeight
             
             cell.unfold(false, animated: true, completion: nil); duration = kCloseCellDuration // 0.8
-            
-            // remove closed cell from current-opened-cell-stack
-           _playlistInCellsOpened.index(of: cell).map { _playlistInCellsOpened.remove(at: $0) }
         }
         
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
