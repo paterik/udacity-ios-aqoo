@@ -16,6 +16,14 @@ public enum PlaylistMusicIndicatorViewState: Int {
     case paused
 }
 
+public enum PlaylistMusicPlayMode: Int {
+    
+    case playNormal
+    case playShuffle
+    case playLoop
+    case clear
+}
+
 open class PlaylistMusicIndicatorView: UIView {
 
     open var hidesWhenStopped: Bool = true {
