@@ -66,11 +66,14 @@ class PlaylistViewController: BaseViewController,
     var _userProfilesInPlaylists = [String]()
     var _userProfilesInPlaylistsUnique = [String]()
     var _userProfilesCachedForFilter : Int = 0
+    
     var _playlistInCloudSelected: SPTPartialPlaylist?
     var _playlistInCacheSelected: StreamPlayList?
     var _playlistInCellSelected: PlaylistTableFoldingCell?
     var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
-    var _playlistInCellsInPlayMode = [PlaylistTableFoldingCell]()
+    
+    var _playlistCellsInPlayMode = [PlaylistTableFoldingCell]()
+    
     var _playlistChanged: Bool?
     var _playlistChangedItem: StreamPlayList?
     var _playlistGradientLoadingBar = GradientLoadingBar()

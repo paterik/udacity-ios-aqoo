@@ -86,6 +86,11 @@ extension StreamPlayList {
             "\(self.isCollaborative)").md5()
     }
     
+    func getMD5Identifier() -> String {
+        
+        return String(self.metaListNameOrigin).md5()
+    }
+    
     var images: [String] {
         get { return metaMediaRessourcesArray as? Array<String> ?? [] }
         set { metaMediaRessourcesArray = newValue as NSArray }

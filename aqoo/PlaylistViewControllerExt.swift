@@ -1146,6 +1146,7 @@ extension PlaylistViewController {
     //
     func handlePlaylistCellObjectsByTapAction(_ button: UIButton) {
         
+        // majic: iterate through all cell views downside (start at tapped button) and try to find the real PlaylistTableFoldingCell
         guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell })
         else
         {
@@ -1155,22 +1156,13 @@ extension PlaylistViewController {
             );  return
         }
         
-        _playlistInCellSelected = _cell
+        // update current selected cell/cache/cloud variable stack
+        _playlistInCellSelected  = _cell
         _playlistInCacheSelected = _cell.metaPlaylistInDb!
         _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         
         // majic : now decide based on tapped-button what action should provide into business logic
         handlePlaylistControlActionByButton( button, _cell )
-    }
-    
-    func resetPlayModeControls() {
-        
-        // iterate through all cells-in-playmode and reset corresponding controls
-        for playlistCell in _playlistInCellsInPlayMode {
-            
-            togglePlayModeIcons( playlistCell, false )
-            playlistCell.mode = .clear
-        }
     }
     
     func handlePlaylistControlActionByButton(
@@ -1179,8 +1171,10 @@ extension PlaylistViewController {
         
         var playlistInCache = playlistCell.metaPlaylistInDb!
         
-        // reset (all) playMode controls
+        // reset (all) playMode controls of this cell
         playlistCell.mode = .clear
+        
+        print ("___ HANDLE playModeControls for cell (_playlistInCellSelected) [\(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)]")
         
         switch Int16 ( button.tag ) {
             
@@ -1229,33 +1223,49 @@ extension PlaylistViewController {
             default:
                 
                 togglePlayModeIcons( playlistCell, false )
-            
-                break
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : playMode for [\(playlistInCache.metaListInternalName)] not handled! TAG [\(button.tag)] unknown")
+                };  break
         }
-
-       _playlistInCellSelectedInPlayMode = _playlistInCellSelected!
     }
     
-    func handlePlaylistInCellsInPlayMode(_ playlistCell: PlaylistTableFoldingCell) {
+    func resetPlayModeControls(_ currentCellPlayingHash: String) {
         
-        var _inputHash = playlistCell.metaPlaylistInDb!.getMD5FingerPrint()
+        // iterate through all cells-in-playmode and reset corresponding controls
+        for playlistCell in _playlistCellsInPlayMode {
+            
+            if (playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash) {
+                print ("___ ignore current playing cell")
+                continue
+            }
+            
+            togglePlayModeIcons( playlistCell, false )
+            playlistCell.mode = .clear
+        }
+    }
+    
+    /*
+     *  this method will be called if a given cell switched to ative playMode (mode > 0)
+     */
+    func handlePlaylistCellsInPlayMode(_ playlistCell: PlaylistTableFoldingCell) {
         
-        if _playlistInCellSelectedInPlayMode != nil && (_playlistInCellSelectedInPlayMode != _playlistInCellSelected) {
-            resetPlayModeControls()
+        var _inputHash = playlistCell.metaPlaylistInDb!.getMD5Identifier()
+        
+        if _playlistInCellSelectedInPlayMode != nil {
+            resetPlayModeControls ( _playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.getMD5Identifier() )
         }
         
-        for (index, _playlistCell) in _playlistInCellsInPlayMode.enumerated() {
-            
-            var _title = _playlistCell.metaPlaylistInDb!.metaListInternalName
-            if  _playlistCell.metaPlaylistInDb!.getMD5FingerPrint() == _inputHash {
-                _playlistInCellsInPlayMode.index(of: _playlistCell).map { _playlistInCellsInPlayMode.remove(at: $0) }
-                 // exit method after handling cache cleanUp!
-                 return
+        // remove cell from cells-in-playmode queue if the given playlistCell already enlisted in
+        for (index, _playlistCell) in _playlistCellsInPlayMode.enumerated() {
+            if  _playlistCell.metaPlaylistInDb!.getMD5Identifier() == _inputHash {
+                _playlistCellsInPlayMode.index(of: _playlistCell).map { _playlistCellsInPlayMode.remove(at: $0) }
+                // break loop after handling to add given cell in lines below
+                break
             }
         }
         
         // add parem-given playlistCell to cells-in-playmode cache
-       _playlistInCellsInPlayMode.append( playlistCell )
+       _playlistCellsInPlayMode.append( playlistCell )
     }
     
     func togglePlayModeIcons(
@@ -1267,9 +1277,6 @@ extension PlaylistViewController {
         if  active == true {
             playlistCell.state = .playing
         }
-        
-        // we've to handle all unfolded-cell playMode icons inside this method !!!
-        
     }
     
     func setPlaylistPlayMode(
@@ -1278,9 +1285,11 @@ extension PlaylistViewController {
         
         var playListInDb: StreamPlayList = playlistCell.metaPlaylistInDb!
         
-        // handle cache processor for playlist in active playModes ( newPlayMode > 0 )
-        if newPlayMode != playMode.Default.rawValue {
-           handlePlaylistInCellsInPlayMode( playlistCell )
+        // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
+        _playlistInCellSelectedInPlayMode = nil
+        if  newPlayMode != playMode.Default.rawValue {
+           _playlistInCellSelectedInPlayMode = playlistCell
+            handlePlaylistCellsInPlayMode( playlistCell )
         }
         
         // update given playlist - set correspoding playmode now!
@@ -1293,7 +1302,7 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo):
                     if self.debugMode == true {
-                        print ("dbg [playlist] : playMode for [\(playListInDb.metaListInternalName)] updated to [\(newPlayMode)]")
+                        print ("dbg [playlist] : set playMode for [\(playListInDb.metaListInternalName)] to [\(newPlayMode)]")
                     }
                 }
             }
@@ -1323,7 +1332,7 @@ extension PlaylistViewController {
                         case  .success(let userInfo):
                             
                             if  self.debugMode == true {
-                                print ("dbg [playlist] : playFlag for [\(playListInDb.metaListInternalName)] removed")
+                                print ("dbg [playlist] : remove playMode for [\(playListInDb.metaListInternalName)] removed")
                             }
                         }
                     }
