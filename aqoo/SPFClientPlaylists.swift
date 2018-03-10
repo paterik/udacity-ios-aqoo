@@ -77,9 +77,4 @@ class SPFClientPlaylists: NSObject {
             }
         )
     }
-    
-    func getMetaListHashByParam(_ playListPlayableUri: String, _ playListOwner: String) -> String {
-        
-        return String( format: "%@:%@", playListPlayableUri, playListOwner).md5()
-    }
 }

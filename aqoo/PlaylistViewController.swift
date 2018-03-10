@@ -268,8 +268,7 @@ class PlaylistViewController: BaseViewController,
          editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
-        
-       _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+       
         if playlistCell.metaPlaylistInDb == nil {
             _handleErrorAsDialogMessage(
                 "Error Loading Cache Playlist",
@@ -277,7 +276,9 @@ class PlaylistViewController: BaseViewController,
             );   return []
         }
         
-       _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
+        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        
         playlistCell.metaPlayListInCloud = _playlistInCloudSelected
         if playlistCell.metaPlayListInCloud == nil {
             _handleErrorAsDialogMessage(
@@ -306,9 +307,7 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-            if  self.debugMode == true {
-                print ("TBL_ACTION_DETECTED : Hide (not-imlemented-yet!)")
-            }
+            self.handlePlaylistHiddenFlag(self._playlistInCacheSelected!)
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -324,6 +323,39 @@ class PlaylistViewController: BaseViewController,
         }
         
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
+    }
+    
+    func handlePlaylistHiddenFlag(_ playlistInDb: StreamPlayList) {
+        
+        var newHiddenState: Bool = !playlistInDb.isPlaylistHidden
+        var _playListInDb: StreamPlayList?
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                _playListInDb = transaction.fetchOne(
+                    From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistInDb.getMD5Identifier())
+                )
+                
+                if  _playListInDb != nil {
+                    _playListInDb!.isPlaylistHidden = newHiddenState
+                    _playListInDb!.updatedAt = Date()
+                }
+            },
+            completion: { (result) -> Void in
+            
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    
+                    self.tableView.reloadData()
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : [\(playlistInDb.metaListInternalName)] handled -> HIDDEN=\(newHiddenState)")
+                    }
+                }
+            }
+        )
     }
     
     func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

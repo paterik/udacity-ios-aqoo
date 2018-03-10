@@ -365,11 +365,11 @@ extension PlaylistViewController {
         }
         
         _cacheTimer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(_sysCacheCheckInSeconds),
-            target: self,
-            selector: #selector(handleCacheTimerEvent),
-            userInfo: nil,
-            repeats: true
+            timeInterval : TimeInterval(_sysCacheCheckInSeconds),
+            target       : self,
+            selector     : #selector(handleCacheTimerEvent),
+            userInfo     : nil,
+            repeats      : true
         )
     }
     
@@ -533,11 +533,7 @@ extension PlaylistViewController {
 
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
-            _playListFingerprint = spotifyClient.getMetaListHashByParam (
-                playListInCloud.playableUri.absoluteString,
-                spotifyClient.spfUsername
-            )
-            
+            _playListFingerprint = playListInCloud.getMD5Identifier()
             _userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName!)
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
@@ -853,11 +849,11 @@ extension PlaylistViewController {
        _ providerTag: String ) {
         
         var _playListInDb: StreamPlayList?
-        var _playListFingerprint: String!
-        var _playlistIsMine: Bool!
-        var _playlistIsSpotify: Bool!
+        var _playListMetaListHash: String?
+        var _playlistIsMine: Bool = false
+        var _playlistIsSpotify: Bool = false
         var _ownerProfileImageURL: URL?
-        var _ownerProfileImageStringURL: String! = ""
+        var _ownerProfileImageStringURL: String = ""
         var _currentUserName = spotifyClient.spfCurrentSession?.canonicalUsername
 
         //
@@ -875,14 +871,11 @@ extension PlaylistViewController {
             asynchronous: { (transaction) -> Void in
                 
                 // render hash for new playlist using corresponding cloud entry
-                _playListFingerprint = self.spotifyClient.getMetaListHashByParam (
-                    playListInCloud.playableUri.absoluteString,
-                    playListInCloud.owner.canonicalUserName
-                )
+                _playListMetaListHash = playListInCloud.getMD5Identifier()
                 
                 // corresponding playlist entry exists in db? Check this entry again and prepare for update
                 _playListInDb = transaction.fetchOne(
-                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListFingerprint))
+                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListMetaListHash!))
                 )
                 
                 _playlistIsMine = false
@@ -917,10 +910,10 @@ extension PlaylistViewController {
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playListInDb!.isPublic = playListInCloud.isPublic
+                    
                     _playListInDb!.metaListNameOrigin = playListInCloud.name
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
-                    
                     _playListInDb!.metaNumberOfShares = 0
                     _playListInDb!.metaNumberOfPlayed = 0
                     _playListInDb!.metaNumberOfPlayedPartly = 0
@@ -939,16 +932,16 @@ extension PlaylistViewController {
                     
                     _playListInDb!.isPlaylistVotedByStar = false
                     _playListInDb!.isPlaylistRadioSelected = false
-                    _playListInDb!.isHot = false
+                    _playListInDb!.isPlaylistHidden = false
                     
-                    _playListInDb!.metaListHash = _playListFingerprint
+                    _playListInDb!.metaListHash = _playListMetaListHash!
                     _playListInDb!.metaPreviouslyUpdated = false
                     _playListInDb!.metaPreviouslyUpdatedManually = false
                     _playListInDb!.metaPreviouslyCreated = true
                     _playListInDb!.isMine = _playlistIsMine
                     _playListInDb!.isSpotify = _playlistIsSpotify
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
-                    _playListInDb!.ownerImageURL = _ownerProfileImageStringURL!
+                    _playListInDb!.ownerImageURL = _ownerProfileImageStringURL
                     _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
                     _playListInDb!.currentPlayMode = playMode.Default.rawValue // (0: no-action)
                     
@@ -973,7 +966,7 @@ extension PlaylistViewController {
                     
                 }   else {
                  
-                    if _playListInDb!.getMD5FingerPrint() == playListInCloud.getMD5FingerPrint() {
+                    if _playListInDb!.getMD5Fingerprint() == playListInCloud.getMD5Fingerprint() {
                         
                         if  self.debugMode == true {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> NO_CHANGES")
@@ -1007,11 +1000,10 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo):
                     // save handled hashed in separate collection
-                    self.spotifyClient.playListHashesInCloud.append(_playListFingerprint)
+                    self.spotifyClient.playListHashesInCloud.append(_playListMetaListHash!)
                     
                     // evaluate list extension completion and execute event signal after final cache item was handled
-                    if playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
-                        
+                    if  playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                         self.handlePlaylistDbCacheCoreDataOrphans()
                         self.handlePlaylistProfileEnrichtment()
                     }
@@ -1039,7 +1031,7 @@ extension PlaylistViewController {
     func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
         
         for _playlistInCloud in spotifyClient.playlistsInCloud {
-            if  playlistInDb.getMD5FingerPrint() == _playlistInCloud.getMD5FingerPrint() {
+            if  playlistInDb.getMD5Fingerprint() == _playlistInCloud.getMD5Fingerprint() {
                 return _playlistInCloud
             }
         }

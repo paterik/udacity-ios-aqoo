@@ -279,11 +279,10 @@ class BaseViewController: UIViewController {
                             ImageCache.default.store(image!, forKey: coverCacheKey)
                         }
                         
-                        if error != nil {
-                            self._handleErrorAsDialogMessage(
-                                "Error Persisting Cover Image Cache",
-                                "unable to persist current image cover to local cache [\(cacheType)]: \(error.debugDescription) "
-                            )
+                        if error != nil && self.debugKFCMode == true {
+                        
+                            print ("--- KFC :: ERROR unable to fetch image and transfer data into local cache!")
+                            print ("\(coverImageURL)")
                         }
                     }
                 )

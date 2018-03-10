@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StreamPlayList" representedClassName=".StreamPlayList" syncable="YES">
         <attribute name="coverImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="currentPlayMode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isCollaborative" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isHot" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMine" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistRadioSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -60,7 +59,7 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="630"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="615"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
     </elements>

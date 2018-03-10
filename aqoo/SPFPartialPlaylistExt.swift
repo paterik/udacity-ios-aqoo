@@ -10,13 +10,18 @@ import Spotify
 
 extension SPTPartialPlaylist {
 
-    func getMD5FingerPrint() -> String {
+    func getMD5Fingerprint() -> String {
         
         return String(
             format: "%@:%D:%@:%@",
-            self.name ?? self.uri.absoluteString,
+            self.name,
             self.trackCount,
             "\(self.isPublic)",
             "\(self.isCollaborative)").md5()
+    }
+    
+    func getMD5Identifier() -> String {
+        
+        return self.playableUri!.absoluteString.md5()
     }
 }

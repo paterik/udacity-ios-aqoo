@@ -24,7 +24,6 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var coverImagePathOverride: String?
     @NSManaged var profileImagePathOverride: String?
    
-    @NSManaged var isHot: Bool
     @NSManaged var isMine: Bool
     @NSManaged var isSpotify: Bool
     @NSManaged var isPublic: Bool
@@ -76,7 +75,7 @@ class StreamPlayList: NSManagedObject {
 
 extension StreamPlayList {
 
-    func getMD5FingerPrint() -> String {
+    func getMD5Fingerprint() -> String {
         
         return String(
             format: "%@:%D:%@:%@",
@@ -88,7 +87,7 @@ extension StreamPlayList {
     
     func getMD5Identifier() -> String {
         
-        return String(self.metaListNameOrigin).md5()
+        return playableURI.md5()
     }
     
     var images: [String] {
