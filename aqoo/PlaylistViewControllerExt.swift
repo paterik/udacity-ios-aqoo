@@ -170,12 +170,7 @@ extension PlaylistViewController {
             From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
             ) as? StreamProviderConfig {
             
-            let filterKey = Int ( _configKeyRow.defaultPlaylistTableFilterKey )
-            if  debugMode == true {
-                print ("=== config_load :: KEY ➡ [FILTER_INDEX = (\(filterKey))] ===")
-            }
-            
-            return filterKey
+            return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
         }
         
         return 0
@@ -267,14 +262,10 @@ extension PlaylistViewController {
             
         }   else {
             if  let _playListFilterResults = CoreStore.fetchAll(
-                
-                    From<StreamPlayList>(),
-                    Where<StreamPlayList>("isPlaylistHidden = %d", false),
-                    filterQueryOrderBy
-                
-                ) {
-                filterQueryResults = _playListFilterResults
-            }
+                From<StreamPlayList>(),
+                Where<StreamPlayList>("isPlaylistHidden = %d", false),
+                filterQueryOrderBy
+            ) { filterQueryResults = _playListFilterResults }
         }
         
         if  filterQueryResults.count > 0 {
@@ -813,40 +804,39 @@ extension PlaylistViewController {
               let userProfileUserName = payload["userProfileName"] as? String,
               let playListInDb = payload["playlist"] as? StreamPlayList else { return }
 
-        do {
+        CoreStore.perform(
             
-            CoreStore.perform(
+            // weazL :: bug_1001 - sometimes this async process will terminate my app
+            asynchronous: { (transaction) -> Void in
                 
-                // weazL :: bug_1001 - sometimes this async process will terminate my app
-                asynchronous: { (transaction) -> Void in
-                    
+                do {
                     playListInDb.ownerImageURL = userProfileImageURL
                     playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
                     if  userProfile.sharingURL != nil {
                         playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
                     }
-                },
-                completion: { (result) -> Void in
                     
-                    switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }
-                    case .success(let userInfo):
-                        self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
-                            userProfileUserName,
-                            userProfileImageURL
-                        )
+                } catch {
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
                     }
+                    
+                    return
                 }
-            )
-            
-        } catch {
-            
-            if  debugMode == true {
-                print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
+                        userProfileUserName,
+                        userProfileImageURL
+                    )
+                }
             }
-            
-            return
-        }
+        )
     }
     
     func handlePlaylistDbCacheCoreData (
@@ -1140,11 +1130,18 @@ extension PlaylistViewController {
             }
         )
     }
-    
+
     func handlePlaylistHiddenFlag(_ playlistInDb: StreamPlayList) {
         
         var newHiddenState: Bool = !playlistInDb.isPlaylistHidden
+        var hiddenStateVerb: String = "Disable"
+        var hiddenStateInformation: String = "You can find this playlist using the 'show-hidden' filter"
         var _playListInDb: StreamPlayList?
+        
+        if  newHiddenState == false {
+            hiddenStateVerb = "Enable"
+            hiddenStateInformation = "This playlist is now visible in all filters again"
+        }
         
         CoreStore.perform(
             
@@ -1164,6 +1161,7 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo):
                     
+                    self.showUserNotification("\(hiddenStateVerb) \(playlistInDb.metaListInternalName)", hiddenStateInformation, nil)
                     self.setupUILoadExtendedPlaylists()
                     
                     if  self.debugMode == true {
@@ -1172,6 +1170,25 @@ extension PlaylistViewController {
                 }
             }
         )
+    }
+    
+    func showUserNotification(
+       _ title: String,
+       _ description: String,
+       _ iconImageName: String? ) {
+        
+        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+        bannerView.lblTitle.text = title
+        bannerView.lblSubTitle.text = description
+        if  iconImageName != nil {
+            bannerView.imgViewNotificationDefault.image = UIImage(named: "\(iconImageName)")
+        }
+        
+        let banner = NotificationBanner(customView: bannerView)
+        banner.duration = 1.1275
+        banner.onTap = {
+            banner.dismiss()
+        };  banner.show(bannerPosition: .bottom)
     }
     
     //
