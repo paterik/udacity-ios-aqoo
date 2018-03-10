@@ -1174,8 +1174,6 @@ extension PlaylistViewController {
         // reset (all) playMode controls of this cell
         playlistCell.mode = .clear
         
-        print ("___ HANDLE playModeControls for cell (_playlistInCellSelected) [\(_playlistInCellSelected!.metaPlaylistInDb!.metaListInternalName)]")
-        
         switch Int16 ( button.tag ) {
             
             case playMode.PlayRepeatAll.rawValue:
@@ -1234,10 +1232,7 @@ extension PlaylistViewController {
         // iterate through all cells-in-playmode and reset corresponding controls
         for playlistCell in _playlistCellsInPlayMode {
             
-            if (playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash) {
-                print ("___ ignore current playing cell")
-                continue
-            }
+            if (playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash) { continue }
             
             togglePlayModeIcons( playlistCell, false )
             playlistCell.mode = .clear
@@ -1301,7 +1296,7 @@ extension PlaylistViewController {
                 switch result {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo):
-                    if self.debugMode == true {
+                    if  self.debugMode == true {
                         print ("dbg [playlist] : set playMode for [\(playListInDb.metaListInternalName)] to [\(newPlayMode)]")
                     }
                 }
@@ -1330,7 +1325,6 @@ extension PlaylistViewController {
                         switch result {
                         case  .failure(let error): if self.debugMode == true { print (error) }
                         case  .success(let userInfo):
-                            
                             if  self.debugMode == true {
                                 print ("dbg [playlist] : remove playMode for [\(playListInDb.metaListInternalName)] removed")
                             }
