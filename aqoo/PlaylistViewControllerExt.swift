@@ -266,7 +266,13 @@ extension PlaylistViewController {
             }
             
         }   else {
-            if  let _playListFilterResults = CoreStore.fetchAll( From<StreamPlayList>(), filterQueryOrderBy ) {
+            if  let _playListFilterResults = CoreStore.fetchAll(
+                
+                    From<StreamPlayList>(),
+                    Where<StreamPlayList>("isPlaylistHidden = %d", false),
+                    filterQueryOrderBy
+                
+                ) {
                 filterQueryResults = _playListFilterResults
             }
         }
@@ -1131,6 +1137,39 @@ extension PlaylistViewController {
                     "Error Loading Playlists",
                     "Oops! An error occured while loading playlists from database ..."
                 )
+            }
+        )
+    }
+    
+    func handlePlaylistHiddenFlag(_ playlistInDb: StreamPlayList) {
+        
+        var newHiddenState: Bool = !playlistInDb.isPlaylistHidden
+        var _playListInDb: StreamPlayList?
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                _playListInDb = transaction.fetchOne(
+                    From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistInDb.getMD5Identifier())
+                )
+                
+                if  _playListInDb != nil {
+                    _playListInDb!.isPlaylistHidden = newHiddenState
+                    _playListInDb!.updatedAt = Date()
+                }
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    
+                    self.setupUILoadExtendedPlaylists()
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : [\(playlistInDb.metaListInternalName)] handled -> HIDDEN=\(newHiddenState)")
+                    }
+                }
             }
         )
     }
