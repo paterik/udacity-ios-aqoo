@@ -907,6 +907,7 @@ extension PlaylistViewController {
                     
                     _playListInDb!.createdAt = Date()
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
+                    _playListInDb!.trackCountOld = 0
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playListInDb!.isPublic = playListInCloud.isPublic
@@ -976,14 +977,15 @@ extension PlaylistViewController {
                         
                         // name (origin) , number of tracks or flags for public/collaborative changed? update list
                         _playListInDb!.metaListNameOrigin = playListInCloud.name ?? playListInCloud.uri.absoluteString
+                        _playListInDb!.trackCountOld = _playListInDb!.trackCount
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playListInDb!.isPublic = playListInCloud.isPublic
                         _playListInDb!.metaNumberOfUpdates += 1
-                        _playListInDb!.updatedAt = Date()
                         _playListInDb!.metaPreviouslyUpdatedManually = false
                         _playListInDb!.metaPreviouslyUpdated = true
                         _playListInDb!.metaPreviouslyCreated = false
+                        _playListInDb!.updatedAt = Date()
                         
                         if  self.debugMode == true {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> UPDATED")

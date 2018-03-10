@@ -37,6 +37,7 @@
         <attribute name="profileImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="smallestImageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="trackCountOld" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="provider" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="playlists" inverseEntity="StreamProvider" syncable="YES"/>
         <fetchIndex name="byMetaListHashIndex">
@@ -59,7 +60,7 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="615"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="630"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
     </elements>
