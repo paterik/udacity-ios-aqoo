@@ -11,6 +11,7 @@
 		B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */; };
 		B10198AD20381AE900232EB6 /* PlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */; };
 		B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */; };
+		B11575C3205A7C5800C41F7D /* AppBaseNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */; };
 		B119C20E201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */; };
 		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
@@ -79,6 +80,7 @@
 		B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewController.swift; sourceTree = "<group>"; };
 		B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
 		B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewControllerExt.swift; sourceTree = "<group>"; };
+		B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppBaseNotification.xib; sourceTree = "<group>"; };
 		B119C20D201C761B009B78BF /* PlaylistEditViewDetailDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailDelegate.swift; sourceTree = "<group>"; };
 		B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylists.swift; sourceTree = "<group>"; };
 		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				B1D45004204AC5E300B1BAF4 /* PlaylistMusicIndicatorView.swift */,
 				B1D45006204AC5F900B1BAF4 /* PlaylistMusicIndicatorContentView.swift */,
 				B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */,
+				B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */,
 			);
 			name = partials;
 			sourceTree = "<group>";
@@ -614,6 +617,7 @@
 				B1B8DD22202E189A008CE9EB /* PlaylistFilterNotification.xib in Resources */,
 				B1A620521F700D820093CAEF /* Assets.xcassets in Resources */,
 				B1BBECEA1F92488D00BD9D39 /* PlaylistTableCell.xib in Resources */,
+				B11575C3205A7C5800C41F7D /* AppBaseNotification.xib in Resources */,
 				B1A6204D1F700D820093CAEF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

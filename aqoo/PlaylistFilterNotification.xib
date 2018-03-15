@@ -29,7 +29,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblProfileDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-Tt-cd9" userLabel="img_default">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnNotificationDefault_v2" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-Tt-cd9" userLabel="img_default">
                     <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="bjl-Hl-EW9"/>
@@ -69,6 +69,6 @@
         </view>
     </objects>
     <resources>
-        <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
+        <image name="icnNotificationDefault_v2" width="64" height="64"/>
     </resources>
 </document>
