@@ -756,10 +756,12 @@ extension PlaylistViewController {
             playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultSpotifyUserImage)
             playlistCell.imageViewPlaylistOwnerInDetail.image = playlistCell.imageViewPlaylistOwner.image
         }   else {
+            
             let _profileImageProcessor = ResizingImageProcessor(
                  referenceSize: _sysUserProfileImageSize)
                 .append(another: RoundCornerImageProcessor(cornerRadius: _sysUserProfileImageCRadiusInDeg))
                 .append(another: BlackWhiteProcessor())
+            
             
             playlistCell.imageViewPlaylistOwner.kf.setImage(
                 with: URL(string: userProfileImageURL),
