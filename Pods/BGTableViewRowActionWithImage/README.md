@@ -1,5 +1,7 @@
 # BGTableViewRowActionWithImage
 
+**NOTE:** This project is no longer being maintained by the author as of March 2018.
+
 **UPDATE:** Finally, Apple has given us `UIContextualAction` in iOS 11: https://developer.apple.com/documentation/uikit/uicontextualaction
 
 > **For iOS 11 and above,** you MUST use this. ⬆️
@@ -87,7 +89,7 @@ pod "BGTableViewRowActionWithImage"
 
 ## Author
 
-Ben Guild, email@benguild.com
+Ben Guild, hello@benguild.com
 
 ## License
 

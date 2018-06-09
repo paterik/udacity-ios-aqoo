@@ -219,7 +219,7 @@ public final class CoreStoreSchema: DynamicSchema {
                 allCustomGettersSetters[entity] = customGetterSetterByKeyPaths
             }
             CoreStoreSchema.secondPassConnectRelationshipAttributes(for: entityDescriptionsByEntity)
-            CoreStoreSchema.thirdPassConnectInheritanceTree(for: entityDescriptionsByEntity)
+            CoreStoreSchema.thirdPassConnectInheritanceTreeAndIndexes(for: entityDescriptionsByEntity)
             CoreStoreSchema.fourthPassSynthesizeManagedObjectClasses(
                 for: entityDescriptionsByEntity,
                 allCustomGettersSetters: allCustomGettersSetters
@@ -292,9 +292,9 @@ public final class CoreStoreSchema: DynamicSchema {
                     description.name = attribute.keyPath
                     description.attributeType = Swift.type(of: attribute).attributeType
                     description.isOptional = attribute.isOptional
-                    description.isIndexed = attribute.isIndexed
                     description.defaultValue = attribute.defaultValue()
                     description.isTransient = attribute.isTransient
+                    description.allowsExternalBinaryDataStorage = attribute.allowsExternalBinaryDataStorage
                     description.versionHashModifier = attribute.versionHashModifier()
                     description.renamingIdentifier = attribute.renamingIdentifier()
                     propertyDescriptions.append(description)
@@ -415,7 +415,7 @@ public final class CoreStoreSchema: DynamicSchema {
         }
     }
     
-    private static func thirdPassConnectInheritanceTree(for entityDescriptionsByEntity: [DynamicEntity: NSEntityDescription]) {
+    private static func thirdPassConnectInheritanceTreeAndIndexes(for entityDescriptionsByEntity: [DynamicEntity: NSEntityDescription]) {
         
         func connectBaseEntity(mirror: Mirror, entityDescription: NSEntityDescription) {
             
@@ -440,6 +440,53 @@ public final class CoreStoreSchema: DynamicSchema {
                 mirror: Mirror(reflecting: (entity.type as! CoreStoreObject.Type).meta),
                 entityDescription: entityDescription
             )
+        }
+        for (entity, entityDescription) in entityDescriptionsByEntity {
+            
+            let uniqueConstraints = entity.uniqueConstraints.filter({ !$0.isEmpty })
+            if !uniqueConstraints.isEmpty {
+                
+                CoreStore.assert(
+                    entityDescription.superentity == nil,
+                    "Uniqueness constraints must be defined at the highest level possible."
+                )
+                entityDescription.uniquenessConstraints = entity.uniqueConstraints.map { $0.map { $0 as NSString } }
+            }
+            guard !entity.indexes.isEmpty else {
+                
+                continue
+            }
+            defer {
+                
+                entityDescription.coreStoreEntity = entity // reserialize
+            }
+            let attributesByName = entityDescription.attributesByName
+            if #available(iOS 11.0, OSX 10.13, watchOS 4.0, tvOS 11.0, *) {
+                
+                entityDescription.indexes = entity.indexes.map { (compoundIndexes) in
+                    
+                    return NSFetchIndexDescription.init(
+                        name: "_CoreStoreSchema_indexes_\(entityDescription.name!)_\(compoundIndexes.joined(separator: "-"))",
+                        elements: compoundIndexes.map { (keyPath) in
+                            
+                            return NSFetchIndexElementDescription(
+                                property: attributesByName[keyPath]!,
+                                collationType: .binary
+                            )
+                        }
+                    )
+                }
+            }
+            else {
+                
+                entityDescription.compoundIndexes = entity.indexes.map { (compoundIndexes) in
+                    
+                    return compoundIndexes.map { (keyPath) in
+                        
+                        return attributesByName[keyPath]!
+                    }
+                }
+            }
         }
     }
     

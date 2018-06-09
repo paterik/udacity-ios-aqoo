@@ -35,13 +35,13 @@ internal protocol AttributeProtocol: class {
     
     var keyPath: KeyPathString { get }
     var isOptional: Bool { get }
-    var isIndexed: Bool { get }
     var isTransient: Bool { get }
+    var allowsExternalBinaryDataStorage: Bool { get }
     var versionHashModifier: () -> String? { get }
     var renamingIdentifier: () -> String? { get }
     var defaultValue: () -> Any? { get }
     var affectedByKeyPaths: () -> Set<String> { get }
-    weak var parentObject: CoreStoreObject? { get set }
+    var parentObject: CoreStoreObject? { get set }
     var getter: CoreStoreManagedObject.CustomGetter? { get }
     var setter: CoreStoreManagedObject.CustomSetter? { get }
 }
