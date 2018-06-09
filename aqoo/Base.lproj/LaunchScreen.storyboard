@@ -21,28 +21,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLaunchScreen_v1" translatesAutoresizingMaskIntoConstraints="NO" id="EHI-Aq-Ubn">
-                                <rect key="frame" x="0.0" y="28" width="375" height="619"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="2Kt-a9-aQV"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.9.9.1005" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TM-KS-bUb" userLabel="AppVersionLabel">
                                 <rect key="frame" x="16" y="638" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="FNb-Ho-okj"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLaunchScreen_v1" translatesAutoresizingMaskIntoConstraints="NO" id="EHI-Aq-Ubn">
+                                <rect key="frame" x="27" y="69" width="320" height="529"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="EHI-Aq-Ubn" secondAttribute="bottom" constant="20" symbolic="YES" id="4tH-QO-nMa"/>
-                            <constraint firstItem="1TM-KS-bUb" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="618" id="B3r-w6-Fws"/>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="centerX" secondItem="1TM-KS-bUb" secondAttribute="centerX" id="Kq6-D7-cHD"/>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="NEa-lz-83g"/>
-                            <constraint firstItem="1TM-KS-bUb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="Rvp-XB-dfd"/>
-                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" symbolic="YES" id="SG1-6i-39y"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="1TM-KS-bUb" secondAttribute="bottom" constant="8" symbolic="YES" id="fYM-m0-ldh"/>
+                            <constraint firstItem="1TM-KS-bUb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="9rP-Fg-sfH"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="1TM-KS-bUb" secondAttribute="bottom" constant="8" symbolic="YES" id="Nxa-OI-jmU"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="11" id="URW-eo-xaB"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="VuH-tg-fei"/>
+                            <constraint firstItem="1TM-KS-bUb" firstAttribute="top" secondItem="EHI-Aq-Ubn" secondAttribute="bottom" constant="40" id="gme-wb-nDA"/>
+                            <constraint firstItem="EHI-Aq-Ubn" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="olr-UO-VZd"/>
+                            <constraint firstItem="1TM-KS-bUb" firstAttribute="centerX" secondItem="EHI-Aq-Ubn" secondAttribute="centerX" id="qik-Sh-m5Z"/>
                         </constraints>
                     </view>
                 </viewController>
