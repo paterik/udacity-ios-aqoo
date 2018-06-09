@@ -25,7 +25,7 @@ def aq_base
 end
 
 def aq_data
-    pod 'CoreStore', :git => 'https://github.com/JohnEstropia/CoreStore.git', :branch => 'prototype/Swift_4_0'
+    pod 'CoreStore'
 end
 
 target 'aqoo' do

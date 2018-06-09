@@ -1,15 +1,15 @@
 PODS:
-  - BGTableViewRowActionWithImage (0.4.3)
-  - CoreStore (5.0.0)
-  - CryptoSwift (0.8.3)
+  - BGTableViewRowActionWithImage (0.4.4)
+  - CoreStore (5.1.0)
+  - CryptoSwift (0.10.0)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.0.3)
-  - GradientLoadingBar (1.1.9)
-  - Kingfisher (4.6.3)
+  - FoldingCell (3.1.1)
+  - GradientLoadingBar (1.1.11)
+  - Kingfisher (4.8.0)
   - LetterAvatarKit (1.1.2)
-  - MarqueeLabel/Swift (3.1.4)
-  - NotificationBannerSwift (1.6.2):
+  - MarqueeLabel/Swift (3.1.6)
+  - NotificationBannerSwift (1.6.3):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - Persei (3.1.1)
@@ -28,7 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
-  - CoreStore (from `https://github.com/JohnEstropia/CoreStore.git`, branch `prototype/Swift_4_0`)
+  - CoreStore
   - CryptoSwift
   - fluid-slider
   - FoldingCell
@@ -43,27 +43,37 @@ DEPENDENCIES:
   - Spotify-iOS-SDK
   - SwiftRandom
 
-EXTERNAL SOURCES:
-  CoreStore:
-    :branch: prototype/Swift_4_0
-    :git: https://github.com/JohnEstropia/CoreStore.git
-
-CHECKOUT OPTIONS:
-  CoreStore:
-    :commit: 15edabdbb5f230b237106c2d59603e3b1108c905
-    :git: https://github.com/JohnEstropia/CoreStore.git
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - BGTableViewRowActionWithImage
+    - CoreStore
+    - CryptoSwift
+    - fluid-slider
+    - FoldingCell
+    - GradientLoadingBar
+    - Kingfisher
+    - LetterAvatarKit
+    - MarqueeLabel
+    - NotificationBannerSwift
+    - Persei
+    - PKHUD
+    - pop
+    - Reachability
+    - SnapKit
+    - Spotify-iOS-SDK
+    - SwiftRandom
 
 SPEC CHECKSUMS:
-  BGTableViewRowActionWithImage: 05bd250553eb5ddd33df4de41f4b6e232379b22b
-  CoreStore: a2c17c76d5e10272ded239ac1260b3b0456ccdd3
-  CryptoSwift: 033efc3523865d19cc6ab6612fa17a62613b5dfa
+  BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
+  CoreStore: 5fd51cbe7ea2d7b4dfc6327031ab6ff6f7c63175
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: 76ce5d1ddba34c6d25548b473b7b51585e992da0
-  GradientLoadingBar: 903b340157956c72071d02c58f2bad44785f3bb9
-  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
+  FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
+  GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
-  MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
-  NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
+  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
+  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
@@ -72,6 +82,6 @@ SPEC CHECKSUMS:
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
 
-PODFILE CHECKSUM: fe998ccbebf840b80c5f8b098595cd61622683b5
+PODFILE CHECKSUM: cf2a83d37921b95f3e50929fbcbcf4a8998bf160
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.5.3
