@@ -25,6 +25,7 @@ PODS:
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
   - SwiftRandom (1.0.0)
+  - WSTagsField (3.1.0)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - SnapKit
   - Spotify-iOS-SDK
   - SwiftRandom
+  - WSTagsField (~> 3.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -62,6 +64,7 @@ SPEC REPOS:
     - SnapKit
     - Spotify-iOS-SDK
     - SwiftRandom
+    - WSTagsField
 
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
@@ -81,7 +84,8 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
+  WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
 
-PODFILE CHECKSUM: cf2a83d37921b95f3e50929fbcbcf4a8998bf160
+PODFILE CHECKSUM: 1e868e6ad532721a6c19b3c612a680655204ebe6
 
 COCOAPODS: 1.5.3

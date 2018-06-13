@@ -12,6 +12,7 @@ def aq_ui
     pod 'GradientLoadingBar'
     pod 'Persei', '~> 3.0'
     pod 'PKHUD', '~> 5.0'
+    pod 'WSTagsField', '~> 3.1'
     pod 'NotificationBannerSwift'
 end
 
