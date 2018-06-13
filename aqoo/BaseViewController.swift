@@ -177,33 +177,43 @@ class BaseViewController: UIViewController {
         if  playlistItem.largestImageURL != nil {
             _usedCoverImageURL = URL(string: playlistItem.largestImageURL!)
             _noCoverImageAvailable = false
-            if self.debugKFCMode == true { print ("--- use large cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true {
+                print ("--- use large cover for [\(playlistItem.metaListInternalName)]")
+            }
         }
         
         // no large image found? try smallestImageURL instead
         if  playlistItem.smallestImageURL != nil && _noCoverImageAvailable == true {
             _usedCoverImageURL = URL(string: playlistItem.smallestImageURL!)
             _noCoverImageAvailable = false
-            if self.debugKFCMode == true { print ("--- use small cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true {
+                print ("--- use small cover for [\(playlistItem.metaListInternalName)]")
+            }
         }
         
         // check playlist item is part of internal playlist selection - take internal cover on match
         if  let _imageName = getInternalCoverImageNameByCacheModel(playlistItem) {
             playlistCoverImageView.image = UIImage(named: _imageName)
             _noCoverSetForInternal = true
-            if self.debugKFCMode == true { print ("--- use internal cover for [\(playlistItem.metaListInternalName)]") }
+            if self.debugKFCMode == true {
+                print ("--- use internal cover for [\(playlistItem.metaListInternalName)]")
+            }
         }
         
         // set user selected images for covers if available (on non-internal playlist only)
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
                 playlistCoverImageView.image = _image
-                if self.debugKFCMode == true { print ("--- use cover override for [\(playlistItem.metaListInternalName)]") }
+                if self.debugKFCMode == true {
+                    print ("--- use cover override for [\(playlistItem.metaListInternalName)]")
+                }
             }
         }
         
         // call kingfisher majic and place coverImage using kf-methods (including cache loading) for playlistCover images
-        if _noCoverImageAvailable == false && _noCoverOverrideImageAvailable == true && _noCoverSetForInternal == false {
+        if _noCoverImageAvailable == false &&
+           _noCoverOverrideImageAvailable == true &&
+           _noCoverSetForInternal == false {
             
            _usedNormalCoverImageCacheKey = String(format: "c1::%@", _usedCoverImageURL!.absoluteString).md5()
            _usedDetailCoverImageCacheKey = String(format: "c2::%@", _usedCoverImageURL!.absoluteString).md5()

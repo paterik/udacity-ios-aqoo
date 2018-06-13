@@ -12,9 +12,9 @@ import CoreStore
 import Kingfisher
 
 class BasePlaylistEditViewController: BaseViewController,
-    UITextViewDelegate,
-    UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate {
+      UITextViewDelegate,
+      UIImagePickerControllerDelegate,
+      UINavigationControllerDelegate {
     
     //
     // MARK: Class Variables
