@@ -1692,7 +1692,7 @@
         <scene sceneID="jtu-Pf-Fi1">
             <objects>
                 <navigationController id="a0S-z4-p83" userLabel="NCPlaylistFirstPage" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage1_v1" id="il8-zi-dY6"/>
+                    <tabBarItem key="tabBarItem" title="" image="icnPlaylistViewDetailPage1_v1" selectedImage="icnPlaylistViewDetailPage1_v1" id="il8-zi-dY6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8kw-9U-m8d">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1717,7 +1717,7 @@
         <scene sceneID="Wvw-Wq-g5R">
             <objects>
                 <navigationController id="NDt-EV-7cF" userLabel="NCPlaylistThirdPage" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage3_v1" id="ZK2-Qh-dr9"/>
+                    <tabBarItem key="tabBarItem" title="" image="icnPlaylistViewDetailPage3_v1" selectedImage="icnPlaylistViewDetailPage3_v1" id="ZK2-Qh-dr9"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CBg-B7-3hx">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1742,7 +1742,7 @@
         <scene sceneID="2Ue-Fi-FcX">
             <objects>
                 <navigationController id="IdN-La-5Lk" userLabel="NCPlaylistSecondPage" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage2_v1" id="gDh-we-59a"/>
+                    <tabBarItem key="tabBarItem" title="" image="icnPlaylistViewDetailPage2_v1" selectedImage="icnPlaylistViewDetailPage2_v1" id="gDh-we-59a"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PPm-5l-CcJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
