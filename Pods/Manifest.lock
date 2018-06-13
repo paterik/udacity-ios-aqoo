@@ -1,6 +1,6 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.4)
-  - CoreStore (5.1.0)
+  - CoreStore (5.1.1)
   - CryptoSwift (0.10.0)
   - fluid-slider (0.0.6):
     - pop
@@ -65,7 +65,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
-  CoreStore: 5fd51cbe7ea2d7b4dfc6327031ab6ff6f7c63175
+  CoreStore: 40c48542f6d48b825326fbc3a6f5934e3353533b
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
   FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
