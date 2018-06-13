@@ -486,19 +486,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLo-Tv-vpe" userLabel="ui_dbg_label">
-                                <rect key="frame" x="16" y="295" width="343" height="77"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="64"/>
-                                <color key="textColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUICoverOverrideDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-6R-yfg" userLabel="ui_playlist_cover_big">
+                                <rect key="frame" x="16" y="79" width="343" height="343"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="aLo-Tv-vpe" secondAttribute="trailing" constant="16" id="9XN-YQ-CTq"/>
-                            <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="aLo-Tv-vpe" secondAttribute="bottom" constant="246" id="Huy-mQ-hsu"/>
-                            <constraint firstItem="aLo-Tv-vpe" firstAttribute="top" secondItem="cZ7-dN-tCF" secondAttribute="bottom" constant="231" id="XfS-C5-qZO"/>
-                            <constraint firstItem="aLo-Tv-vpe" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leading" constant="16" id="muf-ep-pPF"/>
+                            <constraint firstItem="zKh-6R-yfg" firstAttribute="trailing" secondItem="KvN-Uq-UwH" secondAttribute="trailingMargin" id="CtM-ZC-9fA"/>
+                            <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="zKh-6R-yfg" secondAttribute="bottom" constant="196" id="ao0-97-iqQ"/>
+                            <constraint firstItem="zKh-6R-yfg" firstAttribute="top" secondItem="cZ7-dN-tCF" secondAttribute="bottom" constant="15" id="ouh-sn-ZQK"/>
+                            <constraint firstItem="zKh-6R-yfg" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leadingMargin" id="oz9-j8-N0v"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit" id="vTa-7R-WjH">
@@ -513,6 +510,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="imgPlaylistCoverBig" destination="zKh-6R-yfg" id="zJ5-dM-QRd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-Dl-arD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1880,6 +1880,7 @@
         <image name="icnShareContent_v2" width="25" height="25"/>
         <image name="icnShowPlaylist_v1" width="25" height="25"/>
         <image name="icnStepBack_v1" width="25" height="25"/>
+        <image name="imgUICoverOverrideDefault_v1" width="127" height="127"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
         <image name="imgUITblContentChanged_v1" width="25" height="25"/>
         <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
