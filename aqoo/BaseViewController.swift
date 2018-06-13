@@ -216,10 +216,7 @@ class BaseViewController: UIViewController {
                _usedNormalCoverImageCacheKey!,
                 [
                     .transition(.fade(0.1875)),
-                    .processor(
-                        ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize)
-                            .append(another: BlackWhiteProcessor()
-                    ))
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
                 ]
             )
             
@@ -231,7 +228,7 @@ class BaseViewController: UIViewController {
                    _usedCoverImageURL!,
                    _usedDetailCoverImageCacheKey!,
                     [
-                        .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverImageSize))
+                        .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverDetailImageSize))
                     ]
                 )
             }
