@@ -112,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="1822" y="136"/>
         </scene>
-        <!--NavigationControllerPLTableView-->
+        <!--NCPlaylistTableView-->
         <scene sceneID="Pj4-6L-3m6">
             <objects>
-                <navigationController id="o5I-q9-HMB" userLabel="NavigationControllerPLTableView" sceneMemberID="viewController">
+                <navigationController id="o5I-q9-HMB" userLabel="NCPlaylistTableView" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPLTableView" id="QGJ-gX-pgr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="99P-xc-4WF">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -467,17 +467,17 @@
                     <connections>
                         <outlet property="btnRefreshPlaylist" destination="Mbz-BF-aJM" id="mfo-iz-ttJ"/>
                         <outlet property="tableView" destination="6bT-aE-8Bz" id="zoI-lA-Crz"/>
-                        <segue destination="MO5-Jd-Yip" kind="showDetail" identifier="showPlaylistEditView" id="vUh-7i-Lsb"/>
+                        <segue destination="Ps3-kk-VSI" kind="showDetail" identifier="showPlaylistEditViewTabController" id="avI-XT-aBv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3560.8000000000002" y="-174.06296851574214"/>
         </scene>
-        <!--PlaylistEditViewController-->
+        <!--VCPlaylistEditViewFirstPage-->
         <scene sceneID="9oS-mC-jbO">
             <objects>
-                <viewController title="PlaylistEditViewController" id="MO5-Jd-Yip" customClass="PlaylistEditViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="VCPlaylistEditViewFirstPage" id="MO5-Jd-Yip" customClass="PlaylistEditViewFirstPage" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cZ7-dN-tCF"/>
                         <viewControllerLayoutGuide type="bottom" id="4kc-4o-hkz"/>
@@ -486,201 +486,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDg-K3-zxJ" userLabel="ui_nav_playlistEdit_main">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <color key="barTintColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="PlaylistName" id="4YG-cM-qIv" userLabel="ui_nav_title">
-                                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Hl6-4e-aEf" userLabel="ui_btn_exit_view">
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="btnExitEditViewAction:" destination="MO5-Jd-Yip" id="V0R-pa-HHr"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="wOk-UT-ixH" userLabel="ui_btn_save_view">
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="btnSavePlaylistChangesAction:" destination="MO5-Jd-Yip" id="D8H-0Z-ogP"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.875" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wTh-s3-bo7" userLabel="ui_view_main">
-                                <rect key="frame" x="10" y="64" width="355" height="595"/>
-                                <subviews>
-                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Inception Soundtrack" adjustsFontSizeToFit="NO" minimumFontSize="14" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="WDe-jI-C9X" userLabel="ui_playlist_name_input">
-                                        <rect key="frame" x="20" y="20" width="315" height="36"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="3pt-Yx-bY5"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES" textContentType="name"/>
-                                        <connections>
-                                            <action selector="inpPlaylistTitleDidChanged:" destination="MO5-Jd-Yip" eventType="editingChanged" id="5sH-bo-sdv"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="playlist title" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPc-Uj-Llc" userLabel="ui_playlist_name_label">
-                                        <rect key="frame" x="20" y="64" width="315" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="ZxE-JU-6Af"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rax-wn-BfQ" userLabel="ui_playlist_name_fx_line">
-                                        <rect key="frame" x="20" y="57" width="315" height="5"/>
-                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="yky-rt-gcZ" userLabel="ui_img_playlistCoverOrigin">
-                                        <rect key="frame" x="20" y="101" width="150" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="PHU-Xp-2RE"/>
-                                            <constraint firstAttribute="width" constant="150" id="d8d-o9-9Nm"/>
-                                        </constraints>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PMd-HN-cdR" userLabel="ui_img_playlistCoverOrigin_fx_line">
-                                        <rect key="frame" x="20" y="252" width="150" height="5"/>
-                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mLx-GX-sJ4" userLabel="ui_action_playlistCoverOverride_button">
-                                        <rect key="frame" x="185" y="101" width="150" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="vb6-l6-ajE"/>
-                                            <constraint firstAttribute="height" constant="150" id="wmx-t8-BEK"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="imgUICoverOverrideDefault_v1"/>
-                                        <connections>
-                                            <action selector="btnPlaylistCoverOverrideAction:" destination="MO5-Jd-Yip" eventType="touchUpInside" id="eIn-dr-wst"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUc-34-Oj0" userLabel="ui_img_playlistCoverOverride_fx_line">
-                                        <rect key="frame" x="185" y="252" width="150" height="5"/>
-                                        <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plH-F9-JuX" userLabel="ui_playlist_rating_view" customClass="Slider" customModule="fluid_slider">
-                                        <rect key="frame" x="20" y="364" width="315" height="50"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="wcm-xl-8N7"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="playlist rating" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCG-vC-aVu" userLabel="ui_playlist_rating_label">
-                                        <rect key="frame" x="20" y="419" width="315" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="EHE-Is-iBy"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your cover selection" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yhY-v9-s6g" userLabel="ui_playlist_rating_label">
-                                        <rect key="frame" x="249" y="259" width="86" height="16"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spotify playlist cover" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTc-IT-lCE" userLabel="ui_playlist_rating_label">
-                                        <rect key="frame" x="20" y="259" width="150" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="dfb-ar-f7U"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                        <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="5ob-hj-G1c" userLabel="ui_action_next_page_button">
-                                        <rect key="frame" x="20" y="537" width="315" height="40"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="4QX-vk-Xz0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
-                                        <state key="normal" title="SHOW ME MORE">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnSpotifyLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oGR-5n-wKC"/>
-                                            <segue destination="rqx-iJ-BrN" kind="showDetail" identifier="showPlaylistEditViewDetail" id="iL7-XV-yDA"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="WDe-jI-C9X" secondAttribute="trailing" constant="20" id="0Fy-lR-rbI"/>
-                                    <constraint firstItem="LUc-34-Oj0" firstAttribute="top" secondItem="PMd-HN-cdR" secondAttribute="top" id="3Yx-a1-nNp"/>
-                                    <constraint firstItem="Rax-wn-BfQ" firstAttribute="trailing" secondItem="wPc-Uj-Llc" secondAttribute="trailing" id="3bI-pJ-ur8"/>
-                                    <constraint firstItem="Rax-wn-BfQ" firstAttribute="leading" secondItem="wPc-Uj-Llc" secondAttribute="leading" id="5b2-ks-IfD"/>
-                                    <constraint firstItem="yhY-v9-s6g" firstAttribute="trailing" secondItem="plH-F9-JuX" secondAttribute="trailing" id="8e4-Fg-5Iw"/>
-                                    <constraint firstAttribute="trailing" secondItem="5ob-hj-G1c" secondAttribute="trailing" constant="20" id="AKc-8Y-QZ2"/>
-                                    <constraint firstItem="PMd-HN-cdR" firstAttribute="top" secondItem="yky-rt-gcZ" secondAttribute="bottom" constant="1" id="DcX-B5-yS9"/>
-                                    <constraint firstItem="Rax-wn-BfQ" firstAttribute="top" secondItem="WDe-jI-C9X" secondAttribute="bottom" constant="1" id="Dry-6j-ACf"/>
-                                    <constraint firstItem="jTc-IT-lCE" firstAttribute="top" secondItem="yky-rt-gcZ" secondAttribute="bottom" constant="8" symbolic="YES" id="FEu-22-vsS"/>
-                                    <constraint firstItem="WDe-jI-C9X" firstAttribute="centerX" secondItem="wTh-s3-bo7" secondAttribute="centerX" id="GKl-Dh-VZa"/>
-                                    <constraint firstItem="jTc-IT-lCE" firstAttribute="top" secondItem="PMd-HN-cdR" secondAttribute="bottom" constant="2" id="HNe-kL-lts"/>
-                                    <constraint firstItem="yky-rt-gcZ" firstAttribute="top" secondItem="wPc-Uj-Llc" secondAttribute="bottom" constant="21" id="HfW-IT-Ifr"/>
-                                    <constraint firstItem="plH-F9-JuX" firstAttribute="top" secondItem="jTc-IT-lCE" secondAttribute="bottom" constant="89" id="IoX-1R-3K7"/>
-                                    <constraint firstItem="LUc-34-Oj0" firstAttribute="trailing" secondItem="yhY-v9-s6g" secondAttribute="trailing" id="J8T-XF-3S7"/>
-                                    <constraint firstItem="PMd-HN-cdR" firstAttribute="trailing" secondItem="jTc-IT-lCE" secondAttribute="trailing" id="JGA-fi-72e"/>
-                                    <constraint firstItem="plH-F9-JuX" firstAttribute="leading" secondItem="dCG-vC-aVu" secondAttribute="leading" id="KKO-sV-WIg"/>
-                                    <constraint firstItem="LUc-34-Oj0" firstAttribute="leading" secondItem="mLx-GX-sJ4" secondAttribute="leading" id="LHk-Xo-ZWk"/>
-                                    <constraint firstItem="wPc-Uj-Llc" firstAttribute="leading" secondItem="yky-rt-gcZ" secondAttribute="leading" id="P2s-b4-OZF"/>
-                                    <constraint firstItem="PMd-HN-cdR" firstAttribute="leading" secondItem="jTc-IT-lCE" secondAttribute="leading" id="Snx-tt-kSh"/>
-                                    <constraint firstItem="wPc-Uj-Llc" firstAttribute="top" secondItem="Rax-wn-BfQ" secondAttribute="bottom" constant="2" id="YR8-8U-RSg"/>
-                                    <constraint firstItem="jTc-IT-lCE" firstAttribute="leading" secondItem="plH-F9-JuX" secondAttribute="leading" id="ZCW-bm-VIO"/>
-                                    <constraint firstItem="LUc-34-Oj0" firstAttribute="trailing" secondItem="mLx-GX-sJ4" secondAttribute="trailing" id="aRy-nG-440"/>
-                                    <constraint firstAttribute="bottom" secondItem="LUc-34-Oj0" secondAttribute="bottom" constant="338" id="aXJ-2G-o5E"/>
-                                    <constraint firstItem="dCG-vC-aVu" firstAttribute="top" secondItem="plH-F9-JuX" secondAttribute="bottom" constant="5" id="brm-Cr-FlA"/>
-                                    <constraint firstItem="jTc-IT-lCE" firstAttribute="baseline" secondItem="yhY-v9-s6g" secondAttribute="baseline" id="kA6-g5-7CS"/>
-                                    <constraint firstItem="LUc-34-Oj0" firstAttribute="bottom" secondItem="PMd-HN-cdR" secondAttribute="bottom" id="lGY-h8-NOJ"/>
-                                    <constraint firstItem="mLx-GX-sJ4" firstAttribute="top" secondItem="wPc-Uj-Llc" secondAttribute="bottom" constant="21" id="lti-0F-roQ"/>
-                                    <constraint firstItem="yky-rt-gcZ" firstAttribute="leading" secondItem="PMd-HN-cdR" secondAttribute="leading" id="m5q-A0-jbF"/>
-                                    <constraint firstAttribute="trailing" secondItem="mLx-GX-sJ4" secondAttribute="trailing" constant="20" id="nR1-ee-66h"/>
-                                    <constraint firstItem="WDe-jI-C9X" firstAttribute="trailing" secondItem="Rax-wn-BfQ" secondAttribute="trailing" id="qu9-SV-gik"/>
-                                    <constraint firstItem="WDe-jI-C9X" firstAttribute="leading" secondItem="wTh-s3-bo7" secondAttribute="leading" constant="20" id="r4d-0b-7HH"/>
-                                    <constraint firstItem="WDe-jI-C9X" firstAttribute="top" secondItem="wTh-s3-bo7" secondAttribute="top" constant="20" id="snq-ks-3W7"/>
-                                    <constraint firstItem="jTc-IT-lCE" firstAttribute="firstBaseline" secondItem="yhY-v9-s6g" secondAttribute="firstBaseline" id="tYj-gy-YqH"/>
-                                    <constraint firstItem="WDe-jI-C9X" firstAttribute="leading" secondItem="Rax-wn-BfQ" secondAttribute="leading" id="vFX-8n-8mP"/>
-                                    <constraint firstItem="wPc-Uj-Llc" firstAttribute="top" secondItem="WDe-jI-C9X" secondAttribute="bottom" constant="8" symbolic="YES" id="wyt-nm-N1h"/>
-                                    <constraint firstItem="yky-rt-gcZ" firstAttribute="trailing" secondItem="PMd-HN-cdR" secondAttribute="trailing" id="xfI-9d-EUS"/>
-                                    <constraint firstItem="plH-F9-JuX" firstAttribute="trailing" secondItem="dCG-vC-aVu" secondAttribute="trailing" id="yZh-h7-3l8"/>
-                                    <constraint firstItem="yhY-v9-s6g" firstAttribute="top" secondItem="mLx-GX-sJ4" secondAttribute="bottom" constant="8" symbolic="YES" id="yxg-N7-1JD"/>
-                                </constraints>
-                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLo-Tv-vpe" userLabel="ui_dbg_label">
+                                <rect key="frame" x="16" y="295" width="343" height="77"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="64"/>
+                                <color key="textColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="uDg-K3-zxJ" firstAttribute="centerX" secondItem="wTh-s3-bo7" secondAttribute="centerX" id="2tL-Cx-Ucf"/>
-                            <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="wTh-s3-bo7" secondAttribute="bottom" constant="8" symbolic="YES" id="Bo8-mj-KIA"/>
-                            <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="5ob-hj-G1c" secondAttribute="bottom" constant="26" id="Pfq-uC-gMl"/>
-                            <constraint firstItem="wTh-s3-bo7" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leadingMargin" constant="-6" id="UE1-Cd-oXq"/>
-                            <constraint firstItem="uDg-K3-zxJ" firstAttribute="top" secondItem="cZ7-dN-tCF" secondAttribute="bottom" id="Yba-wr-b9h"/>
-                            <constraint firstItem="wTh-s3-bo7" firstAttribute="top" secondItem="uDg-K3-zxJ" secondAttribute="bottom" id="bQm-qE-XiA"/>
-                            <constraint firstItem="5ob-hj-G1c" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leading" constant="30" id="eUP-PK-3Yj"/>
-                            <constraint firstItem="uDg-K3-zxJ" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leading" id="kPR-dE-4oe"/>
-                            <constraint firstAttribute="trailing" secondItem="uDg-K3-zxJ" secondAttribute="trailing" id="v8t-jU-lFB"/>
+                            <constraint firstAttribute="trailing" secondItem="aLo-Tv-vpe" secondAttribute="trailing" constant="16" id="9XN-YQ-CTq"/>
+                            <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="aLo-Tv-vpe" secondAttribute="bottom" constant="246" id="Huy-mQ-hsu"/>
+                            <constraint firstItem="aLo-Tv-vpe" firstAttribute="top" secondItem="cZ7-dN-tCF" secondAttribute="bottom" constant="231" id="XfS-C5-qZO"/>
+                            <constraint firstItem="aLo-Tv-vpe" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leading" constant="16" id="muf-ep-pPF"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Edit" id="vTa-7R-WjH">
+                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Hl6-4e-aEf" userLabel="ui_btn_exit_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnExitEditViewPage:" destination="MO5-Jd-Yip" id="5qS-X6-u4l"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="wOk-UT-ixH" userLabel="ui_btn_save_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <size key="freeformSize" width="375" height="667"/>
-                    <connections>
-                        <outlet property="btnPlaylistCoverOverride" destination="mLx-GX-sJ4" id="eu0-kK-VN3"/>
-                        <outlet property="btnSavePlaylistChanges" destination="wOk-UT-ixH" id="Tdx-vk-eb0"/>
-                        <outlet property="imgPlaylistCoverOrigin" destination="yky-rt-gcZ" id="oY9-5K-sl2"/>
-                        <outlet property="inpPlaylistRatingSlider" destination="plH-F9-JuX" id="A4J-km-qhm"/>
-                        <outlet property="inpPlaylistTitle" destination="WDe-jI-C9X" id="wIx-1A-0Z2"/>
-                        <outlet property="navItemEditViewTitle" destination="4YG-cM-qIv" id="XNE-k3-FL0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-Dl-arD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4330.3999999999996" y="-174.06296851574214"/>
+            <point key="canvasLocation" x="6581.6000000000004" y="-545.57721139430294"/>
         </scene>
         <!--TemplatePlaceholder-->
         <scene sceneID="zFg-oL-hlp">
@@ -1408,12 +1244,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOV-zE-kWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3561" y="-860"/>
+            <point key="canvasLocation" x="140" y="-1360"/>
         </scene>
-        <!--NavigationControllerPLCellView-->
+        <!--NCPlaylistCellView-->
         <scene sceneID="kdu-Z7-SaA">
             <objects>
-                <navigationController id="n84-nc-JIa" userLabel="NavigationControllerPLCellView" sceneMemberID="viewController">
+                <navigationController id="n84-nc-JIa" userLabel="NCPlaylistCellView" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icnPLCellView" selectedImage="icnPLCellView" id="EQj-TX-Mv8"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gcC-nm-zsu">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1828,7 +1664,192 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJ2-7T-4XD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5100" y="-174.06296851574214"/>
+            <point key="canvasLocation" x="1623" y="-1360"/>
+        </scene>
+        <!--Playlist Edit View Tab Bar Controller-->
+        <scene sceneID="xV5-od-AGU">
+            <objects>
+                <tabBarController id="Ps3-kk-VSI" customClass="PlaylistEditViewTabBarController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="K0W-Md-rMe"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wkO-f3-tGM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="a0S-z4-p83" kind="relationship" relationship="viewControllers" id="tjX-BW-Y01"/>
+                        <segue destination="IdN-La-5Lk" kind="relationship" relationship="viewControllers" id="vqw-tI-IFC"/>
+                        <segue destination="NDt-EV-7cF" kind="relationship" relationship="viewControllers" id="pFW-BH-umu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gcP-FI-ljA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4417" y="210"/>
+        </scene>
+        <!--NCPlaylistFirstPage-->
+        <scene sceneID="jtu-Pf-Fi1">
+            <objects>
+                <navigationController id="a0S-z4-p83" userLabel="NCPlaylistFirstPage" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage1_v1" id="il8-zi-dY6"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8kw-9U-m8d">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="MO5-Jd-Yip" kind="relationship" relationship="rootViewController" id="LvJ-20-NZ6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uDZ-PA-uSI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5713" y="-544"/>
+        </scene>
+        <!--NCPlaylistThirdPage-->
+        <scene sceneID="Wvw-Wq-g5R">
+            <objects>
+                <navigationController id="NDt-EV-7cF" userLabel="NCPlaylistThirdPage" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage3_v1" id="ZK2-Qh-dr9"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CBg-B7-3hx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vso-N8-E91" kind="relationship" relationship="rootViewController" id="DNV-WP-zoe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ay3-YO-3qX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5713" y="988"/>
+        </scene>
+        <!--NCPlaylistSecondPage-->
+        <scene sceneID="2Ue-Fi-FcX">
+            <objects>
+                <navigationController id="IdN-La-5Lk" userLabel="NCPlaylistSecondPage" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icnPLTableView" selectedImage="icnPlaylistViewDetailPage2_v1" id="gDh-we-59a"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PPm-5l-CcJ">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="qxB-u5-DHY" kind="relationship" relationship="rootViewController" id="Txh-M9-G2a"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Kk-lx-Lyu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5713" y="209"/>
+        </scene>
+        <!--VCPlaylistEditViewSecondPage-->
+        <scene sceneID="tkx-sr-tuv">
+            <objects>
+                <viewController title="VCPlaylistEditViewSecondPage" id="qxB-u5-DHY" customClass="PlaylistEditViewSecondPage" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vL5-kd-oHn"/>
+                        <viewControllerLayoutGuide type="bottom" id="D20-MV-vBY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sG0-JD-I7H" userLabel="ui_view_content">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fm-oQ-ZGP">
+                                <rect key="frame" x="16" y="295" width="343" height="77"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="64"/>
+                                <color key="textColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="7fm-oQ-ZGP" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="Y1I-nh-HDw"/>
+                            <constraint firstItem="7fm-oQ-ZGP" firstAttribute="top" secondItem="vL5-kd-oHn" secondAttribute="bottom" constant="231" id="ZE3-li-irr"/>
+                            <constraint firstItem="D20-MV-vBY" firstAttribute="top" secondItem="7fm-oQ-ZGP" secondAttribute="bottom" constant="246" id="qfn-Cm-JHu"/>
+                            <constraint firstAttribute="trailing" secondItem="7fm-oQ-ZGP" secondAttribute="trailing" constant="16" id="qiM-Ro-xNO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Vote" id="k3G-GJ-OV1">
+                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="Bn0-tW-4Wy" userLabel="ui_btn_exit_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnExitEditViewPage:" destination="qxB-u5-DHY" id="lVo-GX-sJ9"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="x6o-Ik-YAl" userLabel="ui_btn_save_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <size key="freeformSize" width="375" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5u2-ot-Dv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6582" y="208"/>
+        </scene>
+        <!--VCPlaylistEditViewThirdPage-->
+        <scene sceneID="hPl-y5-iMh">
+            <objects>
+                <viewController title="VCPlaylistEditViewThirdPage" id="vso-N8-E91" customClass="PlaylistEditViewThirdPage" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jxt-qP-LYX"/>
+                        <viewControllerLayoutGuide type="bottom" id="9x9-bX-K5U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tjo-Af-05b" userLabel="ui_view_content">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mat-uC-qF3">
+                                <rect key="frame" x="16" y="295" width="343" height="77"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="64"/>
+                                <color key="textColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9x9-bX-K5U" firstAttribute="top" secondItem="mat-uC-qF3" secondAttribute="bottom" constant="246" id="h6F-8O-SaS"/>
+                            <constraint firstAttribute="trailing" secondItem="mat-uC-qF3" secondAttribute="trailing" constant="16" id="lvp-dt-fX6"/>
+                            <constraint firstItem="mat-uC-qF3" firstAttribute="leading" secondItem="Tjo-Af-05b" secondAttribute="leading" constant="16" id="tqo-U9-usV"/>
+                            <constraint firstItem="mat-uC-qF3" firstAttribute="top" secondItem="jxt-qP-LYX" secondAttribute="bottom" constant="231" id="ufW-NY-LuH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Notes" id="9dl-4Q-p7i">
+                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="UZy-Hy-UeB" userLabel="ui_btn_exit_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnExitEditViewPage:" destination="vso-N8-E91" id="mGc-dC-4Af"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="ZRW-r5-PjN" userLabel="ui_btn_save_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <size key="freeformSize" width="375" height="667"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p3b-7o-8D1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6582" y="987"/>
         </scene>
     </scenes>
     <resources>
@@ -1843,6 +1864,9 @@
         <image name="icnPLCellView" width="25" height="25"/>
         <image name="icnPLRefresh" width="25" height="25"/>
         <image name="icnPLTableView" width="25" height="25"/>
+        <image name="icnPlaylistViewDetailPage1_v1" width="25" height="25"/>
+        <image name="icnPlaylistViewDetailPage2_v1" width="25" height="25"/>
+        <image name="icnPlaylistViewDetailPage3_v1" width="25" height="25"/>
         <image name="icnSave_v1" width="25" height="25"/>
         <image name="icnSetPauseMini_1" width="25" height="25"/>
         <image name="icnSetPlayMini_1" width="25" height="25"/>
@@ -1856,7 +1880,6 @@
         <image name="icnShareContent_v2" width="25" height="25"/>
         <image name="icnShowPlaylist_v1" width="25" height="25"/>
         <image name="icnStepBack_v1" width="25" height="25"/>
-        <image name="imgUICoverOverrideDefault_v1" width="127" height="127"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
         <image name="imgUITblContentChanged_v1" width="25" height="25"/>
         <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
