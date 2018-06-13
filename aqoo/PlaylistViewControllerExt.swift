@@ -84,11 +84,19 @@ extension PlaylistViewController {
         var filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>?
         var filterQueryUseDefaults: Bool = false
         var filterImageKey: Int?
+        var filterTargetIndex: Int = index
+        var filterMaxIndex: Int = playlistFilterMeta.count
+        
+        // prevent filter collision on dynamic parts of current filter set
+        if  index > filterMaxIndex {
+            filterTargetIndex = 0
+        }
         
         // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
         for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
             
-            if _index == index {
+            if _index == filterTargetIndex {
+                
                 if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
                     
                     // fetch filter image key from config dictionary stack
@@ -503,7 +511,8 @@ extension PlaylistViewController {
     func setupUILoadExtendedPlaylists() {
         
         // fetch logical filterBlock by key selection index
-        let filterBlock = getFilterBlockByIndex( getConfigTableFilterKeyByProviderTag() )
+        let filterKey = getConfigTableFilterKeyByProviderTag()
+        let filterBlock = getFilterBlockByIndex( filterKey )
         // call specific filter action corresponding to current filter-item menu selection
         handleTableFilterByFetchChainQuery(
             filterBlock.2,
