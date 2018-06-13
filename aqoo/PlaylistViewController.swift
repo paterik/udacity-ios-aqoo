@@ -162,13 +162,27 @@ class PlaylistViewController: BaseViewController,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "showPlaylistEditView" {
+        if segue.identifier == "showPlaylistEditViewTabController" {
             
-            let editViewController = segue.destination as! PlaylistEditViewController
-            
-            editViewController.playListInDb = _playlistInCacheSelected!
-            editViewController.playListInCloud = _playlistInCloudSelected!
-            editViewController.delegate = self
+            if let editViewTabBarController = segue.destination as? PlaylistEditViewTabBarController {
+                
+                editViewTabBarController.viewControllers?.forEach {
+                    if let nvc = $0 as? UINavigationController {
+                        
+                        nvc.viewControllers.forEach {
+                            
+                            if  let vc = $0 as? BasePlaylistEditViewController {
+                                vc.playListInDb = self._playlistInCacheSelected!
+                                vc.playListInCloud = self._playlistInCloudSelected!
+                                vc.playListChanged = false
+                            }   else {
+                                print ("!!! unable to cast BasePlaylistEditViewController !!!")
+                                print ($0)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -297,7 +311,7 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnSettings_v2"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-                self.performSegue(withIdentifier: "showPlaylistEditView", sender: self)
+                self.performSegue(withIdentifier: "showPlaylistEditViewTabController", sender: self)
         }
         
         let tblActionHide = BGTableViewRowActionWithImage.rowAction(
