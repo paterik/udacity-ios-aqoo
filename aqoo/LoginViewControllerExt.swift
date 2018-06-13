@@ -33,7 +33,7 @@ extension LoginViewController {
         // lets start with users playlistView
         //
         
-        performSegue(withIdentifier: segueIdentPlayListPage, sender: self)
+        performSegue(withIdentifier: _defaultLandingPageSegueId, sender: self)
     }
     
     func getAuthViewController(withURL url: URL) -> UIViewController {
@@ -53,12 +53,7 @@ extension LoginViewController {
     @objc
     func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
-        if spotifyClient.isSpotifyTokenValid() {
-            
-            //
-            // application entry point during development
-            //
-            
+        if  spotifyClient.isSpotifyTokenValid() {
             showLandingPage()
             
         } else {

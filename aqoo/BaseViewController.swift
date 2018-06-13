@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
     let spotifyClient = SpotifyClient.sharedInstance
     let notifier = SPFEventNotifier()
     
-    let segueIdentPlayListPage = "showAllUserPlaylists"
+    let _defaultLandingPageSegueId = "showAllUserPlaylists"
     let _sampleSong: String = "spotify:track:3rkge8kur9i26zpByFKvBu"
     let _randomStringRange: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
     
