@@ -13,7 +13,7 @@ PODS:
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - Persei (3.1.1)
-  - PKHUD (5.0.0)
+  - PKHUD (5.1.0)
   - pop (1.0.10)
   - Reachability (3.2)
   - SnapKit (4.0.0)
@@ -78,7 +78,7 @@ SPEC CHECKSUMS:
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
-  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
+  PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694

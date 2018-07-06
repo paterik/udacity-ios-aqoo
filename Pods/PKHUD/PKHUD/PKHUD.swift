@@ -55,9 +55,16 @@ open class PKHUD: NSObject {
 
     public override init () {
         super.init()
+
+        #if swift(>=4.2)
+        let notificationName = UIApplication.willEnterForegroundNotification
+        #else
+        let notificationName = NSNotification.Name.UIApplicationWillEnterForeground
+        #endif
+
         NotificationCenter.default.addObserver(self,
             selector: #selector(PKHUD.willEnterForeground(_:)),
-            name: NSNotification.Name.UIApplicationWillEnterForeground,
+            name: notificationName,
             object: nil)
         userInteractionOnUnderlyingViewsEnabled = false
         container.frameView.autoresizingMask = [ .flexibleLeftMargin,
@@ -187,7 +194,7 @@ open class PKHUD: NSObject {
     // MARK: Timer callbacks
 
     @objc internal func performDelayedHide(_ timer: Timer? = nil) {
-        let userInfo = timer?.userInfo as? [String:AnyObject]
+        let userInfo = timer?.userInfo as? [String: AnyObject]
         let key = userInfo?["timerActionKey"] as? String
         var completion: TimerAction?
 
