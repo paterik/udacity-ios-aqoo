@@ -489,13 +489,34 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUICoverOverrideDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-6R-yfg" userLabel="ui_playlist_cover_big">
                                 <rect key="frame" x="16" y="79" width="343" height="343"/>
                             </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Best of TVOTR 2018" placeholder="please enter playlist title" minimumFontSize="21" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Ex-cS-ID1" userLabel="ui_inp_playlist_name">
+                                <rect key="frame" x="16" y="440" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="EMs-Qs-u6D"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="organization"/>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nr8-Z0-exG" userLabel="ui_pnl_playlist_tags">
+                                <rect key="frame" x="16" y="490" width="343" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1Ex-cS-ID1" firstAttribute="leading" secondItem="nr8-Z0-exG" secondAttribute="leading" id="0BA-ap-Kk8"/>
+                            <constraint firstItem="nr8-Z0-exG" firstAttribute="bottom" secondItem="4kc-4o-hkz" secondAttribute="top" id="5Y1-a6-XVC"/>
                             <constraint firstItem="zKh-6R-yfg" firstAttribute="trailing" secondItem="KvN-Uq-UwH" secondAttribute="trailingMargin" id="CtM-ZC-9fA"/>
+                            <constraint firstItem="1Ex-cS-ID1" firstAttribute="leading" secondItem="zKh-6R-yfg" secondAttribute="leading" id="KJX-0S-lBb"/>
                             <constraint firstItem="4kc-4o-hkz" firstAttribute="top" secondItem="zKh-6R-yfg" secondAttribute="bottom" constant="196" id="ao0-97-iqQ"/>
+                            <constraint firstItem="nr8-Z0-exG" firstAttribute="top" secondItem="1Ex-cS-ID1" secondAttribute="bottom" constant="20" id="f3P-SM-Hc0"/>
+                            <constraint firstItem="1Ex-cS-ID1" firstAttribute="trailing" secondItem="zKh-6R-yfg" secondAttribute="trailing" id="o5D-aI-qCd"/>
                             <constraint firstItem="zKh-6R-yfg" firstAttribute="top" secondItem="cZ7-dN-tCF" secondAttribute="bottom" constant="15" id="ouh-sn-ZQK"/>
                             <constraint firstItem="zKh-6R-yfg" firstAttribute="leading" secondItem="KvN-Uq-UwH" secondAttribute="leadingMargin" id="oz9-j8-N0v"/>
+                            <constraint firstItem="1Ex-cS-ID1" firstAttribute="top" secondItem="zKh-6R-yfg" secondAttribute="bottom" constant="18" id="rlY-qh-fc6"/>
+                            <constraint firstItem="1Ex-cS-ID1" firstAttribute="trailing" secondItem="nr8-Z0-exG" secondAttribute="trailing" id="vVD-gQ-5T2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit" id="vTa-7R-WjH">
@@ -512,6 +533,8 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="imgPlaylistCoverBig" destination="zKh-6R-yfg" id="zJ5-dM-QRd"/>
+                        <outlet property="inpPlaylistName" destination="1Ex-cS-ID1" id="cGj-xD-Dl7"/>
+                        <outlet property="viewPlaylistTags" destination="nr8-Z0-exG" id="mI3-Bv-bP6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-Dl-arD" userLabel="First Responder" sceneMemberID="firstResponder"/>

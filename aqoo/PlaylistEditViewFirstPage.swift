@@ -10,8 +10,9 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import WSTagsField
 
-class PlaylistEditViewFirstPage: BasePlaylistEditViewController {
+class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDelegate {
     
     //
     // MARK: Class LowLevel Variables
@@ -20,23 +21,107 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController {
     var _noCoverImageAvailable: Bool = true
     var _noCoverOverrideImageAvailable: Bool = true
     
+    fileprivate let tagsField = WSTagsField()
+    
     @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
+    @IBOutlet weak var inpPlaylistName: UITextField!
+    @IBOutlet fileprivate weak var viewPlaylistTags: UIView!
+    
+    //
+    // MARK: Class Method Overloads
+    //
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         setupUICoverImages()
+        setupUIPlaylistName()
+        setupUIPlaylistTags()
     }
-    
-    //
-    // MARK: Class Method Overloads
-    //
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
+        tagsField.beginEditing()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tagsField.frame = viewPlaylistTags.bounds
+    }
+    
+    //
+    // MARK: Class Function Extensions
+    //
+    
+    func setupUIPlaylistName() {
+        
+        inpPlaylistName.text = playListInDb!.metaListInternalName
+    }
+    
+    func setupUIPlaylistTags() {
+        
+        viewPlaylistTags.frame = viewPlaylistTags.bounds
+        viewPlaylistTags.addSubview(tagsField)
+        
+        tagsField.cornerRadius = 3.0
+        tagsField.spaceBetweenLines = 10
+        tagsField.spaceBetweenTags = 10
+        tagsField.numberOfLines = 4
+        
+        tagsField.layoutMargins = UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6)
+        tagsField.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        
+        tagsField.backgroundColor = UIColor(netHex: 0x1ED761)
+        tagsField.tintColor = UIColor(netHex: 0x1ED761)
+        tagsField.textColor = .black
+        tagsField.fieldTextColor = .white
+        tagsField.selectedColor = .white
+        tagsField.selectedTextColor = UIColor(netHex: 0x1ED761)
+        
+        tagsField.delimiter = ""
+        tagsField.placeholder = "Enter a tag"
+        tagsField.isDelimiterVisible = false
+        tagsField.placeholderColor = .white
+        tagsField.placeholderAlwaysVisible = true
+        tagsField.backgroundColor = .clear
+        
+        tagsField.acceptTagOption = .space
+        tagsField.returnKeyType = .next
+        tagsField.textDelegate = self
+
+        handlePlaylistTagEvents()
+    }
+    
+    func handlePlaylistTagEvents() {
+        
+        tagsField.onDidAddTag = { _, _ in
+            print("onDidAddTag")
+        }
+        
+        tagsField.onDidRemoveTag = { _, _ in
+            print("onDidRemoveTag")
+        }
+        
+        tagsField.onDidChangeText = { _, text in
+            print("onDidChangeText")
+        }
+        
+        tagsField.onDidChangeHeightTo = { _, height in
+            print("HeightTo \(height)")
+        }
+        
+        tagsField.onDidSelectTagView = { _, tagView in
+            print("Select \(tagView)")
+        }
+        
+        tagsField.onDidUnselectTagView = { _, tagView in
+            print("Unselect \(tagView)")
+        }
+        
     }
 
     func setupUICoverImages() {
@@ -74,4 +159,14 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController {
             }
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == tagsField {
+            inpPlaylistName.becomeFirstResponder()
+        }
+        
+        return true
+    }
 }
+
