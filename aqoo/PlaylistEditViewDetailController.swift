@@ -219,7 +219,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
                 }
             },
             failure: { (error) in
-                self._handleErrorAsDialogMessage(
+                self.handleErrorAsDialogMessage(
                     "Error Validating Key-Value",
                     "Oops! An error occured while validating playlist property from local database ..."
                 )

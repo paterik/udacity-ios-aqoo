@@ -604,7 +604,7 @@ extension PlaylistViewController {
                 
                 failure: { (error) in
                     
-                    self._handleErrorAsDialogMessage(
+                    self.handleErrorAsDialogMessage(
                         "Error Loading Playlist Cache",
                         "Oops! An error occured while loading playlists from database ..."
                     )
@@ -1072,7 +1072,7 @@ extension PlaylistViewController {
                     
                 }   else {
                     
-                    self._handleErrorAsDialogMessage(
+                    self.handleErrorAsDialogMessage(
                         "Error Loading Provider",
                         "Oops! No provider were found in database ..."
                     )
@@ -1080,7 +1080,7 @@ extension PlaylistViewController {
             },
             
             failure: { (error) in
-                self._handleErrorAsDialogMessage(
+                self.handleErrorAsDialogMessage(
                     "Error Loading Provider",
                     "Oops! An error occured while loading provider from database ..."
                 )
@@ -1092,7 +1092,7 @@ extension PlaylistViewController {
         
         if provider.tag != _sysDefaultProviderTag {
             
-            _handleErrorAsDialogMessage(
+            handleErrorAsDialogMessage(
                 "Error Loading Provider",
                 "Oops! The provider '\(provider.name)' isn't supported yet ..."
             );  return
@@ -1134,7 +1134,7 @@ extension PlaylistViewController {
             
             failure: { (error) in
                 
-                self._handleErrorAsDialogMessage(
+                self.handleErrorAsDialogMessage(
                     "Error Loading Playlists",
                     "Oops! An error occured while loading playlists from database ..."
                 )
@@ -1211,7 +1211,7 @@ extension PlaylistViewController {
         guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell })
         else
         {
-            _handleErrorAsDialogMessage(
+            handleErrorAsDialogMessage(
                 "Error Handling Playback Controls",
                 "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by our palyback events!"
             );  return

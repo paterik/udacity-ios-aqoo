@@ -280,8 +280,8 @@ class PlaylistViewController: BaseViewController,
         
         let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
        
-        if playlistCell.metaPlaylistInDb == nil {
-            _handleErrorAsDialogMessage(
+        if  playlistCell.metaPlaylistInDb == nil {
+            handleErrorAsDialogMessage(
                 "Error Loading Cache Playlist",
                 "This local playlist [index: \(indexPath.row)] is not found in your cache api call!"
             );   return []
@@ -291,8 +291,8 @@ class PlaylistViewController: BaseViewController,
         _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
         
         playlistCell.metaPlayListInCloud = _playlistInCloudSelected
-        if playlistCell.metaPlayListInCloud == nil {
-            _handleErrorAsDialogMessage(
+        if  playlistCell.metaPlayListInCloud == nil {
+            handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
                 "The local playlist [index: \(indexPath.row)] is not found in spotify api call!"
             );   return []

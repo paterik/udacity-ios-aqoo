@@ -74,7 +74,8 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
             withReuseIdentifier: coverCellIdent,
             for: indexPath) as? PlaylistColletionViewCell else {
                 
-           _handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
+            handleErrorAsDialogMessage("UI Error (Cell)", "unable to fetch cell from dequeue cache")
+                
             return UICollectionViewCell()
         }
         

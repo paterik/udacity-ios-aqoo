@@ -103,7 +103,7 @@ extension PlaylistEditViewController {
                 btnPlaylistCoverOverride.setImage(UIImage(named: "icnSwitch_v1"), for: UIControlState.normal)
                 imgPlaylistCoverOrigin.alpha = _sysPlaylistCoverOriginInActiveAlpha
             }   else {
-               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
             }
         }
     }

@@ -90,7 +90,7 @@ class BaseViewController: UIViewController {
     // MARK: Base Methods
     //
     
-    func _handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
+    func handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
         
         let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
@@ -119,7 +119,7 @@ class BaseViewController: UIViewController {
             
         }   catch {
             
-            _handleErrorAsDialogMessage("IO Error (Read)", "\(error.localizedDescription)")
+            handleErrorAsDialogMessage("IO Error (Read)", "\(error.localizedDescription)")
         }
         
         return nil
@@ -134,7 +134,7 @@ class BaseViewController: UIViewController {
             return fileName
         }
         
-        _handleErrorAsDialogMessage("IO Error (Write)", "unable to save image data to your device")
+        handleErrorAsDialogMessage("IO Error (Write)", "unable to save image data to your device")
         
         return nil
     }

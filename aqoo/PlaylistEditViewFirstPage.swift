@@ -19,9 +19,9 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     // MARK: Class LowLevel Variables
     //
     
-    var _noCoverImageAvailable: Bool = true
-    var _noCoverOverrideImageAvailable: Bool = true
-    var _playlistUpdateDetected: Bool = false
+    var noCoverImageAvailable: Bool = true
+    var noCoverOverrideImageAvailable: Bool = true
+    var playlistUpdateDetected: Bool = false
     
     fileprivate let playlistTagsField = WSTagsField()
     
@@ -121,14 +121,14 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         // evaluate the "perfect" cover for our detailView
         if (playListInDb!.largestImageURL != nil) {
            _playListCoverURL = playListInDb!.largestImageURL!
-           _noCoverImageAvailable = false
+            noCoverImageAvailable = false
         }   else if (playListInDb!.smallestImageURL != nil) {
            _playListCoverURL = playListInDb!.smallestImageURL!
-           _noCoverImageAvailable = false
+            noCoverImageAvailable = false
         }
         
         // cover image url available - using kf processing technics and render one
-        if _noCoverImageAvailable == false {
+        if  noCoverImageAvailable == false {
             imgPlaylistCoverBig.kf.setImage(
                 with: URL(string: _playListCoverURL!),
                 placeholder: UIImage(named: _sysDefaultCoverImage),
@@ -140,12 +140,12 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         }
         
         if  playListInDb!.coverImagePathOverride != nil {
-           _noCoverOverrideImageAvailable = false
+            noCoverOverrideImageAvailable = false
             
             if  let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
                 imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
             }   else {
-               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
             }
         }
     }
@@ -186,6 +186,9 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     
     func handlePlaylistMetaUpdate() {
         
+        // presume our updates will be successfully
+        playlistUpdateDetected = true
+        
         var _playListTitle: String = inpPlaylistName.text!
         
         CoreStore.perform(
@@ -195,7 +198,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 guard let playlistToUpdate = transaction.fetchOne(
                       From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
                       as? StreamPlayList else {
-                          self._handleErrorAsDialogMessage(
+                          self.handleErrorAsDialogMessage(
                               "Cache Error", "unable to fetch playlist from local cache"
                           );   return
                 }
@@ -205,21 +208,35 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 playlistToUpdate.metaNumberOfUpdates += 1
                 playlistToUpdate.metaPreviouslyUpdatedManually = true
                 
+                self.playlistUpdateDetected = true
                 self.playListInDb = playlistToUpdate
-                
             },
             completion: { (result) -> Void in
                 switch result {
                     
                 case .failure(let error):
+                    
                     if  self.debugMode == true {
-                        print ("dbg [db] : ERROR [\(error)]")
-                    };  self._playlistUpdateDetected = false
+                        print ("dbg [db] : Playlist [\(_playListTitle)] update fail!")
+                    }
+                    
+                    self.playlistUpdateDetected = false
+                    self.handleErrorAsDialogMessage(
+                        "Cache Error", "unable to update playlist local cache"
+                    )
                 
                 case .success(let userInfo):
+                    
                     if  self.debugMode == true {
                         print ("dbg [db] : Playlist [\(_playListTitle)] updated")
-                    };  self._playlistUpdateDetected = true
+                    }
+                    
+                    // delegate information about current playlist entity state to playlistView
+                    if  let delegate = self.delegate {
+                        if  self.playlistUpdateDetected == true {
+                            delegate.onPlaylistChanged( self.playListInDb! )
+                        }
+                    }
                 }
             }
         )
@@ -234,7 +251,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 guard let _playlistInContext = transaction.fetchOne(
                       From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
                       as? StreamPlayList else {
-                        self._handleErrorAsDialogMessage(
+                        self.handleErrorAsDialogMessage(
                             "Cache Error", "unable to fetch playlist from local cache"
                         );   return
                 }
@@ -249,33 +266,39 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 
                 // add tag to StreamPlayListTags cache/db table
                 if  playlistTagToUpdate == nil && add == true {
-                    if self.debugMode == true { print ("TAG [\(tag)] ADDED") }
                     playlistTagToUpdate = transaction.create(Into<StreamPlayListTags>()) as StreamPlayListTags
                     playlistTagToUpdate!.playlistTag = tag
                     playlistTagToUpdate!.createdAt = Date()
                     playlistTagToUpdate!.updatedAt = Date()
                     playlistTagToUpdate!.playlist = _playlistInContext
+                    self.playlistUpdateDetected = true
+                    
+                    if self.debugMode == true { print ("TAG [\(tag)] ADDED") }
                 }
                 
                 // remove tag from StreamPlayListTags cache/db table
                 if  playlistTagToUpdate != nil && add == false {
-                    if self.debugMode == true { print ("TAG [\(tag)] REMOVED") }
+                    
                     transaction.delete(playlistTagToUpdate)
                     self.playlistTagsField.removeTag(tag)
+                    self.playlistUpdateDetected = true
+                    
+                    if self.debugMode == true { print ("TAG [\(tag)] REMOVED") }
                 }
             },
             completion: { (result) -> Void in
                 switch result {
                     
                 case .failure(let error):
-                    if  self.debugMode == true {
-                        print ("dbg [db] : ERROR [\(error)]")
-                    };  self._playlistUpdateDetected = false
+                    self.playlistUpdateDetected = false
+                    self.handleErrorAsDialogMessage(
+                        "Cache Error", "unable to update playlist tag local cache"
+                    )
                 
                 case .success(let userInfo):
                     if  self.debugMode == true {
                         print ("dbg [db] : TAG [\(tag)] loaded")
-                    };  self._playlistUpdateDetected = true
+                    }
                 }
             }
         )
@@ -284,12 +307,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
         
         handlePlaylistMetaUpdate()
-        
-        // delegate information about current playlist entity state to playlistView
-        if  let delegate = self.delegate {
-            delegate.onPlaylistChanged( playListInDb! )
-        }
-        
         dismiss(animated: true, completion: nil)
     }
 }

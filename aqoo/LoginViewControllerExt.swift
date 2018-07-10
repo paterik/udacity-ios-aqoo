@@ -56,9 +56,9 @@ extension LoginViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             showLandingPage()
             
-        } else {
+        }   else {
             
-           _handleErrorAsDialogMessage(
+            handleErrorAsDialogMessage(
                 "Spotify Login Fail!",
                 "Oops! I'm unable to verify valid authentication for your spotify account!"
             )
