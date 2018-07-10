@@ -52,30 +52,27 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     }
     
     override func viewDidLayoutSubviews() {
+        
         super.viewDidLayoutSubviews()
         playlistTagsField.frame = viewPlaylistTags.bounds
     }
     
     //
-    // MARK: Class Function Extensions
+    // MARK: Class Function Delegate Overloads
     //
     
-    func loadMetaPlaylistFromDb() {
-    
-        // load playlistName
-        inpPlaylistName.text = playListInDb!.metaListInternalName
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        // fetch all available tags for this playlist and load them to our tagView
-        if  let _playListTagsInCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayListTags>().where(
-                (\StreamPlayListTags.playlist == self.playListInDb!))
-            ) {
-            
-            for _tag in _playListTagsInCache {
-                self.playlistTagsField.addTag(_tag.playlistTag)
-            }
+        if textField == playlistTagsField {
+            inpPlaylistName.becomeFirstResponder()
         }
+        
+        return true
     }
+    
+    //
+    // MARK: Class Setup UI/UX Functions
+    //
     
     func setupUI() {
         
@@ -115,18 +112,108 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
         handlePlaylistTagEvents()
     }
     
-    func handlePlaylistTagEvents() {
+    func setupUICoverImages() {
         
-        playlistTagsField.onDidAddTag = { _, tag in
-            self.handleAddPlaylistTag( tag.text.lowercased(), add: true )
+        var _playListCoverURL: String?
+        
+        // evaluate the "perfect" cover for our detailView
+        if (playListInDb!.largestImageURL != nil) {
+           _playListCoverURL = playListInDb!.largestImageURL!
+           _noCoverImageAvailable = false
+        }   else if (playListInDb!.smallestImageURL != nil) {
+           _playListCoverURL = playListInDb!.smallestImageURL!
+           _noCoverImageAvailable = false
         }
         
-        playlistTagsField.onDidRemoveTag = { _, tag in
-            self.handleAddPlaylistTag( tag.text.lowercased(), add: false )
+        // cover image url available - using kf processing technics and render one
+        if _noCoverImageAvailable == false {
+            imgPlaylistCoverBig.kf.setImage(
+                with: URL(string: _playListCoverURL!),
+                placeholder: UIImage(named: _sysDefaultCoverImage),
+                options: [
+                    .transition(.fade(0.2)),
+                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverDetailImageSize))
+                ]
+            )
+        }
+        
+        if  playListInDb!.coverImagePathOverride != nil {
+           _noCoverOverrideImageAvailable = false
+            
+            if  let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
+                imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
+            }   else {
+               _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+            }
         }
     }
     
-    func handleAddPlaylistTag(_ tag: String, add: Bool) {
+    //
+    // MARK: Class Setup Data/Meta Functions
+    //
+    
+    func loadMetaPlaylistFromDb() {
+        
+        // load playlistName
+        inpPlaylistName.text = playListInDb!.metaListInternalName
+        
+        // fetch all available tags for this playlist and load them to our tagView
+        if  let _playListTagsInCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayListTags>().where(
+                (\StreamPlayListTags.playlist == playListInDb!))
+            ) {
+            
+            for _tag in _playListTagsInCache {
+                self.playlistTagsField.addTag(_tag.playlistTag)
+            }
+        }
+    }
+    
+    func handlePlaylistTagEvents() {
+        
+        playlistTagsField.onDidAddTag = { _, tag in
+            self.handlePlaylistTagInput( tag.text.lowercased(), add: true )
+        }
+        
+        playlistTagsField.onDidRemoveTag = { _, tag in
+            self.handlePlaylistTagInput( tag.text.lowercased(), add: false )
+        }
+    }
+    
+    func handlePlaylistMetaUpdate() {
+        
+        var _playListTitle: String = inpPlaylistName.text!
+        
+        CoreStore.perform(
+            asynchronous: { (transaction) -> Void in
+                
+                // find persisted playlist object from local cache (db)
+                guard let playlistToUpdate = transaction.fetchOne(
+                      From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
+                      as? StreamPlayList else {
+                          self._handleErrorAsDialogMessage(
+                              "Cache Error", "unable to fetch playlist from local cache"
+                          );   return
+                }
+                    
+                playlistToUpdate.metaListInternalName = _playListTitle
+                playlistToUpdate.updatedAt = Date()
+                playlistToUpdate.metaNumberOfUpdates += 1
+                playlistToUpdate.metaPreviouslyUpdatedManually = true
+                
+                self.playListInDb = playlistToUpdate
+                
+            },
+            completion: { (result) -> Void in
+                switch result {
+                    case .failure(let error):    if self.debugMode == true { print (error) }
+                    case .success(let userInfo): if self.debugMode == true { print ("dbg [db] : playlist updated") }
+                }
+            }
+        )
+    }
+    
+    func handlePlaylistTagInput(_ tag: String, add: Bool) {
         
         CoreStore.perform(
             asynchronous: { (transaction) -> Void in
@@ -135,12 +222,9 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
                 guard let _playlistInContext = transaction.fetchOne(
                       From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
                       as? StreamPlayList else {
-                        
                         self._handleErrorAsDialogMessage(
                             "Cache Error", "unable to fetch playlist from local cache"
-                        )
-                        
-                        return
+                        );   return
                 }
                 
                 // try to evaluate current tag in right context
@@ -177,57 +261,9 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
         )
     }
 
-    func setupUICoverImages() {
-        
-        var _playListCoverURL: String?
-        
-        // evaluate the "perfect" cover for our detailView
-        if (playListInDb!.largestImageURL != nil) {
-            _playListCoverURL = playListInDb!.largestImageURL!
-            _noCoverImageAvailable = false
-        }   else if (playListInDb!.smallestImageURL != nil) {
-            _playListCoverURL = playListInDb!.smallestImageURL!
-            _noCoverImageAvailable = false
-        }
-        
-        // cover image url available - using kf processing technics and render one
-        if _noCoverImageAvailable == false {
-            imgPlaylistCoverBig.kf.setImage(
-                with: URL(string: _playListCoverURL!),
-                placeholder: UIImage(named: _sysDefaultCoverImage),
-                options: [
-                    .transition(.fade(0.2)),
-                    .processor(ResizingImageProcessor(referenceSize: _sysPlaylistCoverDetailImageSize))
-                ]
-            )
-        }
-        
-        if  playListInDb!.coverImagePathOverride != nil {
-            _noCoverOverrideImageAvailable = false
-            
-            if let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
-                imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
-            }   else {
-                _handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
-            }
-        }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if textField == playlistTagsField {
-            inpPlaylistName.becomeFirstResponder()
-        }
-        
-        return true
-    }
-    
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
         
-        print ("CURRENT TAGS")
-        for tag in playlistTagsField.tags {
-            print("--- \(tag.text) ---")
-        }
+        handlePlaylistMetaUpdate()
     }
 }
 
