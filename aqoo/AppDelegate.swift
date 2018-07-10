@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     let spotifyClient = SpotifyClient.sharedInstance
     
     let providerFixtureData = [
-        ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (will be default)"),
+        ("Spotify", "_spotify", true, "our primary streaming provider spotify for aqoo (default)"),
         ("SoundCloud", "_soundcloud", false, "our soundcloud streaming provider (not implemented yet)"),
         ("MixCloud", "_mixcloud", false, "our mixcloud streaming provider (not implemented yet)"),
     ]
