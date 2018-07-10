@@ -42,6 +42,7 @@
 		B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BBECED1F93642B00BD9D39 /* UILabel.swift */; };
 		B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE71F778621001FC294 /* StreamPlayList.swift */; };
 		B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE91F778646001FC294 /* StreamProvider.swift */; };
+		B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */; };
 		B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA991FFE84DF008138F1 /* UITableView.swift */; };
 		B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */; };
 		B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */; };
@@ -126,6 +127,7 @@
 		B1BBECED1F93642B00BD9D39 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		B1BD1EE71F778621001FC294 /* StreamPlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamPlayList.swift; sourceTree = "<group>"; };
 		B1BD1EE91F778646001FC294 /* StreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamProvider.swift; sourceTree = "<group>"; };
+		B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTags.swift; sourceTree = "<group>"; };
 		B1CDAA991FFE84DF008138F1 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewController.swift; sourceTree = "<group>"; };
 		B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewControllerExt.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				B1BD1EE71F778621001FC294 /* StreamPlayList.swift */,
 				B1BD1EE91F778646001FC294 /* StreamProvider.swift */,
 				B1A7E0252040C0B100A9805C /* StreamProviderConfig.swift */,
+				B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */,
 				B1D45007204AC5F900B1BAF4 /* PlaylistMusicIndicatorContentView.swift in Sources */,
 				B1A7E0262040C0B100A9805C /* StreamProviderConfig.swift in Sources */,
+				B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */,
 				B1D33DD020D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,

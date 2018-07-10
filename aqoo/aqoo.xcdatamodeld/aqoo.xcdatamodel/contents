@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1212" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17F77" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StreamPlayList" representedClassName=".StreamPlayList" syncable="YES">
         <attribute name="coverImagePathOverride" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -17,8 +17,11 @@
         <attribute name="metaListHash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListInternalDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListInternalName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="metaListInternalRating" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListNameOrigin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metaListRatingArousal" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaListRatingDepth" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaListRatingOverall" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="metaListRatingValence" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaMediaRessourcesArray" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
         <attribute name="metaNumberOfPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayedCompletely" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -44,6 +47,12 @@
             <fetchIndexElement property="metaListHash" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
+    <entity name="StreamPlayListTags" representedClassName=".StreamPlayListTags" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="playlistTag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamPlayList" syncable="YES"/>
+    </entity>
     <entity name="StreamProvider" representedClassName=".StreamProvider" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -60,8 +69,9 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="630"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="675"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
+        <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
     </elements>
 </model>
