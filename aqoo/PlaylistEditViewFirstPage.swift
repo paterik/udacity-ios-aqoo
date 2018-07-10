@@ -21,10 +21,11 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     var _noCoverImageAvailable: Bool = true
     var _noCoverOverrideImageAvailable: Bool = true
     
-    fileprivate let tagsField = WSTagsField()
+    fileprivate let playlistTagsField = WSTagsField()
     
     @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
     @IBOutlet weak var inpPlaylistName: UITextField!
+    @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet fileprivate weak var viewPlaylistTags: UIView!
     
     //
@@ -35,9 +36,11 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
         
         super.viewDidLoad()
         
+        setupUI()
         setupUICoverImages()
-        setupUIPlaylistName()
         setupUIPlaylistTags()
+        
+        loadMetaPlaylistFromDb()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,83 +48,133 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
-        tagsField.beginEditing()
+        playlistTagsField.beginEditing()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tagsField.frame = viewPlaylistTags.bounds
+        playlistTagsField.frame = viewPlaylistTags.bounds
     }
     
     //
     // MARK: Class Function Extensions
     //
     
-    func setupUIPlaylistName() {
-        
+    func loadMetaPlaylistFromDb() {
+    
+        // load playlistName
         inpPlaylistName.text = playListInDb!.metaListInternalName
+        
+        // fetch all available tags for this playlist and load them to our tagView
+        if  let _playListTagsInCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayListTags>().where(
+                (\StreamPlayListTags.playlist == self.playListInDb!))
+            ) {
+            
+            for _tag in _playListTagsInCache {
+                self.playlistTagsField.addTag(_tag.playlistTag)
+            }
+        }
+    }
+    
+    func setupUI() {
+        
+        btnSavePlaylistChanges.isEnabled = false
     }
     
     func setupUIPlaylistTags() {
         
         viewPlaylistTags.frame = viewPlaylistTags.bounds
-        viewPlaylistTags.addSubview(tagsField)
+        viewPlaylistTags.addSubview(playlistTagsField)
         
-        tagsField.cornerRadius = 3.0
-        tagsField.spaceBetweenLines = 10
-        tagsField.spaceBetweenTags = 10
-        tagsField.numberOfLines = 4
+        playlistTagsField.cornerRadius = 3.0
+        playlistTagsField.spaceBetweenLines = 10
+        playlistTagsField.spaceBetweenTags = 10
+        playlistTagsField.numberOfLines = 4
         
-        tagsField.layoutMargins = UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6)
-        tagsField.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        playlistTagsField.layoutMargins = UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6)
+        playlistTagsField.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         
-        tagsField.backgroundColor = UIColor(netHex: 0x1ED761)
-        tagsField.tintColor = UIColor(netHex: 0x1ED761)
-        tagsField.textColor = .black
-        tagsField.fieldTextColor = .white
-        tagsField.selectedColor = .white
-        tagsField.selectedTextColor = UIColor(netHex: 0x1ED761)
+        playlistTagsField.backgroundColor = UIColor(netHex: 0x1ED761)
+        playlistTagsField.tintColor = UIColor(netHex: 0x1ED761)
+        playlistTagsField.textColor = .black
+        playlistTagsField.fieldTextColor = .white
+        playlistTagsField.selectedColor = .white
+        playlistTagsField.selectedTextColor = .black
         
-        tagsField.delimiter = ""
-        tagsField.placeholder = "Enter a tag"
-        tagsField.isDelimiterVisible = false
-        tagsField.placeholderColor = .white
-        tagsField.placeholderAlwaysVisible = true
-        tagsField.backgroundColor = .clear
+        playlistTagsField.placeholder = "Enter a tag"
+        playlistTagsField.isDelimiterVisible = false
+        playlistTagsField.placeholderColor = .white
+        playlistTagsField.placeholderAlwaysVisible = true
+        playlistTagsField.backgroundColor = .clear
         
-        tagsField.acceptTagOption = .space
-        tagsField.returnKeyType = .next
-        tagsField.textDelegate = self
+        playlistTagsField.acceptTagOption = .space
+        playlistTagsField.returnKeyType = .next
+        playlistTagsField.textDelegate = self
 
         handlePlaylistTagEvents()
     }
     
     func handlePlaylistTagEvents() {
         
-        tagsField.onDidAddTag = { _, _ in
-            print("onDidAddTag")
+        playlistTagsField.onDidAddTag = { _, tag in
+            self.handleAddPlaylistTag( tag.text.lowercased(), add: true )
         }
         
-        tagsField.onDidRemoveTag = { _, _ in
-            print("onDidRemoveTag")
+        playlistTagsField.onDidRemoveTag = { _, tag in
+            self.handleAddPlaylistTag( tag.text.lowercased(), add: false )
         }
+    }
+    
+    func handleAddPlaylistTag(_ tag: String, add: Bool) {
         
-        tagsField.onDidChangeText = { _, text in
-            print("onDidChangeText")
-        }
-        
-        tagsField.onDidChangeHeightTo = { _, height in
-            print("HeightTo \(height)")
-        }
-        
-        tagsField.onDidSelectTagView = { _, tagView in
-            print("Select \(tagView)")
-        }
-        
-        tagsField.onDidUnselectTagView = { _, tagView in
-            print("Unselect \(tagView)")
-        }
-        
+        CoreStore.perform(
+            asynchronous: { (transaction) -> Void in
+                
+                // find persisted playlist object from local cache (db)
+                guard let _playlistInContext = transaction.fetchOne(
+                      From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
+                      as? StreamPlayList else {
+                        
+                        self._handleErrorAsDialogMessage(
+                            "Cache Error", "unable to fetch playlist from local cache"
+                        )
+                        
+                        return
+                }
+                
+                // try to evaluate current tag in right context
+                var playlistTagToUpdate = transaction.fetchOne(
+                    From<StreamPlayListTags>()
+                        .where((\StreamPlayListTags.playlistTag == tag) &&
+                               (\StreamPlayListTags.playlist == self.playListInDb!)
+                    )
+                )
+                
+                // add tag to StreamPlayListTags cache/db table
+                if  playlistTagToUpdate == nil && add == true {
+                    if self.debugMode == true { print ("TAG [\(tag)] ADDED") }
+                    playlistTagToUpdate = transaction.create(Into<StreamPlayListTags>()) as StreamPlayListTags
+                    playlistTagToUpdate!.playlistTag = tag
+                    playlistTagToUpdate!.createdAt = Date()
+                    playlistTagToUpdate!.updatedAt = Date()
+                    playlistTagToUpdate!.playlist = _playlistInContext
+                }
+                
+                // remove tag from StreamPlayListTags cache/db table
+                if  playlistTagToUpdate != nil && add == false {
+                    if self.debugMode == true { print ("TAG [\(tag)] REMOVED") }
+                    transaction.delete(playlistTagToUpdate)
+                    self.playlistTagsField.removeTag(tag)
+                }
+            },
+            completion: { (result) -> Void in
+                switch result {
+                    case .failure(let error):    if self.debugMode == true { print (error) }
+                    case .success(let userInfo): if self.debugMode == true { print ("dbg [db] : TAG [\(tag)] loaded") }
+                }
+            }
+        )
     }
 
     func setupUICoverImages() {
@@ -162,11 +215,19 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        if textField == tagsField {
+        if textField == playlistTagsField {
             inpPlaylistName.becomeFirstResponder()
         }
         
         return true
+    }
+    
+    @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
+        
+        print ("CURRENT TAGS")
+        for tag in playlistTagsField.tags {
+            print("--- \(tag.text) ---")
+        }
     }
 }
 

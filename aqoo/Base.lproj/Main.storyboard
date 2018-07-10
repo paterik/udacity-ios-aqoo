@@ -528,10 +528,14 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icnSave_v1" id="wOk-UT-ixH" userLabel="ui_btn_save_view">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnSavePlaylistChangesAction:" destination="MO5-Jd-Yip" id="kpy-sf-waY"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="btnSavePlaylistChanges" destination="wOk-UT-ixH" id="6BO-Nx-Z6Y"/>
                         <outlet property="imgPlaylistCoverBig" destination="zKh-6R-yfg" id="zJ5-dM-QRd"/>
                         <outlet property="inpPlaylistName" destination="1Ex-cS-ID1" id="cGj-xD-Dl7"/>
                         <outlet property="viewPlaylistTags" destination="nr8-Z0-exG" id="mI3-Bv-bP6"/>
