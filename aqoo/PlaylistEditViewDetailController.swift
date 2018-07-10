@@ -28,7 +28,6 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var inputsListenForChanges = [Any]()
-    var delegate: PlaylistEditViewDetailDelegate?
  
     enum tagFor: Int {
         case PlaylistDescription = 1
@@ -289,7 +288,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
     @IBAction func btnCancelEditViewAction(_ sender: Any) {
         
         // delegate information about current playlist entity state to playlistEditView
-        if let delegate = self.delegate {
+        /*if let delegate = self.delegate {
             
             playListInDb!.isPlaylistHidden = switchPlaylistIsHidden.isOn
             playListInDb!.isPlaylistRadioSelected = switchPlaylistIsRadioLiked.isOn
@@ -299,7 +298,7 @@ class PlaylistEditViewDetailController: BaseViewController, UITextViewDelegate {
             
             delegate.promoteToChanged( playListChanged )
             delegate.promoteChangedPlaylistObject( playListInDb! )
-        }
+        }*/
         
         dismiss(animated: true, completion: nil)
     }

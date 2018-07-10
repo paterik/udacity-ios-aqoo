@@ -24,6 +24,7 @@ class BasePlaylistEditViewController: BaseViewController,
     var playListInCloud: SPTPartialPlaylist?
     var playListChanged: Bool = false
     var playlistChangedItem: StreamPlayList?
+    var delegate: PlaylistViewUpdateDelegate?
     
     @IBAction func btnExitEditViewPage(_ sender: Any) {
         

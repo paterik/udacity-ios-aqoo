@@ -20,7 +20,8 @@ import BGTableViewRowActionWithImage
 class PlaylistViewController: BaseViewController,
                               UITableViewDataSource,
                               UITableViewDelegate,
-                              PlaylistEditViewDetailDelegate, MenuViewDelegate {
+                              PlaylistViewUpdateDelegate,
+                              MenuViewDelegate {
     
     //
     // MARK: Class IBOutlet definitions
@@ -140,6 +141,8 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,6 +174,7 @@ class PlaylistViewController: BaseViewController,
                                 vc.playListInDb = self._playlistInCacheSelected!
                                 vc.playListInCloud = self._playlistInCloudSelected!
                                 vc.playListChanged = false
+                                vc.delegate = self
                             }
                         }
                     }

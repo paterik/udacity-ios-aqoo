@@ -17,8 +17,7 @@ import fluid_slider
 class PlaylistEditViewController: BaseViewController,
                                   UITextViewDelegate,
                                   UIImagePickerControllerDelegate,
-                                  UINavigationControllerDelegate,
-                                  PlaylistEditViewDetailDelegate {
+                                  UINavigationControllerDelegate {
 
     //
     // MARK: Class IBOutlet definitions
@@ -48,7 +47,6 @@ class PlaylistEditViewController: BaseViewController,
     var playlistChangedItem: StreamPlayList?
     var imagePickerSuccess: Bool = false
     var inputsListenForChanges = [Any]()
-    var delegate: PlaylistEditViewDetailDelegate?
     
     //
     // MARK: Class LowLevel Variables
@@ -90,7 +88,7 @@ class PlaylistEditViewController: BaseViewController,
         if segue.identifier == "showPlaylistEditViewDetail" {
             
             let editViewDetailController = segue.destination as! PlaylistEditViewDetailController
-                editViewDetailController.delegate = self
+                // editViewDetailController.delegate = self
                 editViewDetailController.playListInDb = playListInDb!
                 editViewDetailController.playListInCloud = playListInCloud!
         }
@@ -242,10 +240,10 @@ class PlaylistEditViewController: BaseViewController,
     @IBAction func btnExitEditViewAction(_ sender: Any) {
         
         // delegate information about current playlist entity state to playlistView
-        if let delegate = self.delegate {
+        /*if let delegate = self.delegate {
             delegate.promoteToChanged( playListChanged )
             delegate.promoteChangedPlaylistObject( playListInDb! )
-        }
+        }*/
         
         dismiss(animated: true, completion: nil)
     }

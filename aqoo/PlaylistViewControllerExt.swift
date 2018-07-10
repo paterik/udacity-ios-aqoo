@@ -1396,17 +1396,10 @@ extension PlaylistViewController {
         }
     }
     
-    func promoteChangedPlaylistObject(_ playlistItem: StreamPlayList ) {
+    func onPlaylistChanged(_ playlistItem: StreamPlayList ) {
         
         if  self.debugMode == true {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
         }; _playlistChangedItem = playlistItem
-    }
-    
-    func promoteToChanged(_ value: Bool) {
-        
-        if  self.debugMode == true {
-            print ("dbg [delegate] : PlaylistViewControllerExt::playlistChanged = \(value)")
-        }; _playlistChanged = value
     }
 }

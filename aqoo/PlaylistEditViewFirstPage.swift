@@ -12,7 +12,8 @@ import CoreStore
 import Kingfisher
 import WSTagsField
 
-class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDelegate {
+class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
+                                 UITextFieldDelegate {
     
     //
     // MARK: Class LowLevel Variables
@@ -20,6 +21,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     
     var _noCoverImageAvailable: Bool = true
     var _noCoverOverrideImageAvailable: Bool = true
+    var _playlistUpdateDetected: Bool = false
     
     fileprivate let playlistTagsField = WSTagsField()
     
@@ -172,10 +174,12 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     func handlePlaylistTagEvents() {
         
         playlistTagsField.onDidAddTag = { _, tag in
+            self.btnSavePlaylistChanges.isEnabled = true
             self.handlePlaylistTagInput( tag.text.lowercased(), add: true )
         }
         
         playlistTagsField.onDidRemoveTag = { _, tag in
+            self.btnSavePlaylistChanges.isEnabled = true
             self.handlePlaylistTagInput( tag.text.lowercased(), add: false )
         }
     }
@@ -206,8 +210,16 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
             },
             completion: { (result) -> Void in
                 switch result {
-                    case .failure(let error):    if self.debugMode == true { print (error) }
-                    case .success(let userInfo): if self.debugMode == true { print ("dbg [db] : playlist updated") }
+                    
+                case .failure(let error):
+                    if  self.debugMode == true {
+                        print ("dbg [db] : ERROR [\(error)]")
+                    };  self._playlistUpdateDetected = false
+                
+                case .success(let userInfo):
+                    if  self.debugMode == true {
+                        print ("dbg [db] : Playlist [\(_playListTitle)] updated")
+                    };  self._playlistUpdateDetected = true
                 }
             }
         )
@@ -254,8 +266,16 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
             },
             completion: { (result) -> Void in
                 switch result {
-                    case .failure(let error):    if self.debugMode == true { print (error) }
-                    case .success(let userInfo): if self.debugMode == true { print ("dbg [db] : TAG [\(tag)] loaded") }
+                    
+                case .failure(let error):
+                    if  self.debugMode == true {
+                        print ("dbg [db] : ERROR [\(error)]")
+                    };  self._playlistUpdateDetected = false
+                
+                case .success(let userInfo):
+                    if  self.debugMode == true {
+                        print ("dbg [db] : TAG [\(tag)] loaded")
+                    };  self._playlistUpdateDetected = true
                 }
             }
         )
@@ -264,6 +284,13 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController, UITextFieldDele
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
         
         handlePlaylistMetaUpdate()
+        
+        // delegate information about current playlist entity state to playlistView
+        if  let delegate = self.delegate {
+            delegate.onPlaylistChanged( playListInDb! )
+        }
+        
+        dismiss(animated: true, completion: nil)
     }
 }
 
