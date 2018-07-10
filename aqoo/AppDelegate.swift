@@ -136,8 +136,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): print (error)
-                case .success(let userInfo): print("dbg [init] : provider fixtures loaded successfully")
+                    case .failure(let error): print (error)
+                    case .success(let userInfo): print("dbg [init] : provider fixtures loaded successfully")
                 }
             }
         )
