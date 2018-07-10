@@ -13,7 +13,8 @@ import CryptoSwift
 class StreamPlayListTags: NSManagedObject {
     
     @NSManaged var playlistTag: String
-    @NSManaged var playlist: StreamPlayList?
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?
+    
+    @NSManaged var playlist: StreamPlayList?
 }

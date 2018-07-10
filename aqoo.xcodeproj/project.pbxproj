@@ -377,9 +377,9 @@
 			children = (
 				B1D6A3961F910F74006E1DBC /* extension */,
 				B1BD1EE71F778621001FC294 /* StreamPlayList.swift */,
+				B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */,
 				B1BD1EE91F778646001FC294 /* StreamProvider.swift */,
 				B1A7E0252040C0B100A9805C /* StreamProviderConfig.swift */,
-				B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -887,7 +887,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SUPPRESS_WARNINGS = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -939,7 +939,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SUPPRESS_WARNINGS = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

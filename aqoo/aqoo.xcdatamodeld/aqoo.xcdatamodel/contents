@@ -43,6 +43,7 @@
         <attribute name="trackCountOld" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="provider" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="playlists" inverseEntity="StreamProvider" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StreamPlayListTags" inverseName="playlist" inverseEntity="StreamPlayListTags" syncable="YES"/>
         <fetchIndex name="byMetaListHashIndex">
             <fetchIndexElement property="metaListHash" type="Binary" order="ascending"/>
         </fetchIndex>
@@ -51,7 +52,7 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="playlistTag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamPlayList" syncable="YES"/>
+        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamPlayList" inverseName="tags" inverseEntity="StreamPlayList" syncable="YES"/>
     </entity>
     <entity name="StreamProvider" representedClassName=".StreamProvider" syncable="YES">
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
@@ -69,7 +70,7 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="675"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="690"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
         <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>

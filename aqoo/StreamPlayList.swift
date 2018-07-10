@@ -56,6 +56,8 @@ class StreamPlayList: NSManagedObject {
 
     @NSManaged var metaMediaRessourcesArray: NSArray?
     
+    @NSManaged var metaTagsArray: NSArray?
+    
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
     @NSManaged var metaNumberOfPlayed: Int64
@@ -80,6 +82,8 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaWeight: Int32
     
     @NSManaged var provider: StreamProvider?
+    
+    @NSManaged var tags: [StreamPlayListTags]?
 }
 
 extension StreamPlayList {
@@ -99,8 +103,13 @@ extension StreamPlayList {
         return playableURI.md5()
     }
     
-    var images: [String] {
+    var imageList: [String] {
         get { return metaMediaRessourcesArray as? Array<String> ?? [] }
         set { metaMediaRessourcesArray = newValue as NSArray }
+    }
+    
+    var tagList: [String] {
+        get { return metaTagsArray as? Array<String> ?? [] }
+        set { metaTagsArray = newValue as NSArray }
     }
 }
