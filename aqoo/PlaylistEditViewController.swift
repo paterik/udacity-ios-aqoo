@@ -131,7 +131,7 @@ class PlaylistEditViewController: BaseViewController,
                     playlistToUpdate!.updatedAt = Date()
                     playlistToUpdate!.metaNumberOfUpdates += 1
                     playlistToUpdate!.metaPreviouslyUpdatedManually = true
-                    playlistToUpdate!.metaListInternalRating = _playListRating
+                    playlistToUpdate!.metaListRatingOverall = _playListRating
                     playlistToUpdate!.isPlaylistHidden = self.playListInDb!.isPlaylistHidden
                     playlistToUpdate!.isPlaylistRadioSelected = self.playListInDb!.isPlaylistRadioSelected
                     playlistToUpdate!.isPlaylistVotedByStar = self.playListInDb!.isPlaylistVotedByStar

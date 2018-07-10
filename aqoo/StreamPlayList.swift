@@ -40,7 +40,15 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var metaListInternalDescription: String
     @NSManaged var metaListInternalName: String
-    @NSManaged var metaListInternalRating: Float
+    
+    //
+    // https://www.digitalmusicnews.com/2016/05/17/music-genres-three-attributes/
+    //
+    @NSManaged var metaListRatingArousal: Float
+    @NSManaged var metaListRatingValence: Float
+    @NSManaged var metaListRatingDepth: Float
+    @NSManaged var metaListRatingOverall: Float
+    
     @NSManaged var metaListNameOrigin: String
     
     @NSManaged var metaListHash: String

@@ -90,7 +90,7 @@ class PlaylistViewController: BaseViewController,
             "title": "Top rated playlists",
             "description": "Your playlists ordered by rating",
             "image_key": filterItem.PlaylistBestRated.rawValue,
-            "query_order_by": OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListInternalRating),
+            "query_order_by": OrderBy<StreamPlayList>.SortKey.descending(\StreamPlayList.metaListRatingOverall),
             "query_order_use_internals": true,
         ],
         
@@ -162,22 +162,15 @@ class PlaylistViewController: BaseViewController,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "showPlaylistEditViewTabController" {
-            
-            if let editViewTabBarController = segue.destination as? PlaylistEditViewTabBarController {
-                
+        if  segue.identifier == "showPlaylistEditViewTabController" {
+            if  let editViewTabBarController = segue.destination as? PlaylistEditViewTabBarController {
                 editViewTabBarController.viewControllers?.forEach {
-                    if let nvc = $0 as? UINavigationController {
-                        
+                    if  let nvc = $0 as? UINavigationController {
                         nvc.viewControllers.forEach {
-                            
                             if  let vc = $0 as? BasePlaylistEditViewController {
                                 vc.playListInDb = self._playlistInCacheSelected!
                                 vc.playListInCloud = self._playlistInCloudSelected!
                                 vc.playListChanged = false
-                            }   else {
-                                print ("!!! unable to cast BasePlaylistEditViewController !!!")
-                                print ($0)
                             }
                         }
                     }

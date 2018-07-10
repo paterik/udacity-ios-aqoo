@@ -37,7 +37,7 @@ extension PlaylistEditViewController {
         
         inpPlaylistRatingSlider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
         inpPlaylistRatingSlider.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
-        inpPlaylistRatingSlider.fraction = CGFloat(playListInDb!.metaListInternalRating)
+        inpPlaylistRatingSlider.fraction = CGFloat(playListInDb!.metaListRatingOverall)
         
         inpPlaylistRatingSlider.shadowColor = UIColor(white: 0, alpha: 0.1)
         inpPlaylistRatingSlider.contentViewColor = UIColor(netHex: 0x1DB954)
@@ -123,7 +123,7 @@ extension PlaylistEditViewController {
     func checkInputPlaylistRatingChanged() {
         
         playListChanged = false
-        if inpPlaylistRatingSlider.fraction != CGFloat(playListInDb!.metaListInternalRating) {
+        if inpPlaylistRatingSlider.fraction != CGFloat(playListInDb!.metaListRatingOverall) {
             playListChanged = true
         };  handleSaveChangesButton(playListChanged)
     }
