@@ -157,7 +157,7 @@
                                     <tableViewCell clipsSubviews="YES" alpha="0.875" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListItem" rowHeight="505" id="EVd-1W-wVg" userLabel="ui_cell_playlist_item" customClass="PlaylistTableFoldingCell" customModule="aqoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="505"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.875" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EVd-1W-wVg" id="q49-l2-U3C" userLabel="ui_view_playlist_item">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="505"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -371,7 +371,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Lj-Us-Ihn" userLabel="ui_view_content_002_follower" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
                                                                             <rect key="frame" x="98" y="8" width="40" height="32"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62m-2H-1IY" userLabel="ui_lbl_playlistPlayCount">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.47499999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62m-2H-1IY" userLabel="ui_lbl_playlistPlayCount">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -400,7 +400,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWJ-61-GyY" userLabel="ui_view_content_002_shares">
                                                                             <rect key="frame" x="146" y="8" width="40" height="32"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1x" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="og6-v6-n96" userLabel="ui_lbl_playlistPlayCount">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.47499999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="og6-v6-n96" userLabel="ui_lbl_playlistPlayCount">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -424,7 +424,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6FY-20-NCE" userLabel="ui_view_content_002_updates">
                                                                             <rect key="frame" x="194" y="8" width="40" height="32"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPA-3Z-R4w" userLabel="ui_lbl_playlistPlayCount">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.47499999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPA-3Z-R4w" userLabel="ui_lbl_playlistPlayCount">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -445,7 +445,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-51-M4k" userLabel="ui_view_content_002_played">
                                                                             <rect key="frame" x="242" y="8" width="40" height="32"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="17x" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFK-Kh-jXU" userLabel="ui_lbl_playlistPlayCount">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.47499999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFK-Kh-jXU" userLabel="ui_lbl_playlistPlayCount">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -469,7 +469,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euA-Eg-nXZ" userLabel="ui_view_content_002_tracks">
                                                                             <rect key="frame" x="290" y="8" width="57" height="32"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llk-3Q-3nt" userLabel="ui_lbl_playlistPlayCount">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llk-3Q-3nt" userLabel="ui_lbl_playlistPlayCount">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="57" height="16"/>
                                                                                     <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <constraints>
@@ -496,6 +496,45 @@
                                                                                 <constraint firstItem="aL7-zA-oA0" firstAttribute="top" secondItem="llk-3Q-3nt" secondAttribute="bottom" constant="5" id="ryx-ho-YB4"/>
                                                                             </constraints>
                                                                         </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URF-TE-CrP" userLabel="ui_view_content_002_rating" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
+                                                                            <rect key="frame" x="8" y="8" width="82" height="70"/>
+                                                                            <subviews>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ei-dz-vP6" userLabel="ui_view_playlistRating_intensity">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
+                                                                                    <color key="backgroundColor" red="0.58039215686274503" green="0.8784313725490196" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="HvC-jH-q22"/>
+                                                                                        <constraint firstAttribute="width" constant="82" id="paO-il-XgZ"/>
+                                                                                    </constraints>
+                                                                                </view>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZN-LI-QMc" userLabel="ui_view_playlistRating_emotional">
+                                                                                    <rect key="frame" x="0.0" y="18" width="82" height="16"/>
+                                                                                    <color key="backgroundColor" red="0.58039215690000001" green="0.87843137250000003" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="c5s-t3-8lc"/>
+                                                                                        <constraint firstAttribute="width" constant="82" id="fer-eT-kci"/>
+                                                                                    </constraints>
+                                                                                </view>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjd-ZU-eTu" userLabel="ui_view_playlistRating_depth">
+                                                                                    <rect key="frame" x="0.0" y="36" width="82" height="16"/>
+                                                                                    <color key="backgroundColor" red="0.58039215690000001" green="0.87843137250000003" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="16" id="Owr-kQ-RCU"/>
+                                                                                        <constraint firstAttribute="width" constant="82" id="nch-k7-zpM"/>
+                                                                                    </constraints>
+                                                                                </view>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <constraints>
+                                                                                <constraint firstItem="UZN-LI-QMc" firstAttribute="leading" secondItem="URF-TE-CrP" secondAttribute="leading" id="ASF-Gb-0bu"/>
+                                                                                <constraint firstAttribute="height" constant="70" id="GgH-xa-0UY"/>
+                                                                                <constraint firstAttribute="width" constant="82" id="Uxc-NV-ig7"/>
+                                                                                <constraint firstItem="UZN-LI-QMc" firstAttribute="top" secondItem="8ei-dz-vP6" secondAttribute="bottom" constant="2" id="VKi-eK-Doy"/>
+                                                                                <constraint firstItem="8ei-dz-vP6" firstAttribute="leading" secondItem="URF-TE-CrP" secondAttribute="leading" id="WQO-YX-Vny"/>
+                                                                                <constraint firstItem="hjd-ZU-eTu" firstAttribute="top" secondItem="UZN-LI-QMc" secondAttribute="bottom" constant="2" id="bHL-oF-yOi"/>
+                                                                                <constraint firstItem="hjd-ZU-eTu" firstAttribute="leading" secondItem="URF-TE-CrP" secondAttribute="leading" id="mfh-0u-2DL"/>
+                                                                            </constraints>
+                                                                        </view>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
@@ -507,6 +546,8 @@
                                                                         <constraint firstAttribute="bottom" secondItem="euA-Eg-nXZ" secondAttribute="bottom" constant="46" id="BtN-U2-7Rc"/>
                                                                         <constraint firstAttribute="bottom" secondItem="bJe-51-M4k" secondAttribute="bottom" constant="46" id="HSR-r3-ooL"/>
                                                                         <constraint firstAttribute="bottom" secondItem="5Lj-Us-Ihn" secondAttribute="bottom" constant="46" id="IH7-ZA-VYV"/>
+                                                                        <constraint firstItem="8ei-dz-vP6" firstAttribute="top" secondItem="Vki-WT-pBZ" secondAttribute="top" constant="8" id="IZ7-xc-vG8"/>
+                                                                        <constraint firstItem="URF-TE-CrP" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leading" constant="8" id="Kde-GC-ffa"/>
                                                                         <constraint firstAttribute="trailing" secondItem="6FY-20-NCE" secondAttribute="trailing" constant="121" id="QqX-WB-Uzd"/>
                                                                         <constraint firstItem="hWJ-61-GyY" firstAttribute="top" secondItem="Vki-WT-pBZ" secondAttribute="top" constant="8" id="VWf-Vf-5zT"/>
                                                                         <constraint firstAttribute="height" constant="86" id="Vgb-XG-fnY"/>
@@ -517,6 +558,7 @@
                                                                         <constraint firstItem="hWJ-61-GyY" firstAttribute="leading" secondItem="5Lj-Us-Ihn" secondAttribute="trailing" constant="8" id="lum-ri-E9h"/>
                                                                         <constraint firstAttribute="trailing" secondItem="5Lj-Us-Ihn" secondAttribute="trailing" constant="217" id="mEN-ng-5e0"/>
                                                                         <constraint firstItem="bJe-51-M4k" firstAttribute="leading" secondItem="6FY-20-NCE" secondAttribute="trailing" constant="8" symbolic="YES" id="oGA-NX-uah"/>
+                                                                        <constraint firstItem="URF-TE-CrP" firstAttribute="top" secondItem="Vki-WT-pBZ" secondAttribute="top" constant="8" id="tuC-cN-g98"/>
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
@@ -730,6 +772,9 @@
                                             <outlet property="cViewCellOpenContentRowFourth" destination="vfi-s7-Zxw" id="bwF-cL-ePl"/>
                                             <outlet property="cViewCellOpenContentRowSecond" destination="Wic-g1-BMa" id="P5s-jC-VZK"/>
                                             <outlet property="cViewCellOpenContentRowThird" destination="2de-as-ZwF" id="eP0-yP-weI"/>
+                                            <outlet property="cViewPlaylistRatingDepth" destination="hjd-ZU-eTu" id="Kfh-MK-Nt3"/>
+                                            <outlet property="cViewPlaylistRatingEmotional" destination="UZN-LI-QMc" id="EfG-pt-PWE"/>
+                                            <outlet property="cViewPlaylistRatingIntensity" destination="8ei-dz-vP6" id="E3a-eR-DNA"/>
                                             <outlet property="containerView" destination="lIF-EV-Fgk" id="lP9-sv-qmC"/>
                                             <outlet property="containerViewTop" destination="qKO-ZV-b6s" id="2ll-c1-qD5"/>
                                             <outlet property="foregroundView" destination="ZR1-8l-W4s" id="MA4-Ja-gGx"/>
