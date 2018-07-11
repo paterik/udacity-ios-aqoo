@@ -54,6 +54,7 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var cViewCellNormalRight: UIView!
     @IBOutlet weak var cViewCellNormalLeft: UIView!
     
+    @IBOutlet weak var cViewCellCloseContentRowFirst: RotatedView!
     @IBOutlet weak var cViewCellOpenContentRowFirst: UIView!
     @IBOutlet weak var cViewCellOpenContentRowSecond: UIView!
     @IBOutlet weak var cViewCellOpenContentRowThird: RotatedView!

@@ -470,7 +470,7 @@ extension PlaylistViewController {
                 if  let _playListCache = CoreStore.defaultStack.fetchAll(
                     From<StreamPlayList>().where(
                         (\StreamPlayList.provider == _defaultStreamingProvider) &&
-                        (\StreamPlayList.owner == _userName))
+                        (\StreamPlayList.owner    == _userName))
                     ) {
 
                     //
