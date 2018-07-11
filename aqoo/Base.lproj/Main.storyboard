@@ -364,7 +364,157 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wic-g1-BMa" userLabel="ui_view_content_002" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="135" width="355" height="75"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vki-WT-pBZ" userLabel="ui_view_content_002_right">
+                                                                    <rect key="frame" x="90" y="-6" width="255" height="86"/>
+                                                                    <subviews>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Lj-Us-Ihn" userLabel="ui_view_content_002_follower" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
+                                                                            <rect key="frame" x="8" y="8" width="40" height="32"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62m-2H-1IY" userLabel="ui_lbl_playlistPlayCount">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                            <real key="value" value="2"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="follower" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQK-hY-4xm" userLabel="ui_lbl_playlistPlayCount_desc">
+                                                                                    <rect key="frame" x="0.0" y="21" width="40" height="12"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWJ-61-GyY" userLabel="ui_view_content_002_shares">
+                                                                            <rect key="frame" x="56" y="8" width="40" height="32"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1x" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="og6-v6-n96" userLabel="ui_lbl_playlistPlayCount">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="shares" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEf-JP-Shm" userLabel="ui_lbl_playlistPlayCount_desc">
+                                                                                    <rect key="frame" x="0.0" y="21" width="40" height="12"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6FY-20-NCE" userLabel="ui_view_content_002_updates">
+                                                                            <rect key="frame" x="104" y="8" width="40" height="32"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPA-3Z-R4w" userLabel="ui_lbl_playlistPlayCount">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="updates" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDd-Ti-BEG" userLabel="ui_lbl_playlistPlayCount_desc">
+                                                                                    <rect key="frame" x="0.0" y="21" width="40" height="12"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euA-Eg-nXZ" userLabel="ui_view_content_002_tracks">
+                                                                            <rect key="frame" x="200" y="8" width="55" height="32"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="23" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llk-3Q-3nt" userLabel="ui_lbl_playlistPlayCount">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tracks" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aL7-zA-oA0" userLabel="ui_lbl_playlistPlayCount_desc">
+                                                                                    <rect key="frame" x="0.0" y="21" width="55" height="12"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJe-51-M4k" userLabel="ui_view_content_002_played">
+                                                                            <rect key="frame" x="152" y="8" width="40" height="32"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="17x" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFK-Kh-jXU" userLabel="ui_lbl_playlistPlayCount">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="played" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hvx-Sv-2Tv" userLabel="ui_lbl_playlistPlayCount_desc">
+                                                                                    <rect key="frame" x="0.0" y="21" width="40" height="12"/>
+                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </view>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="bottom" secondItem="5Lj-Us-Ihn" secondAttribute="bottom" id="2Wz-Y3-Rnm"/>
+                                                                        <constraint firstItem="hWJ-61-GyY" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leading" constant="56" id="4JS-Kp-DNi"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="bottom" secondItem="hWJ-61-GyY" secondAttribute="bottom" id="8Bp-E5-iGd"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="euA-Eg-nXZ" secondAttribute="trailing" id="CM9-OU-65F"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="top" secondItem="Vki-WT-pBZ" secondAttribute="topMargin" id="FOc-GH-9br"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="top" secondItem="5Lj-Us-Ihn" secondAttribute="top" id="GFP-4n-jNh"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="top" secondItem="bJe-51-M4k" secondAttribute="top" id="JmI-DM-vIR"/>
+                                                                        <constraint firstItem="6FY-20-NCE" firstAttribute="leading" secondItem="hWJ-61-GyY" secondAttribute="trailing" constant="8" symbolic="YES" id="UX2-eM-XBJ"/>
+                                                                        <constraint firstItem="bJe-51-M4k" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leading" constant="152" id="XmS-r1-oBg"/>
+                                                                        <constraint firstItem="bJe-51-M4k" firstAttribute="leading" secondItem="6FY-20-NCE" secondAttribute="trailing" constant="8" symbolic="YES" id="Y2E-Xk-Hev"/>
+                                                                        <constraint firstItem="bJe-51-M4k" firstAttribute="leading" secondItem="6FY-20-NCE" secondAttribute="trailing" constant="8" id="YOe-E9-BZo"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="top" secondItem="6FY-20-NCE" secondAttribute="top" id="Zdy-LR-DPX"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="leading" secondItem="bJe-51-M4k" secondAttribute="trailing" constant="8" id="amt-e7-6JN"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leading" constant="200" id="blo-5s-CGw"/>
+                                                                        <constraint firstItem="hWJ-61-GyY" firstAttribute="leading" secondItem="5Lj-Us-Ihn" secondAttribute="trailing" constant="8" symbolic="YES" id="cRv-rq-S3Z"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="leading" secondItem="bJe-51-M4k" secondAttribute="trailing" constant="8" symbolic="YES" id="hqC-1V-TLV"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="top" secondItem="hWJ-61-GyY" secondAttribute="top" id="hvV-lX-7Ha"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="bottom" secondItem="bJe-51-M4k" secondAttribute="bottom" id="qTi-qb-hug"/>
+                                                                        <constraint firstItem="6FY-20-NCE" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leading" constant="104" id="r64-J9-2Lz"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="euA-Eg-nXZ" secondAttribute="bottom" constant="46" id="rcQ-Gk-PyO"/>
+                                                                        <constraint firstItem="5Lj-Us-Ihn" firstAttribute="leading" secondItem="Vki-WT-pBZ" secondAttribute="leadingMargin" id="xoM-lG-9kE"/>
+                                                                        <constraint firstItem="6FY-20-NCE" firstAttribute="leading" secondItem="hWJ-61-GyY" secondAttribute="trailing" constant="8" id="xoY-Ca-O8F"/>
+                                                                        <constraint firstItem="euA-Eg-nXZ" firstAttribute="bottom" secondItem="6FY-20-NCE" secondAttribute="bottom" id="zbw-8x-sTS"/>
+                                                                        <constraint firstItem="hWJ-61-GyY" firstAttribute="leading" secondItem="5Lj-Us-Ihn" secondAttribute="trailing" constant="8" id="zrl-fa-XoQ"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="Vki-WT-pBZ" firstAttribute="leading" secondItem="Wic-g1-BMa" secondAttribute="leading" constant="90" id="KRd-ys-fhN"/>
+                                                                <constraint firstItem="Vki-WT-pBZ" firstAttribute="centerY" secondItem="Wic-g1-BMa" secondAttribute="centerY" id="Q4o-se-FAB"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Vki-WT-pBZ" secondAttribute="trailing" constant="10" id="QOW-0O-VLn"/>
+                                                                <constraint firstItem="Vki-WT-pBZ" firstAttribute="top" secondItem="Wic-g1-BMa" secondAttribute="top" constant="-6" id="za9-uL-OYN"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="210" width="355" height="45"/>
