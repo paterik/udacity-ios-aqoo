@@ -216,7 +216,8 @@ class PlaylistViewController: BaseViewController,
         handlePlaylistCellCoverImages ( playlistCell, playlistCacheData )
         handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
         handlePlaylistTimeAndDateMeta ( playlistCell, playlistCacheData )
- 
+        handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
+        
         playlistCell.durationsForExpandedState = _sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         

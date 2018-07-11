@@ -664,6 +664,34 @@ extension PlaylistViewController {
             playlistCell.lblPlaylistCreatedAt.text = getHumanReadableDate(playlistCreatedAt)
         }
     }
+    
+    func handlePlaylistRatingBlockMeta(
+        _ playlistCell: PlaylistTableFoldingCell,
+        _ playlistItem: StreamPlayList) {
+        
+        let maxRatingBarWidth = Float(playlistCell.cViewPlaylistRatingIntensity.frame.width)
+        let maxRatingBarHeight = Float(playlistCell.cViewPlaylistRatingIntensity.frame.height)
+        let calcRatingBarWidthForArousal = (playlistItem.metaListRatingArousal * maxRatingBarWidth) / 100
+        let calcRatingBarWidthForValence = (playlistItem.metaListRatingValence * maxRatingBarWidth) / 100
+        let calcRatingBarWidthForDepth = (playlistItem.metaListRatingDepth * maxRatingBarWidth) / 100
+        
+        let cViewIcnRatingIntensity = UIImageView(image: UIImage(named: "icnRateIntensity_v1")!)
+        let cViewIcnRatingEmotional = UIImageView(image: UIImage(named: "icnRateEmotional_v1")!)
+        let cViewIcnRatingDepth = UIImageView(image: UIImage(named: "icnRateDepth_v1")!)
+        
+        cViewIcnRatingIntensity.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
+        cViewIcnRatingEmotional.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
+        cViewIcnRatingDepth.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
+        
+        playlistCell.cViewPlaylistRatingIntensity.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForArousal), CGFloat(maxRatingBarHeight)))
+        playlistCell.cViewPlaylistRatingIntensity.addSubview(cViewIcnRatingIntensity)
+        
+        playlistCell.cViewPlaylistRatingEmotional.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForValence), CGFloat(maxRatingBarHeight)))
+        playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
+        
+        playlistCell.cViewPlaylistRatingDepth.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForDepth), CGFloat(maxRatingBarHeight)))
+        playlistCell.cViewPlaylistRatingDepth.addSubview(cViewIcnRatingDepth)
+    }
 
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
@@ -978,6 +1006,9 @@ extension PlaylistViewController {
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
         var _shares = Int.random(9, 9999999) // 7
+        var _rate_intensity = Int.random(0, 100)
+        var _rate_emotional = Int.random(0, 100)
+        var _rate_depth = Int.random(0, 100)
         
         CoreStore.perform(
             
@@ -1014,6 +1045,9 @@ extension PlaylistViewController {
                         print ("fixture_load --> \(_playedPartly) x playedPartly")
                         print ("fixture_load --> \(_playedCompletly) x playedCompletly")
                         print ("fixture_load --> \(_shares) x shared")
+                        print ("fixture_load --> \(_rate_intensity) x rate/intensity")
+                        print ("fixture_load --> \(_rate_emotional) x rate/emotional")
+                        print ("fixture_load --> \(_rate_depth) x rate/depth")
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
@@ -1043,6 +1077,9 @@ extension PlaylistViewController {
                         _playListInDb!.metaNumberOfPlayedPartly = Int64(_playedPartly)
                         _playListInDb!.metaNumberOfPlayedCompletely = Int64(_playedCompletly)
                         _playListInDb!.metaNumberOfShares = Int64(_shares)
+                        _playListInDb!.metaListRatingArousal = Float(_rate_intensity)
+                        _playListInDb!.metaListRatingValence = Float(_rate_emotional)
+                        _playListInDb!.metaListRatingDepth = Float(_rate_depth)
                     }
                     
                     _playListInDb!.isPlaylistVotedByStar = false
@@ -1501,6 +1538,20 @@ extension PlaylistViewController {
                 )
             }
         }
+    }
+    
+    func getRatingLabel(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> UILabel {
+        
+        let playlistRatingLabel = UILabel()
+        playlistRatingLabel.frame = CGRect(x, y, width, height)
+        playlistRatingLabel.lineBreakMode = .byWordWrapping
+        playlistRatingLabel.textColor = UIColor.white
+        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x12AD5E)
+        playlistRatingLabel.textAlignment = .right
+        playlistRatingLabel.numberOfLines = 1
+        playlistRatingLabel.font = UIFont(name: "Helvetica-Neue", size: 9)
+        
+        return playlistRatingLabel
     }
     
     func onPlaylistChanged(_ playlistItem: StreamPlayList ) {

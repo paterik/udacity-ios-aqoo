@@ -51,6 +51,10 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var cViewPlaylistStatusMarker: UIImageView!
     @IBOutlet weak var cViewPlaylistIsFavoriteMarker: UIView!
     
+    @IBOutlet weak var cViewPlaylistRatingIntensity: UIView!
+    @IBOutlet weak var cViewPlaylistRatingEmotional: UIView!
+    @IBOutlet weak var cViewPlaylistRatingDepth: UIView!
+    
     @IBOutlet weak var cViewCellNormalRight: UIView!
     @IBOutlet weak var cViewCellNormalLeft: UIView!
     
