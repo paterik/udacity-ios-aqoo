@@ -683,6 +683,7 @@
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="imageViewPlaylistOwnerInDetail" destination="SQY-Ji-lBH" id="JSL-Uh-hLY"/>
+                                            <outlet property="lblPlaylistCreatedAt" destination="rtW-az-zAy" id="p6f-81-PYL"/>
                                             <outlet property="lblPlaylistMetaFollowerCount" destination="62m-2H-1IY" id="VoL-En-9YM"/>
                                             <outlet property="lblPlaylistMetaPlayCount" destination="QFK-Kh-jXU" id="l4t-8W-W7a"/>
                                             <outlet property="lblPlaylistMetaShareCount" destination="og6-v6-n96" id="cJ5-nB-co4"/>
@@ -691,6 +692,8 @@
                                             <outlet property="lblPlaylistMetaUpdateCount" destination="EPA-3Z-R4w" id="VW9-Ld-wK9"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                             <outlet property="lblPlaylistNameInDetail" destination="cPi-Z5-2Zt" id="SHp-04-E39"/>
+                                            <outlet property="lblPlaylistPlaytimeInDetail" destination="Vj7-kA-zxe" id="3oM-wd-4eg"/>
+                                            <outlet property="lblPlaylistUpdatedAt" destination="2lH-k5-LeP" id="7gF-HA-OaE"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

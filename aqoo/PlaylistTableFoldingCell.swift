@@ -29,7 +29,6 @@ class PlaylistTableFoldingCell: FoldingCell {
     
     @IBOutlet weak var lblPlaylistName: UILabel!
     @IBOutlet weak var lblPlaylistNameInDetail: UILabel!
-    @IBOutlet weak var lblPlaylistPlaytime: UILabel!
     @IBOutlet weak var lblPlaylistPlaytimeInDetail: UILabel!
     
     @IBOutlet weak var lblPlaylistCreatedAt: UILabel!
