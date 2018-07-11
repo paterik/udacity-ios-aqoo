@@ -45,6 +45,7 @@ class PlaylistViewController: BaseViewController,
     let _sysImgCacheInMb: UInt = 512
     let _sysImgCacheRevalidateInDays: UInt = 30
     let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
+    let _sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475
     
     //
     // MARK: Constants (normal)
@@ -210,51 +211,13 @@ class PlaylistViewController: BaseViewController,
             for: indexPath) as! PlaylistTableFoldingCell
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
-        
-        playlistCell.lblPlaylistName.text = playlistCacheData.metaListInternalName
-        playlistCell.lblPlaylistNameInDetail.text = playlistCacheData.metaListInternalName
-        playlistCell.lblPlaylistMetaTrackCount.text = String(playlistCacheData.trackCount)
-        playlistCell.metaOwnerName = playlistCacheData.owner
-        playlistCell.metaPlaylistInDb = playlistCacheData
+       
+        handlePlaylistCellMetaFields(playlistCell, playlistCacheData)
+        handlePlaylistCellCoverImages(playlistCell, playlistCacheData)
+        handlePlaylistOwnerImageMeta(playlistCell, playlistCacheData)
         
         playlistCell.durationsForExpandedState = _sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
-        
-        // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
-        playlistCell.imageViewPlaylistIsSpotify.isHidden = false
-        if  playlistCacheData.isSpotify == false ||
-            playlistCacheData.isPlaylistVotedByStar == true ||
-            playlistCacheData.isPlaylistRadioSelected == true ||
-            playlistCacheData.isPlaylistYourWeekly == true {
-            
-            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
-        }
-
-        playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
-        if  playlistCacheData.ownerImageURL != nil && playlistCacheData.ownerImageURL != "" {
-            handleOwnerProfileImageCacheForCell(playlistCacheData.owner, playlistCacheData.ownerImageURL, playlistCell)
-        }
-        
-        // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
-        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
-        playlistCell.imageViewPlaylistCoverInDetail.image = UIImage.makeLetterAvatar(withUsername: playlistCacheData.metaListInternalName)
-        
-        // set final cover image based on current playlist model and corresponding imageView
-        var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
-        var playlistCoverDetailView: UIImageView! = playlistCell.imageViewPlaylistCoverInDetail
-        var coverImageBlock = getCoverImageViewByCacheModel( playlistCacheData, playlistCoverView, playlistCoverDetailView)
-        
-        // set image cover in foldingCell normalView and set corresponding cacheKey
-        if  coverImageBlock.normalView != nil {
-            playlistCell.imageCacheKeyNormalView = coverImageBlock.normalViewCacheKey
-            playlistCoverView = coverImageBlock.normalView
-        }
-        
-        // set image cover in foldingCell detailView and set cacheKey
-        if  coverImageBlock.detailView != nil {
-            playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
-            playlistCoverDetailView = coverImageBlock.detailView
-        }
         
         // set marker for manually updated playlistItem
         playlistCell.imageViewContentChangedManually.alpha = 0.475
