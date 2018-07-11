@@ -529,7 +529,89 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2de-as-ZwF" userLabel="ui_view_content_003" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="210" width="355" height="45"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9A-U9-2Uy" userLabel="ui_view_content_003_002">
+                                                                    <rect key="frame" x="96" y="0.0" width="90" height="45"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5 minutes ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2lH-k5-LeP" userLabel="ui_lbl_playlistUpdated">
+                                                                            <rect key="frame" x="8" y="5" width="82" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                            <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="last playlist update" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-8E-7pW" userLabel="ui_lbl_playlistUpdated_desc">
+                                                                            <rect key="frame" x="8" y="23" width="82" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                            <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="90" id="XBn-br-1bs"/>
+                                                                        <constraint firstAttribute="height" constant="45" id="rMU-cG-Vds"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxr-H0-Ew9" userLabel="ui_view_content_003_001">
+                                                                    <rect key="frame" x="6" y="0.0" width="90" height="45"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12 days ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtW-az-zAy" userLabel="ui_lbl_playlistCreated">
+                                                                            <rect key="frame" x="8" y="5" width="82" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                            <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="playlist created" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Yv-0P-fvV" userLabel="ui_lbl_playlistCreated_desc">
+                                                                            <rect key="frame" x="8" y="23" width="82" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                            <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="90" id="WX3-tT-Fra"/>
+                                                                        <constraint firstAttribute="height" constant="45" id="cdy-Xv-MCH"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9JO-0J-cZc" userLabel="ui_view_content_003_003">
+                                                                    <rect key="frame" x="186" y="0.0" width="163" height="45"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1 hour 35 minutes" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj7-kA-zxe" userLabel="ui_lbl_playlistUpdated">
+                                                                            <rect key="frame" x="8" y="5" width="147" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="12"/>
+                                                                            <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="current list playtime" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHC-Lu-S8s" userLabel="ui_lbl_playlistUpdated_desc">
+                                                                            <rect key="frame" x="8" y="23" width="147" height="16"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                                            <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="45" id="1SG-Ul-PLn"/>
+                                                                        <constraint firstAttribute="width" constant="163" id="AiW-6X-Idg"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstItem="bxr-H0-Ew9" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="top" id="UE9-s3-3p8"/>
+                                                                <constraint firstItem="e9A-U9-2Uy" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="top" id="UIx-lr-hGq"/>
+                                                                <constraint firstItem="9JO-0J-cZc" firstAttribute="top" secondItem="2de-as-ZwF" secondAttribute="top" id="dY0-2T-wjh"/>
+                                                                <constraint firstAttribute="trailing" secondItem="9JO-0J-cZc" secondAttribute="trailing" constant="6" id="scF-Nk-AwM"/>
+                                                                <constraint firstItem="bxr-H0-Ew9" firstAttribute="leading" secondItem="2de-as-ZwF" secondAttribute="leading" constant="6" id="tHl-Gt-jOF"/>
+                                                                <constraint firstItem="e9A-U9-2Uy" firstAttribute="leading" secondItem="bxr-H0-Ew9" secondAttribute="trailing" id="tzy-8H-ii5"/>
+                                                            </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="255" width="355" height="45"/>
