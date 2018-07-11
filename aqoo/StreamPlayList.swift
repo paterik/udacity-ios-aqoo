@@ -63,6 +63,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaNumberOfPlayed: Int64
     @NSManaged var metaNumberOfPlayedPartly: Int64
     @NSManaged var metaNumberOfPlayedCompletely: Int64
+    @NSManaged var metaNumberOfFollowers: Int64
     
     //
     // this property will be used as playmode flag for currently played playlists

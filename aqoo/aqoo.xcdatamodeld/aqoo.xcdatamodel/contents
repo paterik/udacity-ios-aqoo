@@ -23,6 +23,7 @@
         <attribute name="metaListRatingOverall" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListRatingValence" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaMediaRessourcesArray" optional="YES" attributeType="Transformable" customClassName=".NSArray" syncable="YES"/>
+        <attribute name="metaNumberOfFollowers" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayedCompletely" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaNumberOfPlayedPartly" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -70,9 +71,9 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="690"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="705"/>
+        <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
-        <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
     </elements>
 </model>
