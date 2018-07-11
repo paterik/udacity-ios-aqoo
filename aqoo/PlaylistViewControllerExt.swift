@@ -558,6 +558,93 @@ extension PlaylistViewController {
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
         }
     }
+    
+    func handlePlaylistOwnerImageMeta(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
+    
+         playlistCell.metaOwnerName = playlistItem.owner
+        
+        // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
+        playlistCell.imageViewPlaylistIsSpotify.isHidden = false
+        if  playlistItem.isSpotify == false ||
+            playlistItem.isPlaylistVotedByStar == true ||
+            playlistItem.isPlaylistRadioSelected == true ||
+            playlistItem.isPlaylistYourWeekly == true {
+            
+            playlistCell.imageViewPlaylistIsSpotify.isHidden = true
+        }
+        
+        playlistCell.imageViewPlaylistOwner.image = UIImage(named: _sysDefaultUserProfileImage)
+        if  playlistItem.ownerImageURL != nil && playlistItem.ownerImageURL != "" {
+            handleOwnerProfileImageCacheForCell(playlistItem.owner, playlistItem.ownerImageURL, playlistCell)
+        }
+    }
+    
+    func handlePlaylistCellCoverImages(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
+        
+        // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
+        playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
+        playlistCell.imageViewPlaylistCoverInDetail.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
+        
+        // set final cover image based on current playlist model and corresponding imageView
+        var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
+        var playlistCoverDetailView: UIImageView! = playlistCell.imageViewPlaylistCoverInDetail
+        var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverView, playlistCoverDetailView)
+        
+        // set image cover in foldingCell normalView and set corresponding cacheKey
+        if  coverImageBlock.normalView != nil {
+            playlistCell.imageCacheKeyNormalView = coverImageBlock.normalViewCacheKey
+            playlistCoverView = coverImageBlock.normalView
+        }
+        
+        // set image cover in foldingCell detailView and set cacheKey
+        if  coverImageBlock.detailView != nil {
+            playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
+            playlistCoverDetailView = coverImageBlock.detailView
+        }
+    }
+    
+    func handlePlaylistCellMetaFields(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
+        
+        playlistCell.metaPlaylistInDb = playlistItem
+        
+        // add some meta data in normalView of our playlistItemCell
+        playlistCell.lblPlaylistName.text = playlistItem.metaListInternalName
+        playlistCell.lblPlaylistNameInDetail.text = playlistItem.metaListInternalName
+        playlistCell.lblPlaylistMetaTrackCount.text = String(playlistItem.trackCount)
+        
+        // add some meta data in detailView of our playlistItemCell
+        playlistCell.lblPlaylistMetaTrackCountInDetail.text = playlistItem.trackCount.hrFormatted
+        playlistCell.lblPlaylistMetaPlayCount.text = playlistItem.metaNumberOfPlayed.hrFormatted
+        playlistCell.lblPlaylistMetaUpdateCount.text = playlistItem.metaNumberOfUpdates.hrFormatted
+        playlistCell.lblPlaylistMetaShareCount.text = playlistItem.metaNumberOfShares.hrFormatted
+        playlistCell.lblPlaylistMetaFollowerCount.text = playlistItem.metaNumberOfFollowers.hrFormatted
+        
+        playlistCell.lblPlaylistMetaFollowerCount.alpha = 1.0
+        if  playlistItem.metaNumberOfFollowers == 0 {
+            playlistCell.lblPlaylistMetaFollowerCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        }
+        
+        playlistCell.lblPlaylistMetaShareCount.alpha = 1.0
+        if  playlistItem.metaNumberOfShares == 0 {
+            playlistCell.lblPlaylistMetaShareCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        }
+        
+        playlistCell.lblPlaylistMetaUpdateCount.alpha = 1.0
+        if  playlistItem.metaNumberOfUpdates == 0 {
+            playlistCell.lblPlaylistMetaUpdateCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        }
+        
+        playlistCell.lblPlaylistMetaPlayCount.alpha = 1.0
+        if  playlistItem.metaNumberOfPlayed == 0 {
+            playlistCell.lblPlaylistMetaPlayCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        }
+    }
 
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
@@ -868,10 +955,10 @@ extension PlaylistViewController {
         // played, playedParty, playedCompletly and number of shares during development
         //
         
-        var _played = Int.random(1, 550) // 234
+        var _played = Int.random(1000, 5550) // 234
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
-        var _shares = Int.random(0, 9) // 7
+        var _shares = Int.random(9, 9999999) // 7
         
         CoreStore.perform(
             
@@ -923,6 +1010,7 @@ extension PlaylistViewController {
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
                     _playListInDb!.metaNumberOfShares = 0
+                    _playListInDb!.metaNumberOfFollowers = 0
                     _playListInDb!.metaNumberOfPlayed = 0
                     _playListInDb!.metaNumberOfPlayedPartly = 0
                     _playListInDb!.metaNumberOfPlayedCompletely = 0
