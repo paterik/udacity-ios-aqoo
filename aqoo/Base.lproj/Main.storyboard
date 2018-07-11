@@ -615,7 +615,66 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-s7-Zxw" userLabel="ui_view_content_004" customClass="RotatedView" customModule="FoldingCell">
                                                             <rect key="frame" x="0.0" y="255" width="355" height="45"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kei-pQ-UgS" userLabel="ui_view_content_third_left">
+                                                                    <rect key="frame" x="8" y="0.0" width="42" height="45"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiN-T8-PQm" userLabel="ui_btn_playlistDelete">
+                                                                            <rect key="frame" x="8" y="10" width="25" height="25"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <state key="normal" image="icnDelete_v1">
+                                                                                <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </state>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="45" id="E24-hY-ugV"/>
+                                                                        <constraint firstAttribute="width" constant="42" id="L7H-mL-WDB"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FMT-3A-b9M" userLabel="ui_view_content_third_right">
+                                                                    <rect key="frame" x="183" y="0.0" width="164" height="45"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qr4-VD-i7G" userLabel="ui_btn_playlistShare">
+                                                                            <rect key="frame" x="8" y="10" width="25" height="25"/>
+                                                                            <state key="normal" image="icnShareContent_v2">
+                                                                                <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </state>
+                                                                        </button>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dfb-4k-Gv3" userLabel="ui_btn_playlistEdit">
+                                                                            <rect key="frame" x="70" y="10" width="25" height="25"/>
+                                                                            <state key="normal" image="icnSettings_v1">
+                                                                                <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </state>
+                                                                        </button>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GxB-PO-V89" userLabel="ui_btn_playlistView">
+                                                                            <rect key="frame" x="131" y="10" width="25" height="25"/>
+                                                                            <state key="normal" image="icnShowPlaylist_v1">
+                                                                                <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </state>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="GxB-PO-V89" firstAttribute="leading" secondItem="Dfb-4k-Gv3" secondAttribute="trailing" constant="36" id="0yw-DF-Ejh"/>
+                                                                        <constraint firstAttribute="width" constant="164" id="3o4-kb-ovl"/>
+                                                                        <constraint firstAttribute="height" constant="45" id="81L-xt-Yxo"/>
+                                                                        <constraint firstItem="GxB-PO-V89" firstAttribute="top" secondItem="FMT-3A-b9M" secondAttribute="top" constant="10" id="9Xs-vy-hpX"/>
+                                                                        <constraint firstItem="Dfb-4k-Gv3" firstAttribute="leading" secondItem="qr4-VD-i7G" secondAttribute="trailing" constant="37" id="DRy-pu-waK"/>
+                                                                        <constraint firstItem="Dfb-4k-Gv3" firstAttribute="top" secondItem="FMT-3A-b9M" secondAttribute="top" constant="10" id="dUW-E0-99w"/>
+                                                                        <constraint firstItem="qr4-VD-i7G" firstAttribute="top" secondItem="FMT-3A-b9M" secondAttribute="top" constant="10" id="gpF-07-Na3"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="GxB-PO-V89" secondAttribute="trailing" constant="8" id="kCV-Pg-3Kz"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstItem="Kei-pQ-UgS" firstAttribute="top" secondItem="vfi-s7-Zxw" secondAttribute="top" id="61m-un-68X"/>
+                                                                <constraint firstItem="Kei-pQ-UgS" firstAttribute="leading" secondItem="vfi-s7-Zxw" secondAttribute="leading" constant="8" id="RUH-oE-5fO"/>
+                                                                <constraint firstItem="FMT-3A-b9M" firstAttribute="top" secondItem="vfi-s7-Zxw" secondAttribute="top" id="fYI-eB-wdY"/>
+                                                                <constraint firstAttribute="trailing" secondItem="FMT-3A-b9M" secondAttribute="trailing" constant="8" id="ocX-pc-Tkr"/>
+                                                            </constraints>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
