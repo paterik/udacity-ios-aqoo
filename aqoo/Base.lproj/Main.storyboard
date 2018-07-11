@@ -231,7 +231,7 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="lvd-FW-jux" firstAttribute="trailing" secondItem="NOb-wp-Paj" secondAttribute="trailing" id="0eh-i5-jXQ"/>
@@ -423,6 +423,7 @@
                                             <outlet property="btnPlayNormalMode" destination="2vx-lr-Cw9" id="Viu-R0-0zv"/>
                                             <outlet property="btnPlayRepeatMode" destination="Hle-Ag-3Vb" id="c9l-g5-31s"/>
                                             <outlet property="btnPlayShuffleMode" destination="vg2-rF-yc1" id="OW1-RL-qig"/>
+                                            <outlet property="cViewCellCloseContentRowFirst" destination="ZR1-8l-W4s" id="bEB-Re-ReB"/>
                                             <outlet property="cViewCellOpenContentRowFirst" destination="uEm-L6-f0N" id="aX8-11-p35"/>
                                             <outlet property="cViewCellOpenContentRowFourth" destination="vfi-s7-Zxw" id="bwF-cL-ePl"/>
                                             <outlet property="cViewCellOpenContentRowSecond" destination="Wic-g1-BMa" id="P5s-jC-VZK"/>
@@ -497,6 +498,9 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="organization"/>
+                                <connections>
+                                    <action selector="inpPlaylistNameChanged:" destination="MO5-Jd-Yip" eventType="editingChanged" id="Y3i-FV-Zvo"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nr8-Z0-exG" userLabel="ui_pnl_playlist_tags">
                                 <rect key="frame" x="16" y="490" width="343" height="128"/>
