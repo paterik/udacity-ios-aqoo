@@ -220,12 +220,6 @@ class PlaylistViewController: BaseViewController,
         playlistCell.durationsForExpandedState = _sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
         
-        playlistCell.imageViewContentChangedManually.alpha = 0.475
-        playlistCell.imageViewContentChangedManually.isHidden = true
-        if  playlistCacheData.metaPreviouslyUpdatedManually == true {
-            playlistCell.imageViewContentChangedManually.isHidden = false
-        }
-        
         // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
         playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         if  playlistCacheData.isSpotify == false ||
@@ -260,6 +254,13 @@ class PlaylistViewController: BaseViewController,
         if  coverImageBlock.detailView != nil {
             playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
             playlistCoverDetailView = coverImageBlock.detailView
+        }
+        
+        // set marker for manually updated playlistItem
+        playlistCell.imageViewContentChangedManually.alpha = 0.475
+        playlistCell.imageViewContentChangedManually.isHidden = true
+        if  playlistCacheData.metaPreviouslyUpdatedManually == true {
+            playlistCell.imageViewContentChangedManually.isHidden = false
         }
         
         playlistCell.hViewPlaylistPlayModeIndicator.hidesWhenStopped = true

@@ -38,7 +38,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         super.viewDidLoad()
         
-        setupUI()
+        setupUIBase()
         setupUICoverImages()
         setupUIPlaylistTags()
         
@@ -76,9 +76,10 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     // MARK: Class Setup UI/UX Functions
     //
     
-    func setupUI() {
+    func setupUIBase() {
         
         btnSavePlaylistChanges.isEnabled = false
+        inpPlaylistName.delegate = self
     }
     
     func setupUIPlaylistTags() {
@@ -186,9 +187,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     
     func handlePlaylistMetaUpdate() {
         
-        // presume our updates will be successfully
-        playlistUpdateDetected = true
-        
         var _playListTitle: String = inpPlaylistName.text!
         
         CoreStore.perform(
@@ -208,7 +206,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 playlistToUpdate.metaNumberOfUpdates += 1
                 playlistToUpdate.metaPreviouslyUpdatedManually = true
                 
-                self.playlistUpdateDetected = true
                 self.playListInDb = playlistToUpdate
             },
             completion: { (result) -> Void in
@@ -216,26 +213,17 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                     
                 case .failure(let error):
                     
-                    if  self.debugMode == true {
-                        print ("dbg [db] : Playlist [\(_playListTitle)] update fail!")
-                    }
-                    
-                    self.playlistUpdateDetected = false
+                    self.handleBtnSavePlaylistChangesState( active: false )
                     self.handleErrorAsDialogMessage(
                         "Cache Error", "unable to update playlist local cache"
                     )
                 
                 case .success(let userInfo):
                     
-                    if  self.debugMode == true {
-                        print ("dbg [db] : Playlist [\(_playListTitle)] updated")
-                    }
-                    
-                    // delegate information about current playlist entity state to playlistView
+                    // delegate information about current playlist state to parentView
+                    self.handleBtnSavePlaylistChangesState( active: true )
                     if  let delegate = self.delegate {
-                        if  self.playlistUpdateDetected == true {
-                            delegate.onPlaylistChanged( self.playListInDb! )
-                        }
+                        delegate.onPlaylistChanged( self.playListInDb! )
                     }
                 }
             }
@@ -248,41 +236,41 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
             asynchronous: { (transaction) -> Void in
                 
                 // find persisted playlist object from local cache (db)
-                guard let _playlistInContext = transaction.fetchOne(
-                      From<StreamPlayList>().where(\.metaListHash == self.playListInDb!.metaListHash))
-                      as? StreamPlayList else {
-                        self.handleErrorAsDialogMessage(
-                            "Cache Error", "unable to fetch playlist from local cache"
-                        );   return
+                guard let playlistInContext = transaction.fetchOne(
+                      From<StreamPlayList>().where(
+                        \.metaListHash == self.playListInDb!.metaListHash
+                      )) as? StreamPlayList else {
+                        self.handleErrorAsDialogMessage("Cache Error", "unable to fetch playlist from local cache")
+                    
+                        return
                 }
                 
-                // try to evaluate current tag in right context
+                // try to evaluate current tag in right playlist context
                 var playlistTagToUpdate = transaction.fetchOne(
                     From<StreamPlayListTags>()
                         .where((\StreamPlayListTags.playlistTag == tag) &&
-                               (\StreamPlayListTags.playlist == self.playListInDb!)
+                            (\StreamPlayListTags.playlist == self.playListInDb!)
                     )
                 )
                 
-                // add tag to StreamPlayListTags cache/db table
-                if  playlistTagToUpdate == nil && add == true {
+                //  add tag to StreamPlayListTags cache/db table
+                if  add == true {
                     playlistTagToUpdate = transaction.create(Into<StreamPlayListTags>()) as StreamPlayListTags
                     playlistTagToUpdate!.playlistTag = tag
                     playlistTagToUpdate!.createdAt = Date()
                     playlistTagToUpdate!.updatedAt = Date()
-                    playlistTagToUpdate!.playlist = _playlistInContext
-                    self.playlistUpdateDetected = true
+                    playlistTagToUpdate!.playlist = playlistInContext
                     
+                    self.handleBtnSavePlaylistChangesState( active: true )
                     if self.debugMode == true { print ("TAG [\(tag)] ADDED") }
                 }
                 
-                // remove tag from StreamPlayListTags cache/db table
-                if  playlistTagToUpdate != nil && add == false {
-                    
+                //  remove tag from StreamPlayListTags cache/db table
+                if  add == false {
                     transaction.delete(playlistTagToUpdate)
-                    self.playlistTagsField.removeTag(tag)
-                    self.playlistUpdateDetected = true
                     
+                    self.playlistTagsField.removeTag(tag)
+                    self.handleBtnSavePlaylistChangesState( active: true )
                     if self.debugMode == true { print ("TAG [\(tag)] REMOVED") }
                 }
             },
@@ -290,7 +278,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 switch result {
                     
                 case .failure(let error):
-                    self.playlistUpdateDetected = false
+                    self.handleBtnSavePlaylistChangesState( active: false )
                     self.handleErrorAsDialogMessage(
                         "Cache Error", "unable to update playlist tag local cache"
                     )
@@ -302,6 +290,21 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 }
             }
         )
+    }
+    
+    func handleBtnSavePlaylistChangesState(active: Bool) {
+        
+        btnSavePlaylistChanges.isEnabled = active
+        playlistUpdateDetected = active
+    }
+    
+    //
+    // MARK: Class IABaction Methods
+    //
+    
+    @IBAction func inpPlaylistNameChanged(_ sender: Any) {
+        
+        handleBtnSavePlaylistChangesState( active: true )
     }
 
     @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
