@@ -645,6 +645,25 @@ extension PlaylistViewController {
             playlistCell.lblPlaylistMetaPlayCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
         }
     }
+    
+    func handlePlaylistTimeAndDateMeta(
+        _ playlistCell: PlaylistTableFoldingCell,
+        _ playlistItem: StreamPlayList) {
+        
+        playlistCell.lblPlaylistUpdatedAt.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistUpdatedAt.text = "not yet"
+        if  let playlistUpdatedAt = playlistItem.updatedAt as? Date {
+            playlistCell.lblPlaylistUpdatedAt.alpha = 1.0
+            playlistCell.lblPlaylistUpdatedAt.text = getHumanReadableDate(playlistUpdatedAt)
+        }
+        
+        playlistCell.lblPlaylistCreatedAt.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistCreatedAt.text = "not yet"
+        if  let playlistCreatedAt = playlistItem.createdAt as? Date {
+            playlistCell.lblPlaylistCreatedAt.alpha = 1.0
+            playlistCell.lblPlaylistCreatedAt.text = getHumanReadableDate(playlistCreatedAt)
+        }
+    }
 
     /*
      * this method will be called every n-seconds to ensure your lists are up to date
