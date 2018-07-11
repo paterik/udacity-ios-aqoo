@@ -35,11 +35,12 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var lblPlaylistCreatedAt: UILabel!
     @IBOutlet weak var lblPlaylistUpdatedAt: UILabel!
     
+    @IBOutlet weak var lblPlaylistMetaTrackCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaFollowerCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaShareCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaUpdateCount: UILabel!
-    @IBOutlet weak var lblPlaylistMetaTrackCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaPlayCount: UILabel!
+    @IBOutlet weak var lblPlaylistMetaTrackCountInDetail: UILabel!
     
     @IBOutlet weak var hViewPlaylistPlayModeIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var hViewCellNormalCategoryFrame: UIView!

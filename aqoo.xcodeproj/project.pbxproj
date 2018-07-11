@@ -23,6 +23,7 @@
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
 		B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */; };
+		B1A117A120F618B3002C4CA9 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A117A020F618B3002C4CA9 /* Integer.swift */; };
 		B1A3D2461F8E3B660098330D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A3D2451F8E3B660098330D /* String.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
 		B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620491F700D820093CAEF /* LoginViewController.swift */; };
@@ -102,6 +103,7 @@
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFilterMenuItem.swift; sourceTree = "<group>"; };
+		B1A117A020F618B3002C4CA9 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		B1A3D2451F8E3B660098330D /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A620471F700D820093CAEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				B1CDAA9F2000D4F5008138F1 /* NSDate.swift */,
 				B1B8DD25202E1EE3008CE9EB /* UIView.swift */,
 				B1B8DD27202E5756008CE9EB /* Dictionary.swift */,
+				B1A117A020F618B3002C4CA9 /* Integer.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -774,6 +777,7 @@
 				B1B8DD28202E5756008CE9EB /* Dictionary.swift in Sources */,
 				B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */,
 				B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */,
+				B1A117A120F618B3002C4CA9 /* Integer.swift in Sources */,
 				B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,
 				B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */,

@@ -601,7 +601,12 @@
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
                                             <outlet property="imageViewPlaylistOwnerInDetail" destination="SQY-Ji-lBH" id="JSL-Uh-hLY"/>
+                                            <outlet property="lblPlaylistMetaFollowerCount" destination="62m-2H-1IY" id="VoL-En-9YM"/>
+                                            <outlet property="lblPlaylistMetaPlayCount" destination="QFK-Kh-jXU" id="l4t-8W-W7a"/>
+                                            <outlet property="lblPlaylistMetaShareCount" destination="og6-v6-n96" id="cJ5-nB-co4"/>
                                             <outlet property="lblPlaylistMetaTrackCount" destination="Rzk-Wc-Tps" id="LIa-jC-TVe"/>
+                                            <outlet property="lblPlaylistMetaTrackCountInDetail" destination="llk-3Q-3nt" id="uwg-9b-zbW"/>
+                                            <outlet property="lblPlaylistMetaUpdateCount" destination="EPA-3Z-R4w" id="VW9-Ld-wK9"/>
                                             <outlet property="lblPlaylistName" destination="NOb-wp-Paj" id="t5h-fc-wWV"/>
                                             <outlet property="lblPlaylistNameInDetail" destination="cPi-Z5-2Zt" id="SHp-04-E39"/>
                                         </connections>
