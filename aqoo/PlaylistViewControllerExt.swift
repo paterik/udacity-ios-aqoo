@@ -1558,6 +1558,9 @@ extension PlaylistViewController {
         
         if  self.debugMode == true {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
-        }; _playlistChangedItem = playlistItem
+        }
+        
+       _playlistChangedItem = playlistItem
+        tableView.reloadData()        
     }
 }
