@@ -20,6 +20,7 @@ class PlaylistEditViewSecondPage: BasePlaylistEditViewController {
     @IBOutlet weak var cViewPlaylistRatingIntensity: Slider!
     @IBOutlet weak var cViewPlaylistRatingEmotional: Slider!
     @IBOutlet weak var cViewPlaylistRatingDepth: Slider!
+    @IBOutlet weak var lblPlaylistRatingAverageValue: UILabel!
     
     //
     // MARK: Class Method Overloads
@@ -163,6 +164,9 @@ class PlaylistEditViewSecondPage: BasePlaylistEditViewController {
             
             playlistUpdateDetected = true
         }
+    
+        let playlistRatingAverageValue = (getOverallRatingFromThreeWayFaction() * 100).rounded() / 100
+        lblPlaylistRatingAverageValue.text = "\(playlistRatingAverageValue)"
         
         handleBtnSavePlaylistChangesState( active: playlistUpdateDetected )
     }

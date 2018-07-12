@@ -666,8 +666,8 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistRatingBlockMeta(
-        _ playlistCell: PlaylistTableFoldingCell,
-        _ playlistItem: StreamPlayList) {
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
         
         let maxRatingBarWidth = Float(playlistCell.cViewPlaylistRatingIntensity.frame.width)
         let maxRatingBarHeight = Float(playlistCell.cViewPlaylistRatingIntensity.frame.height)
@@ -683,14 +683,26 @@ extension PlaylistViewController {
         cViewIcnRatingEmotional.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
         cViewIcnRatingDepth.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
         
-        playlistCell.cViewPlaylistRatingIntensity.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForArousal), CGFloat(maxRatingBarHeight)))
-        playlistCell.cViewPlaylistRatingIntensity.addSubview(cViewIcnRatingIntensity)
+        for subview in playlistCell.cViewPlaylistRatingIntensity.subviews {
+            subview.removeFromSuperview()
+        };  playlistCell.cViewPlaylistRatingIntensity.addSubview(cViewIcnRatingIntensity)
+            playlistCell.cViewPlaylistRatingIntensity.addSubview(
+                getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForArousal), CGFloat(maxRatingBarHeight))
+            )
         
-        playlistCell.cViewPlaylistRatingEmotional.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForValence), CGFloat(maxRatingBarHeight)))
-        playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
+        for subview in playlistCell.cViewPlaylistRatingEmotional.subviews {
+            subview.removeFromSuperview()
+        };  playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
+            playlistCell.cViewPlaylistRatingEmotional.addSubview(
+                getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForValence), CGFloat(maxRatingBarHeight))
+            )
         
-        playlistCell.cViewPlaylistRatingDepth.addSubview(getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForDepth), CGFloat(maxRatingBarHeight)))
-        playlistCell.cViewPlaylistRatingDepth.addSubview(cViewIcnRatingDepth)
+        for subview in playlistCell.cViewPlaylistRatingDepth.subviews {
+            subview.removeFromSuperview()
+        };  playlistCell.cViewPlaylistRatingDepth.addSubview(cViewIcnRatingDepth)
+            playlistCell.cViewPlaylistRatingDepth.addSubview(
+                getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForDepth), CGFloat(maxRatingBarHeight))
+            )
     }
 
     /*
@@ -1561,6 +1573,8 @@ extension PlaylistViewController {
         }
         
        _playlistChangedItem = playlistItem
-        tableView.reloadData()        
+        
+        setupUILoadExtendedPlaylists()
+        // tableView.reloadData()
     }
 }

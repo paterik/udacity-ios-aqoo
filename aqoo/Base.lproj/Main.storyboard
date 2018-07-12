@@ -2162,62 +2162,70 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dkk-jk-abW" userLabel="ui_view_rating_for_intensity" customClass="Slider" customModule="fluid_slider">
-                                <rect key="frame" x="16" y="131" width="343" height="55"/>
+                                <rect key="frame" x="16" y="223" width="343" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="gWs-x1-2TP"/>
+                                    <constraint firstAttribute="height" constant="55" id="6bT-ET-9fM"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intensity of this playlist?" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFd-6p-0il" userLabel="ui_lbl_rating_for_intensity_desc">
-                                <rect key="frame" x="16" y="187" width="343" height="12"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                <rect key="frame" x="216.5" y="279" width="142" height="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bru-iz-PMh" userLabel="ui_view_rating_for_emotion" customClass="Slider" customModule="fluid_slider">
-                                <rect key="frame" x="16" y="242" width="343" height="55"/>
+                                <rect key="frame" x="16" y="369" width="343" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="Qdh-PF-eU8"/>
+                                    <constraint firstAttribute="height" constant="55" id="zbF-R3-IoY"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emotiveness of this playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Brn-I3-d7L" userLabel="ui_lbl_rating_for_emotion_desc">
-                                <rect key="frame" x="16" y="297" width="343" height="12"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                <rect key="frame" x="198" y="424" width="161" height="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5rb-c8-XzI" userLabel="ui_view_rating_for_depth" customClass="Slider" customModule="fluid_slider">
-                                <rect key="frame" x="16" y="352" width="343" height="55"/>
+                                <rect key="frame" x="16" y="513" width="343" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="bQD-ZS-AnH"/>
+                                    <constraint firstAttribute="height" constant="55" id="FDj-YZ-DoH"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Depth of this playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXJ-Yw-gk5" userLabel="ui_lbl_rating_for_depth_desc">
-                                <rect key="frame" x="16" y="409" width="343" height="12"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Depth of this playlist" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXJ-Yw-gk5" userLabel="ui_lbl_rating_for_depth_desc">
+                                <rect key="frame" x="236.5" y="570" width="122" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sh-6v-AHV">
+                                <rect key="frame" x="16" y="72" width="343" height="77"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76.5" id="XAd-SJ-o0s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="64"/>
+                                <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Brn-I3-d7L" firstAttribute="top" secondItem="bru-iz-PMh" secondAttribute="bottom" id="4ND-dM-z5L"/>
-                            <constraint firstAttribute="trailing" secondItem="bru-iz-PMh" secondAttribute="trailing" constant="16" id="5wL-iV-IQD"/>
-                            <constraint firstItem="5rb-c8-XzI" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="AER-1C-ZhL"/>
-                            <constraint firstItem="Brn-I3-d7L" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="If1-bF-S9u"/>
-                            <constraint firstAttribute="trailing" secondItem="JXJ-Yw-gk5" secondAttribute="trailing" constant="16" id="Jjz-ZC-ad5"/>
-                            <constraint firstAttribute="trailing" secondItem="Dkk-jk-abW" secondAttribute="trailing" constant="16" id="PNw-Rw-2H9"/>
-                            <constraint firstItem="CFd-6p-0il" firstAttribute="top" secondItem="Dkk-jk-abW" secondAttribute="bottom" constant="1" id="QtC-Nx-xyV"/>
-                            <constraint firstItem="JXJ-Yw-gk5" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="SZW-I1-SiR"/>
-                            <constraint firstItem="Dkk-jk-abW" firstAttribute="top" secondItem="vL5-kd-oHn" secondAttribute="bottom" constant="67" id="VCZ-Wc-DNd"/>
-                            <constraint firstAttribute="trailing" secondItem="CFd-6p-0il" secondAttribute="trailing" constant="16" id="aq7-SC-12G"/>
-                            <constraint firstAttribute="trailing" secondItem="5rb-c8-XzI" secondAttribute="trailing" constant="16" id="bkp-Tx-xVp"/>
-                            <constraint firstAttribute="trailing" secondItem="Brn-I3-d7L" secondAttribute="trailing" constant="16" id="bqS-L6-aPN"/>
-                            <constraint firstItem="JXJ-Yw-gk5" firstAttribute="top" secondItem="5rb-c8-XzI" secondAttribute="bottom" constant="2" id="h89-Zo-LrE"/>
-                            <constraint firstItem="bru-iz-PMh" firstAttribute="top" secondItem="Dkk-jk-abW" secondAttribute="bottom" constant="56" id="jd8-2V-dc3"/>
-                            <constraint firstItem="Dkk-jk-abW" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="n7y-R2-OOq"/>
-                            <constraint firstItem="CFd-6p-0il" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="ol1-Of-geI"/>
-                            <constraint firstItem="5rb-c8-XzI" firstAttribute="top" secondItem="bru-iz-PMh" secondAttribute="bottom" constant="55" id="rlG-B7-gLV"/>
-                            <constraint firstItem="bru-iz-PMh" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="wMG-70-C6F"/>
+                            <constraint firstAttribute="trailing" secondItem="Dkk-jk-abW" secondAttribute="trailing" constant="16" id="4dZ-Zg-OwF"/>
+                            <constraint firstItem="Dkk-jk-abW" firstAttribute="top" secondItem="9sh-6v-AHV" secondAttribute="bottom" constant="74.5" id="D9Y-EW-zDE"/>
+                            <constraint firstAttribute="trailing" secondItem="5rb-c8-XzI" secondAttribute="trailing" constant="16" id="I1V-dM-FCO"/>
+                            <constraint firstAttribute="trailing" secondItem="CFd-6p-0il" secondAttribute="trailing" constant="16.5" id="LWK-Ol-U34"/>
+                            <constraint firstItem="bru-iz-PMh" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="MFO-f8-4Rs"/>
+                            <constraint firstAttribute="trailing" secondItem="9sh-6v-AHV" secondAttribute="trailing" constant="16" id="My5-lR-sVN"/>
+                            <constraint firstAttribute="trailing" secondItem="Brn-I3-d7L" secondAttribute="trailing" constant="16" id="NID-rX-I8W"/>
+                            <constraint firstItem="bru-iz-PMh" firstAttribute="top" secondItem="Dkk-jk-abW" secondAttribute="bottom" constant="91" id="Pex-7K-mJN"/>
+                            <constraint firstItem="Dkk-jk-abW" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="VvU-cW-EER"/>
+                            <constraint firstAttribute="trailing" secondItem="bru-iz-PMh" secondAttribute="trailing" constant="16" id="aol-aj-faJ"/>
+                            <constraint firstItem="9sh-6v-AHV" firstAttribute="top" secondItem="vL5-kd-oHn" secondAttribute="bottom" constant="8" id="lJN-TG-kHH"/>
+                            <constraint firstItem="5rb-c8-XzI" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="mMg-NV-Nc2"/>
+                            <constraint firstItem="Brn-I3-d7L" firstAttribute="top" secondItem="bru-iz-PMh" secondAttribute="bottom" id="nhU-ml-U09"/>
+                            <constraint firstItem="9sh-6v-AHV" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="ruz-uZ-XTj"/>
+                            <constraint firstItem="CFd-6p-0il" firstAttribute="top" secondItem="Dkk-jk-abW" secondAttribute="bottom" constant="1" id="y4O-dt-Mmo"/>
+                            <constraint firstItem="5rb-c8-XzI" firstAttribute="top" secondItem="bru-iz-PMh" secondAttribute="bottom" constant="89" id="yHm-8Q-LpW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Vote" id="k3G-GJ-OV1">
@@ -2240,6 +2248,7 @@
                         <outlet property="cViewPlaylistRatingDepth" destination="5rb-c8-XzI" id="eUZ-F9-fUo"/>
                         <outlet property="cViewPlaylistRatingEmotional" destination="bru-iz-PMh" id="Bea-0c-0PZ"/>
                         <outlet property="cViewPlaylistRatingIntensity" destination="Dkk-jk-abW" id="JvO-BB-g2b"/>
+                        <outlet property="lblPlaylistRatingAverageValue" destination="9sh-6v-AHV" id="qcl-72-uPn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5u2-ot-Dv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
