@@ -47,16 +47,36 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     
     override func viewWillAppear(_ animated: Bool) {
         
-        super.viewWillAppear(animated)
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        super.viewWillAppear(animated); UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
+        subscribeToKeyboardNotifications()
         playlistTagsField.beginEditing()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        
+        unSubscribeToKeyboardNotifications()
     }
     
     override func viewDidLayoutSubviews() {
         
         super.viewDidLayoutSubviews()
+        
         playlistTagsField.frame = viewPlaylistTags.bounds
+    }
+    
+    // set orientation to portrait(fix) in this editView
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        
+        return UIInterfaceOrientationMask.portrait
+    }
+    
+    // disable orientation switch in this editView
+    override var shouldAutorotate: Bool {
+        
+        return false
     }
     
     //
@@ -64,12 +84,15 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     //
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
+
         if textField == playlistTagsField {
-            inpPlaylistName.becomeFirstResponder()
+            
+           return true
         }
         
-        return true
+        view.endEditing(true)
+        
+        return false
     }
     
     //
@@ -80,6 +103,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         btnSavePlaylistChanges.isEnabled = false
         inpPlaylistName.delegate = self
+        imgPlaylistCoverBig.becomeFirstResponder()
     }
     
     func setupUIPlaylistTags() {
@@ -296,6 +320,53 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         btnSavePlaylistChanges.isEnabled = active
         playlistUpdateDetected = active
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(PlaylistEditViewFirstPage.keyboardWillAppear),
+            name: NSNotification.Name.UIKeyboardWillShow,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(PlaylistEditViewFirstPage.keyboardWillDisappear),
+            name: NSNotification.Name.UIKeyboardWillHide,
+            object: nil
+        )
+    }
+    
+    func unSubscribeToKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(
+            self, name: NSNotification.Name.UIKeyboardWillShow, object: nil
+        )
+        
+        NotificationCenter.default.removeObserver(
+            self, name: NSNotification.Name.UIKeyboardWillHide, object: nil
+        )
+    }
+    
+    @objc
+    func keyboardWillDisappear(notification: NSNotification) {
+        
+        view.frame.origin.y = 0
+    }
+    
+    @objc
+    func keyboardWillAppear(notification: NSNotification) {
+
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
+           view.frame.origin.y =  keyboardSize * -1
+        }
+        
+        /*view.setNeedsLayout()
+        view.layoutIfNeeded()
+        view.superview!.setNeedsLayout()
+        view.superview!.layoutIfNeeded()*/
     }
     
     //
