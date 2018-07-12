@@ -1573,8 +1573,5 @@ extension PlaylistViewController {
         }
         
        _playlistChangedItem = playlistItem
-        
-        setupUILoadExtendedPlaylists()
-        // tableView.reloadData()
     }
 }
