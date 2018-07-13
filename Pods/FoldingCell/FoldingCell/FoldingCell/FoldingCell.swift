@@ -26,7 +26,7 @@ import UIKit
 /// UITableViewCell with folding animation
 open class FoldingCell: UITableViewCell {
     
-    /// UIView whitch display when cell open
+    /// UIView is displayed when cell open
     @IBOutlet open var containerView: UIView!
     @IBOutlet open var containerViewTop: NSLayoutConstraint!
     
@@ -183,14 +183,14 @@ open class FoldingCell: UITableViewCell {
         let foregroundViewSize = foregroundView.bounds.size
         
         // added first item
-        var image = containerView.pb_takeSnapshot(CGRect(x: 0, y: 0, width: containerViewSize.width, height: foregroundViewSize.height))
+        var image = containerView.takeSnapshot(CGRect(x: 0, y: 0, width: containerViewSize.width, height: foregroundViewSize.height))
         var imageView = UIImageView(image: image)
         imageView.tag = 0
         imageView.layer.cornerRadius = foregroundView.layer.cornerRadius
         animationView?.addSubview(imageView)
         
         // added secod item
-        image = containerView.pb_takeSnapshot(CGRect(x: 0, y: foregroundViewSize.height, width: containerViewSize.width, height: foregroundViewSize.height))
+        image = containerView.takeSnapshot(CGRect(x: 0, y: foregroundViewSize.height, width: containerViewSize.width, height: foregroundViewSize.height))
         
         imageView = UIImageView(image: image)
         let rotatedView = RotatedView(frame: imageView.frame)
@@ -216,7 +216,7 @@ open class FoldingCell: UITableViewCell {
         var yPosition = 2 * foregroundViewSize.height
         var tag = 2
         for _ in 2 ..< itemCount {
-            image = containerView.pb_takeSnapshot(CGRect(x: 0, y: yPosition, width: containerViewSize.width, height: itemHeight))
+            image = containerView.takeSnapshot(CGRect(x: 0, y: yPosition, width: containerViewSize.width, height: itemHeight))
             
             imageView = UIImageView(image: image)
             let rotatedView = RotatedView(frame: imageView.frame)
@@ -400,6 +400,12 @@ open class FoldingCell: UITableViewCell {
 // MARK: RotatedView
 
 open class RotatedView: UIView {
+    
+    fileprivate enum Const {
+        static let rotationX = "rotation.x"
+        static let transformRotationX = "transform.rotation.x"
+    }
+    
     var hiddenAfterAnimation = false
     var backView: RotatedView?
     
@@ -446,7 +452,7 @@ extension RotatedView: CAAnimationDelegate {
     
     func foldingAnimation(_ timing: String, from: CGFloat, to: CGFloat, duration: TimeInterval, delay: TimeInterval, hidden: Bool) {
         
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.x")
+        let rotateAnimation = CABasicAnimation(keyPath: Const.transformRotationX)
         rotateAnimation.timingFunction = CAMediaTimingFunction(name: timing)
         rotateAnimation.fromValue = from
         rotateAnimation.toValue = to
@@ -458,7 +464,7 @@ extension RotatedView: CAAnimationDelegate {
         
         self.hiddenAfterAnimation = hidden
         
-        self.layer.add(rotateAnimation, forKey: "rotation.x")
+        self.layer.add(rotateAnimation, forKey: Const.rotationX)
     }
     
     public func animationDidStart(_: CAAnimation) {
@@ -476,9 +482,10 @@ extension RotatedView: CAAnimationDelegate {
     }
 }
 
+// MARK: UIView + extension
 private extension UIView {
     
-    func pb_takeSnapshot(_ frame: CGRect) -> UIImage? {
+    func takeSnapshot(_ frame: CGRect) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         
         guard let context = UIGraphicsGetCurrentContext() else { return nil }

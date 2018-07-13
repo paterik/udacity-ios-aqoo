@@ -4,7 +4,7 @@ PODS:
   - CryptoSwift (0.10.0)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.1.1)
+  - FoldingCell (3.1.2)
   - GradientLoadingBar (1.1.11)
   - Kingfisher (4.8.0)
   - LetterAvatarKit (1.1.2)
@@ -71,7 +71,7 @@ SPEC CHECKSUMS:
   CoreStore: 40c48542f6d48b825326fbc3a6f5934e3353533b
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: 238c33ae8d9cd655090c9c4c5ff32596cfd18c6e
+  FoldingCell: e9b02668b89af673c377cb9560edcc4c6b293a95
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
