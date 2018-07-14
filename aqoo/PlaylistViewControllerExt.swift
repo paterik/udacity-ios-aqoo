@@ -683,26 +683,26 @@ extension PlaylistViewController {
         cViewIcnRatingEmotional.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
         cViewIcnRatingDepth.frame = CGRect(x: 2, y: 3, width: 11, height: 11)
         
+        // add intensity (arousal) rating
         for subview in playlistCell.cViewPlaylistRatingIntensity.subviews {
             subview.removeFromSuperview()
-        };  playlistCell.cViewPlaylistRatingIntensity.addSubview(cViewIcnRatingIntensity)
-            playlistCell.cViewPlaylistRatingIntensity.addSubview(
+        };  playlistCell.cViewPlaylistRatingIntensity.addSubview(
                 getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForArousal), CGFloat(maxRatingBarHeight))
-            )
+            );  playlistCell.cViewPlaylistRatingIntensity.addSubview(cViewIcnRatingIntensity)
         
+        // add emotional (valence) rating
         for subview in playlistCell.cViewPlaylistRatingEmotional.subviews {
             subview.removeFromSuperview()
-        };  playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
-            playlistCell.cViewPlaylistRatingEmotional.addSubview(
+        };  playlistCell.cViewPlaylistRatingEmotional.addSubview(
                 getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForValence), CGFloat(maxRatingBarHeight))
-            )
+            );  playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
         
+        // add depth (intellectual) rating
         for subview in playlistCell.cViewPlaylistRatingDepth.subviews {
             subview.removeFromSuperview()
-        };  playlistCell.cViewPlaylistRatingDepth.addSubview(cViewIcnRatingDepth)
-            playlistCell.cViewPlaylistRatingDepth.addSubview(
+        };  playlistCell.cViewPlaylistRatingDepth.addSubview(
                 getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForDepth), CGFloat(maxRatingBarHeight))
-            )
+            );  playlistCell.cViewPlaylistRatingDepth.addSubview(cViewIcnRatingDepth)
     }
 
     /*
