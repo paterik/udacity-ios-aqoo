@@ -512,14 +512,17 @@ extension PlaylistViewController {
         
         var duration = 0.0
         
-        for cell in tableView.visibleCells as! Array<PlaylistTableFoldingCell> {
-            cell.unfold(false, animated: false, completion: nil)
-            duration = kCloseCellDuration
-           _cellHeights[0] = kCloseCellHeight
-            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
-            },  completion: nil)
+        let cells = tableView.visibleCells as! Array<PlaylistTableFoldingCell>
+        for (index, cell) in cells.enumerated() {
+            if  cell.isUnfolded {
+                cell.unfold(false, animated: false, completion: nil)
+                duration = kCloseCellDuration
+               _cellHeights[index] = kCloseCellHeight
+                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                },  completion: nil)
+            }
         }
     }
     
