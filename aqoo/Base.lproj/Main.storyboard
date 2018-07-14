@@ -664,9 +664,12 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiN-T8-PQm" userLabel="ui_btn_playlistDelete">
                                                                             <rect key="frame" x="8" y="10" width="25" height="25"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                            <state key="normal" image="icnDelete_v1">
+                                                                            <state key="normal" image="icnHide_v2">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="btnShowPlaylistHidingOptionAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="3We-Tk-SYc"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -683,18 +686,27 @@
                                                                             <state key="normal" image="icnShareContent_v2">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="btnShowPlaylistSharingAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="31X-fs-LpX"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dfb-4k-Gv3" userLabel="ui_btn_playlistEdit">
                                                                             <rect key="frame" x="70" y="10" width="25" height="25"/>
                                                                             <state key="normal" image="icnSettings_v1">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="btnShowPlaylistEditViewAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="ja8-u7-6fD"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GxB-PO-V89" userLabel="ui_btn_playlistView">
                                                                             <rect key="frame" x="131" y="10" width="25" height="25"/>
                                                                             <state key="normal" image="icnShowPlaylist_v1">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="btnShowPlaylistContentAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="XSe-wn-u8L"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2309,6 +2321,7 @@
         <image name="icnDelete_v1" width="25" height="25"/>
         <image name="icnExitView_v1" width="25" height="25"/>
         <image name="icnFavoriteOn_v1" width="25" height="25"/>
+        <image name="icnHide_v2" width="25" height="25"/>
         <image name="icnPLCellView" width="25" height="25"/>
         <image name="icnPLRefresh" width="25" height="25"/>
         <image name="icnPLTableView" width="25" height="25"/>

@@ -142,8 +142,6 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -403,4 +401,17 @@ class PlaylistViewController: BaseViewController,
         
         _ = self.navigationController!.popViewController(animated: true)
     }
+    
+    @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
+    }
+    
+    @IBAction func btnShowPlaylistEditViewAction(_ sender: Any) {
+    }
+    
+    @IBAction func btnShowPlaylistSharingAction(_ sender: Any) {
+    }
+    
+    @IBAction func btnShowPlaylistContentAction(_ sender: Any) {
+    }
+    
 }

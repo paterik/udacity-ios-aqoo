@@ -117,6 +117,8 @@ class PlaylistTableFoldingCell: FoldingCell {
         }
     }
     
+    
+    
     func resetPlayNormalButton() {
         
         btnPlayNormalMode.backgroundColor = UIColor.clear
