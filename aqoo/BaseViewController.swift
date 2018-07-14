@@ -162,13 +162,21 @@ class BaseViewController: UIViewController {
     
     func getCoverImageViewByCacheModel(
        _ playlistItem: StreamPlayList,
-       _ playlistCoverImageView: UIImageView,
+       _ playlistCoverImageRawView: UIImageView,
+       _ playlistCoverImageNormalView: UIImageView,
        _ playlistCoverImageDetailView: UIImageView?)
-         -> (normalView: UIImageView, detailView: UIImageView?, normalViewCacheKey: String?, detailViewCacheKey: String?) {
+        -> (rawView: UIImageView,
+            normalView: UIImageView,
+            detailView: UIImageView?,
+            rawViewCacheKey: String?,
+            normalViewCacheKey: String?,
+            detailViewCacheKey: String?,
+            imageDownloadURL: URL?) {
         
         var _usedCoverImageURL: URL?
         var _usedNormalCoverImageCacheKey: String?
         var _usedDetailCoverImageCacheKey: String?
+        var _usedRawCoverImageCacheKey: String?
         var _noCoverImageAvailable: Bool = true
         var _noCoverOverrideImageAvailable: Bool = true
         var _noCoverSetForInternal: Bool = false
@@ -193,7 +201,7 @@ class BaseViewController: UIViewController {
         
         // check playlist item is part of internal playlist selection - take internal cover on match
         if  let _imageName = getInternalCoverImageNameByCacheModel(playlistItem) {
-            playlistCoverImageView.image = UIImage(named: _imageName)
+            playlistCoverImageNormalView.image = UIImage(named: _imageName)
             _noCoverSetForInternal = true
             if self.debugKFCMode == true {
                 print ("--- use internal cover for [\(playlistItem.metaListInternalName)]")
@@ -203,7 +211,7 @@ class BaseViewController: UIViewController {
         // set user selected images for covers if available (on non-internal playlist only)
         if _noCoverOverrideImageAvailable == false && _noCoverSetForInternal == false {
             if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
-                playlistCoverImageView.image = _image
+                playlistCoverImageNormalView.image = _image
                 if self.debugKFCMode == true {
                     print ("--- use cover override for [\(playlistItem.metaListInternalName)]")
                 }
@@ -215,13 +223,23 @@ class BaseViewController: UIViewController {
            _noCoverOverrideImageAvailable == true &&
            _noCoverSetForInternal == false {
             
+           _usedRawCoverImageCacheKey    = String(format: "c0::%@", _usedCoverImageURL!.absoluteString).md5()
            _usedNormalCoverImageCacheKey = String(format: "c1::%@", _usedCoverImageURL!.absoluteString).md5()
            _usedDetailCoverImageCacheKey = String(format: "c2::%@", _usedCoverImageURL!.absoluteString).md5()
+            
+            // raw cover image handler (used for sharing and editView)
+            handleCoverImageByCache(
+                playlistItem,
+                playlistCoverImageRawView,
+               _usedCoverImageURL!,
+               _usedRawCoverImageCacheKey!,
+               []
+            )
             
             // normal cell view cover image handler
             handleCoverImageByCache(
                 playlistItem,
-                playlistCoverImageView,
+                playlistCoverImageNormalView,
                _usedCoverImageURL!,
                _usedNormalCoverImageCacheKey!,
                 [
@@ -245,10 +263,13 @@ class BaseViewController: UIViewController {
         }
         
         return (
-            normalView: playlistCoverImageView,
+            rawView: playlistCoverImageRawView,
+            normalView: playlistCoverImageNormalView,
             detailView: playlistCoverImageDetailView,
+            rawViewCacheKey: _usedRawCoverImageCacheKey,
             normalViewCacheKey: _usedNormalCoverImageCacheKey,
-            detailViewCacheKey: _usedDetailCoverImageCacheKey
+            detailViewCacheKey: _usedDetailCoverImageCacheKey,
+            imageDownloadURL: _usedCoverImageURL
         )
     }
     

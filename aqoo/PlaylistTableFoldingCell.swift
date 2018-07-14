@@ -19,7 +19,9 @@ class PlaylistTableFoldingCell: FoldingCell {
     var imageCacheKeyNormalView: String?
     var imageCacheKeyDetailView: String?
 
+    
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
+    @IBOutlet weak var imageViewPlaylistCoverRaw: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverInDetail: UIImageView!
     @IBOutlet weak var imageViewContentChangedManually: UIImageView!
     @IBOutlet weak var imageViewPlaylistOwner: UIImageView!

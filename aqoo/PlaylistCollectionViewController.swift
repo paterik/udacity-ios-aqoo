@@ -99,6 +99,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         let coverImageBlock = getCoverImageViewByCacheModel(
             playlistItem,
             playlistCell.imageViewPlaylistCover,
+            playlistCell.imageViewPlaylistCover,
             playlistCell.imageViewPlaylistCover
         )
         

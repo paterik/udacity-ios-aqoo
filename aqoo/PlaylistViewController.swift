@@ -415,9 +415,26 @@ class PlaylistViewController: BaseViewController,
     }
     
     @IBAction func btnShowPlaylistSharingAction(_ sender: Any) {
+        
+        let playlistShareTitle = "I'm just listening to \"\(_playlistInCacheSelected!.metaListInternalName)\" 🎧 - you can find this playlist here: \"\(_playlistInCacheSelected!.playableURI)\" (copy the URI into spotifys search)"
+        
+        for cell in tableView.visibleCells as! Array<PlaylistTableFoldingCell> {
+            // find current opened/valid cell
+            if  cell.isUnfolded &&
+                cell.metaPlaylistInDb?.getMD5Identifier() == _playlistInCacheSelected?.getMD5Identifier() {
+                // get first low quality image from cell cache as fallback
+                var playlistShareImage = cell.imageViewPlaylistCoverRaw.image
+                // retrieve primary image url (should conatin hq version of cover image)
+                
+                let vc = UIActivityViewController(
+                    activityItems: [playlistShareTitle, playlistShareImage],
+                    applicationActivities: []
+                );  present(vc, animated: true)
+ 
+                return
+            }
+        }
     }
     
-    @IBAction func btnShowPlaylistContentAction(_ sender: Any) {
-    }
-    
+    @IBAction func btnShowPlaylistContentAction(_ sender: Any) { }
 }

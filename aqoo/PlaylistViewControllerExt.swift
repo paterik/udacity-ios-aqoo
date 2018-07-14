@@ -607,8 +607,9 @@ extension PlaylistViewController {
         
         // set final cover image based on current playlist model and corresponding imageView
         var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
+        var playlistCoverRawView: UIImageView! = playlistCell.imageViewPlaylistCoverRaw
         var playlistCoverDetailView: UIImageView! = playlistCell.imageViewPlaylistCoverInDetail
-        var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverView, playlistCoverDetailView)
+        var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverRawView, playlistCoverView, playlistCoverDetailView)
         
         // set image cover in foldingCell normalView and set corresponding cacheKey
         if  coverImageBlock.normalView != nil {
@@ -1563,6 +1564,7 @@ extension PlaylistViewController {
                             }
                         }
                     }
+                    
                 )
             }
         }

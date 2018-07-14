@@ -343,6 +343,10 @@
                                                                         <action selector="btnPlayRepeatModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="uX5-i5-6BA"/>
                                                                     </connections>
                                                                 </button>
+                                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="mbZ-dg-saB" userLabel="ui_img_playlistCoverRawHidden">
+                                                                    <rect key="frame" x="145" y="50" width="40" height="40"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -795,6 +799,7 @@
                                             <outlet property="imageViewContentChangedManually" destination="v2e-jW-gyw" id="qi5-gr-gWX"/>
                                             <outlet property="imageViewPlaylistCover" destination="pK2-6a-rSX" id="McK-yY-gHV"/>
                                             <outlet property="imageViewPlaylistCoverInDetail" destination="HGO-lT-TFa" id="ypK-XA-OPz"/>
+                                            <outlet property="imageViewPlaylistCoverRaw" destination="mbZ-dg-saB" id="7cV-6p-etO"/>
                                             <outlet property="imageViewPlaylistIsPlaying" destination="TvP-5j-vWs" id="gjm-2c-Zsq"/>
                                             <outlet property="imageViewPlaylistIsSpotify" destination="kWC-iX-15N" id="pui-s9-Jbv"/>
                                             <outlet property="imageViewPlaylistOwner" destination="lvd-FW-jux" id="IUO-gi-zNg"/>
