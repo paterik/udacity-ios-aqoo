@@ -403,9 +403,15 @@ class PlaylistViewController: BaseViewController,
     }
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
+        
+        handlePlaylistHiddenFlag(_playlistInCacheSelected!)
+        setupUICollapseAllVisibleOpenCells()
+        tableView.reloadData()
     }
     
     @IBAction func btnShowPlaylistEditViewAction(_ sender: Any) {
+        
+        performSegue(withIdentifier: "showPlaylistEditViewTabController", sender: self)
     }
     
     @IBAction func btnShowPlaylistSharingAction(_ sender: Any) {
