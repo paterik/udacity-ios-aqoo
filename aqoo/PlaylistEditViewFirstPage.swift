@@ -22,13 +22,18 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     var noCoverImageAvailable: Bool = true
     var noCoverOverrideImageAvailable: Bool = true
     var playlistUpdateDetected: Bool = false
-    
+    var imagePickerSuccess: Bool = false
+
+    //
+    // MARK: Constants (normal)
+    //
     fileprivate let playlistTagsField = WSTagsField()
-    
-    @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
+    let imagePickerController = UIImagePickerController()
+
     @IBOutlet weak var inpPlaylistName: UITextField!
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet fileprivate weak var viewPlaylistTags: UIView!
+    @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
     
     //
     // MARK: Class Method Overloads
@@ -103,7 +108,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         btnSavePlaylistChanges.isEnabled = false
         inpPlaylistName.delegate = self
-        imgPlaylistCoverBig.becomeFirstResponder()
+        imagePickerSuccess = false
     }
     
     func setupUIPlaylistTags() {
@@ -142,6 +147,8 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     func setupUICoverImages() {
         
         var _playListCoverURL: String?
+        
+         imagePickerController.delegate = self
         
         // evaluate the "perfect" cover for our detailView
         if (playListInDb!.largestImageURL != nil) {
@@ -362,11 +369,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
            view.frame.origin.y =  keyboardSize * -1
         }
-        
-        /*view.setNeedsLayout()
-        view.layoutIfNeeded()
-        view.superview!.setNeedsLayout()
-        view.superview!.layoutIfNeeded()*/
     }
     
     //
@@ -382,6 +384,135 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         handlePlaylistMetaUpdate()
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func btnPlaylistCoverOverrideAction(_ sender: UIButton) {
+        
+        var _title = "Pick an image"
+        var _message = "Choose your image location"
+        if   noCoverOverrideImageAvailable == false {
+            _title = "Pick an image or reset the current one"
+            _message = "Choose your image location or reset the current one to spotify default"
+        }
+        
+        let alertController = UIAlertController(
+            title: _title,
+            message: _message,
+            preferredStyle: .alert)
+        
+        if  noCoverOverrideImageAvailable == false {
+            let photoResetAction = UIAlertAction(title: "Reset", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                
+                self.playListInDb!.coverImagePathOverride = nil
+                self.playListChanged = true
+                self.handleBtnSavePlaylistChangesState( active: true )
+                
+                return
+            }
+            
+            alertController.addAction(photoResetAction)
+        }
+        
+        if isPhotoLibrarayAvailable() {
+            
+            let photoLibAction = UIAlertAction(title: "From Photos", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .photoLibrary
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(photoLibAction)
+        }
+        
+        if isSavedPhotosAlbumAvailable() {
+            
+            let photoAlbumAction = UIAlertAction(title: "From Album", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .savedPhotosAlbum
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(photoAlbumAction)
+        }
+        
+        if isCameraAvailable() {
+            
+            let cameraAction = UIAlertAction(title: "From Camera", style: UIAlertActionStyle.default ) {
+                UIAlertAction in
+                self.imagePickerController.sourceType = .camera
+                self.loadImagePickerSource()
+            }
+            
+            alertController.addAction(cameraAction)
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in return
+        })
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func isCameraAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+    }
+    
+    func isPhotoLibrarayAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)
+    }
+    
+    func isSavedPhotosAlbumAvailable() -> Bool {
+        return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum)
+    }
+    
+    func isLocalImageStockAvailable() -> Bool {
+        return isPhotoLibrarayAvailable() || isSavedPhotosAlbumAvailable()
+    }
+    
+    func imagePickerController(
+       _ picker: UIImagePickerController,
+         didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        imagePickerSuccess = false
+        imgPlaylistCoverBig.alpha = 1.0
+        playListInDb!.coverImagePathOverride = nil
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+               let _imageDataRaw = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let _imageDataResized = _imageDataRaw.kf.resize(to: _sysPlaylistCoverOverrideResize)
+            let _imageDataCropped = _imageDataResized.kf.crop(
+                to: _sysPlaylistCoverDetailImageSize,
+                anchorOn: CGPoint(x: 10, y: 10)
+            )
+            
+            playListInDb!.coverImagePathOverride = getSavedImageFileName(_imageDataCropped, String.random().md5())
+            
+            imgPlaylistCoverBig.image = pickedImage
+            imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
+            imagePickerSuccess = true
+        }
+        
+        // every change on successfull image pick will be result in a changed playlist
+        playListChanged = imagePickerSuccess
+        handleBtnSavePlaylistChangesState( active: imagePickerSuccess )
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(
+        _ picker: UIImagePickerController) {
+        
+        imagePickerSuccess = false
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func loadImagePickerSource() {
+        
+        imagePickerController.allowsEditing = false
+        present(imagePickerController, animated: true, completion: nil)
     }
 }
 
