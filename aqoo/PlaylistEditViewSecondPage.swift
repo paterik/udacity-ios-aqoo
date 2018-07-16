@@ -77,7 +77,6 @@ class PlaylistEditViewSecondPage: BasePlaylistEditViewController {
                 ]
             )
         }
-        
         sliderView.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
         sliderView.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
         sliderView.fraction = CGFloat(sliderInitValue)
