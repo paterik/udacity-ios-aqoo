@@ -1214,7 +1214,9 @@
                             <constraint firstAttribute="trailing" secondItem="9sh-6v-AHV" secondAttribute="trailing" constant="16" id="My5-lR-sVN"/>
                             <constraint firstAttribute="trailing" secondItem="Brn-I3-d7L" secondAttribute="trailing" constant="16" id="NID-rX-I8W"/>
                             <constraint firstItem="bru-iz-PMh" firstAttribute="top" secondItem="Dkk-jk-abW" secondAttribute="bottom" constant="91" id="Pex-7K-mJN"/>
+                            <constraint firstItem="Brn-I3-d7L" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="20" symbolic="YES" id="TY9-iY-uiV"/>
                             <constraint firstItem="Dkk-jk-abW" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="VvU-cW-EER"/>
+                            <constraint firstItem="CFd-6p-0il" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="20" symbolic="YES" id="XI0-xd-fwV"/>
                             <constraint firstAttribute="trailing" secondItem="bru-iz-PMh" secondAttribute="trailing" constant="16" id="aol-aj-faJ"/>
                             <constraint firstItem="9sh-6v-AHV" firstAttribute="top" secondItem="vL5-kd-oHn" secondAttribute="bottom" constant="8" id="lJN-TG-kHH"/>
                             <constraint firstItem="5rb-c8-XzI" firstAttribute="leading" secondItem="sG0-JD-I7H" secondAttribute="leading" constant="16" id="mMg-NV-Nc2"/>
@@ -1295,6 +1297,7 @@
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="trailing" secondItem="Tjo-Af-05b" secondAttribute="trailingMargin" id="KfE-uk-E9d"/>
                             <constraint firstItem="9x9-bX-K5U" firstAttribute="top" secondItem="ifi-5z-gUH" secondAttribute="bottom" constant="271" id="NGy-GV-pqG"/>
                             <constraint firstItem="ifi-5z-gUH" firstAttribute="top" secondItem="GxM-wY-rC2" secondAttribute="bottom" constant="4" id="O9Z-aB-rSl"/>
+                            <constraint firstItem="ifi-5z-gUH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tjo-Af-05b" secondAttribute="leading" constant="20" symbolic="YES" id="UbA-bQ-vRs"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="trailing" secondItem="GxM-wY-rC2" secondAttribute="trailing" id="cdj-c3-OIX"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="kZ8-cw-Vaf"/>
                             <constraint firstItem="GxM-wY-rC2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="s9t-9d-QJI"/>
@@ -1323,7 +1326,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3b-7o-8D1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6581.5" y="985.5"/>
+            <point key="canvasLocation" x="6582" y="1074"/>
         </scene>
     </scenes>
     <resources>
