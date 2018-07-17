@@ -275,7 +275,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="355" height="135"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPi-Z5-2Zt" userLabel="ui_lbl_playlistName">
-                                                                    <rect key="frame" x="98" y="8" width="249" height="20"/>
+                                                                    <rect key="frame" x="121" y="8" width="226" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="20" id="GfJ-YU-mUZ"/>
                                                                     </constraints>
@@ -361,13 +361,13 @@
                                                             <constraints>
                                                                 <constraint firstItem="mbZ-dg-saB" firstAttribute="bottom" secondItem="SQY-Ji-lBH" secondAttribute="bottom" id="3D5-MS-qRs"/>
                                                                 <constraint firstAttribute="trailing" secondItem="cPi-Z5-2Zt" secondAttribute="trailing" constant="8" id="Fnq-1g-AX1"/>
-                                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="8" symbolic="YES" id="GQG-sw-kha"/>
+                                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="31" id="GQG-sw-kha"/>
                                                                 <constraint firstAttribute="bottom" secondItem="vg2-rF-yc1" secondAttribute="bottom" constant="45" id="IO6-Vj-A2F"/>
                                                                 <constraint firstItem="2vx-lr-Cw9" firstAttribute="leading" secondItem="vg2-rF-yc1" secondAttribute="trailing" constant="8" id="JNu-30-huT"/>
                                                                 <constraint firstAttribute="bottom" secondItem="SQY-Ji-lBH" secondAttribute="bottom" constant="45" id="K9Q-jD-tRZ"/>
                                                                 <constraint firstItem="mbZ-dg-saB" firstAttribute="top" secondItem="SQY-Ji-lBH" secondAttribute="top" id="MEA-nu-8Mf"/>
                                                                 <constraint firstAttribute="bottom" secondItem="Hle-Ag-3Vb" secondAttribute="bottom" constant="45" id="Nl9-aw-H4X"/>
-                                                                <constraint firstItem="drJ-4c-Ll4" firstAttribute="leading" secondItem="cPi-Z5-2Zt" secondAttribute="leading" id="Oio-Bu-msf"/>
+                                                                <constraint firstItem="drJ-4c-Ll4" firstAttribute="leading" secondItem="cPi-Z5-2Zt" secondAttribute="leading" constant="-23" id="Oio-Bu-msf"/>
                                                                 <constraint firstItem="SQY-Ji-lBH" firstAttribute="leading" secondItem="HGO-lT-TFa" secondAttribute="trailing" constant="8" id="PCG-6f-qQd"/>
                                                                 <constraint firstAttribute="trailing" secondItem="2vx-lr-Cw9" secondAttribute="trailing" constant="8" id="Pxc-Ie-YaP"/>
                                                                 <constraint firstItem="HGO-lT-TFa" firstAttribute="leading" secondItem="uEm-L6-f0N" secondAttribute="leading" id="QKT-nj-ue3"/>
@@ -831,7 +831,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="ZR1-8l-W4s" secondAttribute="trailing" constant="10" id="63M-5H-Hn1"/>
                                                 <constraint firstAttribute="trailing" secondItem="lIF-EV-Fgk" secondAttribute="trailing" constant="10" id="81N-iz-lh0"/>
-                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="108" id="Gba-yI-b65"/>
+                                                <constraint firstItem="cPi-Z5-2Zt" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="131" id="Gba-yI-b65"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="ap7-4r-n1J"/>
                                                 <constraint firstItem="ZR1-8l-W4s" firstAttribute="top" secondItem="q49-l2-U3C" secondAttribute="top" constant="10" identifier="ForegroundViewTop" id="l1t-UW-mH7"/>
                                                 <constraint firstItem="lIF-EV-Fgk" firstAttribute="leading" secondItem="q49-l2-U3C" secondAttribute="leading" constant="10" id="nWe-uc-Gc4"/>
