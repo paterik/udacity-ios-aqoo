@@ -60,6 +60,9 @@
 		B1D4EAB61F71683200939998 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4EAB51F71683200939998 /* WebViewController.swift */; };
 		B1D6A3951F90FE6A006E1DBC /* SpotifyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */; };
 		B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E2DA0B1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift */; };
+		B1F367F120FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */; };
+		B1F367F320FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */; };
+		B1F367F520FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F367F420FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift */; };
 		B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* PlaylistViewController.swift */; };
 		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
 		B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7E1F7045E80005FE43 /* UIImage.swift */; };
@@ -146,6 +149,9 @@
 		B1D4EAB51F71683200939998 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyClient.swift; sourceTree = "<group>"; };
 		B1E2DA0B1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFPartialPlaylistExt.swift; sourceTree = "<group>"; };
+		B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewFirstPageExt.swift; sourceTree = "<group>"; };
+		B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewSecondPageExt.swift; sourceTree = "<group>"; };
+		B1F367F420FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewThirdPageExt.swift; sourceTree = "<group>"; };
 		B1F88B721F7033450005FE43 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B1F88B7E1F7045E80005FE43 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -300,6 +306,9 @@
 				B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */,
 				B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */,
 				B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */,
+				B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */,
+				B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */,
+				B1F367F420FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -745,6 +754,7 @@
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
 				B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */,
 				B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */,
+				B1F367F520FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
 				B1C4B05320F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift in Sources */,
 				B1D6A3951F90FE6A006E1DBC /* SpotifyClient.swift in Sources */,
@@ -770,6 +780,8 @@
 				B1D45007204AC5F900B1BAF4 /* PlaylistMusicIndicatorContentView.swift in Sources */,
 				B1A7E0262040C0B100A9805C /* StreamProviderConfig.swift in Sources */,
 				B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */,
+				B1F367F120FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift in Sources */,
+				B1F367F320FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift in Sources */,
 				B1D33DD020D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,
