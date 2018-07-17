@@ -88,10 +88,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        if textField == playlistTagsField {
-            
-           return true
-        }
+        if textField == playlistTagsField { return true }
         
         view.endEditing(true)
         
