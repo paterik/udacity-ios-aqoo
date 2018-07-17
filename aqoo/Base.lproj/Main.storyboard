@@ -371,7 +371,7 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vki-WT-pBZ" userLabel="ui_view_content_002_main">
                                                                     <rect key="frame" x="0.0" y="-6" width="355" height="86"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Lj-Us-Ihn" userLabel="ui_view_content_002_follower" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Lj-Us-Ihn" userLabel="ui_view_content_002_follower">
                                                                             <rect key="frame" x="98" y="8" width="40" height="32"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.47499999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62m-2H-1IY" userLabel="ui_lbl_playlistPlayCount">
@@ -494,7 +494,7 @@
                                                                                 <constraint firstItem="aL7-zA-oA0" firstAttribute="top" secondItem="llk-3Q-3nt" secondAttribute="bottom" constant="5" id="ryx-ho-YB4"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URF-TE-CrP" userLabel="ui_view_content_002_rating" customClass="UIViewDesignable" customModule="aqoo" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URF-TE-CrP" userLabel="ui_view_content_002_rating">
                                                                             <rect key="frame" x="8" y="8" width="82" height="70"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ei-dz-vP6" userLabel="ui_view_playlistRating_intensity">
