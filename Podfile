@@ -34,3 +34,10 @@ target 'aqoo' do
     aq_base
     aq_data
 end
+
+post_install do |installer|
+    podsTargets = installer.pods_project.targets.find_all { |target| target.name.start_with?('Pods') }
+    podsTargets.each do |target|
+        target.frameworks_build_phase.clear
+    end
+end

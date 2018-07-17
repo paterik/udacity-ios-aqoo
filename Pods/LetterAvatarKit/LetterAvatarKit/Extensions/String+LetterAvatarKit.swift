@@ -26,16 +26,14 @@
 import Foundation
 
 extension String {
+    
     /// The the first element of the collection.
     ///
     /// If the collection is empty, the value of this property is `nil`.
     var first: Character? {
-        get {
-            if isEmpty {
-                return nil
-            }
-            return self[index(startIndex, offsetBy: 0)]
+        if isEmpty {
+            return nil
         }
+        return self[index(startIndex, offsetBy: 0)]
     }
-    
 }

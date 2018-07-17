@@ -26,6 +26,7 @@
 import Foundation
 
 extension UIImage {
+    
     /// Makes an letter-based avatar image using given configuration.
     ///
     /// - Parameters:
@@ -34,7 +35,9 @@ extension UIImage {
     ///
     /// - Returns: An instance of UIImage
     @objc(lak_makeLetterAvatarWithConfiguration:)
-    static open func makeLetterAvatar(withConfiguration configuration: LetterAvatarBuilderConfiguration) -> UIImage? {
+    static open func makeLetterAvatar(
+        withConfiguration configuration: LetterAvatarBuilderConfiguration
+        ) -> UIImage? {
         return LetterAvatarBuilder().makeAvatar(withConfiguration: configuration)
     }
     
@@ -67,4 +70,5 @@ extension UIImage {
         configuration.size = size
         return LetterAvatarBuilder().makeAvatar(withConfiguration: configuration)
     }
+    
 }

@@ -1,20 +1,16 @@
 # LetterAvatarKit
 
-![][Platform] ![][Travis] ![][Pods] ![][Swift3.2] ![][Swift4.0]
+![][Platform] ![][Travis] ![][Pods] ![][Swift4.0] ![][Codacy Badge]
 
-LetterAvatarKit is an ```UIImage``` extension that generates letter-based avatars written in Swift. Here are some images showing what the LetterAvatarKit does:
+LetterAvatarKit is an ```UIImage``` extension that generates letter-based avatars. Here are some images showing what LetterAvatarKit does:
 
 ![][screenshots]
 
 ## Requirements
 - iOS 8 and later
-- Swift 3.2 and later
+- Swift 4.0 and later
 
-## Install
-
-To use with **Swift 3.2** please ensure you are using **v1.1.1**
-
-To use with **Swift 4.0** please ensure you are using **v1.1.2**
+## Installation
 
 ### CocoaPods
 
@@ -87,9 +83,10 @@ self.avatarImageView.image = [UIImage lak_makeLetterAvatarWithUsername:@"Letter 
 
 Questions, comments, issues, and pull requests are always welcome!
 
-## Thanks
+## Contacts
 
-Thanks [Cargo](https://github.com/Gargo) for translating [README](https://github.com/vpeschenkov/LetterAvatarKit/blob/master/README.md) to [Russian](http://gargo.of.by/letteravatarkit/).
+- [GitHub](https://github.com/vpeschenkov)
+- [Twitter](https://twitter.com/vpeschenkov)
 
 ## License
 
@@ -99,6 +96,5 @@ Distributed under the MIT license. See LICENSE for more information.
 [Platform]: https://cocoapod-badges.herokuapp.com/p/LetterAvatarKit/badge.png
 [Travis]: https://travis-ci.org/vpeschenkov/LetterAvatarKit.svg?branch=master
 [Pods]: https://cocoapod-badges.herokuapp.com/v/LetterAvatarKit/badge.png
-[Swift3.2]: https://img.shields.io/badge/swift-3.2-orange.svg?style=flat
 [Swift4.0]: https://img.shields.io/badge/swift-4.0-orange.svg?style=flat
-
+[Codacy Badge]: https://api.codacy.com/project/badge/Grade/d0f9b1a4ccb64d4aacd18a971e4cf8b7

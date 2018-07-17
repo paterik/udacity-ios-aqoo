@@ -7,7 +7,7 @@ PODS:
   - FoldingCell (3.1.2)
   - GradientLoadingBar (1.1.11)
   - Kingfisher (4.8.0)
-  - LetterAvatarKit (1.1.2)
+  - LetterAvatarKit (1.1.3)
   - MarqueeLabel/Swift (3.1.6)
   - NotificationBannerSwift (1.6.3):
     - MarqueeLabel/Swift
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   FoldingCell: e9b02668b89af673c377cb9560edcc4c6b293a95
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
-  LetterAvatarKit: 50af51c201d935dd868c7e53db5b7b0ef57297cf
+  LetterAvatarKit: 6bd6d30e69d3fdef0a33648812fc7fa119a86efa
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
@@ -86,6 +86,6 @@ SPEC CHECKSUMS:
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
 
-PODFILE CHECKSUM: 1e868e6ad532721a6c19b3c612a680655204ebe6
+PODFILE CHECKSUM: b8556006de08c30e3dafe09f51f0eeb875c37bdd
 
 COCOAPODS: 1.5.3

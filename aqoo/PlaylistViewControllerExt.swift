@@ -1590,7 +1590,7 @@ extension PlaylistViewController {
         playlistRatingLabel.frame = CGRect(x, y, width, height)
         playlistRatingLabel.lineBreakMode = .byWordWrapping
         playlistRatingLabel.textColor = UIColor.white
-        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x12AD5E)
+        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x121212) // UIColor(netHex: 0x12AD5E)
         playlistRatingLabel.textAlignment = .right
         playlistRatingLabel.numberOfLines = 1
         playlistRatingLabel.font = UIFont(name: "Helvetica-Neue", size: 9)
