@@ -43,6 +43,7 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var lblPlaylistMetaPlayCount: UILabel!
     @IBOutlet weak var lblPlaylistMetaTrackCountInDetail: UILabel!
     
+    @IBOutlet weak var hViewPlaylistPlayModeIndicatorInDetail: PlaylistMusicIndicatorView!
     @IBOutlet weak var hViewPlaylistPlayModeIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var hViewCellNormalCategoryFrame: UIView!
     @IBOutlet weak var hViewCellOpenCategoryFrameFirst: UIView!
@@ -119,8 +120,6 @@ class PlaylistTableFoldingCell: FoldingCell {
         }
     }
     
-    
-    
     func resetPlayNormalButton() {
         
         btnPlayNormalMode.backgroundColor = UIColor.clear
@@ -146,6 +145,7 @@ class PlaylistTableFoldingCell: FoldingCell {
         
         didSet {
             hViewPlaylistPlayModeIndicator.state = state
+            hViewPlaylistPlayModeIndicatorInDetail.state = state
         }
     }
 }
