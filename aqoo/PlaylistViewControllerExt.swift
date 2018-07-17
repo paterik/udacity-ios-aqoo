@@ -612,18 +612,29 @@ extension PlaylistViewController {
         var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
         var playlistCoverRawView: UIImageView! = playlistCell.imageViewPlaylistCoverRaw
         var playlistCoverDetailView: UIImageView! = playlistCell.imageViewPlaylistCoverInDetail
-        var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverRawView, playlistCoverView, playlistCoverDetailView)
         
-        // set image cover in foldingCell normalView and set corresponding cacheKey
-        if  coverImageBlock.normalView != nil {
-            playlistCell.imageCacheKeyNormalView = coverImageBlock.normalViewCacheKey
-            playlistCoverView = coverImageBlock.normalView
-        }
-        
-        // set image cover in foldingCell detailView and set cacheKey
-        if  coverImageBlock.detailView != nil {
-            playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
-            playlistCoverDetailView = coverImageBlock.detailView
+        if  playlistItem.coverImagePathOverride != nil {
+            if  let _image = getImageByFileName(playlistItem.coverImagePathOverride!) {
+                playlistCoverView.image = _image
+                playlistCoverDetailView.image = _image
+            }   else {
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted cover image for your playlist")
+            }
+            
+        }   else {
+            var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverRawView, playlistCoverView, playlistCoverDetailView)
+            
+            // set image cover in foldingCell normalView and set corresponding cacheKey
+            if  coverImageBlock.normalView != nil {
+                playlistCell.imageCacheKeyNormalView = coverImageBlock.normalViewCacheKey
+                playlistCoverView = coverImageBlock.normalView
+            }
+            
+            // set image cover in foldingCell detailView and set cacheKey
+            if  coverImageBlock.detailView != nil {
+                playlistCell.imageCacheKeyDetailView = coverImageBlock.detailViewCacheKey
+                playlistCoverDetailView = coverImageBlock.detailView
+            }
         }
     }
     
