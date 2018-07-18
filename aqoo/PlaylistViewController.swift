@@ -164,6 +164,10 @@ class PlaylistViewController: BaseViewController,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        if  segue.identifier == "showPlaylistContentViewController" {
+            
+        }
+        
         if  segue.identifier == "showPlaylistEditViewTabController" {
             if  let editViewTabBarController = segue.destination as? PlaylistEditViewTabBarController {
                 editViewTabBarController.viewControllers?.forEach {
@@ -296,9 +300,7 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnShowPlaylist_v2"),
             forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
                 
-            if  self.debugMode == true {
-                print ("TBL_ACTION_DETECTED : ShowDetails (not-imlemented-yet!)")
-            }
+                self.performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
         }
         
         return [ tblActionShowPlaylistContent!, tblActionEdit!, tblActionHide! ]
@@ -440,5 +442,8 @@ class PlaylistViewController: BaseViewController,
         }
     }
     
-    @IBAction func btnShowPlaylistContentAction(_ sender: Any) { }
+    @IBAction func btnShowPlaylistContentAction(_ sender: Any) {
+        
+        performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
+    }
 }
