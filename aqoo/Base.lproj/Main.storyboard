@@ -911,6 +911,7 @@
                         <outlet property="btnRefreshPlaylist" destination="Mbz-BF-aJM" id="mfo-iz-ttJ"/>
                         <outlet property="tableView" destination="6bT-aE-8Bz" id="zoI-lA-Crz"/>
                         <segue destination="Ps3-kk-VSI" kind="showDetail" identifier="showPlaylistEditViewTabController" id="avI-XT-aBv"/>
+                        <segue destination="c1H-Hc-tHN" kind="showDetail" identifier="showPlaylistContentViewController" id="Rq6-SS-BoJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1145,6 +1146,144 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gcP-FI-ljA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4417" y="210"/>
+        </scene>
+        <!--VCPlaylistContentView-->
+        <scene sceneID="hDd-hA-MiC">
+            <objects>
+                <viewController title="VCPlaylistContentView" id="XdC-SD-d9F" customClass="PlaylistContentViewController" customModule="aqoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UeS-yN-CGS"/>
+                        <viewControllerLayoutGuide type="bottom" id="RIY-zE-ros"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ufh-7q-PYM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lh7-Nw-6h9" userLabel="ui_tbl_playlist_content">
+                                <rect key="frame" x="10" y="210" width="355" height="352"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="352" id="r2a-7n-av9"/>
+                                </constraints>
+                                <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playListContentItem" id="ZKM-PP-FYH">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZKM-PP-FYH" id="UIr-XZ-zCo">
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.074509803921568626" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Uz-M3d" userLabel="ui_view_content_001">
+                                <rect key="frame" x="10" y="64" width="355" height="135"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
+                                        <rect key="frame" x="121" y="8" width="226" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="dDT-Vi-xfA" userLabel="ui_img_playlistCover">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.90588235289999997" green="0.0" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sample_user_01" translatesAutoresizingMaskIntoConstraints="NO" id="sS6-BJ-Fyl" userLabel="ui_img_owner">
+                                        <rect key="frame" x="98" y="50" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyz-Cu-rit" userLabel="ui_btn_playlistPlayNormal">
+                                        <rect key="frame" x="307" y="50" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="icnSetPlayNormal_0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" image="icnSetPlayNormal_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <state key="highlighted" image="icnSetPlayNormal_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <connections>
+                                            <action selector="btnPlayNormalModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="aFs-f3-Dy9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVS-dX-KZ2" userLabel="ui_btn_playlistPlayShuffle">
+                                        <rect key="frame" x="259" y="50" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="icnSetPlayShuffle_0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <state key="highlighted" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <connections>
+                                            <action selector="btnPlayShuffleModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="dr6-mb-PYO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLI-03-vrR" userLabel="ui_btn_playlistPlayRepeat">
+                                        <rect key="frame" x="211" y="50" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="icnSetPlayRepeatAll_0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <state key="highlighted" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
+                                        <connections>
+                                            <action selector="btnPlayRepeatModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="hkT-0n-eqL"/>
+                                        </connections>
+                                    </button>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="imgUITblPlaylistDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="xuT-Gh-Xas" userLabel="ui_img_playlistCoverRawHidden">
+                                        <rect key="frame" x="145" y="50" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="szo-YY-Ec6" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
+                                        <rect key="frame" x="98" y="11" width="15" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="lh7-Nw-6h9" firstAttribute="trailing" secondItem="3m0-Uz-M3d" secondAttribute="trailing" id="Bsz-9U-YDy"/>
+                            <constraint firstItem="3m0-Uz-M3d" firstAttribute="top" secondItem="UeS-yN-CGS" secondAttribute="bottom" id="HjY-HU-LLQ"/>
+                            <constraint firstItem="RIY-zE-ros" firstAttribute="top" secondItem="lh7-Nw-6h9" secondAttribute="bottom" constant="12" id="ejl-mT-zlQ"/>
+                            <constraint firstItem="lh7-Nw-6h9" firstAttribute="centerX" secondItem="Ufh-7q-PYM" secondAttribute="centerX" id="mc4-T4-xG8"/>
+                            <constraint firstItem="lh7-Nw-6h9" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="bottom" constant="11" id="oZV-UQ-uDx"/>
+                            <constraint firstItem="lh7-Nw-6h9" firstAttribute="leading" secondItem="Ufh-7q-PYM" secondAttribute="leadingMargin" constant="-6" id="wSZ-D2-E4R"/>
+                            <constraint firstItem="lh7-Nw-6h9" firstAttribute="leading" secondItem="3m0-Uz-M3d" secondAttribute="leading" id="yaG-wU-635"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Playlist" id="t2x-Qu-BH8">
+                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="U7I-WF-5dN" userLabel="ui_btn_exit_view">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnClosePlayistContentView:" destination="XdC-SD-d9F" id="prA-4J-gJn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="lh7-Nw-6h9" id="ZBN-Gg-N3D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BK6-M2-aBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5712.8000000000002" y="-1271.5142428785607"/>
         </scene>
         <!--NCPlaylistFirstPage-->
         <scene sceneID="jtu-Pf-Fi1">
@@ -1403,6 +1542,28 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3b-7o-8D1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6582" y="1074"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bpu-oB-SP3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="c1H-Hc-tHN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="afw-Wv-mGR">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="XdC-SD-d9F" kind="relationship" relationship="rootViewController" id="ibt-Jf-PYd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xvj-9F-2zM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4417" y="-546"/>
         </scene>
     </scenes>
     <resources>
@@ -2640,6 +2801,7 @@ AAAAAAAAAAAAAAEYfQ
         <image name="imgUITblContentChanged_v1" width="25" height="25"/>
         <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
         <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
+        <image name="sample_cover_01" width="320" height="320"/>
         <image name="sample_cover_02" width="150" height="150"/>
         <image name="sample_user_01" width="100" height="100"/>
     </resources>
