@@ -166,6 +166,10 @@ class PlaylistViewController: BaseViewController,
         
         if  segue.identifier == "showPlaylistContentViewController" {
             
+            if  let playlistContentViewController = segue.destination as? PlaylistContentViewController {
+                playlistContentViewController.playListInCloud = self._playlistInCloudSelected!
+                playlistContentViewController.playListInDb = self._playlistInCacheSelected!
+            }
         }
         
         if  segue.identifier == "showPlaylistEditViewTabController" {

@@ -555,7 +555,7 @@ extension PlaylistViewController {
        _userProfilesHandled = []
        _userProfilesInPlaylistsUnique = []
        _userProfilesInPlaylists = []
-
+        
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
             _playListFingerprint = playListInCloud.getMD5Identifier()
@@ -830,7 +830,32 @@ extension PlaylistViewController {
         }
     }
     
-    func handlePlaylistProfileEnrichtment() {
+    func handlePlaylistExtendedMetaEnrichment() {
+        // dbg: load follower and snapshot id
+        
+        var _playlistInCloudExt: StreamPlayListExtended?
+        
+        if let _playListCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
+            ) {
+            
+            for playlist in _playListCache {
+                
+                if  debugMode == true {
+                    print ("dbg [playlist] : [\(playlist.metaListInternalName)] will be extended")
+                }
+                
+                _playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
+                 if _playlistInCloudExt == nil {
+                    print ("ERROR :: Extended Playlist not found !!!")
+                 }  else {
+                    print ("== done ==")
+                }
+            }
+        }
+    }
+    
+    func handlePlaylistProfileEnrichment() {
         
         // unify current userProfile array, remove double entries
         _userProfilesInPlaylistsUnique = Array(Set(_userProfilesInPlaylists))
@@ -1027,12 +1052,27 @@ extension PlaylistViewController {
         )
     }
     
+    func handlePlaylistExtendedMetaData (
+       _ playListInDb: StreamPlayList) -> StreamPlayListExtended? {
+        
+        for cloudExt in spotifyClient.playlistsInCloudExtended {
+            
+            if cloudExt.playlistIdentifier == playListInDb.getMD5Identifier() {
+                
+               return cloudExt
+            }
+        }
+        
+        return nil
+    }
+    
     func handlePlaylistDbCacheCoreData (
        _ playListInCloud: SPTPartialPlaylist,
        _ playListIndex: Int,
        _ providerTag: String ) {
         
         var _playListInDb: StreamPlayList?
+        var _playlistInCloudExt: StreamPlayListExtended?
         var _playListMetaListHash: String?
         var _playlistIsMine: Bool = false
         var _playlistIsSpotify: Bool = false
@@ -1201,7 +1241,8 @@ extension PlaylistViewController {
                     // evaluate list extension completion and execute event signal after final cache item was handled
                     if  playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                         self.handlePlaylistDbCacheCoreDataOrphans()
-                        self.handlePlaylistProfileEnrichtment()
+                        self.handlePlaylistProfileEnrichment()
+                        self.handlePlaylistExtendedMetaEnrichment()
                     }
                 }
             }

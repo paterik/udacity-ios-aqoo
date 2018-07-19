@@ -16,6 +16,9 @@ class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
                                      UITableViewDelegate {
     
+    var playListInDb: StreamPlayList?
+    var playListInCloud: SPTPartialPlaylist?
+    
     var fruits = ["Apple", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry",
                   "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit",
                   "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango",
@@ -47,6 +50,11 @@ class PlaylistContentViewController: BaseViewController,
     override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
+    }
+    
+    func loadPlaylistTracks() {
+        
+        
     }
     
     //
