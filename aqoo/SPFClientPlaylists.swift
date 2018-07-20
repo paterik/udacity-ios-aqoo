@@ -20,22 +20,20 @@ class SPFClientPlaylists: NSObject {
     var playListHashesInCloud = [String]()
     var playListHashesInCache = [String]()
     var playListDefaultImage: UIImage?
+    var playlistInCloudExtendedHandled: Int = 0
     
     func handlePlaylistTracks(_ playistItems : [SPTPartialPlaylist], _ accessToken: String ) {
         
         for _playlist in playistItems  {
-            
-            let stringFromUrl = _playlist.uri.absoluteString
-            let uri = URL(string: stringFromUrl)
+
+            let uri = URL(string: _playlist.uri.absoluteString)
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
             SPTPlaylistSnapshot.playlist(withURI: uri, accessToken: accessToken) {
                 (error, snap) in
                 
-                print ("== try to handle: \(_playlist.name!)")
-                
+                self.playlistInCloudExtendedHandled += 1
                 if  let _snapshot = snap as? SPTPlaylistSnapshot {
                     
-                    print ("   handle:okay")
                     var _playlistsExtended = StreamPlayListExtended(
                         _playlist.name!,
                         _playlist.getMD5Identifier(),
@@ -43,9 +41,14 @@ class SPFClientPlaylists: NSObject {
                         _snapshot.followerCount)
                     
                     self.playlistsInCloudExtended.append(_playlistsExtended)
-                }   else {
                     
-                    print ("    error!")
+                    if self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {
+                        // all playlist items handled? Send completion call ...
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistMetaExtendLoadCompleted),
+                            object: self
+                        )
+                    }
                 }
             }
         }

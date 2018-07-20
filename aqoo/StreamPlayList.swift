@@ -14,7 +14,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var owner: String
     @NSManaged var ownerSharingURL: String
     @NSManaged var ownerImageURL: String
-    @NSManaged var ownerFollowerCount: Int64
+    @NSManaged var ownerFollowerCount: Int
     
     @NSManaged var trackCount: Int32
     @NSManaged var trackCountOld: Int32
@@ -50,20 +50,20 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var metaListRatingOverall: Float
     
     @NSManaged var metaListNameOrigin: String
+    @NSManaged var metaListSnapshotId: String
+    @NSManaged var metaListSnapshotDate: Date?
     
     @NSManaged var metaListHash: String
     @NSManaged var metaLastListenedAt: Date?
 
     @NSManaged var metaMediaRessourcesArray: NSArray?
     
-    @NSManaged var metaTagsArray: NSArray?
-    
     @NSManaged var metaNumberOfShares: Int64
     @NSManaged var metaNumberOfUpdates: Int64
     @NSManaged var metaNumberOfPlayed: Int64
     @NSManaged var metaNumberOfPlayedPartly: Int64
     @NSManaged var metaNumberOfPlayedCompletely: Int64
-    @NSManaged var metaNumberOfFollowers: Int64
+    @NSManaged var metaNumberOfFollowers: Int
     
     //
     // this property will be used as playmode flag for currently played playlists
@@ -107,10 +107,5 @@ extension StreamPlayList {
     var imageList: [String] {
         get { return metaMediaRessourcesArray as? Array<String> ?? [] }
         set { metaMediaRessourcesArray = newValue as NSArray }
-    }
-    
-    var tagList: [String] {
-        get { return metaTagsArray as? Array<String> ?? [] }
-        set { metaTagsArray = newValue as NSArray }
     }
 }

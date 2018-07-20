@@ -8,6 +8,31 @@
 
 import Foundation
 
+extension Int {
+    // max: 2.147.483.647
+    var hrFormatted: String {
+        
+        if  self >= 1000, self <= 999999 {
+            return String(format: "%.1dk", locale: Locale.current, self / 1000)
+        }
+        
+        if  self > 999999 {
+            return String(format: "%.1dM", locale: Locale.current, self / 1000000)
+        }
+        
+        // stop handling numbers beyond type maximum ;)
+        if  self >= 2147483647 {
+            return "∞"
+        }
+        
+        if  self == 0 {
+            return "-"
+        }
+        
+        return String(format: "%.0d", locale: Locale.current, self)
+    }
+}
+
 extension Int32 {
     // max: 2.147.483.647
     var hrFormatted: String {

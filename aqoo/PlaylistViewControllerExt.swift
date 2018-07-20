@@ -36,6 +36,12 @@ extension PlaylistViewController {
         )
         
         NotificationCenter.default.addObserver(
+            self, selector: #selector(self.setupUILoadMetaExtendedPlaylists),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistMetaExtendLoadCompleted),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadExtendedPlaylists),
             name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
@@ -541,6 +547,12 @@ extension PlaylistViewController {
     }
     
     @objc
+    func setupUILoadMetaExtendedPlaylists() {
+        
+        handlePlaylistExtendedMetaEnrichment()
+    }
+    
+    @objc
     func setupUILoadCloudPlaylists() {
         
         var _playListFingerprint: String!
@@ -831,27 +843,45 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistExtendedMetaEnrichment() {
-        // dbg: load follower and snapshot id
-        
-        var _playlistInCloudExt: StreamPlayListExtended?
-        
-        if let _playListCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
-            ) {
-            
-            for playlist in _playListCache {
+
+        for playlist in spotifyClient.playlistsInCache {
+
+            CoreStore.perform(
                 
-                if  debugMode == true {
-                    print ("dbg [playlist] : [\(playlist.metaListInternalName)] will be extended")
-                }
+                asynchronous: { (transaction) -> Void in
+                    
+                    guard let playlistToUpdate = transaction.fetchOne(
+                        From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
+                        as? StreamPlayList else {
+                            self.handleErrorAsDialogMessage(
+                                "Cache Error", "unable to fetch \(playlist.metaListInternalName) from local cache"
+                            );   return
+                    }
+                    
+                    guard let _playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
+                        as? StreamPlayListExtended else {
+                        self.handleErrorAsDialogMessage(
+                            "Cache Error", "unable to fetch playlistMetaBlock from local cache"
+                        );   return
+                    }
+                    
+                    playlistToUpdate.metaNumberOfFollowers = _playlistInCloudExt.playlistFollowerCount!
+                    playlistToUpdate.metaListSnapshotId = _playlistInCloudExt.playlistSnapshotId!
+                    playlistToUpdate.metaListSnapshotDate = Date()
+                    
+                },
                 
-                _playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
-                 if _playlistInCloudExt == nil {
-                    print ("ERROR :: Extended Playlist not found !!!")
-                 }  else {
-                    print ("== done ==")
+                completion: { (result) -> Void in
+                    
+                    switch result {
+                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .success(let userInfo):
+                        if  self.debugMode == true {
+                            print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                        }
+                    }
                 }
-            }
+            )
         }
     }
     
@@ -1024,7 +1054,7 @@ extension PlaylistViewController {
                 
                 do {
                     playListInDb.ownerImageURL = userProfileImageURL
-                    playListInDb.ownerFollowerCount = Int64(userProfile.followerCount)
+                    playListInDb.ownerFollowerCount = userProfile.followerCount
                     if  userProfile.sharingURL != nil {
                         playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
                     }
@@ -1242,7 +1272,6 @@ extension PlaylistViewController {
                     if  playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                         self.handlePlaylistDbCacheCoreDataOrphans()
                         self.handlePlaylistProfileEnrichment()
-                        self.handlePlaylistExtendedMetaEnrichment()
                     }
                 }
             }
