@@ -856,10 +856,18 @@ extension PlaylistViewController {
                         
                         guard let playlistToUpdate = transaction.fetchOne(
                             From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
-                            as? StreamPlayList else { return }
+                            as? StreamPlayList else {
+                                self.handleErrorAsDialogMessage(
+                                    "Cache Error", "unable to fetch \(playlist.metaListInternalName) from local cache"
+                                );   return
+                        }
                         
                         guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
-                            as? ProxyStreamPlayListExtended else { return }
+                            as? ProxyStreamPlayListExtended else {
+                                self.handleErrorAsDialogMessage(
+                                    "Proxy Error", "unable to fetch \(playlist.metaListInternalName) from local proxy"
+                                );   return
+                        }
                         
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
