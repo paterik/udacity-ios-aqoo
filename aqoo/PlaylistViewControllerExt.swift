@@ -856,18 +856,10 @@ extension PlaylistViewController {
                         
                         guard let playlistToUpdate = transaction.fetchOne(
                             From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
-                            as? StreamPlayList else {
-                                self.handleErrorAsDialogMessage(
-                                    "Cache Error", "unable to fetch \(playlist.metaListInternalName) from local cache"
-                                );   return
-                        }
+                            as? StreamPlayList else { return }
                         
                         guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
-                            as? ProxyStreamPlayListExtended else {
-                                self.handleErrorAsDialogMessage(
-                                    "Proxy Error", "unable to fetch \(playlist.metaListInternalName) from local proxy"
-                                );   return
-                        }
+                            as? ProxyStreamPlayListExtended else { return }
                         
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
@@ -1651,7 +1643,6 @@ extension PlaylistViewController {
                             }
                         }
                     }
-                    
                 )
             }
         }
@@ -1663,7 +1654,7 @@ extension PlaylistViewController {
         playlistRatingLabel.frame = CGRect(x, y, width, height)
         playlistRatingLabel.lineBreakMode = .byWordWrapping
         playlistRatingLabel.textColor = UIColor.white
-        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x121212) // UIColor(netHex: 0x12AD5E)
+        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x12AD5E) // UIColor(netHex: 0x12AD5E)
         playlistRatingLabel.textAlignment = .right
         playlistRatingLabel.numberOfLines = 1
         playlistRatingLabel.font = UIFont(name: "Helvetica-Neue", size: 9)
@@ -1677,6 +1668,7 @@ extension PlaylistViewController {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
         }
         
+        setupUICollapseAllVisibleOpenCells()
        _playlistChangedItem = playlistItem
     }
 }

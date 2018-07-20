@@ -414,7 +414,7 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
         
-        handlePlaylistHiddenFlag(_playlistInCacheSelected!)
+        handlePlaylistHiddenFlag( _playlistInCacheSelected! )
         setupUICollapseAllVisibleOpenCells()
         tableView.reloadData()
     }

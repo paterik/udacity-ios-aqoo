@@ -27,7 +27,7 @@ class SPFClientPlaylists: NSObject {
        _ accessToken: String ) {
         
         for playlist in playistItems  {
-
+            
             let uri = URL(string: playlist.uri.absoluteString)
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
             SPTPlaylistSnapshot.playlist(withURI: uri, accessToken: accessToken) {
@@ -52,10 +52,8 @@ class SPFClientPlaylists: NSObject {
                     }
                     
                     // handle firstPage objects
-                    for _track in _snapshot.firstTrackPage.items {
-                        
+                    /*for _track in _snapshot.firstTrackPage.items {
                         if let _playlistTrack = _track as? SPTPlaylistTrack {
-                            
                             print("-<0>-[\(playlist.getMD5Identifier())] Track=\(_playlistTrack.name!), \(self.stringFromTimeInterval(interval: _playlistTrack.duration))")
                         }
                     }
@@ -63,7 +61,7 @@ class SPFClientPlaylists: NSObject {
                     // handle all nextPage objects
                     if _snapshot.firstTrackPage.hasNextPage {
                         self.handlePlaylistTracksGetNextPage(playlist, _snapshot.firstTrackPage, accessToken)
-                    }
+                    }*/
                 }
             }
         }
