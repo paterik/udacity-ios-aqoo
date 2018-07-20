@@ -15,7 +15,7 @@ class SPFClientPlaylists: NSObject {
     
     var playlistsInCache = [StreamPlayList]()
     var playlistsInCloud = [SPTPartialPlaylist]()
-    var playlistsInCloudExtended = [StreamPlayListExtended]()
+    var playlistsInCloudExtended = [ProxyStreamPlayListExtended]()
     
     var playListHashesInCloud = [String]()
     var playListHashesInCache = [String]()
@@ -32,18 +32,17 @@ class SPFClientPlaylists: NSObject {
                 (error, snap) in
                 
                 self.playlistInCloudExtendedHandled += 1
+                
                 if  let _snapshot = snap as? SPTPlaylistSnapshot {
                     
-                    var _playlistsExtended = StreamPlayListExtended(
-                        _playlist.name!,
-                        _playlist.getMD5Identifier(),
-                        _snapshot.snapshotId!,
-                        _snapshot.followerCount)
+                    var playlistsExtended = ProxyStreamPlayListExtended(
+                        identifier: _playlist.getMD5Identifier(),
+                        snapshotId: _snapshot.snapshotId!,
+                        followerCount: _snapshot.followerCount
+                    );  self.playlistsInCloudExtended.append(playlistsExtended)
                     
-                    self.playlistsInCloudExtended.append(_playlistsExtended)
-                    
-                    if self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {
-                        // all playlist items handled? Send completion call ...
+                    // all playlist items handled? Send completion call ...
+                    if  self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {                        
                         NotificationCenter.default.post(
                             name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistMetaExtendLoadCompleted),
                             object: self
@@ -72,7 +71,7 @@ class SPFClientPlaylists: NSObject {
                     self.handlePlaylistTracks(_playlists, accessToken)
                     
                     if _nextPage.hasNextPage == false {
-                        // no further entries in pagination? send completion call now ...
+                        // no further entries in pagination? send completion call ...
                         NotificationCenter.default.post(
                             name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistLoadCompleted),
                             object: self
