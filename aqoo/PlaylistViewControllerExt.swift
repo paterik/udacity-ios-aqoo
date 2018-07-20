@@ -852,23 +852,14 @@ extension PlaylistViewController {
                     
                     guard let playlistToUpdate = transaction.fetchOne(
                         From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
-                        as? StreamPlayList else {
-                            self.handleErrorAsDialogMessage(
-                                "Cache Error", "unable to fetch \(playlist.metaListInternalName) from local cache"
-                            );   return
-                    }
+                        as? StreamPlayList else { return }
                     
-                    guard let _playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
-                        as? StreamPlayListExtended else {
-                        self.handleErrorAsDialogMessage(
-                            "Cache Error", "unable to fetch playlistMetaBlock from local cache"
-                        );   return
-                    }
+                    guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
+                        as? ProxyStreamPlayListExtended else { return }
                     
-                    playlistToUpdate.metaNumberOfFollowers = _playlistInCloudExt.playlistFollowerCount!
-                    playlistToUpdate.metaListSnapshotId = _playlistInCloudExt.playlistSnapshotId!
+                    playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
+                    playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
                     playlistToUpdate.metaListSnapshotDate = Date()
-                    
                 },
                 
                 completion: { (result) -> Void in
@@ -1083,7 +1074,7 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistExtendedMetaData (
-       _ playListInDb: StreamPlayList) -> StreamPlayListExtended? {
+       _ playListInDb: StreamPlayList) -> ProxyStreamPlayListExtended? {
         
         for cloudExt in spotifyClient.playlistsInCloudExtended {
             
@@ -1102,7 +1093,6 @@ extension PlaylistViewController {
        _ providerTag: String ) {
         
         var _playListInDb: StreamPlayList?
-        var _playlistInCloudExt: StreamPlayListExtended?
         var _playListMetaListHash: String?
         var _playlistIsMine: Bool = false
         var _playlistIsSpotify: Bool = false
