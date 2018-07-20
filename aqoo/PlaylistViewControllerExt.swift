@@ -1460,13 +1460,14 @@ extension PlaylistViewController {
     func handlePlaylistCellObjectsByTapAction(_ button: UIButton) {
         
         // majic: iterate through all cell views downside (start at tapped button) and try to find the real PlaylistTableFoldingCell
-        guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(where: { $0 is PlaylistTableFoldingCell })
-        else
-        {
-            handleErrorAsDialogMessage(
-                "Error Handling Playback Controls",
-                "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by our palyback events!"
-            );  return
+        guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(
+            where: { $0 is PlaylistTableFoldingCell }
+            ) else
+            {
+                handleErrorAsDialogMessage(
+                    "Error Handling Playback Controls",
+                    "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by playback events!"
+                );  return
         }
         
         // update current selected cell/cache/cloud variable stack
