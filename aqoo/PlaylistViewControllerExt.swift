@@ -844,35 +844,40 @@ extension PlaylistViewController {
     
     func handlePlaylistExtendedMetaEnrichment() {
 
-        for playlist in spotifyClient.playlistsInCache {
-
-            CoreStore.perform(
+        if  let _playListCache = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
+            ) {
+            
+            for playlist in _playListCache {
                 
-                asynchronous: { (transaction) -> Void in
+                CoreStore.perform(
                     
-                    guard let playlistToUpdate = transaction.fetchOne(
-                        From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
-                        as? StreamPlayList else { return }
+                    asynchronous: { (transaction) -> Void in
+                        
+                        guard let playlistToUpdate = transaction.fetchOne(
+                            From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
+                            as? StreamPlayList else { return }
+                        
+                        guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
+                            as? ProxyStreamPlayListExtended else { return }
+                        
+                        playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
+                        playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
+                        playlistToUpdate.metaListSnapshotDate = Date()
+                    },
                     
-                    guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
-                        as? ProxyStreamPlayListExtended else { return }
-                    
-                    playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
-                    playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
-                    playlistToUpdate.metaListSnapshotDate = Date()
-                },
-                
-                completion: { (result) -> Void in
-                    
-                    switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }
-                    case .success(let userInfo):
-                        if  self.debugMode == true {
-                            print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                    completion: { (result) -> Void in
+                        
+                        switch result {
+                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .success(let userInfo):
+                            if  self.debugMode == true {
+                                print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
     

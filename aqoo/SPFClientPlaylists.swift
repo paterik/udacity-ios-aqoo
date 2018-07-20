@@ -22,11 +22,13 @@ class SPFClientPlaylists: NSObject {
     var playListDefaultImage: UIImage?
     var playlistInCloudExtendedHandled: Int = 0
     
-    func handlePlaylistTracks(_ playistItems : [SPTPartialPlaylist], _ accessToken: String ) {
+    func handlePlaylistTracksGetFirstPage(
+       _ playistItems : [SPTPartialPlaylist],
+       _ accessToken: String ) {
         
-        for _playlist in playistItems  {
+        for playlist in playistItems  {
 
-            let uri = URL(string: _playlist.uri.absoluteString)
+            let uri = URL(string: playlist.uri.absoluteString)
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
             SPTPlaylistSnapshot.playlist(withURI: uri, accessToken: accessToken) {
                 (error, snap) in
@@ -36,21 +38,64 @@ class SPFClientPlaylists: NSObject {
                 if  let _snapshot = snap as? SPTPlaylistSnapshot {
                     
                     var playlistsExtended = ProxyStreamPlayListExtended(
-                        identifier: _playlist.getMD5Identifier(),
+                        identifier: playlist.getMD5Identifier(),
                         snapshotId: _snapshot.snapshotId!,
                         followerCount: _snapshot.followerCount
                     );  self.playlistsInCloudExtended.append(playlistsExtended)
                     
                     // all playlist items handled? Send completion call ...
-                    if  self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {                        
+                    if  self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {
                         NotificationCenter.default.post(
                             name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistMetaExtendLoadCompleted),
                             object: self
                         )
                     }
+                    
+                    // handle firstPage objects
+                    for _track in _snapshot.firstTrackPage.items {
+                        
+                        if let _playlistTrack = _track as? SPTPlaylistTrack {
+                            
+                            print("-<0>-[\(playlist.getMD5Identifier())] Track=\(_playlistTrack.name!), \(self.stringFromTimeInterval(interval: _playlistTrack.duration))")
+                        }
+                    }
+                    
+                    // handle all nextPage objects
+                    if _snapshot.firstTrackPage.hasNextPage {
+                        self.handlePlaylistTracksGetNextPage(playlist, _snapshot.firstTrackPage, accessToken)
+                    }
                 }
             }
         }
+    }
+    
+    func handlePlaylistTracksGetNextPage(
+       _ playlist: SPTPartialPlaylist,
+       _ currentPage: SPTListPage,
+       _ accessToken: String) {
+        
+        currentPage.requestNextPage(
+            
+            withAccessToken: accessToken,
+            callback: {
+                
+                ( error, response ) in
+                
+                if  let _nextPage = response as? SPTListPage,
+                    let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
+                    
+                        if let _playlistTrack = _playlistTracks as? SPTPlaylistTrack {
+                            
+                            print("-<n>-[\(playlist.getMD5Identifier())] Track=\(_playlistTrack.name!), \(self.stringFromTimeInterval(interval: _playlistTrack.duration))")
+                        }
+                    
+                    if _nextPage.hasNextPage == false {
+                        print ("-- no more tracks")
+                        
+                    } else { self.handlePlaylistTracksGetNextPage( playlist, _nextPage, accessToken ) }
+                }
+            }
+        )
     }
     
     func handlePlaylistGetNextPage(
@@ -68,7 +113,7 @@ class SPFClientPlaylists: NSObject {
                     let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
                     
                     self.playlistsInCloud.append(contentsOf: _playlists)
-                    self.handlePlaylistTracks(_playlists, accessToken)
+                    self.handlePlaylistTracksGetFirstPage(_playlists, accessToken)
                     
                     if _nextPage.hasNextPage == false {
                         // no further entries in pagination? send completion call ...
@@ -102,7 +147,7 @@ class SPFClientPlaylists: NSObject {
                     let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
                     
                     self.playlistsInCloud = _playlists
-                    self.handlePlaylistTracks(_playlists, accessToken)
+                    self.handlePlaylistTracksGetFirstPage(_playlists, accessToken)
                     
                     if _firstPage.hasNextPage == false {
                         // no further entries in pagination? send completed call!
