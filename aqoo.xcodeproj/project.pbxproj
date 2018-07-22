@@ -15,7 +15,7 @@
 		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
 		B159C3C120FF5A0E007A460E /* PlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */; };
-		B1698D6C2104742000A2CD37 /* ProxStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxStreamPlayListTrack.swift */; };
+		B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
 		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
@@ -99,7 +99,7 @@
 		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
 		B155CD7E200916A600CEC786 /* fluid_slider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = fluid_slider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistContentViewController.swift; sourceTree = "<group>"; };
-		B1698D6B2104742000A2CD37 /* ProxStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxStreamPlayListTrack.swift; sourceTree = "<group>"; };
+		B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListTrack.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
 		B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTriangleView.swift; sourceTree = "<group>"; };
 		B181B06C1F717C8200F29E8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -390,7 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				B1B3E17B210081C000F05ABE /* ProxyStreamPlayListExtended.swift */,
-				B1698D6B2104742000A2CD37 /* ProxStreamPlayListTrack.swift */,
+				B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */,
 			);
 			name = proxy;
 			sourceTree = "<group>";
@@ -766,7 +766,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1B8DD26202E1EE3008CE9EB /* UIView.swift in Sources */,
-				B1698D6C2104742000A2CD37 /* ProxStreamPlayListTrack.swift in Sources */,
+				B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */,
 				B18C61EE20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift in Sources */,
 				B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */,
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,

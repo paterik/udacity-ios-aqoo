@@ -1,5 +1,5 @@
 //
-//  ProxStreamPlayListTrack.swift
+//  ProxyStreamPlayListTrack.swift
 //  aqoo
 //
 //  Created by Patrick Paechnatz on 22.07.18.
@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Spotify
 
-class ProxStreamPlayListTrack {
+class ProxyStreamPlayListTrack {
     
     var playlistIdentifier: String
     var trackIdentifier: String?
@@ -20,6 +21,7 @@ class ProxStreamPlayListTrack {
     var trackNumber: Int
     var discNumber: Int
     var trackName: String
+    var trackArtists: [SPTPartialArtist]
     var albumName: String
     
     init(plIdentifier: String,
@@ -32,6 +34,7 @@ class ProxStreamPlayListTrack {
          tTrackNumber: Int,
          tDiscNumber: Int,
          tName: String,
+         tArtists: [SPTPartialArtist],
          aName: String
          ) {
         
@@ -48,6 +51,7 @@ class ProxStreamPlayListTrack {
         trackNumber = tTrackNumber
         discNumber = tDiscNumber
         trackName = tName
+        trackArtists = tArtists
         albumName = aName
     }
 }
