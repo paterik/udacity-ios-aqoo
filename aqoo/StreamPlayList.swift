@@ -40,6 +40,7 @@ class StreamPlayList: NSManagedObject {
     
     @NSManaged var metaListInternalDescription: String
     @NSManaged var metaListInternalName: String
+    @NSManaged var metaListOverallPlaytimeInSeconds: Int32
     
     //
     // https://www.digitalmusicnews.com/2016/05/17/music-genres-three-attributes/

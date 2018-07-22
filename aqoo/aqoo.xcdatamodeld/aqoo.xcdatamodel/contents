@@ -18,6 +18,7 @@
         <attribute name="metaListInternalDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListInternalName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metaListNameOrigin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metaListOverallPlaytimeInSeconds" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListRatingArousal" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListRatingDepth" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListRatingOverall" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -73,7 +74,7 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="735"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="750"/>
         <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
