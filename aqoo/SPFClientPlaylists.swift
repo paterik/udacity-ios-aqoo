@@ -11,16 +11,101 @@ import Spotify
 
 class SPFClientPlaylists: NSObject {
     
+    //
+    // MARK: Constants (Special)
+    //
+    
+    let debugMode: Bool = true
     let notifier = SPFEventNotifier()
     
+    //
+    // MARK: Variables
+    //
+    
+    // primary api proxy meta objects
     var playlistsInCache = [StreamPlayList]()
     var playlistsInCloud = [SPTPartialPlaylist]()
     var playlistsInCloudExtended = [ProxyStreamPlayListExtended]()
+    var playlistTracksInCloud = [ProxStreamPlayListTrack]()
     
+    // secondary internal proxy meta objects
     var playListHashesInCloud = [String]()
     var playListHashesInCache = [String]()
+    
+    // some helper vars
     var playListDefaultImage: UIImage?
     var playlistInCloudExtendedHandled: Int = 0
+    
+    //
+    // MARK: API Methods
+    //
+    
+    func handlePlaylistTrackByProxy(_ track: SPTPlaylistTrack, _ playlistIdentifier: String) {
+        
+        if track.isPlayable == false { return }
+        
+        if  debugMode == true {
+            var _dateAdded:NSDate = track.addedAt as! NSDate
+            var _dateAddedHR:String = _dateAdded.dateToString(_dateAdded as Date!, "dd.MM.Y hh:mm") as String
+            
+            print("-<n>-[\(playlistIdentifier)] Track=[\(track.name!)]")
+            print("     id = \(track.identifier)")
+            print("     uri_internal = \(track.uri.absoluteString)")
+            print("     duration = \(self.stringFromTimeInterval(interval: track.duration))")
+            print("     accessable = \(track.isPlayable)")
+            print("     explicit = \(track.flaggedExplicit)")
+            print("     popularity = \(track.popularity)")
+            print("     album_name = \(track.album.name!)")
+            print("     album_disc_number = \(track.discNumber)")
+            print("     album_track_number = \(track.trackNumber)")
+            print("     added_at = \(_dateAddedHR)")
+        }
+        
+        var playlistsTrack = ProxStreamPlayListTrack(
+            plIdentifier : playlistIdentifier,
+            tIdentifier : track.identifier,
+            tURIInternal : track.uri,
+            tDuration : track.duration,
+            tExplicit : track.flaggedExplicit,
+            tPopularity : track.popularity,
+            tAddedAt: track.addedAt as! NSDate,
+            tTrackNumber : track.trackNumber,
+            tDiscNumber : track.discNumber,
+            tName : track.name!,
+            aName : track.album.name!
+        );  self.playlistTracksInCloud.append(playlistsTrack)
+    }
+    
+    func handlePlaylistTracksGetNextPage(
+        _ playlist: SPTPartialPlaylist,
+        _ currentPage: SPTListPage,
+        _ accessToken: String) {
+        
+        currentPage.requestNextPage(
+            
+            withAccessToken: accessToken,
+            callback: {
+                
+                ( error, response ) in
+                
+                if  let _nextPage = response as? SPTListPage,
+                    let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
+                    
+                    if  let _playlistTrack = _playlistTracks as? SPTPlaylistTrack {
+                        self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
+                    }
+                    
+                    if _nextPage.hasNextPage == true {
+                        self.handlePlaylistTracksGetNextPage( playlist, _nextPage, accessToken )
+                    }   else {
+                        print ("-- no more tracks (multipage object handled completely)\n")
+                        // send notification event to activate detailView cell controls
+                        // to enable user access playlist meta information ...
+                    }
+                }
+            }
+        )
+    }
     
     func handlePlaylistTracksGetFirstPage(
        _ playistItems : [SPTPartialPlaylist],
@@ -37,6 +122,7 @@ class SPFClientPlaylists: NSObject {
                 
                 if  let _snapshot = snap as? SPTPlaylistSnapshot {
                     
+                    // extend playlist with addtional meta information using proxy collection object
                     var playlistsExtended = ProxyStreamPlayListExtended(
                         identifier: playlist.getMD5Identifier(),
                         snapshotId: _snapshot.snapshotId!,
@@ -51,49 +137,23 @@ class SPFClientPlaylists: NSObject {
                         )
                     }
                     
-                    // handle firstPage objects
-                    /*for _track in _snapshot.firstTrackPage.items {
+                    // handle firstPage track objects
+                    for _track in _snapshot.firstTrackPage.items {
                         if let _playlistTrack = _track as? SPTPlaylistTrack {
-                            print("-<0>-[\(playlist.getMD5Identifier())] Track=\(_playlistTrack.name!), \(self.stringFromTimeInterval(interval: _playlistTrack.duration))")
+                            self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
                         }
                     }
                     
-                    // handle all nextPage objects
+                    // handle all nextPage track objects
                     if _snapshot.firstTrackPage.hasNextPage {
                         self.handlePlaylistTracksGetNextPage(playlist, _snapshot.firstTrackPage, accessToken)
-                    }*/
+                    }   else {
+                        // send notification event to activate detailView cell controls
+                        // to enable user access playlist meta information ...
+                    }
                 }
             }
         }
-    }
-    
-    func handlePlaylistTracksGetNextPage(
-       _ playlist: SPTPartialPlaylist,
-       _ currentPage: SPTListPage,
-       _ accessToken: String) {
-        
-        currentPage.requestNextPage(
-            
-            withAccessToken: accessToken,
-            callback: {
-                
-                ( error, response ) in
-                
-                if  let _nextPage = response as? SPTListPage,
-                    let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
-                    
-                        if let _playlistTrack = _playlistTracks as? SPTPlaylistTrack {
-                            
-                            print("-<n>-[\(playlist.getMD5Identifier())] Track=\(_playlistTrack.name!), \(self.stringFromTimeInterval(interval: _playlistTrack.duration))")
-                        }
-                    
-                    if _nextPage.hasNextPage == false {
-                        print ("-- no more tracks")
-                        
-                    } else { self.handlePlaylistTracksGetNextPage( playlist, _nextPage, accessToken ) }
-                }
-            }
-        )
     }
     
     func handlePlaylistGetNextPage(
@@ -130,8 +190,10 @@ class SPFClientPlaylists: NSObject {
        _ username: String,
        _ accessToken: String) {
         
+        // clear proxy meta collections
         playlistsInCloud.removeAll()
         playlistsInCloudExtended.removeAll()
+        playlistTracksInCloud.removeAll()
         
         SPTPlaylistList.playlists(
             
@@ -159,6 +221,10 @@ class SPFClientPlaylists: NSObject {
             }
         )
     }
+    
+    //
+    // MARK: Helper Methods (internal)
+    //
     
     fileprivate func stringFromTimeInterval(interval: TimeInterval) -> String {
         

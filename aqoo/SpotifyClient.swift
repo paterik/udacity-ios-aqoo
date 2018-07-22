@@ -19,12 +19,6 @@ class SpotifyClient: SPFClientPlaylists {
     static let sharedInstance = SpotifyClient()
     
     //
-    // MARK: Constants (Special)
-    //
-
-    let debugMode: Bool = true
-    
-    //
     // MARK: Constants (Normal)
     //
     
