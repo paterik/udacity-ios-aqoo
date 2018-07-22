@@ -876,6 +876,8 @@ extension PlaylistViewController {
             for playlist in _playListCache {
                 
                 var playlistIdentifier : String = playlist.getMD5Identifier()
+                var trackIdentifier : String
+                var trackInDbCache : StreamPlayListTracks?
                 
                 CoreStore.perform(
                     
@@ -891,14 +893,70 @@ extension PlaylistViewController {
                         guard let playlistTracksInCloud = self.getPlaylistTracksFromProxyCache( playlistIdentifier )
                             as? ([ProxyStreamPlayListTrack], Int) else { return }
                         
+                        // weazL123
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
                         playlistToUpdate.metaListSnapshotDate = Date()
                         playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
                         
-                        for tracks in playlistTracksInCloud.0 {
-                            if  self.debugMode == true {
-                                print ("dbg [playlist] : track = [\(tracks.trackName)]")
+                        for track in playlistTracksInCloud.0 {
+                            trackInDbCache = transaction.fetchOne(
+                                From<StreamPlayListTracks>()
+                                    .where((\StreamPlayListTracks.playlist == playlistToUpdate) &&
+                                           (\StreamPlayListTracks.trackURIInternal == track.trackURIInternal.absoluteString))
+                                
+                            )
+                            
+                            if  trackInDbCache == nil {
+                                
+                                trackInDbCache = transaction.create(Into<StreamPlayListTracks>()) as StreamPlayListTracks
+                                trackInDbCache!.createdAt = Date()
+                                trackInDbCache!.albumName = track.albumName
+                                trackInDbCache!.discNumber = Int16(track.discNumber)
+                                trackInDbCache!.playlist = playlistToUpdate
+                                trackInDbCache!.trackAddedAt = track.trackAddedAt as Date
+                                trackInDbCache!.trackDuration = Int32(track.trackDuration)
+                                trackInDbCache!.trackNumber = Int16(track.trackNumber)
+                                trackInDbCache!.trackExplicit = track.trackExplicit
+                                trackInDbCache!.trackURIInternal = track.trackURIInternal.absoluteString
+                                trackInDbCache!.trackIdentifier = track.trackIdentifier
+                                trackInDbCache!.trackName = track.trackName
+                                trackInDbCache!.trackPopularity = track.trackPopularity
+                                trackInDbCache!.metaTrackArtists = ""
+                                
+                                let playlist = transaction.edit(playlistToUpdate)!
+                                
+                                if  self.debugMode == true {
+                                    print ("dbg [playlist] : track = [\(track.trackName)] NOT found -> CREATED")
+                                }
+                                
+                            }   else {
+                                
+                                if  trackInDbCache!.getMD5Fingerprint() == track.getMD5Fingerprint() {
+                                    if  self.debugMode == true {
+                                        print ("dbg [playlist] : track = [\(track.trackName)] ignored -> NO_CHANGES")
+                                    }
+                                    
+                                }   else {
+                                    
+                                    trackInDbCache!.updatedAt = Date()
+                                    trackInDbCache!.metaNumberOfUpdates += 1
+                                    trackInDbCache!.albumName = track.albumName
+                                    trackInDbCache!.discNumber = Int16(track.discNumber)
+                                    trackInDbCache!.trackAddedAt = track.trackAddedAt as Date
+                                    trackInDbCache!.trackDuration = Int32(track.trackDuration)
+                                    trackInDbCache!.trackNumber = Int16(track.trackNumber)
+                                    trackInDbCache!.trackExplicit = track.trackExplicit
+                                    trackInDbCache!.trackURIInternal = track.trackURIInternal.absoluteString
+                                    trackInDbCache!.trackIdentifier = track.trackIdentifier
+                                    trackInDbCache!.trackName = track.trackName
+                                    trackInDbCache!.trackPopularity = track.trackPopularity
+                                    trackInDbCache!.metaTrackArtists = ""
+                                    
+                                    if  self.debugMode == true {
+                                        print ("dbg [playlist] : track = [\(track.trackName)] found -> UPDATED")
+                                    }
+                                }
                             }
                         }
                     },

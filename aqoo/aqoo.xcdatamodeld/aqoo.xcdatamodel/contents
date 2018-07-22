@@ -64,6 +64,7 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="discNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaListHash" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metaNumberOfUpdates" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="metaTrackArtists" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackAddedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="trackDuration" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -94,8 +95,8 @@
     <elements>
         <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="765"/>
         <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
+        <element name="StreamPlayListTracks" positionX="-54" positionY="135" width="128" height="285"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="StreamProviderConfig" positionX="-63" positionY="135" width="128" height="120"/>
-        <element name="StreamPlayListTracks" positionX="-54" positionY="135" width="128" height="270"/>
     </elements>
 </model>

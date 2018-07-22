@@ -24,4 +24,17 @@ extension PlaylistContentViewController {
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
     }
+    
+    func loadMetaPlaylistTracksFromDb() {
+        
+        playListTracksInCloud = CoreStore.defaultStack.fetchAll(
+            From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
+        )
+        
+        if  playListTracksInCloud != nil {
+            for playlistTrack in playListTracksInCloud! {
+                print (playlistTrack.trackName)
+            }
+        }
+    }
 }

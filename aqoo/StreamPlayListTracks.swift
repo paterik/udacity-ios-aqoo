@@ -14,7 +14,6 @@ class StreamPlayListTracks: NSManagedObject {
     @NSManaged var trackIdentifier: String?
     @NSManaged var trackURIInternal: String
     @NSManaged var trackDuration: Int32
-    
     @NSManaged var trackExplicit: Bool
     @NSManaged var trackPopularity: Double
     @NSManaged var trackAddedAt: Date
@@ -24,6 +23,7 @@ class StreamPlayListTracks: NSManagedObject {
     @NSManaged var albumName: String
     
     @NSManaged var metaTrackArtists: String
+    @NSManaged var metaNumberOfUpdates: Int64
     
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?

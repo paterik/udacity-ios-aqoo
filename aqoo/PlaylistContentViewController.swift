@@ -18,12 +18,7 @@ class PlaylistContentViewController: BaseViewController,
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
-    
-    var fruits = ["Apple", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry",
-                  "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit",
-                  "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango",
-                  "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach",
-                  "Pear", "Pineapple", "Raspberry", "Strawberry"]
+    var playListTracksInCloud: [StreamPlayListTracks]?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -37,6 +32,8 @@ class PlaylistContentViewController: BaseViewController,
         
         setupUIBase()
         setupUITableView()
+        
+        loadMetaPlaylistTracksFromDb()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,16 +49,12 @@ class PlaylistContentViewController: BaseViewController,
         super.viewWillDisappear(animated)
     }
     
-    func loadPlaylistTracks() {
-        
-        
-    }
-    
     //
     // MARK: Class Table Delegates
     //
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return 1
     }
     
@@ -69,7 +62,7 @@ class PlaylistContentViewController: BaseViewController,
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
         
-        return fruits.count
+        return playListTracksInCloud!.count
     }
     
     func tableView(
@@ -80,7 +73,9 @@ class PlaylistContentViewController: BaseViewController,
             withIdentifier: "playListContentItem",
             for: indexPath) as! UITableViewCell
         
-        playlistCell.textLabel?.text = fruits[indexPath.row]
+        let playlistTrackCacheData = playListTracksInCloud![indexPath.row] as StreamPlayListTracks
+        
+        playlistCell.textLabel?.text = playlistTrackCacheData.trackName
         
         return playlistCell
     }

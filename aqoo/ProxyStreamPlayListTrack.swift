@@ -55,3 +55,21 @@ class ProxyStreamPlayListTrack {
         albumName = aName
     }
 }
+
+extension ProxyStreamPlayListTrack {
+    
+    func getMD5Fingerprint() -> String {
+        
+        return String(
+            format: "%@:%@:%@:%@",
+            self.trackName,
+            self.trackURIInternal.absoluteString,
+            "\(self.trackExplicit)",
+            "\(self.trackPopularity)").md5()
+    }
+    
+    func getMD5Identifier() -> String {
+        
+        return trackURIInternal.absoluteString.md5()
+    }
+}

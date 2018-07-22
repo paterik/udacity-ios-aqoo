@@ -165,10 +165,13 @@ class PlaylistViewController: BaseViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "showPlaylistContentViewController" {
-            
-            if  let playlistContentViewController = segue.destination as? PlaylistContentViewController {
-                playlistContentViewController.playListInCloud = self._playlistInCloudSelected!
-                playlistContentViewController.playListInDb = self._playlistInCacheSelected!
+            if  let nvc = segue.destination as? UINavigationController {
+                nvc.viewControllers.forEach {
+                    if  let vc = $0 as? PlaylistContentViewController {
+                        vc.playListInDb = self._playlistInCacheSelected!
+                        vc.playListInCloud = self._playlistInCloudSelected!
+                    }
+                }
             }
         }
         
