@@ -273,6 +273,18 @@ class BaseViewController: UIViewController {
         )
     }
     
+    func getSecondsAsHoursMinutesSeconds (_ seconds : Int) -> (Int, Int, Int) {
+        
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
+    func getSecondsAsHoursMinutesSecondsString (_ seconds:Int) -> String {
+        
+        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
+        
+        return "\(h) hours, \(m) min, \(s) sec"
+    }
+    
     func getHumanReadableDate(_ date : Date) -> String {
         
         var secondsAgo = Int(Date().timeIntervalSince(date))
