@@ -897,8 +897,10 @@ extension PlaylistViewController {
                         playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
                         
                         for tracks in playlistTracksInCloud.0 {
-                            print ("dbg [playlist] : track = [\(tracks.trackName)]")
-                        };  print ("dbg [playlist] : playlist playtime = [\(playlistTracksInCloud.1)]")
+                            if  self.debugMode == true {
+                                print ("dbg [playlist] : track = [\(tracks.trackName)]")
+                            }
+                        }
                     },
                     
                     completion: { (result) -> Void in
