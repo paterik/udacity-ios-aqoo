@@ -16,6 +16,7 @@
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
 		B159C3C120FF5A0E007A460E /* PlaylistContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */; };
 		B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */; };
+		B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
 		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
@@ -100,6 +101,7 @@
 		B155CD7E200916A600CEC786 /* fluid_slider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = fluid_slider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistContentViewController.swift; sourceTree = "<group>"; };
 		B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListTrack.swift; sourceTree = "<group>"; };
+		B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTracks.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
 		B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTriangleView.swift; sourceTree = "<group>"; };
 		B181B06C1F717C8200F29E8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -409,6 +411,7 @@
 				B1D6A3961F910F74006E1DBC /* extension */,
 				B1BD1EE71F778621001FC294 /* StreamPlayList.swift */,
 				B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */,
+				B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */,
 				B1BD1EE91F778646001FC294 /* StreamProvider.swift */,
 				B1A7E0252040C0B100A9805C /* StreamProviderConfig.swift */,
 			);
@@ -772,6 +775,7 @@
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
 				B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */,
+				B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */,
 				B1D33DD820D18B1000DCDC5F /* PlaylistEditViewThirdPage.swift in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
 				B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */,

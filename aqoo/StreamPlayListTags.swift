@@ -7,7 +7,6 @@
 //
 
 import CoreStore
-import CryptoSwift
 
 class StreamPlayListTags: NSManagedObject {
     

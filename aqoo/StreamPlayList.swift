@@ -86,6 +86,8 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var provider: StreamProvider?
     
     @NSManaged var tags: [StreamPlayListTags]?
+    
+    @NSManaged var tracks: [StreamPlayListTracks]?
 }
 
 extension StreamPlayList {
