@@ -706,6 +706,14 @@ extension PlaylistViewController {
             playlistCell.lblPlaylistCreatedAt.alpha = 1.0
             playlistCell.lblPlaylistCreatedAt.text = getHumanReadableDate(playlistCreatedAt)
         }
+        
+        // metaListOverallPlaytimeInSeconds
+        playlistCell.lblPlaylistPlaytimeInDetail.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistPlaytimeInDetail.text = "unknown"
+        if  let playlistOverallPlaytime = playlistItem.metaListOverallPlaytimeInSeconds as? Int32 {
+            playlistCell.lblPlaylistPlaytimeInDetail.alpha = 1.0
+            playlistCell.lblPlaylistPlaytimeInDetail.text = getSecondsAsHoursMinutesSecondsString(Int(playlistOverallPlaytime))
+        }
     }
     
     func handlePlaylistRatingBlockMeta(
@@ -842,6 +850,23 @@ extension PlaylistViewController {
         }
     }
     
+    func getPlaylistTracksFromProxyCache(_ playlistIdentifier: String)
+         -> ([ProxyStreamPlayListTrack], Int) {
+        
+        var availablePlaylistTracks = [ProxyStreamPlayListTrack]()
+        var sumPlaytimeInSeconds = 0
+        
+        for track in spotifyClient.playlistTracksInCloud {
+            
+            if  track.playlistIdentifier == playlistIdentifier {
+                sumPlaytimeInSeconds = sumPlaytimeInSeconds + Int(track.trackDuration) % 1000
+                availablePlaylistTracks.append(track)
+            }
+        }
+        
+        return (availablePlaylistTracks, sumPlaytimeInSeconds % 60)
+    }
+    
     func handlePlaylistExtendedMetaEnrichment() {
 
         if  let _playListCache = CoreStore.defaultStack.fetchAll(
@@ -850,20 +875,30 @@ extension PlaylistViewController {
             
             for playlist in _playListCache {
                 
+                var playlistIdentifier : String = playlist.getMD5Identifier()
+                
                 CoreStore.perform(
                     
                     asynchronous: { (transaction) -> Void in
                         
                         guard let playlistToUpdate = transaction.fetchOne(
-                            From<StreamPlayList>().where(\.metaListHash == playlist.getMD5Identifier()))
+                            From<StreamPlayList>().where(\.metaListHash == playlistIdentifier))
                             as? StreamPlayList else { return }
                         
                         guard let playlistInCloudExt = self.handlePlaylistExtendedMetaData( playlist )
                             as? ProxyStreamPlayListExtended else { return }
                         
+                        guard let playlistTracksInCloud = self.getPlaylistTracksFromProxyCache( playlistIdentifier )
+                            as? ([ProxyStreamPlayListTrack], Int) else { return }
+                        
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
                         playlistToUpdate.metaListSnapshotDate = Date()
+                        playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
+                        
+                        for tracks in playlistTracksInCloud.0 {
+                            print ("dbg [playlist] : track = [\(tracks.trackName)]")
+                        };  print ("dbg [playlist] : playlist playtime = [\(playlistTracksInCloud.1)]")
                     },
                     
                     completion: { (result) -> Void in
@@ -872,7 +907,8 @@ extension PlaylistViewController {
                         case .failure(let error): if self.debugMode == true { print (error) }
                         case .success(let userInfo):
                             if  self.debugMode == true {
-                                print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                                print ("dbg [playlist] = [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                                print ("---")
                             }
                         }
                     }

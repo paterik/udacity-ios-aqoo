@@ -26,7 +26,7 @@ class SPFClientPlaylists: NSObject {
     var playlistsInCache = [StreamPlayList]()
     var playlistsInCloud = [SPTPartialPlaylist]()
     var playlistsInCloudExtended = [ProxyStreamPlayListExtended]()
-    var playlistTracksInCloud = [ProxStreamPlayListTrack]()
+    var playlistTracksInCloud = [ProxyStreamPlayListTrack]()
     
     // secondary internal proxy meta objects
     var playListHashesInCloud = [String]()
@@ -45,11 +45,12 @@ class SPFClientPlaylists: NSObject {
         if track.isPlayable == false { return }
         
         if  debugMode == true {
-            var _dateAdded:NSDate = track.addedAt as! NSDate
-            var _dateAddedHR:String = _dateAdded.dateToString(_dateAdded as Date!, "dd.MM.Y hh:mm") as String
+            var _dateAdded : NSDate = track.addedAt as! NSDate
+            var _dateAddedHR : String = _dateAdded.dateToString(_dateAdded as Date!, "dd.MM.Y hh:mm") as String
             
             print("-<n>-[\(playlistIdentifier)] Track=[\(track.name!)]")
             print("     id = \(track.identifier)")
+            print("     artist = \(track.artists.count)")
             print("     uri_internal = \(track.uri.absoluteString)")
             print("     duration = \(self.stringFromTimeInterval(interval: track.duration))")
             print("     accessable = \(track.isPlayable)")
@@ -61,7 +62,12 @@ class SPFClientPlaylists: NSObject {
             print("     added_at = \(_dateAddedHR)")
         }
         
-        var playlistsTrack = ProxStreamPlayListTrack(
+        var trackArtists = [SPTPartialArtist]()
+        for artist in track.artists {
+            trackArtists.append(artist as! SPTPartialArtist)
+        }
+        
+        var playlistsTrack = ProxyStreamPlayListTrack(
             plIdentifier : playlistIdentifier,
             tIdentifier : track.identifier,
             tURIInternal : track.uri,
@@ -72,6 +78,7 @@ class SPFClientPlaylists: NSObject {
             tTrackNumber : track.trackNumber,
             tDiscNumber : track.discNumber,
             tName : track.name!,
+            tArtists: trackArtists,
             aName : track.album.name!
         );  self.playlistTracksInCloud.append(playlistsTrack)
     }
