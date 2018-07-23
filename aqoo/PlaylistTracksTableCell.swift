@@ -18,6 +18,6 @@ class PlaylistTracksTableCell: UITableViewCell {
     
     @IBOutlet weak var imageViewAlbumCover: UIImageView!
     @IBOutlet weak var imageViewTrackIsExplicit: UIImageView!
-    @IBOutlet weak var imageViewTrackIsPlayingIndicator: UIImageView!
+    @IBOutlet weak var imageViewTrackIsPlayingIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var imageViewTrackIsPlayingSymbol: UIImageView!
 }

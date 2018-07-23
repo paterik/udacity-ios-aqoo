@@ -922,6 +922,8 @@ extension PlaylistViewController {
                                 trackInDbCache!.trackIdentifier = track.trackIdentifier
                                 trackInDbCache!.trackName = track.trackName
                                 trackInDbCache!.trackPopularity = track.trackPopularity
+                                trackInDbCache!.albumCoverLargestImageURL = track.albumCoverLargestImageURL
+                                trackInDbCache!.albumCoverSmallestImageURL = track.albumCoverSmallestImageURL
                                 trackInDbCache!.metaTrackArtists = ""
                                 
                                 let playlist = transaction.edit(playlistToUpdate)!
@@ -951,6 +953,8 @@ extension PlaylistViewController {
                                     trackInDbCache!.trackIdentifier = track.trackIdentifier
                                     trackInDbCache!.trackName = track.trackName
                                     trackInDbCache!.trackPopularity = track.trackPopularity
+                                    trackInDbCache!.albumCoverLargestImageURL = track.albumCoverLargestImageURL
+                                    trackInDbCache!.albumCoverSmallestImageURL = track.albumCoverSmallestImageURL
                                     trackInDbCache!.metaTrackArtists = ""
                                     
                                     if  self.debugMode == true {

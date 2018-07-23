@@ -1169,19 +1169,22 @@
                                 <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playListContentItem" rowHeight="60" id="ZKM-PP-FYH">
-                                        <rect key="frame" x="0.0" y="28" width="355" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playListContentItem" rowHeight="72" id="ZKM-PP-FYH" customClass="PlaylistTracksTableCell" customModule="aqoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZKM-PP-FYH" id="UIr-XZ-zCo">
-                                            <rect key="frame" x="0.0" y="0.0" width="355" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AiZ-ar-Zqg" userLabel="ui_img_playlistCover_bk">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AiZ-ar-Zqg" userLabel="ui_img_playlistCover_bk">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="FPv-Jv-qWj"/>
+                                                        <constraint firstAttribute="height" constant="60" id="n3S-cS-e0Y"/>
+                                                    </constraints>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.72499999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="aat-sa-aqc" userLabel="ui_img_playlistCover">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.72499999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUICoverOverrideDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="aat-sa-aqc" userLabel="ui_img_playlistCover">
                                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                     <color key="backgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -1190,8 +1193,8 @@
                                                         <constraint firstAttribute="width" constant="60" id="yeI-we-owu"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Full Of Tears" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pss-Mf-Cil" userLabel="ui_lbl_trackName">
-                                                    <rect key="frame" x="83" y="7" width="262" height="15.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TrackName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pss-Mf-Cil" userLabel="ui_lbl_trackName">
+                                                    <rect key="frame" x="83" y="7" width="262" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="262" id="62E-ot-i3k"/>
                                                     </constraints>
@@ -1199,7 +1202,7 @@
                                                     <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsE-2D-Tdo" userLabel="ui_lbl_albumName">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsE-2D-Tdo" userLabel="ui_lbl_albumName">
                                                     <rect key="frame" x="68" y="25" width="277" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="277" id="l8a-yo-ezh"/>
@@ -1209,22 +1212,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
-                                                    <rect key="frame" x="68" y="40" width="57" height="16"/>
+                                                    <rect key="frame" x="68" y="44" width="40" height="9"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="Bfk-Ob-FTZ"/>
-                                                        <constraint firstAttribute="width" constant="57" id="ZgZ-5i-kcm"/>
+                                                        <constraint firstAttribute="height" constant="9" id="4Fc-Vx-1qs"/>
+                                                        <constraint firstAttribute="width" constant="40" id="5QK-ap-pNz"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="9"/>
                                                     <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                    <rect key="frame" x="333" y="44" width="12" height="12"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="12" id="C0H-AI-PB8"/>
-                                                        <constraint firstAttribute="width" constant="12" id="Pv2-KT-M9G"/>
-                                                    </constraints>
-                                                </view>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnSetPlayMini_1" translatesAutoresizingMaskIntoConstraints="NO" id="wft-Db-Fnf" userLabel="ui_img_contentStatePlaying">
                                                     <rect key="frame" x="65" y="7" width="15" height="15"/>
                                                     <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1233,42 +1229,86 @@
                                                         <constraint firstAttribute="width" constant="15" id="sii-vF-fSA"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="clip" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RjO-iS-Dfi" userLabel="ui_lbl_playlistTrackIndex">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="GA7-IH-N2E"/>
+                                                        <constraint firstAttribute="width" constant="60" id="YUq-lx-aUD"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="24"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gXh-NR-22Z" userLabel="ui_hview_row_border_bottom">
+                                                    <rect key="frame" x="0.0" y="60" width="355" height="12"/>
+                                                    <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="fdl-PP-vMU"/>
+                                                    </constraints>
+                                                </view>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
+                                                    <rect key="frame" x="333" y="41" width="12" height="12"/>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="m6m-Be-kGR" secondAttribute="trailing" constant="10" id="519-Rg-f5R"/>
+                                                <constraint firstItem="RjO-iS-Dfi" firstAttribute="leading" secondItem="AiZ-ar-Zqg" secondAttribute="leading" id="2C0-vj-FcP"/>
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="5Dx-r5-iPO"/>
-                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="4" id="5E8-r6-CFv"/>
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="top" secondItem="Pss-Mf-Cil" secondAttribute="bottom" constant="2.5" id="7Ey-W6-idE"/>
+                                                <constraint firstItem="gXh-NR-22Z" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="8I4-nX-E0o"/>
+                                                <constraint firstItem="ECg-if-Jtc" firstAttribute="top" secondItem="WsE-2D-Tdo" secondAttribute="bottom" constant="7" id="AS7-ye-HJu"/>
+                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="trailing" secondItem="m6m-Be-kGR" secondAttribute="trailing" id="BbV-Lm-yDA"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="20" symbolic="YES" id="Dz0-eF-oEt"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="5" id="G1M-ZC-hzb"/>
+                                                <constraint firstItem="ECg-if-Jtc" firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" id="Gwx-zg-fAV"/>
+                                                <constraint firstAttribute="bottom" secondItem="gXh-NR-22Z" secondAttribute="bottom" id="HnZ-EK-NMg"/>
+                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" secondItem="RjO-iS-Dfi" secondAttribute="trailing" constant="8" symbolic="YES" id="I0G-bJ-Dra"/>
                                                 <constraint firstAttribute="trailing" secondItem="Pss-Mf-Cil" secondAttribute="trailing" constant="10" id="IMn-Xr-Qwy"/>
+                                                <constraint firstItem="AiZ-ar-Zqg" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="leading" id="Jef-E8-KCH"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" id="LZL-Ex-o7K"/>
+                                                <constraint firstItem="Pss-Mf-Cil" firstAttribute="centerY" secondItem="wft-Db-Fnf" secondAttribute="centerY" id="NWH-J7-zep"/>
+                                                <constraint firstItem="AiZ-ar-Zqg" firstAttribute="bottom" secondItem="aat-sa-aqc" secondAttribute="bottom" id="NhW-JZ-ZcX"/>
                                                 <constraint firstItem="Pss-Mf-Cil" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="Snn-Z6-xAY"/>
-                                                <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="8" id="VPt-gB-Bh3"/>
-                                                <constraint firstAttribute="bottom" secondItem="ECg-if-Jtc" secondAttribute="bottom" constant="4" id="k0G-68-nYu"/>
+                                                <constraint firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="T5f-z7-3hp"/>
+                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" secondItem="ECg-if-Jtc" secondAttribute="leading" id="VzD-82-qiV"/>
+                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" secondItem="AiZ-ar-Zqg" secondAttribute="trailing" constant="8" symbolic="YES" id="Xoi-Ph-Vrb"/>
+                                                <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="333" id="aIa-6J-M9P"/>
+                                                <constraint firstItem="RjO-iS-Dfi" firstAttribute="top" secondItem="aat-sa-aqc" secondAttribute="top" id="asM-tY-38p"/>
+                                                <constraint firstItem="AiZ-ar-Zqg" firstAttribute="top" secondItem="RjO-iS-Dfi" secondAttribute="top" id="fUv-yt-pbL"/>
                                                 <constraint firstAttribute="trailing" secondItem="WsE-2D-Tdo" secondAttribute="trailing" constant="10" id="oK6-IE-0RW"/>
                                                 <constraint firstItem="Pss-Mf-Cil" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="r6E-Vq-NHM"/>
+                                                <constraint firstItem="RjO-iS-Dfi" firstAttribute="bottom" secondItem="AiZ-ar-Zqg" secondAttribute="bottom" id="uRP-u1-A1e"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="xoU-jd-lA0"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="yCy-Eo-9v1"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="20" symbolic="YES" id="zDS-YV-wpf"/>
+                                                <constraint firstItem="m6m-Be-kGR" firstAttribute="top" secondItem="WsE-2D-Tdo" secondAttribute="bottom" constant="4" id="z2r-Cj-DFH"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="imageViewAlbumCover" destination="aat-sa-aqc" id="GM4-fv-721"/>
+                                            <outlet property="imageViewTrackIsPlayingIndicator" destination="m6m-Be-kGR" id="kgj-HW-tl9"/>
+                                            <outlet property="imageViewTrackIsPlayingSymbol" destination="wft-Db-Fnf" id="wXA-lj-TDq"/>
+                                            <outlet property="lblAlbumName" destination="WsE-2D-Tdo" id="BSN-3s-fBm"/>
+                                            <outlet property="lblTrackName" destination="Pss-Mf-Cil" id="46G-Sx-7yz"/>
+                                            <outlet property="lblTrackOverallPlaytime" destination="ECg-if-Jtc" id="ZOx-b8-GMH"/>
+                                            <outlet property="lblTrackPlayIndex" destination="RjO-iS-Dfi" id="Zeu-Oz-MOA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Uz-M3d" userLabel="ui_view_content_001">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Uz-M3d" userLabel="ui_view_content_001" customClass="PlaylistTracksControlView" customModule="aqoo" customModuleProvider="target">
                                 <rect key="frame" x="10" y="64" width="355" height="135"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inception Soundtrack" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PlaylistName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
                                         <rect key="frame" x="143" y="8" width="204" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample_cover_01" translatesAutoresizingMaskIntoConstraints="NO" id="dDT-Vi-xfA" userLabel="ui_img_playlistCover">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUICoverOverrideDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="dDT-Vi-xfA" userLabel="ui_img_playlistCover">
                                         <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
                                         <color key="backgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -1327,9 +1367,8 @@
                                             <action selector="btnPlayRepeatModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="hkT-0n-eqL"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="szo-YY-Ec6" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szo-YY-Ec6" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
                                         <rect key="frame" x="143" y="61" width="18" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hY0-uM-1kf" userLabel="ui_lbl_playlistTrackCount">
@@ -1367,19 +1406,37 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" constant="8" id="01T-Xz-dFh"/>
                                     <constraint firstItem="8zx-30-e3l" firstAttribute="leading" secondItem="hY0-uM-1kf" secondAttribute="trailing" constant="3" id="2ez-kp-n66"/>
+                                    <constraint firstItem="dyz-Cu-rit" firstAttribute="top" secondItem="ui8-3t-AMa" secondAttribute="bottom" constant="22" id="3bc-vB-4EX"/>
                                     <constraint firstAttribute="height" constant="135" id="3rD-15-gmZ"/>
                                     <constraint firstAttribute="bottom" secondItem="wVS-dX-KZ2" secondAttribute="bottom" constant="45" id="8Ty-7U-w5t"/>
                                     <constraint firstAttribute="bottom" secondItem="dyz-Cu-rit" secondAttribute="bottom" constant="45" id="Dcm-NH-2OB"/>
                                     <constraint firstItem="dyz-Cu-rit" firstAttribute="leading" secondItem="wVS-dX-KZ2" secondAttribute="trailing" constant="8" id="GB9-fE-ZXn"/>
+                                    <constraint firstItem="szo-YY-Ec6" firstAttribute="centerY" secondItem="DLI-03-vrR" secondAttribute="centerY" id="Iip-OX-Idy"/>
                                     <constraint firstItem="hY0-uM-1kf" firstAttribute="leading" secondItem="dDT-Vi-xfA" secondAttribute="trailing" constant="8" id="KN3-t5-Ie5"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="topMargin" id="RFP-BD-J1m"/>
                                     <constraint firstItem="tOi-ca-0uG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3m0-Uz-M3d" secondAttribute="leading" constant="20" symbolic="YES" id="Xma-yZ-Ato"/>
                                     <constraint firstAttribute="bottom" secondItem="hY0-uM-1kf" secondAttribute="bottom" constant="8" id="XyY-dr-LqD"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="leading" secondItem="szo-YY-Ec6" secondAttribute="leading" id="Ym4-t8-nxt"/>
                                     <constraint firstAttribute="bottom" secondItem="8zx-30-e3l" secondAttribute="bottom" constant="7" id="gNh-cH-qpL"/>
                                     <constraint firstAttribute="bottom" secondItem="tOi-ca-0uG" secondAttribute="bottom" constant="8" id="gPU-tF-F3d"/>
                                     <constraint firstAttribute="trailing" secondItem="tOi-ca-0uG" secondAttribute="trailing" constant="8" id="gZx-RD-WZH"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" id="hWl-bj-8bX"/>
+                                    <constraint firstItem="DLI-03-vrR" firstAttribute="leading" secondItem="szo-YY-Ec6" secondAttribute="trailing" constant="50" id="hY2-yV-SCC"/>
                                     <constraint firstItem="wVS-dX-KZ2" firstAttribute="leading" secondItem="DLI-03-vrR" secondAttribute="trailing" constant="8" id="qeV-ep-5sp"/>
+                                    <constraint firstItem="hY0-uM-1kf" firstAttribute="top" secondItem="szo-YY-Ec6" secondAttribute="bottom" constant="32" id="uYH-k2-pRV"/>
+                                    <constraint firstItem="szo-YY-Ec6" firstAttribute="leading" secondItem="hY0-uM-1kf" secondAttribute="leading" id="v59-ab-QCx"/>
                                     <constraint firstAttribute="bottom" secondItem="DLI-03-vrR" secondAttribute="bottom" constant="45" id="wrD-R0-EI9"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="btnPlayNormalMode" destination="dyz-Cu-rit" id="rh3-q4-bXi"/>
+                                    <outlet property="btnPlayRepeatMode" destination="DLI-03-vrR" id="ze4-HN-2Ql"/>
+                                    <outlet property="btnPlayShuffleMode" destination="wVS-dX-KZ2" id="BQZ-hh-dce"/>
+                                    <outlet property="imageViewPlaylistCover" destination="dDT-Vi-xfA" id="MFP-tj-3Yo"/>
+                                    <outlet property="imageViewPlaylistIsPlayingIndicator" destination="szo-YY-Ec6" id="Lg1-67-I6w"/>
+                                    <outlet property="lblPlaylistName" destination="ui8-3t-AMa" id="h7v-K7-kOA"/>
+                                    <outlet property="lblPlaylistOverallPlaytime" destination="tOi-ca-0uG" id="kDS-eq-Sl1"/>
+                                    <outlet property="lblPlaylistTrackCount" destination="hY0-uM-1kf" id="gvH-LA-kiI"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1407,6 +1464,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="lh7-Nw-6h9" id="ZBN-Gg-N3D"/>
+                        <outlet property="trackControlView" destination="3m0-Uz-M3d" id="zay-Sn-lDN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BK6-M2-aBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2925,11 +2983,11 @@ NAABGEEAARhGAAEYTgABGFEAARhWAAEYXgABGGEAARhzAAEYdgABGHsAAAAAAAAEAQAAAAAAAABZAAAA
 AAAAAAAAAAAAAAEYfQ
 </mutableData>
         </image>
+        <image name="imgUICoverOverrideDefault_v1" width="127" height="127"/>
         <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
         <image name="imgUITblContentChanged_v1" width="25" height="25"/>
         <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
         <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
-        <image name="sample_cover_01" width="320" height="320"/>
         <image name="sample_cover_02" width="150" height="150"/>
         <image name="sample_user_01" width="100" height="100"/>
     </resources>

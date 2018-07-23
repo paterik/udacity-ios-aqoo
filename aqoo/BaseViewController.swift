@@ -229,7 +229,6 @@ class BaseViewController: UIViewController {
             
             // raw cover image handler (used for sharing and editView)
             handleCoverImageByCache(
-                playlistItem,
                 playlistCoverImageRawView,
                _usedCoverImageURL!,
                _usedRawCoverImageCacheKey!,
@@ -238,7 +237,6 @@ class BaseViewController: UIViewController {
             
             // normal cell view cover image handler
             handleCoverImageByCache(
-                playlistItem,
                 playlistCoverImageNormalView,
                _usedCoverImageURL!,
                _usedNormalCoverImageCacheKey!,
@@ -251,7 +249,6 @@ class BaseViewController: UIViewController {
             // detail cell view cover image handler
             if  playlistCoverImageDetailView != nil {
                 handleCoverImageByCache(
-                    playlistItem,
                     playlistCoverImageDetailView!,
                    _usedCoverImageURL!,
                    _usedDetailCoverImageCacheKey!,
@@ -278,11 +275,18 @@ class BaseViewController: UIViewController {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
-    func getSecondsAsHoursMinutesSecondsString (_ seconds:Int) -> String {
+    func getSecondsAsHoursMinutesSecondsString (_ seconds : Int) -> String {
         
         let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
         
         return "\(h) hours, \(m) min, \(s) sec"
+    }
+    
+    func getSecondsAsHoursMinutesSecondsDigits (_ seconds : Int) -> String {
+        
+        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
+        
+        return String(format: "%02d:%02d:%02d", h, m, s)
     }
     
     func getHumanReadableDate(_ date : Date) -> String {
@@ -345,7 +349,6 @@ class BaseViewController: UIViewController {
     }
     
     func handleCoverImageByCache(
-       _ playlistItem: StreamPlayList,
        _ coverImageView: UIImageView,
        _ coverImageURL: URL,
        _ coverCacheKey: String,
@@ -360,7 +363,6 @@ class BaseViewController: UIViewController {
                 
                 coverImageView.image = _cacheImage
                 if  self.debugKFCMode == true {
-                    print("\n--- KFC :: playlist = [\(playlistItem.metaListInternalName)]")
                     print("--- KFC :: image loaded from cache: \(_cacheImage) [cacheType: \(cacheType)]")
                     print("--- KFC :: image_key = [\(coverCacheKey)]")
                 }

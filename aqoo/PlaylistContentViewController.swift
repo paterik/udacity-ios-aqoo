@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import CryptoSwift
 import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
@@ -20,6 +21,7 @@ class PlaylistContentViewController: BaseViewController,
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
     
+    @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
     
     //
@@ -67,15 +69,52 @@ class PlaylistContentViewController: BaseViewController,
     
     func tableView(
        _ tableView: UITableView,
+         heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 72.0
+    }
+    
+    func tableView(
+       _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+        let playlistTrackCacheData = playListTracksInCloud![indexPath.row] as StreamPlayListTracks
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListContentItem",
-            for: indexPath) as! UITableViewCell
+            for: indexPath) as! PlaylistTracksTableCell
         
-        let playlistTrackCacheData = playListTracksInCloud![indexPath.row] as StreamPlayListTracks
+        playlistCell.lblAlbumName.text = playlistTrackCacheData.albumName
+        playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
+        playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
+        playlistCell.lblTrackOverallPlaytime.text = "00:00:00"
         
-        playlistCell.textLabel?.text = playlistTrackCacheData.trackName
+        /*if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
+            playlistCell.lblTrackOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
+        }*/
+        
+        var playlistCoverView: UIImageView! = playlistCell.imageViewAlbumCover
+        var usedCoverImageCacheKey: String?
+        var usedCoverImageURL: URL?
+        
+        playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
+    
+        // try to bind album cover to track, use avatar (v1) if nothing found
+        if  playlistTrackCacheData.albumCoverLargestImageURL != nil {
+            usedCoverImageURL = URL(string: playlistTrackCacheData.albumCoverLargestImageURL!)
+            usedCoverImageCacheKey = String(format: "a0::%@", playlistTrackCacheData.albumCoverLargestImageURL!).md5()
+        }   else if playlistTrackCacheData.albumCoverSmallestImageURL != nil {
+            usedCoverImageURL = URL(string: playlistTrackCacheData.albumCoverSmallestImageURL!)
+            usedCoverImageCacheKey = String(format: "a1::%@", playlistTrackCacheData.albumCoverSmallestImageURL!).md5()
+        }
+        
+        if  usedCoverImageURL != nil {
+            handleCoverImageByCache(
+                playlistCoverView,
+                usedCoverImageURL!,
+                usedCoverImageCacheKey!,
+                [.transition(.fade(0.1875))]
+            )
+        }
         
         return playlistCell
     }

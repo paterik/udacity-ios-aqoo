@@ -16,6 +16,12 @@ extension PlaylistContentViewController {
  
     func setupUIBase() {
         
+        trackControlView.lblPlaylistName.text = playListInDb!.metaListInternalName
+        trackControlView.lblPlaylistTrackCount.text = String(format: "%D", playListInDb!.trackCount)
+        
+        if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
+            trackControlView.lblPlaylistOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
+        }
     }
     
     func setupUITableView() {
@@ -30,11 +36,5 @@ extension PlaylistContentViewController {
         playListTracksInCloud = CoreStore.defaultStack.fetchAll(
             From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
         )
-        
-        if  playListTracksInCloud != nil {
-            for playlistTrack in playListTracksInCloud! {
-                print (playlistTrack.trackName)
-            }
-        }
     }
 }

@@ -23,6 +23,8 @@ class ProxyStreamPlayListTrack {
     var trackName: String
     var trackArtists: [SPTPartialArtist]
     var albumName: String
+    var albumCoverLargestImageURL: String?
+    var albumCoverSmallestImageURL: String?
     
     init(plIdentifier: String,
          tIdentifier: String?,

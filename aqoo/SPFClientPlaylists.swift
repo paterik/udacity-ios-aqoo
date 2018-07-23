@@ -59,10 +59,15 @@ class SPFClientPlaylists: NSObject {
             print("     album_name = \(track.album.name!)")
             print("     album_disc_number = \(track.discNumber)")
             print("     album_track_number = \(track.trackNumber)")
-            print("     added_at = \(_dateAddedHR)")
+            print("     added_at = \(_dateAddedHR)")            
+            if  track.discNumber != 0 {
+                print("     album_cover_largest_src = \(track.album.largestCover.imageURL.absoluteString)")
+                print("     album_cover_smallest_src = \(track.album.smallestCover.imageURL.absoluteString)")
+            }
         }
         
         var trackArtists = [SPTPartialArtist]()
+        
         for artist in track.artists {
             trackArtists.append(artist as! SPTPartialArtist)
         }
@@ -80,7 +85,15 @@ class SPFClientPlaylists: NSObject {
             tName : track.name!,
             tArtists: trackArtists,
             aName : track.album.name!
-        );  self.playlistTracksInCloud.append(playlistsTrack)
+        )
+        
+        // discNumber = 0 means single song / direct spotify production, no album available
+        if  track.discNumber != 0 {
+            playlistsTrack.albumCoverLargestImageURL = track.album.largestCover.imageURL.absoluteString
+            playlistsTrack.albumCoverSmallestImageURL = track.album.smallestCover.imageURL.absoluteString
+        }
+        
+        self.playlistTracksInCloud.append(playlistsTrack)
     }
     
     func handlePlaylistTracksGetNextPage(
@@ -97,6 +110,7 @@ class SPFClientPlaylists: NSObject {
                 
                 if  let _nextPage = response as? SPTListPage,
                     let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
+                    
                     
                     if  let _playlistTrack = _playlistTracks as? SPTPlaylistTrack {
                         self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )

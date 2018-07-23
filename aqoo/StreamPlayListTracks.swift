@@ -21,6 +21,8 @@ class StreamPlayListTracks: NSManagedObject {
     @NSManaged var discNumber: Int16
     @NSManaged var trackName: String
     @NSManaged var albumName: String
+    @NSManaged var albumCoverLargestImageURL: String?
+    @NSManaged var albumCoverSmallestImageURL: String?
     
     @NSManaged var metaTrackArtists: String
     @NSManaged var metaNumberOfUpdates: Int64
