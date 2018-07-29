@@ -45,12 +45,14 @@ extension PlaylistContentViewController {
             }
             
             // call cover image handler for primary coverImageView
-            handleCoverImageByCache(
-                trackControlView.imageViewPlaylistCover,
-               _usedCoverImageURL!,
-               _usedCoverImageCacheKey!,
-                [ .transition(.fade(0.1875)) ]
-            )
+            if _noCoverImageAvailable == false {
+                handleCoverImageByCache(
+                    trackControlView.imageViewPlaylistCover,
+                    _usedCoverImageURL!,
+                    _usedCoverImageCacheKey!,
+                    [ .transition(.fade(0.1875)) ]
+                )
+            }
         }
         
         // add some additional meta data for our current playlist trackView

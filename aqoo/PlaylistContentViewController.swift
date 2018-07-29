@@ -105,6 +105,12 @@ class PlaylistContentViewController: BaseViewController,
             usedCoverImageCacheKey = String(format: "a1::%@", playlistTrackCacheData.albumCoverSmallestImageURL!).md5()
         }
         
+        // check explicit state of current track and activate icon if needed/required
+        playlistCell.imageViewTrackIsExplicit.isHidden = true
+        if  playlistTrackCacheData.trackExplicit == true {
+            playlistCell.imageViewTrackIsExplicit.isHidden = false
+        }
+        
         if  usedCoverImageURL != nil {
             handleCoverImageByCache(
                 playlistCoverView,
