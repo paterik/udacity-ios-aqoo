@@ -20,4 +20,6 @@ class PlaylistTracksControlView: UIView {
     
     @IBOutlet weak var imageViewPlaylistIsPlayingIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
+    
+    
 }

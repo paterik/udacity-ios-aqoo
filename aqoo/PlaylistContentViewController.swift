@@ -21,6 +21,7 @@ class PlaylistContentViewController: BaseViewController,
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
     
+    @IBOutlet weak var playlistCover: UIImageView!
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
     
