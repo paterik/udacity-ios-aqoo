@@ -133,9 +133,6 @@ class SPFClientPlaylists: NSObject {
        _ playistItems : [SPTPartialPlaylist],
        _ accessToken: String ) {
         
-        // var playlistTracksInCloud = [ProxyStreamPlayListTrack]()
-        // var playlistTracksLastUpdate = Date()
-        
         for playlist in playistItems  {
             
             let uri = URL(string: playlist.uri.absoluteString)

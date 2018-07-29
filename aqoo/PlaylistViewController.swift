@@ -82,6 +82,8 @@ class PlaylistViewController: BaseViewController,
     var playListMenuBasicFilters: MenuView!
     var playListBasicFilterItems = [MenuItem]()
     
+    var playlistInCloudLastLocalUpdate: Date?
+    
     //
     // primary used filter context including title, description, imageKey
     // and corresponding FetchChainBuilder-Call for CoreStore (lazy query)

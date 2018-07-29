@@ -15,6 +15,7 @@ import CryptoSwift
 import Kingfisher
 import NotificationBannerSwift
 import GradientLoadingBar
+import SwiftDate
 
 extension PlaylistViewController {
     
@@ -840,8 +841,21 @@ extension PlaylistViewController {
     func handlePlaylistCloudRefresh() {
         
         if  spotifyClient.isSpotifyTokenValid() {
-            loadProvider ( spotifyClient.spfStreamingProviderDbTag )
             
+            if  playlistInCloudLastLocalUpdate == nil ||
+                Date() >= (playlistInCloudLastLocalUpdate! + _sysPlaylistCacheRefreshEnforce) ||
+                spotifyClient.playlistsInCloud.count == 0 {
+                
+                loadProvider ( spotifyClient.spfStreamingProviderDbTag )
+                playlistInCloudLastLocalUpdate = Date()
+                
+            }   else {
+                
+                if  debugMode == true {
+                    print ("dbg [playlist] : using playlist cache, no update required now")
+                };  return
+ 
+            }
         } else {
             
             if  debugMode == true {
