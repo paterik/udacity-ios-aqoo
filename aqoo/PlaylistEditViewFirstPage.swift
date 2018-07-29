@@ -52,8 +52,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         super.viewWillAppear(animated); UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
         subscribeToKeyboardNotifications()
-        
-        playlistTagsField.beginEditing()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
