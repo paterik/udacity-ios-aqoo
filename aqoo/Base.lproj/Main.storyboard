@@ -1252,14 +1252,14 @@
                                                     <color key="textColor" red="0.50196078430000002" green="0.78823529410000004" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
                                                     <rect key="frame" x="310" y="45" width="35" height="9"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="8CR-7C-j3Z"/>
                                                         <constraint firstAttribute="height" constant="9" id="lrh-GH-2b1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="10"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.78823529410000004" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnSetPlayMini_1" translatesAutoresizingMaskIntoConstraints="NO" id="wft-Db-Fnf" userLabel="ui_img_contentStatePlaying">
