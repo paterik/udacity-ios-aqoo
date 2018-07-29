@@ -87,7 +87,7 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
         playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
         if  let trackDuration = playlistTrackCacheData.trackDuration as? Int32 {
-            playlistCell.lblTrackPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(trackDuration))
+            playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(trackDuration))
         }
         
         var playlistCoverView: UIImageView! = playlistCell.imageViewAlbumCover
