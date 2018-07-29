@@ -111,10 +111,11 @@ class SPFClientPlaylists: NSObject {
                 
                 if  let _nextPage = response as? SPTListPage,
                     let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
-                    
-                    
-                    if  let _playlistTrack = _playlistTracks as? SPTPlaylistTrack {
-                        self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
+                   
+                    for _track in _playlistTracks {
+                        if let _playlistTrack = _track as? SPTPlaylistTrack {
+                            self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
+                        }
                     }
                     
                     if _nextPage.hasNextPage == true {
