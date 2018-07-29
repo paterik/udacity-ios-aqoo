@@ -362,28 +362,6 @@ class PlaylistViewController: BaseViewController,
         },  completion: nil)
     }
     
-    func animateFoldingCell(_ pDuration: TimeInterval) {
-        
-        UIView.animate(withDuration: pDuration, delay: 0.05, options: .curveEaseOut, animations:
-        { () -> Void in
-            
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-            
-        },  completion: { (Bool) -> Void in })
-    }
-    
-    func animateFoldingCellClose(_ pDuration: TimeInterval) {
-        
-        UIView.animate(withDuration: pDuration, delay: 0.00, options: .curveEaseIn, animations:
-        { () -> Void in
-            
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-            
-        },  completion: { (Bool) -> Void in })
-    }
-    
     //
     // MARK: Class IBAction Methods
     //

@@ -119,10 +119,6 @@ class SPFClientPlaylists: NSObject {
                     
                     if _nextPage.hasNextPage == true {
                         self.handlePlaylistTracksGetNextPage( playlist, _nextPage, accessToken )
-                    }   else {
-                        print ("-- no more tracks (multipage object handled completely)\n")
-                        // send notification event to activate detailView cell controls
-                        // to enable user access playlist meta information ...
                     }
                 }
             }
@@ -169,9 +165,6 @@ class SPFClientPlaylists: NSObject {
                     // handle all nextPage track objects
                     if _snapshot.firstTrackPage.hasNextPage {
                         self.handlePlaylistTracksGetNextPage(playlist, _snapshot.firstTrackPage, accessToken)
-                    }   else {
-                        // send notification event to activate detailView cell controls
-                        // to enable user access playlist meta information ...
                     }
                 }
             }

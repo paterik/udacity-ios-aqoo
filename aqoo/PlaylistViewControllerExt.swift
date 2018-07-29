@@ -1571,7 +1571,8 @@ extension PlaylistViewController {
     //
     // try to find corresponding PlaylistTableFoldingCell object to update _playlistInCellSelected [..] more precisely
     //
-    func handlePlaylistCellObjectsByTapAction(_ button: UIButton) {
+    func handlePlaylistCellObjectsByTapAction(
+       _ button: UIButton) {
         
         // majic: iterate through all cell views downside (start at tapped button) and try to find the real PlaylistTableFoldingCell
         guard case let _cell as PlaylistTableFoldingCell = button.ancestors.first(
@@ -1655,7 +1656,8 @@ extension PlaylistViewController {
         }
     }
     
-    func resetPlayModeControls(_ currentCellPlayingHash: String) {
+    func resetPlayModeControls(
+       _ currentCellPlayingHash: String) {
         
         // iterate through all cells-in-playmode and reset corresponding controls
         for playlistCell in _playlistCellsInPlayMode {
@@ -1670,7 +1672,8 @@ extension PlaylistViewController {
     /*
      *  this method will be called if a given cell switched to ative playMode (mode > 0)
      */
-    func handlePlaylistCellsInPlayMode(_ playlistCell: PlaylistTableFoldingCell) {
+    func handlePlaylistCellsInPlayMode(
+       _ playlistCell: PlaylistTableFoldingCell) {
         
         var _inputHash = playlistCell.metaPlaylistInDb!.getMD5Identifier()
         
@@ -1763,9 +1766,14 @@ extension PlaylistViewController {
         }
     }
     
-    func getRatingLabel(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> UILabel {
+    func getRatingLabel(
+       _ x: CGFloat,
+       _ y: CGFloat,
+       _ width: CGFloat,
+       _ height: CGFloat) -> UILabel {
         
         let playlistRatingLabel = UILabel()
+        
         playlistRatingLabel.frame = CGRect(x, y, width, height)
         playlistRatingLabel.lineBreakMode = .byWordWrapping
         playlistRatingLabel.textColor = UIColor.white
@@ -1777,7 +1785,32 @@ extension PlaylistViewController {
         return playlistRatingLabel
     }
     
-    func onPlaylistChanged(_ playlistItem: StreamPlayList ) {
+    func animateFoldingCell(
+       _ pDuration: TimeInterval) {
+        
+        UIView.animate(withDuration: pDuration, delay: 0.05, options: .curveEaseOut, animations:
+            { () -> Void in
+                
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+                
+        },  completion: { (Bool) -> Void in })
+    }
+    
+    func animateFoldingCellClose(
+       _ pDuration: TimeInterval) {
+        
+        UIView.animate(withDuration: pDuration, delay: 0.00, options: .curveEaseIn, animations:
+            { () -> Void in
+                
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+                
+        },  completion: { (Bool) -> Void in })
+    }
+    
+    func onPlaylistChanged(
+       _ playlistItem: StreamPlayList ) {
         
         if  self.debugMode == true {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
