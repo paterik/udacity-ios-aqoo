@@ -881,7 +881,7 @@ extension PlaylistViewController {
             }
         }
         
-        return (availablePlaylistTracks, sumPlaytimeInSeconds % 60)
+        return (availablePlaylistTracks, sumPlaytimeInSeconds)
     }
     
     func handlePlaylistExtendedMetaEnrichment() {
@@ -916,6 +916,7 @@ extension PlaylistViewController {
                         playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
                         
                         for track in playlistTracksInCloud.0 {
+                            
                             trackInDbCache = transaction.fetchOne(
                                 From<StreamPlayListTracks>()
                                     .where((\StreamPlayListTracks.playlist == playlistToUpdate) &&
