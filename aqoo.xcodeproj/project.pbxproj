@@ -23,8 +23,6 @@
 		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
 		B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */; };
-		B189D4F820165E7D005FC677 /* PlaylistEditViewDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189D4F720165E7D005FC677 /* PlaylistEditViewDetailController.swift */; };
-		B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */; };
 		B18C61EE20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
@@ -52,8 +50,6 @@
 		B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */; };
 		B1C4B05320F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C4B05220F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift */; };
 		B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA991FFE84DF008138F1 /* UITableView.swift */; };
-		B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */; };
-		B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */; };
 		B1CDAAA02000D4F5008138F1 /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CDAA9F2000D4F5008138F1 /* NSDate.swift */; };
 		B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */; };
 		B1D33DD020D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D33DCF20D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift */; };
@@ -113,8 +109,6 @@
 		B181B0701F717CA100F29E8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewControllerExt.swift; sourceTree = "<group>"; };
 		B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewControllerExt.swift; sourceTree = "<group>"; };
-		B189D4F720165E7D005FC677 /* PlaylistEditViewDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailController.swift; sourceTree = "<group>"; };
-		B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewDetailControllerExt.swift; sourceTree = "<group>"; };
 		B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistContentViewControllerExt.swift; sourceTree = "<group>"; };
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -148,8 +142,6 @@
 		B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTags.swift; sourceTree = "<group>"; };
 		B1C4B05220F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewUpdateDelegate.swift; sourceTree = "<group>"; };
 		B1CDAA991FFE84DF008138F1 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
-		B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewController.swift; sourceTree = "<group>"; };
-		B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewControllerExt.swift; sourceTree = "<group>"; };
 		B1CDAA9F2000D4F5008138F1 /* NSDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
 		B1CFA8AA1F93971C00F96FAC /* PlaylistTableFoldingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableFoldingCell.swift; sourceTree = "<group>"; };
 		B1D33DCF20D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEditViewTabBarController.swift; sourceTree = "<group>"; };
@@ -294,8 +286,6 @@
 			children = (
 				B189892C1F72B99300516A53 /* extension */,
 				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
-				B1CDAA9B1FFF74B4008138F1 /* PlaylistEditViewController.swift */,
-				B189D4F720165E7D005FC677 /* PlaylistEditViewDetailController.swift */,
 				B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */,
 				B1D33DCF20D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift */,
 				B1D33DD120D17F2D00DCDC5F /* PlaylistEditViewFirstPage.swift */,
@@ -318,8 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
-				B1CDAA9D1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift */,
-				B189D4F920165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift */,
 				B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */,
 				B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */,
 				B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */,
@@ -782,11 +770,9 @@
 				B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */,
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
-				B1CDAA9E1FFF74ED008138F1 /* PlaylistEditViewControllerExt.swift in Sources */,
 				B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */,
 				B1D33DD820D18B1000DCDC5F /* PlaylistEditViewThirdPage.swift in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
-				B1CDAA9C1FFF74B4008138F1 /* PlaylistEditViewController.swift in Sources */,
 				B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */,
 				B1F367F520FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
@@ -803,7 +789,6 @@
 				B1D33DD420D1822400DCDC5F /* BasePlaylistEditViewController.swift in Sources */,
 				B1D33DD620D18AC100DCDC5F /* PlaylistEditViewSecondPage.swift in Sources */,
 				B13DB8DE21062A990013CAC5 /* PlaylistTracksTableCell.swift in Sources */,
-				B189D4F820165E7D005FC677 /* PlaylistEditViewDetailController.swift in Sources */,
 				B1D45005204AC5E300B1BAF4 /* PlaylistMusicIndicatorView.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
 				B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */,
@@ -812,7 +797,6 @@
 				B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */,
 				B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */,
 				B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */,
-				B189D4FA20165ECB005FC677 /* PlaylistEditViewDetailControllerExt.swift in Sources */,
 				B1D45007204AC5F900B1BAF4 /* PlaylistMusicIndicatorContentView.swift in Sources */,
 				B1A7E0262040C0B100A9805C /* StreamProviderConfig.swift in Sources */,
 				B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */,
