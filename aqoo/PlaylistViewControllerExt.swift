@@ -83,7 +83,9 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    func getFilterBlockByIndex(_ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
+    func getFilterBlockByIndex(
+       _ index : Int)
+         -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
             
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
@@ -156,7 +158,9 @@ extension PlaylistViewController {
     //
     // this method will handle main filter menu tap events and notification
     //
-    func menu(_ menu: MenuView, didSelectItemAt index: Int) {
+    func menu(
+       _ menu: MenuView,
+         didSelectItemAt index: Int) {
         
         // fetch logical filterBlock by key selection index
         let filterBlock = getFilterBlockByIndex( index )
@@ -298,7 +302,10 @@ extension PlaylistViewController {
         tableView.reloadData()
     }
     
-    func showFilterNotification(_ title: String, _ description: String, _ imageKey: Int? ) {
+    func showFilterNotification(
+       _ title: String,
+       _ description: String,
+       _ imageKey: Int? ) {
         
         let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
             bannerView.lblTitle.text = title
@@ -388,7 +395,8 @@ extension PlaylistViewController {
     //
     // will be used as primary filter logic (pre)processor and the last method called in this scene
     //
-    func setupUILoadMenuFilterItems(_ menuItems: [MenuItem]) {
+    func setupUILoadMenuFilterItems(
+       _ menuItems: [MenuItem]) {
         
         // finale item allocation for our filterMenu
         playListMenuBasicFilters.items = menuItems
@@ -402,7 +410,8 @@ extension PlaylistViewController {
     }
     
     @objc
-    func setupUILoadUserProfileImages(notification: Notification) {
+    func setupUILoadUserProfileImages(
+       _ notification: Notification) {
         
         guard let userInfo = notification.userInfo,
               let profileUser = userInfo["profileUser"] as? SPTUser,
@@ -436,6 +445,7 @@ extension PlaylistViewController {
                     if let _rawImage = image {
                         
                         self._userProfilesCachedForFilter += 1
+                        
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
                         var profileImageMin = _rawImage.kf.resize(to: self._sysPlaylistFilterOwnerImageSize)
@@ -637,7 +647,12 @@ extension PlaylistViewController {
             }
             
         }   else {
-            var coverImageBlock = getCoverImageViewByCacheModel( playlistItem, playlistCoverRawView, playlistCoverView, playlistCoverDetailView)
+            var coverImageBlock = getCoverImageViewByCacheModel(
+                playlistItem,
+                playlistCoverRawView,
+                playlistCoverView,
+                playlistCoverDetailView
+            )
             
             // set image cover in foldingCell normalView and set corresponding cacheKey
             if  coverImageBlock.normalView != nil {
@@ -693,8 +708,8 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistTimeAndDateMeta(
-        _ playlistCell: PlaylistTableFoldingCell,
-        _ playlistItem: StreamPlayList) {
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
         
         playlistCell.lblPlaylistUpdatedAt.alpha = _sysPlaylistMetaFieldEmptyAlpha
         playlistCell.lblPlaylistUpdatedAt.text = "not yet"
@@ -769,6 +784,7 @@ extension PlaylistViewController {
             ImageCache.default.calculateDiskCacheSize { size in
                 print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
             }
+            
         };  handlePlaylistCloudRefresh()
     }
     
@@ -867,7 +883,8 @@ extension PlaylistViewController {
         }
     }
     
-    func getPlaylistTracksFromProxyCache(_ playlistIdentifier: String)
+    func getPlaylistTracksFromProxyCache(
+       _ playlistIdentifier: String)
          -> ([ProxyStreamPlayListTrack], Int) {
         
         var availablePlaylistTracks = [ProxyStreamPlayListTrack]()
@@ -1153,7 +1170,7 @@ extension PlaylistViewController {
     }
     
     func handlePlaylistDbCacheOwnerProfileData (
-        _ payload: [String: Any]) {
+       _ payload: [String: Any]) {
 
         guard let userProfile = payload["userProfileData"] as? SPTUser,
               let userProfileImageURL = payload["userProfileImageURL"] as? String,
@@ -1417,7 +1434,8 @@ extension PlaylistViewController {
         return nil
     }
     
-    func loadProvider (_ tag: String) {
+    func loadProvider (
+       _ tag: String) {
         
         CoreStore.perform(
             
@@ -1457,7 +1475,8 @@ extension PlaylistViewController {
         )
     }
     
-    func loadProviderPlaylists (_ provider: StreamProvider) {
+    func loadProviderPlaylists (
+       _ provider: StreamProvider) {
         
         if provider.tag != _sysDefaultProviderTag {
             
@@ -1511,7 +1530,8 @@ extension PlaylistViewController {
         )
     }
 
-    func handlePlaylistHiddenFlag(_ playlistInDb: StreamPlayList) {
+    func handlePlaylistHiddenFlag(
+       _ playlistInDb: StreamPlayList) {
         
         var newHiddenState: Bool = !playlistInDb.isPlaylistHidden
         var hiddenStateVerb: String = "Disable"
