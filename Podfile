@@ -23,6 +23,7 @@ def aq_base
     pod 'LetterAvatarKit'
     pod 'Reachability'
     pod 'SwiftRandom'
+    pod 'SwiftDate', '~> 5.0'
 end
 
 def aq_data

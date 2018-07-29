@@ -36,5 +36,9 @@ extension PlaylistContentViewController {
         playListTracksInCloud = CoreStore.defaultStack.fetchAll(
             From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
         )
+        
+        if playListTracksInCloud == nil {
+            print ("NO_DATA!!!")
+        }
     }
 }

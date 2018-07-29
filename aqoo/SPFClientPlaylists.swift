@@ -27,6 +27,7 @@ class SPFClientPlaylists: NSObject {
     var playlistsInCloud = [SPTPartialPlaylist]()
     var playlistsInCloudExtended = [ProxyStreamPlayListExtended]()
     var playlistTracksInCloud = [ProxyStreamPlayListTrack]()
+    var playlistTracksLastUpdate = Date()
     
     // secondary internal proxy meta objects
     var playListHashesInCloud = [String]()
@@ -59,7 +60,7 @@ class SPFClientPlaylists: NSObject {
             print("     album_name = \(track.album.name!)")
             print("     album_disc_number = \(track.discNumber)")
             print("     album_track_number = \(track.trackNumber)")
-            print("     added_at = \(_dateAddedHR)")            
+            print("     added_at = \(_dateAddedHR)")
             if  track.discNumber != 0 {
                 print("     album_cover_largest_src = \(track.album.largestCover.imageURL.absoluteString)")
                 print("     album_cover_smallest_src = \(track.album.smallestCover.imageURL.absoluteString)")
@@ -131,6 +132,9 @@ class SPFClientPlaylists: NSObject {
     func handlePlaylistTracksGetFirstPage(
        _ playistItems : [SPTPartialPlaylist],
        _ accessToken: String ) {
+        
+        // var playlistTracksInCloud = [ProxyStreamPlayListTrack]()
+        // var playlistTracksLastUpdate = Date()
         
         for playlist in playistItems  {
             

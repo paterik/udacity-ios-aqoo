@@ -4,9 +4,9 @@ PODS:
   - CryptoSwift (0.10.0)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.1.2)
+  - FoldingCell (3.1.3)
   - GradientLoadingBar (1.1.11)
-  - Kingfisher (4.8.0)
+  - Kingfisher (4.8.1)
   - LetterAvatarKit (1.1.4)
   - MarqueeLabel/Swift (3.1.6)
   - NotificationBannerSwift (1.6.3):
@@ -24,6 +24,7 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
+  - SwiftDate (5.0.4)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.1.0)
 
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - Reachability
   - SnapKit
   - Spotify-iOS-SDK
+  - SwiftDate (~> 5.0)
   - SwiftRandom
   - WSTagsField (~> 3.1)
 
@@ -63,6 +65,7 @@ SPEC REPOS:
     - Reachability
     - SnapKit
     - Spotify-iOS-SDK
+    - SwiftDate
     - SwiftRandom
     - WSTagsField
 
@@ -71,9 +74,9 @@ SPEC CHECKSUMS:
   CoreStore: 40c48542f6d48b825326fbc3a6f5934e3353533b
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: e9b02668b89af673c377cb9560edcc4c6b293a95
+  FoldingCell: 85e07b84c0fcf6ca05ee9a806f4b529101381ba2
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
-  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   LetterAvatarKit: 47f238b929d99c4216664a6aff151654dcdc71ba
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
@@ -83,9 +86,10 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
+  SwiftDate: d9827f0e7edfeb8be52882beb67e75c773b634c3
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
 
-PODFILE CHECKSUM: b8556006de08c30e3dafe09f51f0eeb875c37bdd
+PODFILE CHECKSUM: 66cfc2f39c1957098b53e2b4df251392c19eddaf
 
 COCOAPODS: 1.5.3
