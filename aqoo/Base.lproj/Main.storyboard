@@ -1311,8 +1311,8 @@
                                             <outlet property="imageViewTrackIsPlayingSymbol" destination="wft-Db-Fnf" id="wXA-lj-TDq"/>
                                             <outlet property="lblAlbumName" destination="WsE-2D-Tdo" id="BSN-3s-fBm"/>
                                             <outlet property="lblTrackName" destination="Pss-Mf-Cil" id="46G-Sx-7yz"/>
-                                            <outlet property="lblTrackOverallPlaytime" destination="ECg-if-Jtc" id="ZOx-b8-GMH"/>
                                             <outlet property="lblTrackPlayIndex" destination="RjO-iS-Dfi" id="Zeu-Oz-MOA"/>
+                                            <outlet property="lblTrackPlaytime" destination="ECg-if-Jtc" id="irY-Wm-94c"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1450,6 +1450,7 @@
                                     <outlet property="btnPlayNormalMode" destination="dyz-Cu-rit" id="rh3-q4-bXi"/>
                                     <outlet property="btnPlayRepeatMode" destination="DLI-03-vrR" id="ze4-HN-2Ql"/>
                                     <outlet property="btnPlayShuffleMode" destination="wVS-dX-KZ2" id="BQZ-hh-dce"/>
+                                    <outlet property="imageViewPlaylistCover" destination="dDT-Vi-xfA" id="Q65-UA-4Xc"/>
                                     <outlet property="imageViewPlaylistIsPlayingIndicator" destination="szo-YY-Ec6" id="Lg1-67-I6w"/>
                                     <outlet property="lblPlaylistName" destination="ui8-3t-AMa" id="h7v-K7-kOA"/>
                                     <outlet property="lblPlaylistOverallPlaytime" destination="tOi-ca-0uG" id="kDS-eq-Sl1"/>
@@ -1478,7 +1479,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="playlistCover" destination="dDT-Vi-xfA" id="6m8-Ri-zpW"/>
                         <outlet property="tableView" destination="lh7-Nw-6h9" id="ZBN-Gg-N3D"/>
                         <outlet property="trackControlView" destination="3m0-Uz-M3d" id="zay-Sn-lDN"/>
                     </connections>

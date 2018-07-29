@@ -21,7 +21,6 @@ class PlaylistContentViewController: BaseViewController,
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
     
-    @IBOutlet weak var playlistCover: UIImageView!
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -87,11 +86,9 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.lblAlbumName.text = playlistTrackCacheData.albumName
         playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
         playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
-        playlistCell.lblTrackOverallPlaytime.text = "00:00:00"
-        
-        /*if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
-            playlistCell.lblTrackOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
-        }*/
+        if  let trackDuration = playlistTrackCacheData.trackDuration as? Int32 {
+            playlistCell.lblTrackPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(trackDuration))
+        }
         
         var playlistCoverView: UIImageView! = playlistCell.imageViewAlbumCover
         var usedCoverImageCacheKey: String?

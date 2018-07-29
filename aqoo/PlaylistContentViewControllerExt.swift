@@ -23,7 +23,7 @@ extension PlaylistContentViewController {
         // try to bound cover image using user generated image (cover override)
         if  playListInDb!.coverImagePathOverride != nil {
             if  let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
-                playlistCover.image = _image
+                trackControlView.imageViewPlaylistCover.image = _image
             }   else {
                 handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted cover image for your playlist")
             }
@@ -46,7 +46,7 @@ extension PlaylistContentViewController {
             
             // call cover image handler for primary coverImageView
             handleCoverImageByCache(
-                playlistCover,
+                trackControlView.imageViewPlaylistCover,
                _usedCoverImageURL!,
                _usedCoverImageCacheKey!,
                 [ .transition(.fade(0.1875)) ]

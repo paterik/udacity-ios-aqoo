@@ -19,7 +19,5 @@ class PlaylistTracksControlView: UIView {
     @IBOutlet weak var btnPlayNormalMode: UIButton!
     
     @IBOutlet weak var imageViewPlaylistIsPlayingIndicator: PlaylistMusicIndicatorView!
-    @IBOutlet weak var imageViewPlaylistCover: UIImageView!
-    
-    
+    @IBOutlet weak var imageViewPlaylistCover: UIImageView!  
 }

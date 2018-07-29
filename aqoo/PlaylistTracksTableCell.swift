@@ -12,8 +12,7 @@ class PlaylistTracksTableCell: UITableViewCell {
     
     @IBOutlet weak var lblAlbumName: UILabel!
     @IBOutlet weak var lblTrackName: UILabel!
-    @IBOutlet weak var lblTrackOverallPlaytime: UILabel!
-    @IBOutlet weak var lblTrackCurrentPlaytime: UILabel!
+    @IBOutlet weak var lblTrackPlaytime: UILabel!
     @IBOutlet weak var lblTrackPlayIndex: UILabel!
     
     @IBOutlet weak var imageViewAlbumCover: UIImageView!
