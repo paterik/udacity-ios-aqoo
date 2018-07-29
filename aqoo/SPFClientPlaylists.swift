@@ -88,7 +88,7 @@ class SPFClientPlaylists: NSObject {
             aName : track.album.name!
         )
         
-        // discNumber = 0 means single song / direct spotify production, no album available
+        // discNumber = 0 means single song / may direct spotify production, no album available
         if  track.discNumber != 0 {
             playlistsTrack.albumCoverLargestImageURL = track.album.largestCover.imageURL.absoluteString
             playlistsTrack.albumCoverSmallestImageURL = track.album.smallestCover.imageURL.absoluteString
@@ -156,15 +156,16 @@ class SPFClientPlaylists: NSObject {
                     }
                     
                     // handle firstPage track objects
-                    for _track in _snapshot.firstTrackPage.items {
+                    let _firstPage : SPTListPage = _snapshot.firstTrackPage
+                    for _track in _firstPage.items {
                         if let _playlistTrack = _track as? SPTPlaylistTrack {
                             self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
                         }
                     }
                     
                     // handle all nextPage track objects
-                    if _snapshot.firstTrackPage.hasNextPage {
-                        self.handlePlaylistTracksGetNextPage(playlist, _snapshot.firstTrackPage, accessToken)
+                    if _firstPage.hasNextPage {
+                        self.handlePlaylistTracksGetNextPage(playlist, _firstPage, accessToken)
                     }
                 }
             }
