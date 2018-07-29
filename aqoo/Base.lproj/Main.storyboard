@@ -1205,7 +1205,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPQ-HX-Qk6" userLabel="ui_img_playlistTrackIndex">
                                                     <rect key="frame" x="0.0" y="31" width="32" height="32"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.62749999999999995" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="8eZ-Tm-i6h" userLabel="ui_img_playlistIdentFlag">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="8eZ-Tm-i6h" userLabel="ui_img_playlistIdentFlag">
                                                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="clip" minimumFontSize="6" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RjO-iS-Dfi" userLabel="ui_lbl_playlistTrackIndex">
@@ -1216,9 +1216,10 @@
                                                                 <constraint firstAttribute="height" constant="9" id="5e9-UZ-hFN"/>
                                                                 <constraint firstAttribute="width" constant="17" id="Ggb-v7-1P9"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="10"/>
-                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="8"/>
+                                                            <color key="textColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <color key="highlightedColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <size key="shadowOffset" width="1" height="0.0"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1239,7 +1240,7 @@
                                                         <constraint firstAttribute="height" constant="16" id="e1U-ih-OQx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsE-2D-Tdo" userLabel="ui_lbl_albumName">
@@ -1248,8 +1249,8 @@
                                                         <constraint firstAttribute="width" constant="248" id="CVE-NF-jp6"/>
                                                         <constraint firstAttribute="height" constant="12" id="H0l-iZ-3Gu"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.78823529410000004" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="8"/>
+                                                    <color key="textColor" red="0.70588235294117641" green="0.70588235294117641" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
