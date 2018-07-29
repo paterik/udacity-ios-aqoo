@@ -1194,7 +1194,7 @@
                                                         <constraint firstAttribute="width" constant="60" id="9b3-kL-h6o"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnTrackIsExplicit" translatesAutoresizingMaskIntoConstraints="NO" id="Wfu-5p-Skj" userLabel="ui_img_playlistTrackIsExplicit">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="icnTrackIsExplicit" translatesAutoresizingMaskIntoConstraints="NO" id="Wfu-5p-Skj" userLabel="ui_img_playlistTrackIsExplicit">
                                                     <rect key="frame" x="71" y="25" width="22" height="15"/>
                                                     <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -1238,18 +1238,28 @@
                                                         <constraint firstAttribute="width" constant="260" id="cvH-0R-fmt"/>
                                                         <constraint firstAttribute="height" constant="16" id="e1U-ih-OQx"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
-                                                    <rect key="frame" x="71" y="45" width="35" height="9"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsE-2D-Tdo" userLabel="ui_lbl_albumName">
+                                                    <rect key="frame" x="97" y="26" width="248" height="12"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="9" id="E2B-mk-gbM"/>
-                                                        <constraint firstAttribute="width" constant="35" id="H8W-8w-wJA"/>
+                                                        <constraint firstAttribute="width" constant="248" id="CVE-NF-jp6"/>
+                                                        <constraint firstAttribute="height" constant="12" id="H0l-iZ-3Gu"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.78823529410000004" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
+                                                    <rect key="frame" x="310" y="45" width="35" height="9"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="8CR-7C-j3Z"/>
+                                                        <constraint firstAttribute="height" constant="9" id="lrh-GH-2b1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="10"/>
-                                                    <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnSetPlayMini_1" translatesAutoresizingMaskIntoConstraints="NO" id="wft-Db-Fnf" userLabel="ui_img_contentStatePlaying">
@@ -1268,41 +1278,29 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                    <rect key="frame" x="333" y="43" width="12" height="12"/>
+                                                    <rect key="frame" x="71" y="43" width="12" height="12"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="12" id="IPV-vj-72D"/>
-                                                        <constraint firstAttribute="width" constant="12" id="joz-36-yis"/>
+                                                        <constraint firstAttribute="width" constant="12" id="Dif-38-dXY"/>
+                                                        <constraint firstAttribute="height" constant="12" id="iRK-gY-1FU"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AlbumName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsE-2D-Tdo" userLabel="ui_lbl_albumName">
-                                                    <rect key="frame" x="97" y="25" width="248" height="12"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="248" id="CVE-NF-jp6"/>
-                                                        <constraint firstAttribute="height" constant="12" id="H0l-iZ-3Gu"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                                    <color key="textColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="Pss-Mf-Cil" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="0eI-Q2-POa"/>
-                                                <constraint firstItem="ECg-if-Jtc" firstAttribute="top" secondItem="Wfu-5p-Skj" secondAttribute="bottom" constant="5" id="3E0-KB-ZlP"/>
                                                 <constraint firstItem="fPQ-HX-Qk6" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="31" id="4a0-mS-Ujc"/>
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="7Nc-DP-3vo"/>
-                                                <constraint firstAttribute="bottom" secondItem="ECg-if-Jtc" secondAttribute="bottom" constant="18" id="8up-PT-KWH"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="20" symbolic="YES" id="9fD-Oc-SKJ"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="top" secondItem="AiZ-ar-Zqg" secondAttribute="bottom" constant="-60" id="ARk-OW-OR2"/>
-                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="17" id="Cxx-UQ-ToL"/>
+                                                <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="7" id="GeC-U4-i2j"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="IKO-sO-Qy7"/>
-                                                <constraint firstAttribute="trailing" secondItem="m6m-Be-kGR" secondAttribute="trailing" constant="10" id="Jdx-IP-sbQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="10" id="Tmu-n5-J2K"/>
                                                 <constraint firstItem="Pss-Mf-Cil" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="YE9-b6-JhM"/>
+                                                <constraint firstAttribute="bottom" secondItem="ECg-if-Jtc" secondAttribute="bottom" constant="18" id="Z1F-Ai-dhl"/>
                                                 <constraint firstItem="AiZ-ar-Zqg" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="ZAK-Xy-zXH"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="4" id="aAg-42-Gag"/>
                                                 <constraint firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="cOT-Bw-hYg"/>
                                                 <constraint firstItem="gXh-NR-22Z" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="dfi-BI-uvO"/>
-                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="top" secondItem="Pss-Mf-Cil" secondAttribute="bottom" constant="2" id="guZ-fF-gyt"/>
+                                                <constraint firstItem="WsE-2D-Tdo" firstAttribute="top" secondItem="Pss-Mf-Cil" secondAttribute="bottom" constant="3" id="guZ-fF-gyt"/>
                                                 <constraint firstItem="AiZ-ar-Zqg" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" id="kJa-Mu-DDq"/>
                                                 <constraint firstAttribute="trailing" secondItem="Pss-Mf-Cil" secondAttribute="trailing" constant="10" id="n9p-b5-VvI"/>
                                                 <constraint firstItem="Wfu-5p-Skj" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="7" id="ohA-8X-LDc"/>
@@ -1310,7 +1308,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="WsE-2D-Tdo" secondAttribute="trailing" constant="10" id="pie-2u-9FV"/>
                                                 <constraint firstItem="fPQ-HX-Qk6" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="tVI-Ez-AsE"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="leading" secondItem="AiZ-ar-Zqg" secondAttribute="trailing" constant="-59" id="tgl-L4-wAQ"/>
-                                                <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="7" id="vcG-R1-gF4"/>
+                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="17" id="wzG-Q3-KFI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.074509803921568626" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="calibratedRGB"/>
