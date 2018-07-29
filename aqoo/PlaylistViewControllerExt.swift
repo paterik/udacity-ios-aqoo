@@ -483,22 +483,24 @@ extension PlaylistViewController {
                     //
                     // update cache entity for this user, add userProfileImageURL and dispatch queue
                     // using side-thread to prevent known async write-through issues inside coreStore
-                    // async-db-calls.
+                    // sync-db-calls.
                     //
                     
                     for playlistInDb in _playListCache {
                         
                         // ignore self owned image profiles (already fetched)
                         if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
-
-                        DispatchQueue.main.async {
-                            self.handlePlaylistDbCacheOwnerProfileData([
-                                "playlist": playlistInDb,
-                                "userProfileName": _userName,
-                                "userProfileImageURL": _userProfileImageURL,
-                                "userProfileData": profileUser
-                            ])
-                        }
+                        self.handlePlaylistDbCacheOwnerProfileData([
+                            "playlist": playlistInDb,
+                            "userProfileName": _userName,
+                            "userProfileImageURL": _userProfileImageURL,
+                            "userProfileData": profileUser
+                            ]
+                        )
+                        
+                        // DispatchQueue.main.async {
+                        //     self.handlePlaylistDbCacheOwnerProfileData ...
+                        // }
                     }
                 }
             }
@@ -853,6 +855,7 @@ extension PlaylistViewController {
                 
                 if  debugMode == true {
                     print ("dbg [playlist] : using playlist cache, no update required now")
+                    tableView.reloadData()
                 };  return
  
             }
@@ -907,7 +910,6 @@ extension PlaylistViewController {
                         guard let playlistTracksInCloud = self.getPlaylistTracksFromProxyCache( playlistIdentifier )
                             as? ([ProxyStreamPlayListTrack], Int) else { return }
                         
-                        // weazL123
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
                         playlistToUpdate.metaListSnapshotDate = Date()
@@ -1817,6 +1819,7 @@ extension PlaylistViewController {
         }
         
         setupUICollapseAllVisibleOpenCells()
+        setupUILoadExtendedPlaylists()
        _playlistChangedItem = playlistItem
     }
 }
