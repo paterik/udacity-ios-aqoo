@@ -175,7 +175,7 @@ extension PlaylistContentViewController {
         trackStartPlaying( currentTrackPosition )
     }
     
-    func trackStartPlaying(
+    func trackStopPlaying(
        _ number: Int) {
         
         if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
@@ -186,12 +186,12 @@ extension PlaylistContentViewController {
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
             if (error != nil) {
-                print (error)
+                self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
             }
         })
     }
     
-    func trackStopPlaying(
+    func trackStartPlaying(
        _ number: Int) {
         
         if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
@@ -209,9 +209,7 @@ extension PlaylistContentViewController {
             startingWithPosition: currentTrackInterval!,
             callback: { (error) in
                 if (error != nil) {
-                    print (error)
-                }   else {
-                    print("playing : \(track.trackName)")
+                    self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
                 }
             }
         )
@@ -223,9 +221,10 @@ extension PlaylistContentViewController {
         trackControlView.btnPlayRepeatMode.isEnabled = active
         trackControlView.btnPlayNormalMode.isEnabled = active
         trackControlView.btnPlayShuffleMode.isEnabled = active
-        trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = active
-        trackControlView.btnPlayNormalMode.isUserInteractionEnabled = active
+        
         trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = active
+        trackControlView.btnPlayNormalMode.isUserInteractionEnabled = active
+        trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = active
     }
 
     func togglePlayMode (
