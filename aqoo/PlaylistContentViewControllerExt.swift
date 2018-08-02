@@ -183,6 +183,12 @@ extension PlaylistContentViewController {
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
         
+        // update local persistance layer for tracks, set track to mode "isPlaying"
+        localPlaylistControls.setTrackInPlayState( track, false )
+        
+        // handle corresponding cell UI
+        handleTrackPlayingCellUI( number, isPlaying: false )
+        
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
             if (error != nil) {
@@ -199,10 +205,17 @@ extension PlaylistContentViewController {
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
         
+        // update local persistance layer for tracks, set track to mode "isPlaying"
+        localPlaylistControls.setTrackInPlayState( track, true )
+        
         currentTrackPlaying  = track
         // (re)evaluate trackInterval
         currentTrackInterval = TimeInterval(currentTrackTimePosition)
         
+        // handle corresponding cell UI
+        handleTrackPlayingCellUI( number, isPlaying: true )
+        
+        // start playback using spotify api call
         localPlayer.player?.playSpotifyURI(
             currentTrackPlaying!.trackURIInternal,
             startingWith: 0,
@@ -259,10 +272,26 @@ extension PlaylistContentViewController {
         
         currentTrackTimePosition += 1
         currentTrackInterval = TimeInterval(currentTrackTimePosition)
+
+        localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
+    }
+    
+    func handleTrackPlayingCellUI(_ number: Int, isPlaying: Bool) {
         
-        print ("__ handle track timer")
-        print ("   track playtime (sec)   : \(currentTrackPlaying!.trackDuration)")
-        print ("   current position (sec) : \(currentTrackTimePosition)\n")
+        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: number, section: 0)) as? PlaylistTracksTableCell else {
+            
+            print ("[ERRLR] can't handle handleTrackPlayingCellUI(), cell not found ... <return>")
+            
+            return
+        }
+        
+        _trackCell.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
+        _trackCell.lblTrackProgressBar.isHidden = !isPlaying
+        _trackCell.state = .stopped
+        
+        if  isPlaying == true {
+           _trackCell.state = .playing
+        }
     }
     
     func resetLocalPlayerMetaSettings() {

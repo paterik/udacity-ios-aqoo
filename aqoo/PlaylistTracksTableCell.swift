@@ -14,9 +14,16 @@ class PlaylistTracksTableCell: UITableViewCell {
     @IBOutlet weak var lblTrackName: UILabel!
     @IBOutlet weak var lblTrackPlaytime: UILabel!
     @IBOutlet weak var lblTrackPlayIndex: UILabel!
-    
+    @IBOutlet weak var lblTrackProgressBar: UILabel!
     @IBOutlet weak var imageViewAlbumCover: UIImageView!
     @IBOutlet weak var imageViewTrackIsExplicit: UIImageView!
     @IBOutlet weak var imageViewTrackIsPlayingIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var imageViewTrackIsPlayingSymbol: UIImageView!
+    
+    var state: PlaylistMusicIndicatorViewState = .stopped {
+        
+        didSet {
+            imageViewTrackIsPlayingIndicator.state = state
+        }
+    }
 }

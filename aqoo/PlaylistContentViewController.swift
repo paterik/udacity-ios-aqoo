@@ -22,7 +22,7 @@ class PlaylistContentViewController: BaseViewController,
     let localPlayer = SPFClientPlayer.sharedInstance
     
     var currentTrackPlaying: StreamPlayListTracks?
-    var currentTrackTimePosition: Int32 = 0
+    var currentTrackTimePosition: Int = 0
     var currentTrackInterval: TimeInterval?
     var currentTrackPosition: Int = 0
     

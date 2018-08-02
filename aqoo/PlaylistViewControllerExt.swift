@@ -959,6 +959,8 @@ extension PlaylistViewController {
                                 trackInDbCache!.albumCoverLargestImageURL = track.albumCoverLargestImageURL
                                 trackInDbCache!.albumCoverSmallestImageURL = track.albumCoverSmallestImageURL
                                 trackInDbCache!.metaTrackArtists = ""
+                                trackInDbCache!.metaTrackIsPlaying = false
+                                trackInDbCache!.metaTrackLastTrackPosition = 0
                                 
                                 let playlist = transaction.edit(playlistToUpdate)!
                                 
@@ -975,8 +977,6 @@ extension PlaylistViewController {
                                     
                                 }   else {
                                     
-                                    trackInDbCache!.updatedAt = Date()
-                                    trackInDbCache!.metaNumberOfUpdates += 1
                                     trackInDbCache!.albumName = track.albumName
                                     trackInDbCache!.discNumber = Int16(track.discNumber)
                                     trackInDbCache!.trackAddedAt = track.trackAddedAt as Date
@@ -989,7 +989,11 @@ extension PlaylistViewController {
                                     trackInDbCache!.trackPopularity = track.trackPopularity
                                     trackInDbCache!.albumCoverLargestImageURL = track.albumCoverLargestImageURL
                                     trackInDbCache!.albumCoverSmallestImageURL = track.albumCoverSmallestImageURL
+                                    trackInDbCache!.metaNumberOfUpdates += 1
                                     trackInDbCache!.metaTrackArtists = ""
+                                    trackInDbCache!.metaTrackIsPlaying = false
+                                    trackInDbCache!.metaTrackLastTrackPosition = 0
+                                    trackInDbCache!.updatedAt = Date()
                                     
                                     if  self.debugMode == true {
                                         print ("dbg [playlist] : track = [\(track.trackName)] found -> UPDATED")

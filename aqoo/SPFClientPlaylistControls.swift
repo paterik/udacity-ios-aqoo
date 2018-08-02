@@ -17,6 +17,46 @@ class SPFClientPlaylistControls {
     
     let debugMode: Bool = true
     
+    func setTrackInPlayState(_ trackInDb : StreamPlayListTracks, _ isPlaying: Bool) {
+        
+        // set new playMode for current track now
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in trackInDb.metaTrackIsPlaying = isPlaying },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : set playState for [\(trackInDb.trackName)] to [\(isPlaying)]")
+                    }
+                }
+            }
+        )
+    }
+    
+    func setTrackTimePositionWhilePlaying(_ trackInDb : StreamPlayListTracks, _ newTrackTimePosition: Int ) {
+        
+        // set new playMode for current track now
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in trackInDb.metaTrackLastTrackPosition = newTrackTimePosition },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo):
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : set timeframe position for [\(trackInDb.trackName)] to [\(newTrackTimePosition)]")
+                    }
+                }
+            }
+        )
+    }
+    
     func setPlayModeOnPlaylist(_ playlistInDb : StreamPlayList, _ newPlayMode: Int16) {
         
         // set new playMode for current playlist now

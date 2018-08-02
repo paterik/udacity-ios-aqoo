@@ -1279,13 +1279,14 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                    <rect key="frame" x="71" y="43" width="12" height="12"/>
+                                                    <rect key="frame" x="67" y="43" width="12" height="12"/>
+                                                    <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="Dif-38-dXY"/>
                                                         <constraint firstAttribute="height" constant="12" id="iRK-gY-1FU"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9Q-Oe-oPR">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9Q-Oe-oPR" userLabel="ui_lbl_trackProgressBar">
                                                     <rect key="frame" x="64" y="58" width="291" height="2"/>
                                                     <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -1301,7 +1302,7 @@
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="7Nc-DP-3vo"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="top" secondItem="AiZ-ar-Zqg" secondAttribute="bottom" constant="-60" id="ARk-OW-OR2"/>
                                                 <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="ByA-3B-wHW"/>
-                                                <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="7" id="GeC-U4-i2j"/>
+                                                <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="3" id="GeC-U4-i2j"/>
                                                 <constraint firstItem="b9Q-Oe-oPR" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leadingMargin" constant="49" id="HWg-Ob-ziG"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="IKO-sO-Qy7"/>
                                                 <constraint firstItem="b9Q-Oe-oPR" firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="SGc-Ej-UQ3"/>
@@ -1337,6 +1338,7 @@
                                             <outlet property="lblTrackName" destination="Pss-Mf-Cil" id="46G-Sx-7yz"/>
                                             <outlet property="lblTrackPlayIndex" destination="RjO-iS-Dfi" id="Zeu-Oz-MOA"/>
                                             <outlet property="lblTrackPlaytime" destination="ECg-if-Jtc" id="irY-Wm-94c"/>
+                                            <outlet property="lblTrackProgressBar" destination="b9Q-Oe-oPR" id="ydz-H8-mG9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

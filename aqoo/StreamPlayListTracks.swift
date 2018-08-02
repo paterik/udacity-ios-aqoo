@@ -26,6 +26,8 @@ class StreamPlayListTracks: NSManagedObject {
     
     @NSManaged var metaTrackArtists: String
     @NSManaged var metaNumberOfUpdates: Int64
+    @NSManaged var metaTrackLastTrackPosition: Int
+    @NSManaged var metaTrackIsPlaying: Bool
     
     @NSManaged var updatedAt: Date?
     @NSManaged var createdAt: Date?
