@@ -17,6 +17,8 @@ class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
                                      UITableViewDelegate {
     
+    let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
+    
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
@@ -127,5 +129,4 @@ class PlaylistContentViewController: BaseViewController,
         
         dismiss(animated: true, completion: nil)
     }
-    
 }

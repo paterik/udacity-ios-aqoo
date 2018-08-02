@@ -92,6 +92,28 @@ class BaseViewController: UIViewController {
     // MARK: Base Methods
     //
     
+    func getPlayModeAsString(_ playModeValue : Int16) -> String {
+        
+        switch playModeValue {
+            case playMode.Default.rawValue:
+                return "Stop"
+            
+            case playMode.PlayNormal.rawValue:
+                return "Normal"
+            
+            case playMode.PlayShuffle.rawValue:
+                return "Shuffle"
+            
+            case playMode.PlayRepeatAll.rawValue:
+                return "Loop"
+            
+            default:
+                return "unknown"
+        }
+        
+        return ""
+    }
+    
     func handleErrorAsDialogMessage(_ errorTitle: String, _ errorMessage: String) {
         
         let alert = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)

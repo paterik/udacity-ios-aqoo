@@ -61,6 +61,75 @@ extension PlaylistContentViewController {
         if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
             trackControlView.lblPlaylistOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
         }
+        
+        trackControlView.btnPlayShuffleMode.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(PlaylistContentViewController.handlePlaylistPlayShuffleMode))
+        )
+        
+        trackControlView.btnPlayNormalMode.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(PlaylistContentViewController.handlePlaylistPlayNormalMode))
+        )
+        
+        trackControlView.btnPlayRepeatMode.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(PlaylistContentViewController.handlePlaylistPlayRepeatMode))
+        )
+    }
+    
+    @objc
+    func handlePlaylistPlayShuffleMode(sender: UITapGestureRecognizer) {
+        
+        if (sender.state != .ended) { return }
+        
+        handlePlaylistPlayMode(playMode.PlayShuffle.rawValue)
+    }
+    
+    @objc
+    func handlePlaylistPlayNormalMode(sender: UITapGestureRecognizer) {
+        
+        if (sender.state != .ended) { return }
+        
+        handlePlaylistPlayMode(playMode.PlayNormal.rawValue)
+    }
+    
+    @objc
+    func handlePlaylistPlayRepeatMode(sender: UITapGestureRecognizer) {
+        
+        if (sender.state != .ended) { return }
+        
+        handlePlaylistPlayMode(playMode.PlayRepeatAll.rawValue)
+    }
+    
+    func handlePlaylistPlayMode(_ usedPlayMode: Int16) {
+        
+        switch usedPlayMode {
+            
+            case playMode.PlayNormal.rawValue:
+                print ("play normal")
+            
+                if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
+                    setPlaylistPlayMode( playMode.PlayNormal.rawValue )
+                }   else {
+                    setPlaylistPlayMode( playMode.Default.rawValue )
+                    
+                };  break
+            
+     
+            case playMode.PlayShuffle.rawValue:
+                print ("play shuffle")
+            
+            case playMode.PlayRepeatAll.rawValue:
+                print ("play repeat")
+            
+            default:
+                print ("unknown")
+        }
+    }
+    
+    func setPlaylistPlayMode(_ usedPlayMode: Int16) {
+        
     }
     
     func setupUITableView() {

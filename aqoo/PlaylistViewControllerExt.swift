@@ -1561,7 +1561,7 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode == true { print (error) }
                 case .success(let userInfo):
                     
-                    self.showUserNotification("\(hiddenStateVerb) \(playlistInDb.metaListInternalName)", hiddenStateInformation, nil)
+                    self.showUserNotification("\(hiddenStateVerb) \(playlistInDb.metaListInternalName)", hiddenStateInformation, nil, 0.9275)
                     self.setupUILoadExtendedPlaylists()
                     
                     if  self.debugMode == true {
@@ -1575,17 +1575,19 @@ extension PlaylistViewController {
     func showUserNotification(
        _ title: String,
        _ description: String,
-       _ iconImageName: String? ) {
+       _ iconImageName: String?,
+       _ duration: TimeInterval) {
         
-        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+        let bannerView = AppBaseNotification.fromNib(nibName: "AppBaseNotification")
         bannerView.lblTitle.text = title
         bannerView.lblSubTitle.text = description
+        
         if  iconImageName != nil {
             bannerView.imgViewNotificationDefault.image = UIImage(named: "\(iconImageName)")
         }
         
         let banner = NotificationBanner(customView: bannerView)
-        banner.duration = 1.1275
+        banner.duration = duration // 0.9275
         banner.onTap = {
             banner.dismiss()
         };  banner.show(bannerPosition: .bottom)
@@ -1741,52 +1743,10 @@ extension PlaylistViewController {
             handlePlaylistCellsInPlayMode( playlistCell )
         }
         
-        // update given playlist - set correspoding playmode now!
-        CoreStore.perform(
-            
-            asynchronous: { (transaction) -> Void in playListInDb.currentPlayMode = newPlayMode },
-            completion: { (result) -> Void in
-                
-                switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
-                case .success(let userInfo):
-                    if  self.debugMode == true {
-                        print ("dbg [playlist] : set playMode for [\(playListInDb.metaListInternalName)] to [\(newPlayMode)]")
-                    }
-                }
-            }
-        )
-        
-        // fetch all (other) playlists with any playmode not equal '0' (not-played) and reset them now!
-        if  let _playListPlayModeCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayList>().where(
-                (\StreamPlayList.provider == _defaultStreamingProvider) &&
-                (\StreamPlayList.metaListHash != playListInDb.metaListHash) &&
-                (\StreamPlayList.currentPlayMode != playMode.Default.rawValue))
-            ) as? [StreamPlayList] {
-            
-            for playlist in _playListPlayModeCache {
-                
-                CoreStore.perform(
-                    
-                    asynchronous: { (transaction) -> Void in
-                        
-                        playlist.currentPlayMode = playMode.Default.rawValue
-                    },
-                    
-                    completion: { (result) -> Void in
-                        
-                        switch result {
-                        case  .failure(let error): if self.debugMode == true { print (error) }
-                        case  .success(let userInfo):
-                            if  self.debugMode == true {
-                                print ("dbg [playlist] : remove playMode for [\(playListInDb.metaListInternalName)] removed")
-                            }
-                        }
-                    }
-                )
-            }
-        }
+        // reset playmode for all (spotify) playlists in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // set new playmode to corresponding playlist now
+        localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
     }
     
     func getRatingLabel(

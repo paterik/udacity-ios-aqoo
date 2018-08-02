@@ -46,6 +46,7 @@ class PlaylistViewController: BaseViewController,
     let _sysImgCacheRevalidateInDays: UInt = 30
     let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
     let _sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475
+    let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     
     //
     // MARK: Constants (normal)

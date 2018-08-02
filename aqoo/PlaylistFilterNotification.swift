@@ -13,34 +13,4 @@ class PlaylistFilterNotification: UIView {
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var lblSubTitle: UILabel!
     @IBOutlet var imgViewNotificationDefault: UIImageView!
-    
-    var notificationTitle: String?
-    var notificationSubTitle: String?
-    
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        initNotificationBox()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        
-        initNotificationBox()
-    }
-
-    func initNotificationBox() {
-        
-        if notificationTitle != nil {
-            lblTitle.text = notificationTitle
-        }
-        
-        if notificationSubTitle != nil {
-            lblSubTitle.text = notificationSubTitle
-        }
-    }
 }
-
-
