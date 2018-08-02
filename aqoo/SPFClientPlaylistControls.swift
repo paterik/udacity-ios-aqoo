@@ -39,10 +39,22 @@ class SPFClientPlaylistControls {
     
     func setTrackTimePositionWhilePlaying(_ trackInDb : StreamPlayListTracks, _ newTrackTimePosition: Int ) {
         
-        // set new playMode for current track now
+        // set new time position for current track
         CoreStore.perform(
             
-            asynchronous: { (transaction) -> Void in trackInDb.metaTrackLastTrackPosition = newTrackTimePosition },
+            asynchronous: { (transaction) -> Void in
+                
+                guard let track = transaction.fetchOne(
+                    From<StreamPlayListTracks>()
+                        .where(\.trackIdentifier == trackInDb.trackIdentifier)
+                    ) as? StreamPlayListTracks else {
+                    
+                        print ("__ track not found :(")
+                        return
+                }
+                
+                track.metaTrackLastTrackPosition = newTrackTimePosition
+            },
             completion: { (result) -> Void in
                 
                 switch result {
