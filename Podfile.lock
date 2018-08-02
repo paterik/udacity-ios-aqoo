@@ -1,10 +1,10 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.4)
   - CoreStore (5.1.1)
-  - CryptoSwift (0.10.0)
+  - CryptoSwift (0.11.0)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.1.3)
+  - FoldingCell (3.1.4)
   - GradientLoadingBar (1.1.11)
   - Kingfisher (4.8.1)
   - LetterAvatarKit (1.1.4)
@@ -72,9 +72,9 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
   CoreStore: 40c48542f6d48b825326fbc3a6f5934e3353533b
-  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: 85e07b84c0fcf6ca05ee9a806f4b529101381ba2
+  FoldingCell: 5f8a482ce0502bc0d5a1732782c305e0cefe6f81
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
   Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   LetterAvatarKit: 47f238b929d99c4216664a6aff151654dcdc71ba

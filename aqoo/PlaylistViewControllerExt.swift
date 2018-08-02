@@ -1278,8 +1278,8 @@ extension PlaylistViewController {
                        _playlistIsSpotify = true
                     }
 
-                    if  _ownerProfileImageURL != nil {
-                        _ownerProfileImageStringURL = _ownerProfileImageURL!.absoluteString
+                    if _ownerProfileImageURL != nil {
+                       _ownerProfileImageStringURL = _ownerProfileImageURL!.absoluteString
                     }
                     
                     if  self.debugLoadFixtures == true && self.debugMode == true {
