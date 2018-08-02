@@ -104,31 +104,57 @@ extension PlaylistContentViewController {
     
     func handlePlaylistPlayMode(_ usedPlayMode: Int16) {
         
+        // reset (all) playMode controls
+        trackControlView.mode = .clear
+        
         switch usedPlayMode {
             
             case playMode.PlayNormal.rawValue:
-                print ("play normal")
-            
                 if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
                     setPlaylistPlayMode( playMode.PlayNormal.rawValue )
+                    trackControlView.mode = .playNormal
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
+                    trackControlView.mode = .clear
                     
                 };  break
             
      
             case playMode.PlayShuffle.rawValue:
-                print ("play shuffle")
+                if  playListInDb!.currentPlayMode != playMode.PlayShuffle.rawValue {
+                    setPlaylistPlayMode( playMode.PlayShuffle.rawValue )
+                    trackControlView.mode = .playShuffle
+                }   else {
+                    setPlaylistPlayMode( playMode.Default.rawValue )
+                    trackControlView.mode = .clear
+                    
+                };  break
             
             case playMode.PlayRepeatAll.rawValue:
-                print ("play repeat")
+                if  playListInDb!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
+                    setPlaylistPlayMode( playMode.PlayRepeatAll.rawValue )
+                    trackControlView.mode = .playLoop
+                }   else {
+                    setPlaylistPlayMode( playMode.Default.rawValue )
+                    trackControlView.mode = .clear
+                    
+                };  break
             
             default:
-                print ("unknown")
+                
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown")
+                };  break
         }
     }
     
     func setPlaylistPlayMode(_ usedPlayMode: Int16) {
+        
+        // reset playMode for all (spotify) playlists in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // set new playMode to corrsponding playlist now
+        localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
+        // activate visual playmode (ui elements)
         
     }
     

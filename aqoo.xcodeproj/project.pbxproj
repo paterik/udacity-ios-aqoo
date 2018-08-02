@@ -20,6 +20,7 @@
 		B15E03102112D332003124E4 /* AppBaseNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E030F2112D332003124E4 /* AppBaseNotification.swift */; };
 		B15E03122112D3A7003124E4 /* BaseNotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E03112112D3A7003124E4 /* BaseNotificationProtocol.swift */; };
 		B15E03142112E6D9003124E4 /* SPFClientPlaylistControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E03132112E6D9003124E4 /* SPFClientPlaylistControls.swift */; };
+		B15E03162112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */; };
 		B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */; };
 		B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
@@ -106,6 +107,7 @@
 		B15E030F2112D332003124E4 /* AppBaseNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBaseNotification.swift; sourceTree = "<group>"; };
 		B15E03112112D3A7003124E4 /* BaseNotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNotificationProtocol.swift; sourceTree = "<group>"; };
 		B15E03132112E6D9003124E4 /* SPFClientPlaylistControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylistControls.swift; sourceTree = "<group>"; };
+		B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistMusicPlayModeControls.swift; sourceTree = "<group>"; };
 		B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListTrack.swift; sourceTree = "<group>"; };
 		B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTracks.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				B15E030F2112D332003124E4 /* AppBaseNotification.swift */,
 				B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */,
 				B15E03112112D3A7003124E4 /* BaseNotificationProtocol.swift */,
+				B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */,
 			);
 			name = partials;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				B1F367F320FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift in Sources */,
 				B1D33DD020D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
+				B15E03162112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,
 				B1D4CE4C1F936A94005D8F50 /* PlaylistTableCell.swift in Sources */,
 				B1B8DD28202E5756008CE9EB /* Dictionary.swift in Sources */,

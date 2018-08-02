@@ -127,6 +127,11 @@ class PlaylistContentViewController: BaseViewController,
     
     @IBAction func btnClosePlayistContentView(_ sender: Any) {
         
+        // reset (all) playMode controls
+        trackControlView.mode = .clear
+        // reset playMode for all (spotify) playlists in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        
         dismiss(animated: true, completion: nil)
     }
 }

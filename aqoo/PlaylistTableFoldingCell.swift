@@ -74,16 +74,15 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var btnPlayRepeatMode: UIButton!
     @IBOutlet weak var btnPlayShuffleMode: UIButton!
     @IBOutlet weak var btnPlayNormalMode: UIButton!
-    
-    
+
     var mode: PlaylistMusicPlayMode = .playNormal {
         
         didSet {
-        
+            
             switch mode {
                 
                 case .playNormal:
-                
+                    
                     btnPlayNormalMode.backgroundColor = UIColor(netHex: 0x1ED761)
                     btnPlayNormalMode.setImage(UIImage(named : "icnSetPlayNormal_1"), for: UIControlState.normal)
                     btnPlayNormalMode.setImage(UIImage(named : "icnSetPlayNormal_0"), for: [UIControlState.selected, UIControlState.highlighted])
@@ -95,7 +94,7 @@ class PlaylistTableFoldingCell: FoldingCell {
                     btnPlayShuffleMode.backgroundColor = UIColor(netHex: 0x1ED761)
                     btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_1"), for: UIControlState.normal)
                     btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_0"), for: [UIControlState.selected, UIControlState.highlighted])
-                        
+                    
                     break
                 
                 case .playLoop:
@@ -103,7 +102,7 @@ class PlaylistTableFoldingCell: FoldingCell {
                     btnPlayRepeatMode.backgroundColor = UIColor(netHex: 0x1ED761)
                     btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_1"), for: UIControlState.normal)
                     btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_0"), for: [UIControlState.selected, UIControlState.highlighted])
-                        
+                    
                     break
                 
                 case .clear:
@@ -111,7 +110,7 @@ class PlaylistTableFoldingCell: FoldingCell {
                     resetPlayNormalButton()
                     resetPlayLoopButton()
                     resetPlayShuffleButton()
-                
+                    
                     break
                 
                 default: return
@@ -139,7 +138,7 @@ class PlaylistTableFoldingCell: FoldingCell {
         btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_0"), for: UIControlState.normal)
         btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_1"), for: [UIControlState.selected, UIControlState.highlighted])
     }
-
+    
     var state: PlaylistMusicIndicatorViewState = .stopped {
         
         didSet {
