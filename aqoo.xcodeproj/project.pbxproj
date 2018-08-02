@@ -296,11 +296,11 @@
 				B189892C1F72B99300516A53 /* extension */,
 				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
 				B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */,
+				B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */,
 				B1D33DCF20D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift */,
 				B1D33DD120D17F2D00DCDC5F /* PlaylistEditViewFirstPage.swift */,
 				B1D33DD520D18AC100DCDC5F /* PlaylistEditViewSecondPage.swift */,
 				B1D33DD720D18B1000DCDC5F /* PlaylistEditViewThirdPage.swift */,
-				B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */,
 			);
 			name = _playlists;
 			sourceTree = "<group>";
@@ -318,10 +318,10 @@
 			children = (
 				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
 				B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */,
+				B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */,
 				B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */,
 				B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */,
 				B1F367F420FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift */,
-				B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";

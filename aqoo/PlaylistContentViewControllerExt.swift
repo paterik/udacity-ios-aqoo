@@ -113,10 +113,11 @@ extension PlaylistContentViewController {
                 if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
                     setPlaylistPlayMode( playMode.PlayNormal.rawValue )
                     trackControlView.mode = .playNormal
+                    togglePlayModeIcon( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    
+                    togglePlayModeIcon( false )
                 };  break
             
      
@@ -124,24 +125,28 @@ extension PlaylistContentViewController {
                 if  playListInDb!.currentPlayMode != playMode.PlayShuffle.rawValue {
                     setPlaylistPlayMode( playMode.PlayShuffle.rawValue )
                     trackControlView.mode = .playShuffle
+                    togglePlayModeIcon( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    
+                    togglePlayModeIcon( false )
                 };  break
             
             case playMode.PlayRepeatAll.rawValue:
                 if  playListInDb!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
                     setPlaylistPlayMode( playMode.PlayRepeatAll.rawValue )
                     trackControlView.mode = .playLoop
+                    togglePlayModeIcon( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    
+                    togglePlayModeIcon( false )
                 };  break
             
             default:
                 
+                trackControlView.mode = .clear
+                togglePlayModeIcon( false )
                 if  self.debugMode == true {
                     print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown")
                 };  break
@@ -154,8 +159,16 @@ extension PlaylistContentViewController {
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
-        // activate visual playmode (ui elements)
+    }
+    
+    func togglePlayModeIcon(
+       _ active: Bool) {
         
+        trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
+        trackControlView.state = .stopped
+        if  active == true {
+            trackControlView.state = .playing
+        }
     }
     
     func setupUITableView() {

@@ -30,6 +30,7 @@ class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
