@@ -1743,10 +1743,17 @@ extension PlaylistViewController {
             handlePlaylistCellsInPlayMode( playlistCell )
         }
         
-        // reset playmode for all (spotify) playlists in cache
+        // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
-        // set new playmode to corresponding playlist now
+        // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
+        // send out user notification on any relevant playMode changes
+        if  newPlayMode != playMode.Default.rawValue {
+            self.showUserNotification(
+                "Now playing \(playListInDb.metaListInternalName)",
+                "using \(self.getPlayModeAsString(newPlayMode)) playmode",
+                nil, 0.9275)
+        }
     }
     
     func getRatingLabel(
