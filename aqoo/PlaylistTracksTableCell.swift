@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MaterialComponents.MaterialProgressView
 
 class PlaylistTracksTableCell: UITableViewCell {
     
@@ -14,7 +15,8 @@ class PlaylistTracksTableCell: UITableViewCell {
     @IBOutlet weak var lblTrackName: UILabel!
     @IBOutlet weak var lblTrackPlaytime: UILabel!
     @IBOutlet weak var lblTrackPlayIndex: UILabel!
-    @IBOutlet weak var lblTrackProgressBar: UILabel!
+    
+    @IBOutlet weak var progressBar: MDCProgressView!
     @IBOutlet weak var imageViewAlbumCover: UIImageView!
     @IBOutlet weak var imageViewTrackIsExplicit: UIImageView!
     @IBOutlet weak var imageViewTrackIsPlayingIndicator: PlaylistMusicIndicatorView!

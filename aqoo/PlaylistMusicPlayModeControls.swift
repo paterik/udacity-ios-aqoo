@@ -13,7 +13,4 @@ class PlaylistMusicPlayModeControls {
     var btnPlayNormalMode: UIButton!
     var btnPlayShuffleMode: UIButton!
     var btnPlayRepeatMode: UIButton!
-    
-    
-    
 }

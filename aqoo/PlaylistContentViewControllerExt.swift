@@ -11,6 +11,7 @@ import Spotify
 import CoreStore
 import Kingfisher
 import BGTableViewRowActionWithImage
+import MaterialComponents.MaterialProgressView
 
 extension PlaylistContentViewController {
  
@@ -274,23 +275,34 @@ extension PlaylistContentViewController {
         currentTrackInterval = TimeInterval(currentTrackTimePosition)
 
         localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
+        
+        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: currentTrackPosition, section: 0)) as? PlaylistTracksTableCell else {
+            return
+        }
+        
+        var _ctp: Float = Float(currentTrackTimePosition)
+        var _ctd: Float = Float(currentTrackPlaying!.trackDuration)
+        var _progress: Float = (_ctp / _ctd)
+        
+        _trackCell.progressBar.setProgress(_progress, animated: true)
     }
     
     func handleTrackPlayingCellUI(_ number: Int, isPlaying: Bool) {
         
         guard let _trackCell = tableView.cellForRow(at: IndexPath(row: number, section: 0)) as? PlaylistTracksTableCell else {
-            
-            print ("[ERRLR] can't handle handleTrackPlayingCellUI(), cell not found ... <return>")
-            
             return
         }
         
         _trackCell.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
-        _trackCell.lblTrackProgressBar.isHidden = !isPlaying
+        _trackCell.progressBar.isHidden = true
         _trackCell.state = .stopped
         
         if  isPlaying == true {
            _trackCell.state = .playing
+           _trackCell.progressBar.isHidden = false
+           _trackCell.progressBar.progress = 0
+           _trackCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
+           _trackCell.progressBar.trackTintColor = UIColor.clear
         }
     }
     
