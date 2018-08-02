@@ -55,6 +55,15 @@ extension PlaylistContentViewController {
             }
         }
         
+        if  playListTracksInCloud?.count == 0 {
+            trackControlView.btnPlayRepeatMode.isEnabled = false
+            trackControlView.btnPlayNormalMode.isEnabled = false
+            trackControlView.btnPlayShuffleMode.isEnabled = false
+            trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = false
+            trackControlView.btnPlayNormalMode.isUserInteractionEnabled = false
+            trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = false
+        }
+
         // add some additional meta data for our current playlist trackView
         trackControlView.lblPlaylistName.text = playListInDb!.metaListInternalName
         trackControlView.lblPlaylistTrackCount.text = String(format: "%D", playListInDb!.trackCount)
@@ -159,6 +168,35 @@ extension PlaylistContentViewController {
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
+        
+        // dummy code ... just a play a fucking uri
+        for (index, trackRaw) in playListTracksInCloud!.enumerated() {
+            
+            if  let track = trackRaw as? StreamPlayListTracks {
+                
+                localPlayer.player?.playSpotifyURI(
+                    track.trackURIInternal,
+                    startingWith: 0,
+                    startingWithPosition: 0,
+                    callback: { (error) in
+                        if (error != nil) {
+                            print (error)
+                        }   else {
+                            print("playing : \(track.trackName)")
+                        }
+                    }
+                )
+                
+                // just play index 0 (= track_1)
+                return
+                
+            }   else {
+                handleErrorAsDialogMessage("Playlist Format Error", "your playlist isn't valid anymore")
+                return
+            }
+            
+            
+        }
     }
     
     func togglePlayModeIcon(
@@ -168,6 +206,18 @@ extension PlaylistContentViewController {
         trackControlView.state = .stopped
         if  active == true {
             trackControlView.state = .playing
+        }
+    }
+    
+    func setupPlayerAuth() {
+        
+        if  spotifyClient.isSpotifyTokenValid() {
+            localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+        }   else {
+            self.handleErrorAsDialogMessage(
+                "Spotify Session Closed",
+                "Oops! your spotify session is not valid anymore, please (re)login again ..."
+            )
         }
     }
     

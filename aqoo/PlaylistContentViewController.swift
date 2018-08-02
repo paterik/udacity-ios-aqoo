@@ -18,6 +18,7 @@ class PlaylistContentViewController: BaseViewController,
                                      UITableViewDelegate {
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
+    let localPlayer = SPFClientPlayer.sharedInstance
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -36,6 +37,7 @@ class PlaylistContentViewController: BaseViewController,
         
         setupUIBase()
         setupUITableView()
+        setupPlayerAuth()
         
         loadMetaPlaylistTracksFromDb()
     }
