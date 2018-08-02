@@ -38,14 +38,12 @@ class SPFClientPlayer: NSObject, SPTAudioStreamingPlaybackDelegate, SPTAudioStre
     
     func initPlayer(authSession : SPTSession){
         
-        if  player != nil {
-            print ("_ player already initialized ...")
-            return
-        }
+        if  player != nil { try! player!.stop() }
         
         player = SPTAudioStreamingController.sharedInstance()
         player!.playbackDelegate = self
         player!.delegate = self
+        
         try! player!.start(withClientId:    spotifyClient.spfAuth.clientID)
         try! player!.login(withAccessToken: spotifyClient.spfCurrentSession?.accessToken)
     }

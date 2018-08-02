@@ -23,6 +23,7 @@ class PlaylistContentViewController: BaseViewController,
     
     var currentTrackPlaying: StreamPlayListTracks?
     var currentTrackTimePosition: Int32 = 0
+    var currentTrackInterval: TimeInterval?
     var currentTrackPosition: Int = 0
     
     var playListInDb: StreamPlayList?
@@ -144,9 +145,7 @@ class PlaylistContentViewController: BaseViewController,
         // logout from player
         localPlayer.player?.logout()
         // clear local track playback meta
-        currentTrackPlaying = nil
-        currentTrackTimePosition = 0
-        currentTrackPosition = 0
+        resetLocalPlayerMetaSettings()
         
         dismiss(animated: true, completion: nil)
     }

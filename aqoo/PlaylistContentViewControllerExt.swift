@@ -55,20 +55,21 @@ extension PlaylistContentViewController {
             }
         }
         
-        if  playListTracksInCloud?.count == 0 {
-            trackControlView.btnPlayRepeatMode.isEnabled = false
-            trackControlView.btnPlayNormalMode.isEnabled = false
-            trackControlView.btnPlayShuffleMode.isEnabled = false
-            trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = false
-            trackControlView.btnPlayNormalMode.isUserInteractionEnabled = false
-            trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = false
-        }
-
         // add some additional meta data for our current playlist trackView
         trackControlView.lblPlaylistName.text = playListInDb!.metaListInternalName
         trackControlView.lblPlaylistTrackCount.text = String(format: "%D", playListInDb!.trackCount)
         if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
             trackControlView.lblPlaylistOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
+        }
+        
+        setupUIPlayModeControls()
+    }
+    
+    func setupUIPlayModeControls() {
+        
+        toggleActiveMode( true )
+        if  playListTracksInCloud?.count == 0 {
+            toggleActiveMode( false )
         }
         
         trackControlView.btnPlayShuffleMode.addGestureRecognizer(UITapGestureRecognizer(
@@ -111,7 +112,8 @@ extension PlaylistContentViewController {
         handlePlaylistPlayMode(playMode.PlayRepeatAll.rawValue)
     }
     
-    func handlePlaylistPlayMode(_ usedPlayMode: Int16) {
+    func handlePlaylistPlayMode(
+       _ usedPlayMode: Int16) {
         
         // reset (all) playMode controls
         trackControlView.mode = .clear
@@ -157,52 +159,73 @@ extension PlaylistContentViewController {
                 trackControlView.mode = .clear
                 togglePlayMode( false )
                 if  self.debugMode == true {
-                    print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown")
+                    print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown <ignored>")
                 };  break
         }
     }
     
-    func setPlaylistPlayMode(_ usedPlayMode: Int16) {
+    func setPlaylistPlayMode(
+       _ usedPlayMode: Int16) {
         
         // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
+        // play track
+        trackStartPlaying( currentTrackPosition )
+    }
+    
+    func trackStartPlaying(
+       _ number: Int) {
         
-        // debug: just testing (re)positioning after (re)play
-        var _currentInterval: TimeInterval = TimeInterval(currentTrackTimePosition)
+        if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
         
-        // dummy code ... just a play a fucking uri
-        for (index, trackRaw) in playListTracksInCloud!.enumerated() {
-            
-            if  let track = trackRaw as? StreamPlayListTracks {
-                
-                currentTrackPlaying  = track
-                currentTrackPosition = index
-                
-                localPlayer.player?.playSpotifyURI(
-                    track.trackURIInternal,
-                    startingWith: 0,
-                    startingWithPosition: _currentInterval,
-                    callback: { (error) in
-                        if (error != nil) {
-                            print (error)
-                        }   else {
-                            print("playing : \(track.trackName)")
-                        }
-                    }
-                )
-                
-                // just play index 0 (= track_1)
-                return
-                
-            }   else {
-                
-                currentTrackPlaying = nil
-                handleErrorAsDialogMessage("Playlist Format Error", "your playlist isn't valid anymore")
-                return
+        // fetch track from current playlist trackSet
+        let track = playListTracksInCloud![number] as! StreamPlayListTracks
+        
+        // stop playback
+        try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
+            if (error != nil) {
+                print (error)
             }
-        }
+        })
+    }
+    
+    func trackStopPlaying(
+       _ number: Int) {
+        
+        if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
+       
+        // fetch track from current playlist trackSet
+        let track = playListTracksInCloud![number] as! StreamPlayListTracks
+        
+        currentTrackPlaying  = track
+        // (re)evaluate trackInterval
+        currentTrackInterval = TimeInterval(currentTrackTimePosition)
+        
+        localPlayer.player?.playSpotifyURI(
+            currentTrackPlaying!.trackURIInternal,
+            startingWith: 0,
+            startingWithPosition: currentTrackInterval!,
+            callback: { (error) in
+                if (error != nil) {
+                    print (error)
+                }   else {
+                    print("playing : \(track.trackName)")
+                }
+            }
+        )
+    }
+    
+    func toggleActiveMode(
+       _ active: Bool) {
+        
+        trackControlView.btnPlayRepeatMode.isEnabled = active
+        trackControlView.btnPlayNormalMode.isEnabled = active
+        trackControlView.btnPlayShuffleMode.isEnabled = active
+        trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = active
+        trackControlView.btnPlayNormalMode.isUserInteractionEnabled = active
+        trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = active
     }
 
     func togglePlayMode (
@@ -217,14 +240,7 @@ extension PlaylistContentViewController {
         
         if  active == false {
             
-            // stop playback
-            try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
-                if (error != nil) {
-                    print (error)
-                }   else {
-                    print("stop playing")
-                }
-            })
+            trackStopPlaying( currentTrackPosition )
             
         }   else {
         
@@ -243,17 +259,21 @@ extension PlaylistContentViewController {
     func handleTrackTimerEvent() {
         
         currentTrackTimePosition += 1
+        currentTrackInterval = TimeInterval(currentTrackTimePosition)
         
         print ("__ handle track timer")
-        print ("   track playtime (sec)   : \(currentTrackPlaying?.trackDuration)")
+        print ("   track playtime (sec)   : \(currentTrackPlaying!.trackDuration)")
         print ("   current position (sec) : \(currentTrackTimePosition)\n")
-        
+    }
+    
+    func resetLocalPlayerMetaSettings() {
+
+        currentTrackPlaying = nil
+        currentTrackTimePosition = 0
+        currentTrackPosition = 0
     }
     
     func setupPlayerAuth() {
-        
-        currentTrackTimePosition = 0
-        currentTrackPlaying = nil
         
         if  spotifyClient.isSpotifyTokenValid() {
             localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
