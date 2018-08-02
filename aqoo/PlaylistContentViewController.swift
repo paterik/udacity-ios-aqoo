@@ -15,14 +15,20 @@ import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
-                                     UITableViewDelegate {
+                                     UITableViewDelegate,
+                                     SPTAudioStreamingPlaybackDelegate {
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     let localPlayer = SPFClientPlayer.sharedInstance
     
+    var currentTrackPlaying: StreamPlayListTracks?
+    var currentTrackTimePosition: Int32 = 0
+    var currentTrackPosition: Int = 0
+    
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
+    var _trackTimer: Timer!
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
@@ -52,6 +58,9 @@ class PlaylistContentViewController: BaseViewController,
     override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
+        if  _trackTimer != nil {
+            _trackTimer.invalidate()
+        }
     }
     
     //
@@ -132,6 +141,12 @@ class PlaylistContentViewController: BaseViewController,
         trackControlView.mode = .clear
         // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // logout from player
+        localPlayer.player?.logout()
+        // clear local track playback meta
+        currentTrackPlaying = nil
+        currentTrackTimePosition = 0
+        currentTrackPosition = 0
         
         dismiss(animated: true, completion: nil)
     }

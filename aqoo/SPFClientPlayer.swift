@@ -5,6 +5,9 @@
 //  Created by Patrick Paechnatz on 02.08.18.
 //  Copyright © 2018 Patrick Paechnatz. All rights reserved.
 //
+//  https://spotify.github.io/ios-sdk/Protocols/SPTAudioStreamingPlaybackDelegate.html
+//  https://spotify.github.io/ios-sdk/Protocols/SPTAudioStreamingDelegate.html
+//
 
 import UIKit
 import Spotify

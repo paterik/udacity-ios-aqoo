@@ -122,11 +122,11 @@ extension PlaylistContentViewController {
                 if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
                     setPlaylistPlayMode( playMode.PlayNormal.rawValue )
                     trackControlView.mode = .playNormal
-                    togglePlayModeIcon( true )
+                    togglePlayMode( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    togglePlayModeIcon( false )
+                    togglePlayMode( false )
                 };  break
             
      
@@ -134,28 +134,28 @@ extension PlaylistContentViewController {
                 if  playListInDb!.currentPlayMode != playMode.PlayShuffle.rawValue {
                     setPlaylistPlayMode( playMode.PlayShuffle.rawValue )
                     trackControlView.mode = .playShuffle
-                    togglePlayModeIcon( true )
+                    togglePlayMode( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    togglePlayModeIcon( false )
+                    togglePlayMode( false )
                 };  break
             
             case playMode.PlayRepeatAll.rawValue:
                 if  playListInDb!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
                     setPlaylistPlayMode( playMode.PlayRepeatAll.rawValue )
                     trackControlView.mode = .playLoop
-                    togglePlayModeIcon( true )
+                    togglePlayMode( true )
                 }   else {
                     setPlaylistPlayMode( playMode.Default.rawValue )
                     trackControlView.mode = .clear
-                    togglePlayModeIcon( false )
+                    togglePlayMode( false )
                 };  break
             
             default:
                 
                 trackControlView.mode = .clear
-                togglePlayModeIcon( false )
+                togglePlayMode( false )
                 if  self.debugMode == true {
                     print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown")
                 };  break
@@ -169,15 +169,21 @@ extension PlaylistContentViewController {
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
         
+        // debug: just testing (re)positioning after (re)play
+        var _currentInterval: TimeInterval = TimeInterval(currentTrackTimePosition)
+        
         // dummy code ... just a play a fucking uri
         for (index, trackRaw) in playListTracksInCloud!.enumerated() {
             
             if  let track = trackRaw as? StreamPlayListTracks {
                 
+                currentTrackPlaying  = track
+                currentTrackPosition = index
+                
                 localPlayer.player?.playSpotifyURI(
                     track.trackURIInternal,
                     startingWith: 0,
-                    startingWithPosition: 0,
+                    startingWithPosition: _currentInterval,
                     callback: { (error) in
                         if (error != nil) {
                             print (error)
@@ -191,25 +197,63 @@ extension PlaylistContentViewController {
                 return
                 
             }   else {
+                
+                currentTrackPlaying = nil
                 handleErrorAsDialogMessage("Playlist Format Error", "your playlist isn't valid anymore")
                 return
             }
-            
-            
         }
     }
-    
-    func togglePlayModeIcon(
+
+    func togglePlayMode (
        _ active: Bool) {
+        
+        if  _trackTimer != nil {
+            _trackTimer.invalidate()
+        }
         
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
         trackControlView.state = .stopped
-        if  active == true {
-            trackControlView.state = .playing
+        
+        if  active == false {
+            
+            // stop playback
+            try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
+                if (error != nil) {
+                    print (error)
+                }   else {
+                    print("stop playing")
+                }
+            })
+            
+        }   else {
+        
+            // start playback meta timer
+            _trackTimer = Timer.scheduledTimer(
+                timeInterval : TimeInterval(1),
+                target       : self,
+                selector     : #selector(handleTrackTimerEvent),
+                userInfo     : nil,
+                repeats      : true
+            );  trackControlView.state = .playing
         }
     }
     
+    @objc
+    func handleTrackTimerEvent() {
+        
+        currentTrackTimePosition += 1
+        
+        print ("__ handle track timer")
+        print ("   track playtime (sec)   : \(currentTrackPlaying?.trackDuration)")
+        print ("   current position (sec) : \(currentTrackTimePosition)\n")
+        
+    }
+    
     func setupPlayerAuth() {
+        
+        currentTrackTimePosition = 0
+        currentTrackPlaying = nil
         
         if  spotifyClient.isSpotifyTokenValid() {
             localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
