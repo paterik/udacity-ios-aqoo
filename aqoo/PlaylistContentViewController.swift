@@ -30,6 +30,7 @@ class PlaylistContentViewController: BaseViewController,
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
     var _trackTimer: Timer!
+    var _cacheTimer: Timer!
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
@@ -61,6 +62,10 @@ class PlaylistContentViewController: BaseViewController,
         super.viewWillDisappear(animated)
         if  _trackTimer != nil {
             _trackTimer.invalidate()
+        }
+        
+        if  _cacheTimer != nil {
+            _cacheTimer.invalidate()
         }
     }
     

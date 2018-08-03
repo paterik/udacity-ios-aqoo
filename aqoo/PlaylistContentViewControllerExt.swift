@@ -89,6 +89,25 @@ extension PlaylistContentViewController {
         )
     }
     
+    func setupPlayerAuth() {
+        
+        if  spotifyClient.isSpotifyTokenValid() {
+            localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+        }   else {
+            self.handleErrorAsDialogMessage(
+                "Spotify Session Closed",
+                "Oops! your spotify session is not valid anymore, please (re)login again ..."
+            )
+        }
+    }
+    
+    func setupUITableView() {
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
     @objc
     func handlePlaylistPlayShuffleMode(sender: UITapGestureRecognizer) {
         
@@ -172,7 +191,7 @@ extension PlaylistContentViewController {
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
-        // play track
+        // play track finally
         trackStartPlaying( currentTrackPosition )
     }
     
@@ -209,11 +228,13 @@ extension PlaylistContentViewController {
         // update local persistance layer for tracks, set track to mode "isPlaying"
         localPlaylistControls.setTrackInPlayState( track, true )
         
+        // set active meta object of active (playing) track
         currentTrackPlaying  = track
-        // (re)evaluate trackInterval
+        
+        // set active meta object, (re)evaluate current trackInterval
         currentTrackInterval = TimeInterval(currentTrackTimePosition)
         
-        // handle corresponding cell UI
+        // handle corresponding CellUI
         handleTrackPlayingCellUI( number, isPlaying: true )
         
         // start playback using spotify api call
@@ -248,6 +269,10 @@ extension PlaylistContentViewController {
             _trackTimer.invalidate()
         }
         
+        if  _cacheTimer != nil {
+            _cacheTimer.invalidate()
+        }
+        
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
         trackControlView.state = .stopped
         
@@ -257,6 +282,15 @@ extension PlaylistContentViewController {
             
         }   else {
         
+            // start cache meta timer
+            _cacheTimer = Timer.scheduledTimer(
+                timeInterval : TimeInterval(2),
+                target       : self,
+                selector     : #selector(handleCacheTimerEvent),
+                userInfo     : nil,
+                repeats      : true
+            )
+            
             // start playback meta timer
             _trackTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
@@ -268,6 +302,44 @@ extension PlaylistContentViewController {
         }
     }
     
+    func getTableCellForTrackPosition(_ trackPosition: Int) -> PlaylistTracksTableCell? {
+        
+        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: trackPosition, section: 0)) as? PlaylistTracksTableCell else {
+            return nil
+        }
+        
+        return _trackCell
+    }
+    
+    @objc
+    func handleCacheTimerEvent() {
+    
+        if  self.debugMode == true {
+            print ("dbg [playlist/track] : meta fetch track information (dbg)")
+        }
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                guard let track = transaction.fetchOne(From<StreamPlayListTracks>()
+                    .where(\.trackURIInternal == self.currentTrackPlaying!.trackURIInternal)) as? StreamPlayListTracks else {
+                    
+                    print ("__ track not found :(")
+                    return
+                }
+                
+                print ("dbg [playlist/track] : \(track.trackIdentifier), \(track.metaTrackLastTrackPosition), \(track.metaTrackIsPlaying)")
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo): break; }
+            }
+        )
+    }
+    
     @objc
     func handleTrackTimerEvent() {
         
@@ -276,7 +348,7 @@ extension PlaylistContentViewController {
 
         localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
         
-        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: currentTrackPosition, section: 0)) as? PlaylistTracksTableCell else {
+        guard let _trackCell = getTableCellForTrackPosition( currentTrackPosition ) as? PlaylistTracksTableCell else {
             return
         }
         
@@ -289,7 +361,7 @@ extension PlaylistContentViewController {
     
     func handleTrackPlayingCellUI(_ number: Int, isPlaying: Bool) {
         
-        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: number, section: 0)) as? PlaylistTracksTableCell else {
+        guard let _trackCell = getTableCellForTrackPosition( number ) as? PlaylistTracksTableCell else {
             return
         }
         
@@ -308,34 +380,22 @@ extension PlaylistContentViewController {
     
     func resetLocalPlayerMetaSettings() {
 
-        currentTrackPlaying = nil
         currentTrackTimePosition = 0
+        currentTrackPlaying = nil
+        currentTrackInterval = 0
         currentTrackPosition = 0
-    }
-    
-    func setupPlayerAuth() {
-        
-        if  spotifyClient.isSpotifyTokenValid() {
-            localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
-        }   else {
-            self.handleErrorAsDialogMessage(
-                "Spotify Session Closed",
-                "Oops! your spotify session is not valid anymore, please (re)login again ..."
-            )
-        }
-    }
-    
-    func setupUITableView() {
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func loadMetaPlaylistTracksFromDb() {
         
+        // playListTracksInCloud = CoreStore.defaultStack.fetchAll(
+        //     From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
+            
         playListTracksInCloud = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
+            From<StreamPlayListTracks>(),
+            Where<StreamPlayListTracks>("playlist = %@", playListInDb),
+            OrderBy( .ascending(\StreamPlayListTracks.trackAddedAt) ),
+            Tweak({ $0.includesPendingChanges = false })
         )
     }
 }
