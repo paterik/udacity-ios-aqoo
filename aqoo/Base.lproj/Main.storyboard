@@ -1279,7 +1279,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                    <rect key="frame" x="67" y="43" width="12" height="12"/>
+                                                    <rect key="frame" x="67" y="45" width="12" height="12"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="Dif-38-dXY"/>
@@ -1287,7 +1287,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uiL-aL-qez" userLabel="ui_hview_progressBar" customClass="MDCProgressView">
-                                                    <rect key="frame" x="64" y="58" width="291" height="2"/>
+                                                    <rect key="frame" x="67" y="58" width="288" height="2"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
@@ -1299,10 +1299,10 @@
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="7Nc-DP-3vo"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="top" secondItem="AiZ-ar-Zqg" secondAttribute="bottom" constant="-60" id="ARk-OW-OR2"/>
                                                 <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="ByA-3B-wHW"/>
-                                                <constraint firstItem="uiL-aL-qez" firstAttribute="top" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="3" id="GF8-Pb-1qW"/>
+                                                <constraint firstItem="uiL-aL-qez" firstAttribute="top" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="1" id="GF8-Pb-1qW"/>
                                                 <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="3" id="GeC-U4-i2j"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="IKO-sO-Qy7"/>
-                                                <constraint firstItem="uiL-aL-qez" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leadingMargin" constant="49" id="KFW-nX-WTQ"/>
+                                                <constraint firstItem="uiL-aL-qez" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leadingMargin" constant="52" id="KFW-nX-WTQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="10" id="Tmu-n5-J2K"/>
                                                 <constraint firstItem="Pss-Mf-Cil" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="YE9-b6-JhM"/>
                                                 <constraint firstAttribute="bottom" secondItem="ECg-if-Jtc" secondAttribute="bottom" constant="18" id="Z1F-Ai-dhl"/>
@@ -1321,7 +1321,7 @@
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="leading" secondItem="AiZ-ar-Zqg" secondAttribute="trailing" constant="-59" id="tgl-L4-wAQ"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="bottom" secondItem="aat-sa-aqc" secondAttribute="bottom" id="vr2-k8-Scv"/>
                                                 <constraint firstItem="Wfu-5p-Skj" firstAttribute="centerY" secondItem="WsE-2D-Tdo" secondAttribute="centerY" id="wvX-y5-D9s"/>
-                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="17" id="wzG-Q3-KFI"/>
+                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="15" id="wzG-Q3-KFI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
@@ -1390,7 +1390,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyz-Cu-rit" userLabel="ui_btn_playlistPlayNormal">
-                                        <rect key="frame" x="301" y="50" width="40" height="40"/>
+                                        <rect key="frame" x="307" y="50" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="2yn-RI-z4S"/>
                                             <constraint firstAttribute="height" constant="40" id="EFV-Wa-LKa"/>
@@ -1406,7 +1406,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVS-dX-KZ2" userLabel="ui_btn_playlistPlayShuffle">
-                                        <rect key="frame" x="253" y="50" width="40" height="40"/>
+                                        <rect key="frame" x="259" y="50" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="GcT-fO-uxV"/>
                                             <constraint firstAttribute="width" constant="40" id="SV5-wX-H9Q"/>
@@ -1423,7 +1423,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLI-03-vrR" userLabel="ui_btn_playlistPlayRepeat">
-                                        <rect key="frame" x="205" y="50" width="40" height="40"/>
+                                        <rect key="frame" x="211" y="50" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="Obx-jl-jDb"/>
                                             <constraint firstAttribute="height" constant="40" id="xo4-f1-xyf"/>
@@ -1440,7 +1440,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOi-ca-0uG" userLabel="ui_lbl_playlistOverallPlaytime">
-                                        <rect key="frame" x="284" y="111" width="57" height="16"/>
+                                        <rect key="frame" x="290" y="111" width="57" height="16"/>
                                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="Ca3-8E-wFZ"/>
@@ -1456,7 +1456,7 @@
                                     <constraint firstItem="ui8-3t-AMa" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="8" id="2MN-Rh-x9u"/>
                                     <constraint firstItem="szo-YY-Ec6" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="61" id="3kA-hB-AU0"/>
                                     <constraint firstItem="dyz-Cu-rit" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="Bn2-lX-G33"/>
-                                    <constraint firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" constant="14" id="Cd8-z6-Qlg"/>
+                                    <constraint firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" constant="8" id="Cd8-z6-Qlg"/>
                                     <constraint firstItem="dDT-Vi-xfA" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" id="ICc-0c-M9j"/>
                                     <constraint firstAttribute="trailing" secondItem="ui8-3t-AMa" secondAttribute="trailing" constant="14" id="Msj-oh-RYe"/>
                                     <constraint firstItem="8zx-30-e3l" firstAttribute="leading" secondItem="hY0-uM-1kf" secondAttribute="trailing" constant="3" id="THr-IV-fci"/>
@@ -1473,7 +1473,7 @@
                                     <constraint firstAttribute="height" constant="135" id="kiP-FB-xwv"/>
                                     <constraint firstItem="tOi-ca-0uG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3m0-Uz-M3d" secondAttribute="leading" constant="20" symbolic="YES" id="mUa-e2-cnv"/>
                                     <constraint firstItem="dDT-Vi-xfA" firstAttribute="leading" secondItem="3m0-Uz-M3d" secondAttribute="leading" id="ovP-dz-G15"/>
-                                    <constraint firstAttribute="trailing" secondItem="tOi-ca-0uG" secondAttribute="trailing" constant="14" id="qak-HU-RtI"/>
+                                    <constraint firstAttribute="trailing" secondItem="tOi-ca-0uG" secondAttribute="trailing" constant="8" id="qak-HU-RtI"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="btnPlayNormalMode" destination="dyz-Cu-rit" id="rh3-q4-bXi"/>

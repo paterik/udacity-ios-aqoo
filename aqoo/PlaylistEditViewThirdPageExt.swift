@@ -31,7 +31,7 @@ extension PlaylistEditViewThirdPage {
         
         var _playlistDetails: String = textFieldPlaylistDetails.text
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             asynchronous: { (transaction) -> Void in
                 
                 // find persisted playlist object from local cache (db)

@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     
     func initSystemDB () {
         
-        try! CoreStore.addStorageAndWait(
+        try! CoreStore.defaultStack.addStorageAndWait(
             
             SQLiteStore(
                 fileName: "aqoo.sqlite",
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     
     func initProviderCollection() {
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> [StreamProvider]? in
                 
@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     
     internal func loadProviderFixtures() {
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { ( transaction ) -> Void in
                 

@@ -22,7 +22,7 @@ class SPFClientPlaylistControls {
        _ isPlaying: Bool) {
         
         // set new playMode for current track now
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> Void in
                 
@@ -36,7 +36,7 @@ class SPFClientPlaylistControls {
                 case .success(let userInfo):
                     
                     if  self.debugMode == true {
-                        print ("dbg [playlist/track] : set playState for [\(trackInDb.trackName)] to [\(isPlaying)]")
+                        print ("dbg [playlist/track] : set playState for [\(trackInDb.trackIdentifier!)] to [\(isPlaying)]")
                     }
                 }
             }
@@ -48,7 +48,7 @@ class SPFClientPlaylistControls {
        _ newTrackTimePosition: Int ) {
         
         // set new timeFrame position for current track
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> Void in
                 
@@ -63,7 +63,7 @@ class SPFClientPlaylistControls {
                 case .success(let userInfo):
                     
                     if  self.debugMode == true {
-                        print ("dbg [playlist/track] : set timeFrame position for [\(trackInDb.trackName)] to [\(newTrackTimePosition)]")
+                        print ("dbg [playlist/track] : playing stream, set timeFrame position for [\(trackInDb.trackIdentifier!)] to [\(newTrackTimePosition)]")
                     }
                 }
             }
@@ -75,7 +75,7 @@ class SPFClientPlaylistControls {
        _ newPlayMode: Int16) {
         
         // set new playMode for current playlist now
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> Void in
                 
@@ -101,7 +101,7 @@ class SPFClientPlaylistControls {
         if  let playListPlayModeCache = CoreStore.defaultStack.fetchAll(From<StreamPlayList>()) as? [StreamPlayList] {
             for playlist in playListPlayModeCache {
                 
-                CoreStore.perform(
+                CoreStore.defaultStack.perform(
                     asynchronous: { (transaction) -> Void in playlist.currentPlayMode = 0 },
                     completion: { (result) -> Void in
                         switch result {

@@ -15,8 +15,7 @@ import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
-                                     UITableViewDelegate,
-                                     SPTAudioStreamingPlaybackDelegate {
+                                     UITableViewDelegate {
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     let localPlayer = SPFClientPlayer.sharedInstance
@@ -25,12 +24,15 @@ class PlaylistContentViewController: BaseViewController,
     var currentTrackTimePosition: Int = 0
     var currentTrackInterval: TimeInterval?
     var currentTrackPosition: Int = 0
+    var currentTrackCell: PlaylistTracksTableCell?
+    var currentPlayMode: Int16 = 0
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
+    var playListTracksShuffleKeys: [Int]?
+    var playListTracksShuffleKeyPosition: Int = 0
     var _trackTimer: Timer!
-    var _cacheTimer: Timer!
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
@@ -62,10 +64,6 @@ class PlaylistContentViewController: BaseViewController,
         super.viewWillDisappear(animated)
         if  _trackTimer != nil {
             _trackTimer.invalidate()
-        }
-        
-        if  _cacheTimer != nil {
-            _cacheTimer.invalidate()
         }
     }
     

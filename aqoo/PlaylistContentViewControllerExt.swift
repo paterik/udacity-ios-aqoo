@@ -137,8 +137,10 @@ extension PlaylistContentViewController {
         
         // reset (all) playMode controls
         trackControlView.mode = .clear
+        // set current playMode for internal usage
+        currentPlayMode = usedPlayMode
         
-        switch usedPlayMode {
+        switch currentPlayMode {
             
             case playMode.PlayNormal.rawValue:
                 if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
@@ -178,9 +180,7 @@ extension PlaylistContentViewController {
                 
                 trackControlView.mode = .clear
                 togglePlayMode( false )
-                if  self.debugMode == true {
-                    print ("dbg [playlist] : playMode [\(usedPlayMode)] unknown <ignored>")
-                };  break
+                break
         }
     }
     
@@ -197,8 +197,13 @@ extension PlaylistContentViewController {
     
     func trackStopPlaying(
        _ number: Int) {
-        
+
         if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
+        
+        guard let _trackCell = getTableCellForTrackPosition( number ) as? PlaylistTracksTableCell else {
+            return
+        }; currentTrackCell = _trackCell
+           currentTrackCell!.progressBar.setHidden(true, animated: true)
         
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
@@ -220,8 +225,12 @@ extension PlaylistContentViewController {
     func trackStartPlaying(
        _ number: Int) {
         
-        if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
-       
+        if  playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
+        
+        guard let _trackCell = getTableCellForTrackPosition( currentTrackPosition ) as? PlaylistTracksTableCell else {
+            return
+        };  currentTrackCell = _trackCell
+        
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
         
@@ -250,6 +259,91 @@ extension PlaylistContentViewController {
         )
     }
     
+    func trackJumpToNext() -> Bool {
+        
+        currentTrackTimePosition = 0
+        
+        switch currentPlayMode {
+            
+            case playMode.PlayNormal.rawValue:
+                
+                // last track in playlist? return false (mark this process as 'not available') ...
+                if playlistFinished() == true { return false }
+                // otherwise jump to next track in playlist
+                currentTrackPosition += 1
+                
+                break
+            
+            case playMode.PlayShuffle.rawValue:
+            
+                if playListTracksShuffleKeyPosition >= playListTracksShuffleKeys!.count { return false }
+                
+                playListTracksShuffleKeyPosition += 1
+                currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+                
+                print ("__ shuffleKeyPosition = \(playListTracksShuffleKeyPosition)")
+                print ("__ shuffleKeys = \(playListTracksShuffleKeys!)")
+                print ("__ shuffleKeyCount = \(playListTracksShuffleKeys!.count)")
+                print ("__ currentTrackPosition = \(currentTrackPosition)\n")
+                
+                break
+            
+            case playMode.PlayRepeatAll.rawValue:
+        
+                // last track in playlist? jump to first track again otherwise jump to next track in PL
+                if  playlistFinished() == true {
+                    currentTrackPosition  = 0
+                }   else {
+                    currentTrackPosition += 1
+                }
+            
+                break
+            
+            default:
+                return false
+        }
+        
+        return true
+    }
+    
+    func trackIsFinished() -> Bool {
+        
+        let _isFinished: Bool = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
+        if  _isFinished == true && debugMode == true {
+            print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
+        }
+        
+        return _isFinished
+    }
+    
+    func playlistFinished() -> Bool {
+        
+        var _isFinished: Bool = false
+        
+        switch currentPlayMode {
+            
+            case playMode.PlayRepeatAll.rawValue:
+                _isFinished = false
+                break
+            
+            case playMode.PlayShuffle.rawValue:
+                _isFinished = playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count - 1
+                break
+            
+            case playMode.PlayNormal.rawValue:
+                _isFinished = currentTrackPosition == playListTracksInCloud!.count - 1
+                break
+        
+            default: break
+        }
+        
+        if  _isFinished == true && debugMode == true {
+            print ("dbg [playlist/track] : \(playListInDb!.metaListHash) finished, no more songs available ...\n")
+        }
+        
+        return _isFinished
+    }
+    
     func toggleActiveMode(
        _ active: Bool) {
         
@@ -269,10 +363,6 @@ extension PlaylistContentViewController {
             _trackTimer.invalidate()
         }
         
-        if  _cacheTimer != nil {
-            _cacheTimer.invalidate()
-        }
-        
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
         trackControlView.state = .stopped
         
@@ -282,15 +372,6 @@ extension PlaylistContentViewController {
             
         }   else {
         
-            // start cache meta timer
-            _cacheTimer = Timer.scheduledTimer(
-                timeInterval : TimeInterval(2),
-                target       : self,
-                selector     : #selector(handleCacheTimerEvent),
-                userInfo     : nil,
-                repeats      : true
-            )
-            
             // start playback meta timer
             _trackTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
@@ -305,6 +386,11 @@ extension PlaylistContentViewController {
     func getTableCellForTrackPosition(_ trackPosition: Int) -> PlaylistTracksTableCell? {
         
         guard let _trackCell = tableView.cellForRow(at: IndexPath(row: trackPosition, section: 0)) as? PlaylistTracksTableCell else {
+            
+            if  debugMode == true {
+                print ("dbg [playlist/track] : cell not found <return>")
+            }
+            
             return nil
         }
         
@@ -312,51 +398,45 @@ extension PlaylistContentViewController {
     }
     
     @objc
-    func handleCacheTimerEvent() {
-    
-        if  self.debugMode == true {
-            print ("dbg [playlist/track] : meta fetch track information (dbg)")
-        }
-        
-        CoreStore.perform(
-            
-            asynchronous: { (transaction) -> Void in
-                
-                guard let track = transaction.fetchOne(From<StreamPlayListTracks>()
-                    .where(\.trackURIInternal == self.currentTrackPlaying!.trackURIInternal)) as? StreamPlayListTracks else {
-                    
-                    print ("__ track not found :(")
-                    return
-                }
-                
-                print ("dbg [playlist/track] : \(track.trackIdentifier), \(track.metaTrackLastTrackPosition), \(track.metaTrackIsPlaying)")
-            },
-            completion: { (result) -> Void in
-                
-                switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
-                case .success(let userInfo): break; }
-            }
-        )
-    }
-    
-    @objc
     func handleTrackTimerEvent() {
         
-        currentTrackTimePosition += 1
-        currentTrackInterval = TimeInterval(currentTrackTimePosition)
-
-        localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
-        
-        guard let _trackCell = getTableCellForTrackPosition( currentTrackPosition ) as? PlaylistTracksTableCell else {
-            return
+        //  track still runnning? update track timeFrama position and progressBar
+        if  trackIsFinished() == false {
+            
+            currentTrackTimePosition += 1
+            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            
+            localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
+            
+            var _ctp: Float = Float(currentTrackTimePosition)
+            var _ctd: Float = Float(currentTrackPlaying!.trackDuration)
+            var _progress: Float = (_ctp / _ctd)
+            
+            currentTrackCell!.progressBar.setProgress(_progress, animated: true)
         }
         
-        var _ctp: Float = Float(currentTrackTimePosition)
-        var _ctd: Float = Float(currentTrackPlaying!.trackDuration)
-        var _progress: Float = (_ctp / _ctd)
+        if  trackIsFinished() == true {
+            trackStopPlaying( currentTrackPosition )
+            
+            if  playlistFinished() == false {
+                
+                if  trackJumpToNext() == true {
+                    trackStartPlaying( currentTrackPosition )
+                }
+                
+            }   else {
+                
+               _trackTimer.invalidate()
+                handlePlaylistCompleted()
+            }
+        }
+    }
+    
+    func handlePlaylistCompleted() {
         
-        _trackCell.progressBar.setProgress(_progress, animated: true)
+        handlePlaylistPlayMode( 0 )
+        resetLocalPlayerMetaSettings()
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
     }
     
     func handleTrackPlayingCellUI(_ number: Int, isPlaying: Bool) {
@@ -366,6 +446,7 @@ extension PlaylistContentViewController {
         }
         
         _trackCell.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
+        _trackCell.imageViewTrackIsPlayingSymbol.isHidden = !isPlaying
         _trackCell.progressBar.isHidden = true
         _trackCell.state = .stopped
         
@@ -375,7 +456,10 @@ extension PlaylistContentViewController {
            _trackCell.progressBar.progress = 0
            _trackCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
            _trackCell.progressBar.trackTintColor = UIColor.clear
+           _trackCell.progressBar.setHidden(false, animated: true)
         }
+        
+        currentTrackCell = _trackCell
     }
     
     func resetLocalPlayerMetaSettings() {
@@ -388,14 +472,20 @@ extension PlaylistContentViewController {
     
     func loadMetaPlaylistTracksFromDb() {
         
-        // playListTracksInCloud = CoreStore.defaultStack.fetchAll(
-        //     From<StreamPlayListTracks>().where((\StreamPlayListTracks.playlist == playListInDb))
-            
+        // load all tracks from db
         playListTracksInCloud = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayListTracks>(),
-            Where<StreamPlayListTracks>("playlist = %@", playListInDb),
-            OrderBy( .ascending(\StreamPlayListTracks.trackAddedAt) ),
-            Tweak({ $0.includesPendingChanges = false })
+             From<StreamPlayListTracks>()
+                .where(\StreamPlayListTracks.playlist == playListInDb)
+                .orderBy(.ascending(\StreamPlayListTracks.trackAddedAt))
         )
+        
+         // init shuffled key stack for shuffle-play-mode
+        if  playListTracksInCloud != nil {
+            playListTracksShuffleKeys = getRandomUniqueNumberArray(
+                forLowerBound: 0,
+                andUpperBound: playListTracksInCloud!.count,
+                andNumNumbers: playListTracksInCloud!.count
+            )
+        }
     }
 }

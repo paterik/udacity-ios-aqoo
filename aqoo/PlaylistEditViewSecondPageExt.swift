@@ -78,7 +78,7 @@ extension PlaylistEditViewSecondPage {
         var _playListRatingDepth:   Float = Float(cViewPlaylistRatingDepth.fraction) * 100
         var _overall:               Float = self.getOverallRatingFromThreeWayFaction()
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             asynchronous: { (transaction) -> Void in
                 
                 // find persisted playlist object from local cache (db)

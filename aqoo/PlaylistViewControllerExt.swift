@@ -180,12 +180,12 @@ extension PlaylistViewController {
        _ filterProviderTag: String = "_spotify") -> Int {
         
         // prefetch stream provider entity to select corresponding config by lines below ...
-        var _configProvider = CoreStore.fetchOne(
+        var _configProvider = CoreStore.defaultStack.fetchOne(
             From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
         )
         
         // try to fetch config value object by given provider entity ...
-        if  let _configKeyRow = CoreStore.fetchOne(
+        if  let _configKeyRow = CoreStore.defaultStack.fetchOne(
             From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
             ) as? StreamProviderConfig {
             
@@ -275,12 +275,12 @@ extension PlaylistViewController {
         }
         
         if  filterQueryFetchChainBuilder != nil {
-            if  let _playListFilterResults = CoreStore.fetchAll( filterQueryFetchChainBuilder! ) {
+            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll( filterQueryFetchChainBuilder! ) {
                 filterQueryResults = _playListFilterResults
             }
             
         }   else {
-            if  let _playListFilterResults = CoreStore.fetchAll(
+            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll(
                 From<StreamPlayList>(),
                 Where<StreamPlayList>("isPlaylistHidden = %d", false),
                 filterQueryOrderBy
@@ -805,7 +805,7 @@ extension PlaylistViewController {
             ImageCache.default.clearMemoryCache()
             ImageCache.default.clearDiskCache()
             
-            CoreStore.perform(
+            CoreStore.defaultStack.perform(
                 
                 asynchronous: { (transaction) -> [StreamPlayList]? in
                     
@@ -827,7 +827,7 @@ extension PlaylistViewController {
                 }
             )
             
-            CoreStore.perform(
+            CoreStore.defaultStack.perform(
                 asynchronous: { (transaction) -> Void in transaction.deleteAll(From<StreamPlayList>()) },
                 completion: { (result) -> Void in
                     
@@ -913,7 +913,7 @@ extension PlaylistViewController {
                 var trackIdentifier : String
                 var trackInDbCache : StreamPlayListTracks?
                 
-                CoreStore.perform(
+                CoreStore.defaultStack.perform(
                     
                     asynchronous: { (transaction) -> Void in
                         
@@ -1059,7 +1059,7 @@ extension PlaylistViewController {
                     print ("dbg [playlist] : [\(playlist.metaListInternalName)] orphan flagged for removal")
                 }
                 
-                CoreStore.perform(
+                CoreStore.defaultStack.perform(
                     
                     asynchronous: { (transaction) -> Void in
                         
@@ -1181,7 +1181,7 @@ extension PlaylistViewController {
               let userProfileUserName = payload["userProfileName"] as? String,
               let playListInDb = payload["playlist"] as? StreamPlayList else { return }
 
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             // weazL :: bug_1001 - sometimes this async process will terminate my app
             asynchronous: { (transaction) -> Void in
@@ -1256,7 +1256,7 @@ extension PlaylistViewController {
         var _rate_emotional = Int.random(0, 100)
         var _rate_depth = Int.random(0, 100)
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> Void in
                 
@@ -1441,7 +1441,7 @@ extension PlaylistViewController {
     func loadProvider (
        _ tag: String) {
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> StreamProvider? in
                 
@@ -1497,7 +1497,7 @@ extension PlaylistViewController {
         )
         
         // now (pre)fetch corresponding local playlists for sync process
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> [StreamPlayList]? in
                 
@@ -1547,7 +1547,7 @@ extension PlaylistViewController {
             hiddenStateInformation = "This playlist is now visible in all filters again"
         }
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             
             asynchronous: { (transaction) -> Void in
                 _playListInDb = transaction.fetchOne(

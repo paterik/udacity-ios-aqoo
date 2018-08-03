@@ -142,7 +142,7 @@ extension PlaylistEditViewFirstPage {
         
         var _playListTitle: String = inpPlaylistName.text!
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             asynchronous: { (transaction) -> Void in
                 
                 // find persisted playlist object from local cache (db)
@@ -186,7 +186,7 @@ extension PlaylistEditViewFirstPage {
     
     func handlePlaylistTagInput(_ tag: String, add: Bool) {
         
-        CoreStore.perform(
+        CoreStore.defaultStack.perform(
             asynchronous: { (transaction) -> Void in
                 
                 // find persisted playlist object from local cache (db)
