@@ -1217,7 +1217,7 @@
                                                                 <constraint firstAttribute="width" constant="17" id="Ggb-v7-1P9"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="8"/>
-                                                            <color key="textColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="highlightedColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                             <size key="shadowOffset" width="1" height="0.0"/>
                                                         </label>
@@ -1256,7 +1256,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-if-Jtc" userLabel="ui_lbl_playlistTrackPlaytime">
                                                     <rect key="frame" x="310" y="45" width="35" height="9"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="8CR-7C-j3Z"/>
                                                         <constraint firstAttribute="height" constant="9" id="lrh-GH-2b1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="10"/>
@@ -1279,7 +1278,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m6m-Be-kGR" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                    <rect key="frame" x="67" y="45" width="12" height="12"/>
+                                                    <rect key="frame" x="67" y="43" width="12" height="12"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="Dif-38-dXY"/>
@@ -1291,6 +1290,15 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1e-ef-Fbu" userLabel="ui_lbl_playlistTrackPlaytimeRemaining">
+                                                    <rect key="frame" x="310" y="45" width="35" height="9"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="9" id="OVo-cp-ssI"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="10"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.78823529410000004" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -1299,8 +1307,9 @@
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="7Nc-DP-3vo"/>
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="top" secondItem="AiZ-ar-Zqg" secondAttribute="bottom" constant="-60" id="ARk-OW-OR2"/>
                                                 <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="ByA-3B-wHW"/>
-                                                <constraint firstItem="uiL-aL-qez" firstAttribute="top" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="1" id="GF8-Pb-1qW"/>
+                                                <constraint firstItem="uiL-aL-qez" firstAttribute="top" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="3" id="GF8-Pb-1qW"/>
                                                 <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="3" id="GeC-U4-i2j"/>
+                                                <constraint firstItem="K1e-ef-Fbu" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="310" id="HUK-PF-eYw"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="IKO-sO-Qy7"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leadingMargin" constant="52" id="KFW-nX-WTQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="10" id="Tmu-n5-J2K"/>
@@ -1310,6 +1319,7 @@
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="4" id="aAg-42-Gag"/>
                                                 <constraint firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="cOT-Bw-hYg"/>
                                                 <constraint firstItem="gXh-NR-22Z" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="dfi-BI-uvO"/>
+                                                <constraint firstAttribute="trailing" secondItem="K1e-ef-Fbu" secondAttribute="trailing" constant="10" id="gnp-5m-7Ef"/>
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="top" secondItem="Pss-Mf-Cil" secondAttribute="bottom" constant="3" id="guZ-fF-gyt"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="jSJ-nJ-SE3"/>
                                                 <constraint firstItem="AiZ-ar-Zqg" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" id="kJa-Mu-DDq"/>
@@ -1321,7 +1331,8 @@
                                                 <constraint firstItem="aat-sa-aqc" firstAttribute="leading" secondItem="AiZ-ar-Zqg" secondAttribute="trailing" constant="-59" id="tgl-L4-wAQ"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="bottom" secondItem="aat-sa-aqc" secondAttribute="bottom" id="vr2-k8-Scv"/>
                                                 <constraint firstItem="Wfu-5p-Skj" firstAttribute="centerY" secondItem="WsE-2D-Tdo" secondAttribute="centerY" id="wvX-y5-D9s"/>
-                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="15" id="wzG-Q3-KFI"/>
+                                                <constraint firstAttribute="bottom" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="17" id="wzG-Q3-KFI"/>
+                                                <constraint firstAttribute="bottom" secondItem="K1e-ef-Fbu" secondAttribute="bottom" constant="18" id="yyh-wV-yDV"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.070588235294117646" green="0.070588235294117646" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
@@ -1335,6 +1346,7 @@
                                             <outlet property="lblTrackName" destination="Pss-Mf-Cil" id="46G-Sx-7yz"/>
                                             <outlet property="lblTrackPlayIndex" destination="RjO-iS-Dfi" id="Zeu-Oz-MOA"/>
                                             <outlet property="lblTrackPlaytime" destination="ECg-if-Jtc" id="irY-Wm-94c"/>
+                                            <outlet property="lblTrackPlaytimeRemaining" destination="K1e-ef-Fbu" id="9sv-bJ-CjS"/>
                                             <outlet property="progressBar" destination="uiL-aL-qez" id="DDt-Ed-BBN"/>
                                         </connections>
                                     </tableViewCell>
@@ -1380,10 +1392,10 @@
                                             <constraint firstAttribute="height" constant="20" id="i1q-AI-yfE"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PlaylistName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
-                                        <rect key="frame" x="263" y="8" width="78" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PlaylistName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
+                                        <rect key="frame" x="263" y="8" width="84" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="8uF-M2-Mbz"/>
+                                            <constraint firstAttribute="width" constant="84" id="6ue-9p-qeO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1453,23 +1465,23 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="8" id="2MN-Rh-x9u"/>
+                                    <constraint firstItem="dyz-Cu-rit" firstAttribute="top" secondItem="ui8-3t-AMa" secondAttribute="bottom" constant="22" id="33E-q3-WEM"/>
                                     <constraint firstItem="szo-YY-Ec6" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="61" id="3kA-hB-AU0"/>
                                     <constraint firstItem="dyz-Cu-rit" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="Bn2-lX-G33"/>
                                     <constraint firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" constant="8" id="Cd8-z6-Qlg"/>
                                     <constraint firstItem="dDT-Vi-xfA" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" id="ICc-0c-M9j"/>
-                                    <constraint firstAttribute="trailing" secondItem="ui8-3t-AMa" secondAttribute="trailing" constant="14" id="Msj-oh-RYe"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="topMargin" id="LJd-Gf-wTL"/>
                                     <constraint firstItem="8zx-30-e3l" firstAttribute="leading" secondItem="hY0-uM-1kf" secondAttribute="trailing" constant="3" id="THr-IV-fci"/>
                                     <constraint firstItem="dyz-Cu-rit" firstAttribute="leading" secondItem="wVS-dX-KZ2" secondAttribute="trailing" constant="8" id="ZKT-Uv-bBx"/>
                                     <constraint firstAttribute="bottom" secondItem="hY0-uM-1kf" secondAttribute="bottom" constant="8" id="ajb-cx-EWQ"/>
                                     <constraint firstItem="DLI-03-vrR" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="bM9-1T-KaF"/>
                                     <constraint firstItem="hY0-uM-1kf" firstAttribute="leading" secondItem="dDT-Vi-xfA" secondAttribute="trailing" constant="8" id="cAm-Xq-1DV"/>
                                     <constraint firstItem="wVS-dX-KZ2" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="cgI-F7-02D"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" id="czn-r8-LC2"/>
                                     <constraint firstItem="wVS-dX-KZ2" firstAttribute="leading" secondItem="DLI-03-vrR" secondAttribute="trailing" constant="8" id="egL-Z0-HxA"/>
                                     <constraint firstAttribute="bottom" secondItem="tOi-ca-0uG" secondAttribute="bottom" constant="8" id="gX1-Oc-Glz"/>
                                     <constraint firstItem="szo-YY-Ec6" firstAttribute="leading" secondItem="dDT-Vi-xfA" secondAttribute="trailing" constant="8" id="ibT-K0-saa"/>
                                     <constraint firstAttribute="bottom" secondItem="8zx-30-e3l" secondAttribute="bottom" constant="7" id="jAS-JK-AKH"/>
-                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3m0-Uz-M3d" secondAttribute="leading" constant="20" symbolic="YES" id="jve-3V-eG2"/>
                                     <constraint firstAttribute="height" constant="135" id="kiP-FB-xwv"/>
                                     <constraint firstItem="tOi-ca-0uG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3m0-Uz-M3d" secondAttribute="leading" constant="20" symbolic="YES" id="mUa-e2-cnv"/>
                                     <constraint firstItem="dDT-Vi-xfA" firstAttribute="leading" secondItem="3m0-Uz-M3d" secondAttribute="leading" id="ovP-dz-G15"/>
