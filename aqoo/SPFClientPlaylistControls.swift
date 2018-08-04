@@ -28,6 +28,10 @@ class SPFClientPlaylistControls {
                 
                 let trackInDb = transaction.edit(trackInDb)!
                     trackInDb.metaTrackIsPlaying = isPlaying
+                
+                if  isPlaying == false {
+                    trackInDb.metaTrackLastTrackPosition = 0
+                }
             },
             completion: { (result) -> Void in
                 

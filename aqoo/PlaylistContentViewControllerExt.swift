@@ -301,8 +301,15 @@ extension PlaylistContentViewController {
            _isFinished = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
         }
         
-        if  _isFinished == true && debugMode == true {
-            print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
+        if _isFinished == true {
+            
+            //
+            //
+            //
+            
+            if  debugMode == true {
+                print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
+            }
         }
         
         return _isFinished
@@ -451,7 +458,13 @@ extension PlaylistContentViewController {
         
         handlePlaylistPlayMode( 0 )
         resetLocalPlayerMetaSettings()
+        resetLocalTrackStateStettings()
+        
+        // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
+        
+        // reset playMode/timeFrame-Meta-Information for all (spotify) playlistTracks in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
     }
     
     func resetLocalPlayerMetaSettings() {
