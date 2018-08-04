@@ -292,7 +292,15 @@ extension PlaylistContentViewController {
     }
     
     func trackIsFinished() -> Bool {
-        let _isFinished: Bool = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
+        
+        var _isFinished: Bool = false
+        
+        if  currentTrackPlaying == nil {
+           _isFinished = true
+        }   else {
+           _isFinished = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
+        }
+        
         if  _isFinished == true && debugMode == true {
             print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
         }
@@ -377,11 +385,12 @@ extension PlaylistContentViewController {
     
     func jumpToActiveTrackCellByTrackPosition(_ trackPosition: Int) {
      
+        // evaluate indexPath
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
-        
+        // scroll to current trackPosition
         tableView.scrollToRow(at: trackIndexPath, at: .top, animated: true)
-        // try to postfetch ballistic meta data from current active track cell (majic)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+        // try to postFetch ballistic meta data from current tableQueue to get active track cell (majic)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
             
             self.currentTrackCell = nil
             let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
