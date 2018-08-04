@@ -1179,7 +1179,7 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AiZ-ar-Zqg" userLabel="ui_img_playlistCover_bk">
                                                     <rect key="frame" x="0.0" y="0.0" width="63" height="60"/>
-                                                    <color key="backgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.054901960784313725" green="0.054901960784313725" blue="0.054901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="63" id="UgJ-nI-Lrt"/>
                                                         <constraint firstAttribute="height" constant="60" id="nqU-4Z-fZq"/>
@@ -1319,7 +1319,7 @@
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="4" id="aAg-42-Gag"/>
                                                 <constraint firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="cOT-Bw-hYg"/>
                                                 <constraint firstItem="gXh-NR-22Z" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" id="dfi-BI-uvO"/>
-                                                <constraint firstAttribute="trailing" secondItem="K1e-ef-Fbu" secondAttribute="trailing" constant="10" id="gnp-5m-7Ef"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="K1e-ef-Fbu" secondAttribute="trailing" id="gnp-5m-7Ef"/>
                                                 <constraint firstItem="WsE-2D-Tdo" firstAttribute="top" secondItem="Pss-Mf-Cil" secondAttribute="bottom" constant="3" id="guZ-fF-gyt"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="trailing" secondItem="gXh-NR-22Z" secondAttribute="trailing" id="jSJ-nJ-SE3"/>
                                                 <constraint firstItem="AiZ-ar-Zqg" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" id="kJa-Mu-DDq"/>
@@ -1392,7 +1392,7 @@
                                             <constraint firstAttribute="height" constant="20" id="i1q-AI-yfE"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PlaylistName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PlaylistName" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ui8-3t-AMa" userLabel="ui_lbl_playlistName">
                                         <rect key="frame" x="143" y="8" width="204" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="204" id="6ue-9p-qeO"/>
@@ -1469,6 +1469,7 @@
                                     <constraint firstItem="szo-YY-Ec6" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="61" id="3kA-hB-AU0"/>
                                     <constraint firstItem="dyz-Cu-rit" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="Bn2-lX-G33"/>
                                     <constraint firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" constant="8" id="Cd8-z6-Qlg"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="leading" secondItem="3m0-Uz-M3d" secondAttribute="leading" constant="143" id="GeX-oZ-d6M"/>
                                     <constraint firstItem="dDT-Vi-xfA" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" id="ICc-0c-M9j"/>
                                     <constraint firstItem="ui8-3t-AMa" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="topMargin" id="LJd-Gf-wTL"/>
                                     <constraint firstItem="8zx-30-e3l" firstAttribute="leading" secondItem="hY0-uM-1kf" secondAttribute="trailing" constant="3" id="THr-IV-fci"/>
@@ -1477,7 +1478,7 @@
                                     <constraint firstItem="DLI-03-vrR" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="bM9-1T-KaF"/>
                                     <constraint firstItem="hY0-uM-1kf" firstAttribute="leading" secondItem="dDT-Vi-xfA" secondAttribute="trailing" constant="8" id="cAm-Xq-1DV"/>
                                     <constraint firstItem="wVS-dX-KZ2" firstAttribute="top" secondItem="3m0-Uz-M3d" secondAttribute="top" constant="50" id="cgI-F7-02D"/>
-                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="trailing" secondItem="dyz-Cu-rit" secondAttribute="trailing" id="czn-r8-LC2"/>
+                                    <constraint firstItem="ui8-3t-AMa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dyz-Cu-rit" secondAttribute="trailing" id="czn-r8-LC2"/>
                                     <constraint firstItem="wVS-dX-KZ2" firstAttribute="leading" secondItem="DLI-03-vrR" secondAttribute="trailing" constant="8" id="egL-Z0-HxA"/>
                                     <constraint firstAttribute="bottom" secondItem="tOi-ca-0uG" secondAttribute="bottom" constant="8" id="gX1-Oc-Glz"/>
                                     <constraint firstItem="szo-YY-Ec6" firstAttribute="leading" secondItem="dDT-Vi-xfA" secondAttribute="trailing" constant="8" id="ibT-K0-saa"/>
