@@ -456,7 +456,8 @@ extension PlaylistContentViewController {
     
     func handlePlaylistCompleted() {
         
-        handlePlaylistPlayMode( 0 )
+        // call playlistPlayMode with currentPlayMode to simmulate users "stop" click
+        handlePlaylistPlayMode( currentPlayMode )
         resetLocalPlayerMetaSettings()
         resetLocalTrackStateStettings()
         
