@@ -190,11 +190,17 @@ extension PlaylistContentViewController {
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
-        // start playing tracks using -1 as init position for trackJumpToNext() call
-        currentTrackPosition = -1
-        if  trackJumpToNext() == true {
-            trackStartPlaying( currentTrackPosition )
+        
+        if  currentTrackPosition == -1 {
+            
+            if  currentPlayMode != playMode.PlayShuffle.rawValue {
+                currentTrackPosition = 0
+            }   else {
+                if  trackJumpToNext() == false { return }
+            }
         }
+        
+        trackStartPlaying( currentTrackPosition )
     }
     
     func trackStopPlaying(
@@ -220,7 +226,7 @@ extension PlaylistContentViewController {
        _ number: Int) {
         
         if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
-        
+
         jumpToActiveTrackCellByTrackPosition( number )
         
         // fetch track from current playlist trackSet
@@ -246,20 +252,13 @@ extension PlaylistContentViewController {
     
     func trackJumpToNext() -> Bool {
         
-        //
-        // reset currentTrackTimePosition only if not called initially (first track) -
-        // I'll use playTrack override directly after setPlaylistPlayMode starts
-        //
-        if  currentTrackPosition != -1 {
-            currentTrackTimePosition = 0
-        }
-        
         switch currentPlayMode {
             
             case playMode.PlayNormal.rawValue:
                 
                 // last track in playlist? return false (mark this process as 'not available') ...
                 if playlistFinished() == true { return false }
+                
                 // otherwise jump to next track in playlist
                 currentTrackPosition += 1
                 
@@ -303,9 +302,9 @@ extension PlaylistContentViewController {
         
         if _isFinished == true {
             
-            //
-            //
-            //
+            currentTrackTimePosition = 0
+            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            currentTrackTimeProgress = 0.0
             
             if  debugMode == true {
                 print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
@@ -401,7 +400,7 @@ extension PlaylistContentViewController {
             
             self.currentTrackCell = nil
             let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
-            if (_trackCell != nil) {
+            if  _trackCell != nil {
                 self.currentTrackCell = _trackCell
             }
         }
@@ -417,16 +416,16 @@ extension PlaylistContentViewController {
             
             trackCell.lblTrackPlaytime.isHidden = false
             trackCell.lblTrackPlaytimeRemaining.isHidden = true
-            trackCell.progressBar.progress = 0.0
+            trackCell.progressBar.setProgress(0.0, animated: false)
         }
     }
     
     @objc
     func handleTrackTimerEvent() {
-        
+
         // trace cell for this track
         handleActiveTrackCellByTrackPosition( currentTrackPosition )
-        
+
         //  track still runnning? update track timeFrama position and progressBar
         if  trackIsFinished() == false {
             
@@ -438,6 +437,7 @@ extension PlaylistContentViewController {
         }
         
         if  trackIsFinished() == true {
+            
             trackStopPlaying( currentTrackPosition )
             
             if  playlistFinished() == false {

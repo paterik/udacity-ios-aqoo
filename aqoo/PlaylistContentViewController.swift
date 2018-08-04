@@ -22,7 +22,7 @@ class PlaylistContentViewController: BaseViewController,
     var currentTrackTimePosition: Int = 0
     var currentTrackTimeProgress: Float = 0.0
     var currentTrackInterval: TimeInterval?
-    var currentTrackPosition: Int = 0
+    var currentTrackPosition: Int = -1
     var currentTrackCell: PlaylistTracksTableCell?
     var currentPlayMode: Int16 = 0
     
@@ -118,7 +118,7 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true
         playlistCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
         playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(_ctd))
-        playlistCell.lblTrackPlaytimeRemaining.textColor = UIColor(netHex: 0x80C9A4)
+        playlistCell.lblTrackPlaytimeRemaining.textColor = UIColor(netHex: 0x1DB954)
         playlistCell.lblTrackPlaytimeRemaining.text = playlistCell.lblTrackPlaytime.text
         playlistCell.progressBar.progress = 0.0
     
