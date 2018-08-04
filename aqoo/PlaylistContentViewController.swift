@@ -20,6 +20,7 @@ class PlaylistContentViewController: BaseViewController,
     
     var currentTrackPlaying: StreamPlayListTracks?
     var currentTrackTimePosition: Int = 0
+    var currentTrackTimeProgress: Float = 0.0
     var currentTrackInterval: TimeInterval?
     var currentTrackPosition: Int = 0
     var currentTrackCell: PlaylistTracksTableCell?
@@ -99,6 +100,7 @@ class PlaylistContentViewController: BaseViewController,
 
         var _ctp: Float = 0.0
         var _ctd: Float = Float(TimeInterval(playlistTrackCacheData.trackDuration))
+        var _progress: Float = 0.0
         
         var playlistCoverView: UIImageView! = playlistCell.imageViewAlbumCover
         var usedCoverImageCacheKey: String?
@@ -108,10 +110,9 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
         playlistCell.lblTrackPlayIndex.textColor = UIColor(netHex: 0xffffff)
         playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
-        
-        // setup progressBar
         playlistCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
         playlistCell.progressBar.trackTintColor = UIColor.clear
+        playlistCell.progressBar.isHidden = false
     
         // try to bind album cover to track, use avatar (v1) if nothing found
         if  playlistTrackCacheData.albumCoverLargestImageURL != nil {
@@ -136,6 +137,26 @@ class PlaylistContentViewController: BaseViewController,
                 usedCoverImageCacheKey!,
                 [.transition(.fade(0.1875))]
             )
+        }
+        
+        // dynamic meta data payload
+        
+        if  playlistTrackCacheData.metaTrackIsPlaying == true {
+            playlistCell.state = .playing
+            playlistCell.imageViewTrackIsPlayingIndicator.isHidden = false
+            playlistCell.imageViewTrackIsPlayingSymbol.isHidden = false
+            playlistCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x1DB954)
+            playlistCell.lblTrackPlaytime.text = "--:--"
+            playlistCell.progressBar.setProgress(currentTrackTimeProgress, animated: false)
+            
+        }   else {
+            playlistCell.state = .stopped
+            playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
+            playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true
+            playlistCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
+            playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(_ctd))
+            playlistCell.progressBar.progress = 0.0
+            
         }
         
         return playlistCell

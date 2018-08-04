@@ -212,9 +212,7 @@ extension PlaylistContentViewController {
             }
         })
         
-        // check for available track cell, return in silence if missing/not-set
-        // if  currentTrackCell == nil { return }
-        // currentTrackCell!.progressBar.setHidden(true, animated: true)
+        handleActiveTrackCellByTrackPosition( currentTrackPosition )
     }
     
     func trackStartPlaying(
@@ -241,10 +239,6 @@ extension PlaylistContentViewController {
                 }
             }
         )
-        
-        // check for available track cell
-        // if  currentTrackCell == nil { return }
-        // currentTrackCell!.progressBar.setHidden(false, animated: true)
     }
     
     func trackJumpToNext() -> Bool {
@@ -288,8 +282,7 @@ extension PlaylistContentViewController {
             
                 break
             
-            default:
-                return false
+            default: return false
         }
         
         return true
@@ -369,9 +362,6 @@ extension PlaylistContentViewController {
         
             // stop playback using direct api call
             trackStopPlaying( currentTrackPosition )
-            
-            // set cell in track-is-stopped mode
-            // handleTrackPlayingCellElementUI( currentTrackPosition, isPlaying: false )
         }
     }
     
@@ -392,55 +382,26 @@ extension PlaylistContentViewController {
         }
     }
     
-    //
-    // @deprecated
-    //
-    // will be used to override cell behaviour outside main controller tableView delegate.
-    // this is neccessary to prevent table.reload() directive calls after each big meta data change
-    func handleTrackPlayingCellElementUI(_ trackPosition: Int, isPlaying: Bool) {
+    func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
-        if currentTrackCell == nil { return }
+        var trackIndexPath = IndexPath(row: trackPosition, section: 0)
         
-        print ("dbg [playlist/track] : handleTrackPlayingCellElementUI(pos: \(trackPosition))")
-        
-        currentTrackCell!.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
-        currentTrackCell!.imageViewTrackIsPlayingSymbol.isHidden = !isPlaying
-        currentTrackCell!.progressBar.isHidden = !isPlaying
-        currentTrackCell!.state = .stopped
-        
-        if  isPlaying == true {
-           currentTrackCell!.state = .playing
-           currentTrackCell!.lblTrackPlaytime.textColor = UIColor(netHex: 0x1DB954)
-        }   else {
-           currentTrackCell!.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
-           currentTrackCell!.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(currentTrackPlaying!.trackDuration))
-        }
+        tableView.scrollToRow(at: trackIndexPath, at: .top, animated: true)
+        tableView.reloadRows(at: [trackIndexPath], with: .none)
     }
     
     @objc
     func handleTrackTimerEvent() {
         
-        // get cell for this track
-        // getTableCellForTrackPosition( currentTrackPosition )
-        // if  currentTrackCell == nil {
-        //     print ("dbg [playlist/track] : waiting for trackCell identification <loop #\(currentTrackTimePosition)>")
-        //
-        //     return
-        // };  print ("dbg [playlist/track] : ___ cell_ident {0} [\(currentTrackCell!.lblAlbumName.text)]")
-        
-        // set cell in track-is-playing mode
-        // handleTrackPlayingCellElementUI( currentTrackPosition, isPlaying: true )
+        // trace cell for this track
+        handleActiveTrackCellByTrackPosition( currentTrackPosition )
         
         //  track still runnning? update track timeFrama position and progressBar
         if  trackIsFinished() == false {
             
-            var _ctp: Float = Float(currentTrackTimePosition)
-            var _ctd: Float = Float(currentTrackPlaying!.trackDuration)
-            var _progress: Float = (_ctp / _ctd)
-            
             currentTrackTimePosition += 1
+            currentTrackTimeProgress = (Float(currentTrackTimePosition) / Float(currentTrackPlaying!.trackDuration))
             currentTrackInterval = TimeInterval(currentTrackTimePosition)
-            // currentTrackCell!.progressBar.setProgress(_progress, animated: true)
             
             localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
         }
