@@ -10,8 +10,6 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
-import CryptoSwift
-import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
@@ -98,19 +96,25 @@ class PlaylistContentViewController: BaseViewController,
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListContentItem",
             for: indexPath) as! PlaylistTracksTableCell
-        
-        playlistCell.lblAlbumName.text = playlistTrackCacheData.albumName
-        playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
-        playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
-        if  let trackDuration = playlistTrackCacheData.trackDuration as? Int32 {
-            playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(trackDuration))
-        }
+
+        var _ctp: Float = 0.0
+        var _ctd: Float = Float(TimeInterval(playlistTrackCacheData.trackDuration))
         
         var playlistCoverView: UIImageView! = playlistCell.imageViewAlbumCover
         var usedCoverImageCacheKey: String?
         var usedCoverImageURL: URL?
         
-        playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
+        playlistCell.lblAlbumName.text = playlistTrackCacheData.albumName
+        playlistCell.lblTrackName.text = playlistTrackCacheData.trackName
+        playlistCell.lblTrackPlayIndex.textColor = UIColor(netHex: 0xffffff)
+        playlistCell.lblTrackPlayIndex.text = String(format: "%D", (indexPath.row + 1))
+        
+        // setup progressBar
+        playlistCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
+        playlistCell.progressBar.trackTintColor = UIColor.clear
+        
+        // weazL 3
+        // playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
     
         // try to bind album cover to track, use avatar (v1) if nothing found
         if  playlistTrackCacheData.albumCoverLargestImageURL != nil {
@@ -139,16 +143,25 @@ class PlaylistContentViewController: BaseViewController,
         return playlistCell
     }
     
-    @IBAction func btnClosePlayistContentView(_ sender: Any) {
+    func resetPlayer() {
         
         // reset (all) playMode controls
         trackControlView.mode = .clear
         // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // reset playMode/timeFrame-Meta-Information for all (spotify) playlistTracks in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+        // clear local playlist playback meta
+        resetLocalPlayerMetaSettings()
+        // clear local track playback meta
+        resetLocalTrackStateStettings()
         // logout from player
         localPlayer.player?.logout()
-        // clear local track playback meta
-        resetLocalPlayerMetaSettings()
+    }
+    
+    @IBAction func btnClosePlayistContentView(_ sender: Any) {
+        
+        resetPlayer()
         
         dismiss(animated: true, completion: nil)
     }

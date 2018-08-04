@@ -112,4 +112,26 @@ class SPFClientPlaylistControls {
             }
         }
     }
+    
+    func resetPlayModeOnAllPlaylistTracks() {
+        
+        if  let playListTracksInCache = CoreStore.defaultStack.fetchAll(From<StreamPlayListTracks>()) as? [StreamPlayListTracks] {
+            for playlistTrack in playListTracksInCache {
+                
+                CoreStore.defaultStack.perform(
+                    asynchronous: { (transaction) -> Void in
+                        
+                        playlistTrack.metaTrackIsPlaying = false
+                        playlistTrack.metaTrackLastTrackPosition = 0
+                        
+                    },
+                    completion: { (result) -> Void in
+                        switch result {
+                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .success(let userInfo): break }
+                }
+                )
+            }
+        }
+    }
 }

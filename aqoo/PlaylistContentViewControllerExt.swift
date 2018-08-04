@@ -10,7 +10,6 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
-import BGTableViewRowActionWithImage
 import MaterialComponents.MaterialProgressView
 
 extension PlaylistContentViewController {
@@ -140,8 +139,6 @@ extension PlaylistContentViewController {
         // set current playMode for internal usage
         currentPlayMode = usedPlayMode
         
-        print (currentPlayMode, playListInDb!.currentPlayMode, playMode.PlayNormal.rawValue)
-        
         switch currentPlayMode {
             
             case playMode.PlayNormal.rawValue:
@@ -205,19 +202,8 @@ extension PlaylistContentViewController {
 
         if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
         
-        guard let _trackCell = getTableCellForTrackPosition( number ) as? PlaylistTracksTableCell else {
-            return
-        }; currentTrackCell = _trackCell
-           currentTrackCell!.progressBar.setHidden(true, animated: true)
-        
-        // fetch track from current playlist trackSet
-        let track = playListTracksInCloud![number] as! StreamPlayListTracks
-        
         // update local persistance layer for tracks, set track to mode "isPlaying"
-        localPlaylistControls.setTrackInPlayState( track, false )
-        
-        // handle corresponding cell UI
-        handleTrackPlayingCellUI( number, isPlaying: false )
+        localPlaylistControls.setTrackInPlayState( currentTrackPlaying!, false )
         
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
@@ -225,32 +211,26 @@ extension PlaylistContentViewController {
                 self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
             }
         })
+        
+        // check for available track cell, return in silence if missing/not-set
+        if  currentTrackCell == nil { return }
+        
+        // currentTrackCell!.progressBar.setHidden(true, animated: true)
     }
     
     func trackStartPlaying(
        _ number: Int) {
         
-        if  playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
-        
-        guard let _trackCell = getTableCellForTrackPosition( currentTrackPosition ) as? PlaylistTracksTableCell else {
-            return
-        };  currentTrackCell = _trackCell
+        if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
         
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
-        
+        // set active meta object of active (playing) track
+        currentTrackPlaying = track
         // update local persistance layer for tracks, set track to mode "isPlaying"
         localPlaylistControls.setTrackInPlayState( track, true )
-        
-        // set active meta object of active (playing) track
-        currentTrackPlaying  = track
-        
         // set active meta object, (re)evaluate current trackInterval
         currentTrackInterval = TimeInterval(currentTrackTimePosition)
-        
-        // handle corresponding CellUI
-        handleTrackPlayingCellUI( number, isPlaying: true )
-        
         // start playback using spotify api call
         localPlayer.player?.playSpotifyURI(
             currentTrackPlaying!.trackURIInternal,
@@ -262,11 +242,21 @@ extension PlaylistContentViewController {
                 }
             }
         )
+        
+        // check for available track cell
+        if  currentTrackCell == nil { return }
+        // currentTrackCell!.progressBar.setHidden(false, animated: true)
     }
     
     func trackJumpToNext() -> Bool {
         
-        currentTrackTimePosition = 0
+        //
+        // reset currentTrackTimePosition only if not called initially (first track) -
+        // I'll use playTrack override directly after setPlaylistPlayMode starts
+        //
+        if  currentTrackPosition != -1 {
+            currentTrackTimePosition = 0
+        }
         
         switch currentPlayMode {
             
@@ -285,11 +275,6 @@ extension PlaylistContentViewController {
                 
                 currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
                 playListTracksShuffleKeyPosition += 1
-                
-                print ("__ shuffleKeyPosition = \(playListTracksShuffleKeyPosition)")
-                print ("__ shuffleKeys = \(playListTracksShuffleKeys!)")
-                print ("__ shuffleKeyCount = \(playListTracksShuffleKeys!.count)")
-                print ("__ currentTrackPosition = \(currentTrackPosition)\n")
                 
                 break
             
@@ -312,7 +297,6 @@ extension PlaylistContentViewController {
     }
     
     func trackIsFinished() -> Bool {
-        
         let _isFinished: Bool = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
         if  _isFinished == true && debugMode == true {
             print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
@@ -371,12 +355,8 @@ extension PlaylistContentViewController {
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
         trackControlView.state = .stopped
         
-        if  active == false {
+        if  active == true {
             
-            trackStopPlaying( currentTrackPosition )
-            
-        }   else {
-        
             // start playback meta timer
             _trackTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
@@ -385,39 +365,88 @@ extension PlaylistContentViewController {
                 userInfo     : nil,
                 repeats      : true
             );  trackControlView.state = .playing
+            
+        }   else {
+        
+            // stop playback using direct api call
+            trackStopPlaying( currentTrackPosition )
+            
+            // set cell in track-is-stopped mode
+            // handleTrackPlayingCellElementUI( currentTrackPosition, isPlaying: false )
         }
     }
     
-    func getTableCellForTrackPosition(_ trackPosition: Int) -> PlaylistTracksTableCell? {
+    // weazL
+    func getTableCellForTrackPosition(_ trackPosition: Int) {
         
-        guard let _trackCell = tableView.cellForRow(at: IndexPath(row: trackPosition, section: 0)) as? PlaylistTracksTableCell else {
+        // 1st, scroll to position
+        tableView.scrollToRow(at: IndexPath(row: trackPosition, section: 0), at: .top, animated: true)
+        
+        // 2nd, (majic) wait for table dispatchable loadOut and fetch corresponding cell
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             
-            if  debugMode == true {
-                print ("dbg [playlist/track] : cell not found <return>")
+            self.currentTrackCell = nil
+            let _trackCell = self.tableView.cellForRow(at: IndexPath(row: trackPosition, section: 0)) as? PlaylistTracksTableCell
+            if (_trackCell != nil) {
+                self.currentTrackCell = _trackCell
             }
-            
-            return nil
         }
+    }
+    
+    //
+    // @deprecated
+    //
+    // will be used to override cell behaviour outside main controller tableView delegate.
+    // this is neccessary to prevent table.reload() directive calls after each big meta data change
+    func handleTrackPlayingCellElementUI(_ trackPosition: Int, isPlaying: Bool) {
         
-        return _trackCell
+        if currentTrackCell == nil { return }
+        
+        print ("dbg [playlist/track] : handleTrackPlayingCellElementUI(pos: \(trackPosition))")
+        
+        currentTrackCell!.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
+        currentTrackCell!.imageViewTrackIsPlayingSymbol.isHidden = !isPlaying
+        currentTrackCell!.progressBar.isHidden = !isPlaying
+        currentTrackCell!.state = .stopped
+        
+        if  isPlaying == true {
+           currentTrackCell!.state = .playing
+           currentTrackCell!.lblTrackPlaytime.textColor = UIColor(netHex: 0x1DB954)
+        }   else {
+           currentTrackCell!.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
+           currentTrackCell!.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(currentTrackPlaying!.trackDuration))
+        }
     }
     
     @objc
     func handleTrackTimerEvent() {
         
+        // get cell for this track
+        getTableCellForTrackPosition( currentTrackPosition )
+        
+        if  currentTrackCell == nil {
+            print ("dbg [playlist/track] : waiting for trackCell identification <loop #\(currentTrackTimePosition)>")
+            
+            return
+        }
+        
+        print ("dbg [playlist/track] : ___ cell_ident {0} [\(currentTrackCell!.lblAlbumName.text)]")
+        
+        // set cell in track-is-playing mode
+        // handleTrackPlayingCellElementUI( currentTrackPosition, isPlaying: true )
+        
         //  track still runnning? update track timeFrama position and progressBar
         if  trackIsFinished() == false {
-            
-            currentTrackTimePosition += 1
-            currentTrackInterval = TimeInterval(currentTrackTimePosition)
-            
-            localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
             
             var _ctp: Float = Float(currentTrackTimePosition)
             var _ctd: Float = Float(currentTrackPlaying!.trackDuration)
             var _progress: Float = (_ctp / _ctd)
             
-            currentTrackCell!.progressBar.setProgress(_progress, animated: true)
+            currentTrackTimePosition += 1
+            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            // currentTrackCell!.progressBar.setProgress(_progress, animated: true)
+            
+            localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
         }
         
         if  trackIsFinished() == true {
@@ -444,40 +473,21 @@ extension PlaylistContentViewController {
         localPlaylistControls.resetPlayModeOnAllPlaylists()
     }
     
-    func handleTrackPlayingCellUI(_ number: Int, isPlaying: Bool) {
-        
-        guard let _trackCell = getTableCellForTrackPosition( number ) as? PlaylistTracksTableCell else {
-            return
-        }
-        
-        _trackCell.imageViewTrackIsPlayingIndicator.isHidden = !isPlaying
-        _trackCell.imageViewTrackIsPlayingSymbol.isHidden = !isPlaying
-        _trackCell.progressBar.isHidden = true
-        _trackCell.state = .stopped
-        
-        if  isPlaying == true {
-           _trackCell.state = .playing
-           _trackCell.progressBar.isHidden = false
-           _trackCell.progressBar.progress = 0
-           _trackCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
-           _trackCell.progressBar.trackTintColor = UIColor.clear
-           _trackCell.progressBar.setHidden(false, animated: true)
-        }
-        
-        currentTrackCell = _trackCell
-    }
-    
     func resetLocalPlayerMetaSettings() {
 
+        playListTracksShuffleKeyPosition = 0
+        playListTracksShuffleKeys = []
+        currentPlayMode = 0
+    }
+    
+    func resetLocalTrackStateStettings() {
+        
         currentTrackTimePosition = 0
         currentTrackPlaying = nil
         currentTrackInterval = 0
         currentTrackPosition = 0
-        currentPlayMode = 0
-        currentTrackCell = nil
         
-        playListTracksShuffleKeyPosition = 0
-        playListTracksShuffleKeys = []
+        currentTrackCell = nil
     }
     
     func loadMetaPlaylistTracksFromDb() {
@@ -489,17 +499,13 @@ extension PlaylistContentViewController {
                 .orderBy(.ascending(\StreamPlayListTracks.trackAddedAt))
         )
         
-        print (playListTracksInCloud?.count)
-        
         // load playlist local cache from db (refresh)
         playListInDb = CoreStore.defaultStack.fetchOne(
             From<StreamPlayList>()
                 .where(\StreamPlayList.metaListHash == playListInDb!.getMD5Identifier())
         )
         
-        print (playListInDb?.getMD5Identifier())
-        
-         // init shuffled key stack for shuffle-play-mode
+        // init shuffled key stack for shuffle-play-mode
         if  playListTracksInCloud != nil {
             playListTracksShuffleKeys = getRandomUniqueNumberArray(
                 forLowerBound: 0,

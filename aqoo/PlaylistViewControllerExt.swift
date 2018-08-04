@@ -496,7 +496,7 @@ extension PlaylistViewController {
                     // sync-db-calls.
                     //
                     
-                    for playlistInDb in _playListCache {
+                    /*for playlistInDb in _playListCache {
                         
                         // ignore self owned image profiles (already fetched)
                         if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
@@ -511,7 +511,7 @@ extension PlaylistViewController {
                         // DispatchQueue.main.async {
                         //     self.handlePlaylistDbCacheOwnerProfileData ...
                         // }
-                    }
+                    }*/
                 }
             }
             
