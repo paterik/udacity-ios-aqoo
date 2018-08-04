@@ -368,32 +368,17 @@ extension PlaylistContentViewController {
         }
     }
     
-    // weazL
-    func getTableCellForTrackPosition(_ trackPosition: Int) {
-        
-        // 1st, scroll to position
-        tableView.scrollToRow(at: IndexPath(row: trackPosition, section: 0), at: .top, animated: true)
-        
-        // 2nd, (majic) wait for table dispatchable loadOut and fetch corresponding cell
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            
-            self.currentTrackCell = nil
-            let _trackCell = self.tableView.cellForRow(at: IndexPath(row: trackPosition, section: 0)) as? PlaylistTracksTableCell
-            if (_trackCell != nil) {
-                self.currentTrackCell = _trackCell
-            }
-        }
-    }
-    
     func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
+        
         tableView.reloadRows(at: [trackIndexPath], with: .none)
     }
     
     func jumpToActiveTrackCellByTrackPosition(_ trackPosition: Int) {
      
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
+        
         tableView.scrollToRow(at: trackIndexPath, at: .top, animated: true)
         // try to postfetch ballistic meta data from current active track cell (majic)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
@@ -414,7 +399,8 @@ extension PlaylistContentViewController {
             trackCell.imageViewTrackIsPlayingSymbol.isHidden = true
             trackCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
             
-            // trackCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(currentTrackPlaying!.trackDuration))
+            trackCell.lblTrackPlaytime.isHidden = false
+            trackCell.lblTrackPlaytimeRemaining.isHidden = true
             trackCell.progressBar.progress = 0.0
         }
     }
