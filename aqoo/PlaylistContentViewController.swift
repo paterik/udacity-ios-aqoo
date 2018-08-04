@@ -112,9 +112,6 @@ class PlaylistContentViewController: BaseViewController,
         // setup progressBar
         playlistCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
         playlistCell.progressBar.trackTintColor = UIColor.clear
-        
-        // weazL 3
-        // playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
     
         // try to bind album cover to track, use avatar (v1) if nothing found
         if  playlistTrackCacheData.albumCoverLargestImageURL != nil {
@@ -131,6 +128,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsExplicit.isHidden = false
         }
         
+        playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
         if  usedCoverImageURL != nil {
             handleCoverImageByCache(
                 playlistCoverView,

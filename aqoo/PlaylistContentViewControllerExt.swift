@@ -213,8 +213,7 @@ extension PlaylistContentViewController {
         })
         
         // check for available track cell, return in silence if missing/not-set
-        if  currentTrackCell == nil { return }
-        
+        // if  currentTrackCell == nil { return }
         // currentTrackCell!.progressBar.setHidden(true, animated: true)
     }
     
@@ -244,7 +243,7 @@ extension PlaylistContentViewController {
         )
         
         // check for available track cell
-        if  currentTrackCell == nil { return }
+        // if  currentTrackCell == nil { return }
         // currentTrackCell!.progressBar.setHidden(false, animated: true)
     }
     
@@ -422,15 +421,12 @@ extension PlaylistContentViewController {
     func handleTrackTimerEvent() {
         
         // get cell for this track
-        getTableCellForTrackPosition( currentTrackPosition )
-        
-        if  currentTrackCell == nil {
-            print ("dbg [playlist/track] : waiting for trackCell identification <loop #\(currentTrackTimePosition)>")
-            
-            return
-        }
-        
-        print ("dbg [playlist/track] : ___ cell_ident {0} [\(currentTrackCell!.lblAlbumName.text)]")
+        // getTableCellForTrackPosition( currentTrackPosition )
+        // if  currentTrackCell == nil {
+        //     print ("dbg [playlist/track] : waiting for trackCell identification <loop #\(currentTrackTimePosition)>")
+        //
+        //     return
+        // };  print ("dbg [playlist/track] : ___ cell_ident {0} [\(currentTrackCell!.lblAlbumName.text)]")
         
         // set cell in track-is-playing mode
         // handleTrackPlayingCellElementUI( currentTrackPosition, isPlaying: true )
