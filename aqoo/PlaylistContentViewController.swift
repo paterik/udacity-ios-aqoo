@@ -113,6 +113,13 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.progressBar.progressTintColor = UIColor(netHex: 0x1DB954)
         playlistCell.progressBar.trackTintColor = UIColor.clear
         playlistCell.progressBar.isHidden = false
+        
+        playlistCell.state = .stopped
+        playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
+        playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true
+        playlistCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
+        playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(_ctd))
+        playlistCell.progressBar.progress = 0.0
     
         // try to bind album cover to track, use avatar (v1) if nothing found
         if  playlistTrackCacheData.albumCoverLargestImageURL != nil {
@@ -129,7 +136,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsExplicit.isHidden = false
         }
         
-        playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
+        // playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
         if  usedCoverImageURL != nil {
             handleCoverImageByCache(
                 playlistCoverView,
@@ -142,6 +149,7 @@ class PlaylistContentViewController: BaseViewController,
         // dynamic meta data payload
         
         if  playlistTrackCacheData.metaTrackIsPlaying == true {
+            
             playlistCell.state = .playing
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = false
             playlistCell.imageViewTrackIsPlayingSymbol.isHidden = false
@@ -149,7 +157,8 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.lblTrackPlaytime.text = "--:--"
             playlistCell.progressBar.setProgress(currentTrackTimeProgress, animated: false)
             
-        }   else {
+        }   else if currentPlayMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
+            
             playlistCell.state = .stopped
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
             playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true

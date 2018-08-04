@@ -202,23 +202,26 @@ extension PlaylistContentViewController {
 
         if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
         
+        jumpToActiveTrackCellByTrackPosition( number )
+        
         // update local persistance layer for tracks, set track to mode "isPlaying"
         localPlaylistControls.setTrackInPlayState( currentTrackPlaying!, false )
         
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
+            self.handleAllTrackCellsPlayStateReset()
             if (error != nil) {
                 self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
             }
         })
-        
-        handleActiveTrackCellByTrackPosition( currentTrackPosition )
     }
     
     func trackStartPlaying(
        _ number: Int) {
         
         if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
+        
+        jumpToActiveTrackCellByTrackPosition( number )
         
         // fetch track from current playlist trackSet
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
@@ -385,9 +388,35 @@ extension PlaylistContentViewController {
     func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
-        
-        tableView.scrollToRow(at: trackIndexPath, at: .top, animated: true)
         tableView.reloadRows(at: [trackIndexPath], with: .none)
+    }
+    
+    func jumpToActiveTrackCellByTrackPosition(_ trackPosition: Int) {
+     
+        var trackIndexPath = IndexPath(row: trackPosition, section: 0)
+        tableView.scrollToRow(at: trackIndexPath, at: .top, animated: true)
+        // try to postfetch ballistic meta data from current active track cell (majic)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            
+            self.currentTrackCell = nil
+            let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
+            if (_trackCell != nil) {
+                self.currentTrackCell = _trackCell
+            }
+        }
+    }
+    
+    func handleAllTrackCellsPlayStateReset() {
+        
+        for trackCell in tableView.visibleCells as! [PlaylistTracksTableCell] {
+            trackCell.state = .stopped
+            trackCell.imageViewTrackIsPlayingIndicator.isHidden = true
+            trackCell.imageViewTrackIsPlayingSymbol.isHidden = true
+            trackCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
+            
+            // trackCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(currentTrackPlaying!.trackDuration))
+            trackCell.progressBar.progress = 0.0
+        }
     }
     
     @objc
