@@ -7,11 +7,11 @@ PODS:
   - FoldingCell (3.1.4)
   - GradientLoadingBar (1.1.11)
   - Kingfisher (4.8.1)
-  - LetterAvatarKit (1.1.4)
+  - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (59.1.0)
-  - MaterialComponents/private/Math (59.1.0)
-  - MaterialComponents/ProgressView (59.1.0):
+  - MaterialComponents/Palettes (59.1.1)
+  - MaterialComponents/private/Math (59.1.1)
+  - MaterialComponents/ProgressView (59.1.1):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -35,7 +35,7 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
-  - SwiftDate (5.0.4)
+  - SwiftDate (5.0.5)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.1.0)
 
@@ -93,9 +93,9 @@ SPEC CHECKSUMS:
   FoldingCell: 5f8a482ce0502bc0d5a1732782c305e0cefe6f81
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
   Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
-  LetterAvatarKit: 47f238b929d99c4216664a6aff151654dcdc71ba
+  LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: a4edbc1c4a005a4a989328ad2940f03365e84e73
+  MaterialComponents: 9ba063439c19dd92b3489bc2c4e428f2abaced65
   MDFInternationalization: e355b0cebecf53d60233bd267084e49366c82513
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
-  SwiftDate: d9827f0e7edfeb8be52882beb67e75c773b634c3
+  SwiftDate: 963ed9f6d97e2de396d4ce73174185de04f9cdb6
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
 
