@@ -152,9 +152,9 @@ extension PlaylistContentViewController {
         // real playmode change in process? set new playmode and play
         //
         
-        print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode)" )
+        print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
         
-        if  usedPlayMode != currentPlayMode {
+        if  usedPlayMode != playListInDb!.currentPlayMode {
             
             setPlaylistPlayMode( usedPlayMode )
             togglePlayMode( true )
