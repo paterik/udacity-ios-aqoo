@@ -25,6 +25,7 @@ class PlaylistContentViewController: BaseViewController,
     var currentTrackPosition: Int = 0
     var currentTrackCell: PlaylistTracksTableCell?
     var currentPlayMode: Int16 = 0
+    var currentTrackIsPlaying: Bool = false
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?

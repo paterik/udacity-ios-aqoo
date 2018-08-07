@@ -138,12 +138,12 @@ extension PlaylistContentViewController {
         // stop everything and reset cache meta information (from status play to stop) also
         //
         
-        // A) always reset (all) playMode controls and stop playback
+        // A) always reset (all) playMode controls and stop playback first
         trackControlView.mode = .clear
         setPlaylistPlayMode( playMode.Stopped.rawValue )
         togglePlayMode( false )
         
-        // B) always reset playMode/timeFrame-Meta-Information for all (spotify) playlists and playlistTracks in dbcache
+        // B) also reset playMode/timeFrame-Meta-Information for all (spotify) playlists and playlistTracks in dbcache
         localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
         localPlaylistControls.resetPlayModeOnAllPlaylists()
         tableView.reloadData()
@@ -151,6 +151,8 @@ extension PlaylistContentViewController {
         //
         // real playmode change in process? set new playmode and play
         //
+        
+        print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode)" )
         
         if  usedPlayMode != currentPlayMode {
             
@@ -287,9 +289,7 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = false
         
-        if  currentTrackPlaying == nil {
-           _isFinished = true
-        }   else {
+        if  currentTrackPlaying != nil {
            _isFinished = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
         }
         
@@ -466,16 +466,16 @@ extension PlaylistContentViewController {
         playListTracksShuffleKeyPosition = 0
         playListTracksShuffleKeys = []
         currentPlayMode = 0
+        currentTrackCell = nil
     }
     
     func resetLocalTrackStateStettings() {
         
         currentTrackTimePosition = 0
         currentTrackPlaying = nil
+        currentTrackIsPlaying = false
         currentTrackInterval = 0
         currentTrackPosition = 0
-        
-        currentTrackCell = nil
     }
     
     func loadMetaPlaylistTracksFromDb() {
