@@ -16,7 +16,7 @@ PODS:
     - MaterialComponents/private/Math
     - MDFInternationalization
     - MotionAnimator (~> 2.1)
-  - MDFInternationalization (1.0.4)
+  - MDFInternationalization (1.1.0)
   - MotionAnimator (2.8.1):
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MaterialComponents: 9ba063439c19dd92b3489bc2c4e428f2abaced65
-  MDFInternationalization: e355b0cebecf53d60233bd267084e49366c82513
+  MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
