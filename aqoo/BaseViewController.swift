@@ -82,7 +82,7 @@ class BaseViewController: UIViewController {
     //
     enum playMode: Int16 {
         
-        case Default = 0
+        case Stopped = 0
         case PlayNormal = 1
         case PlayShuffle = 2
         case PlayRepeatAll = 3
@@ -95,7 +95,7 @@ class BaseViewController: UIViewController {
     func getPlayModeAsString(_ playModeValue : Int16) -> String {
         
         switch playModeValue {
-            case playMode.Default.rawValue:
+            case playMode.Stopped.rawValue:
                 return "Stop"
             
             case playMode.PlayNormal.rawValue:

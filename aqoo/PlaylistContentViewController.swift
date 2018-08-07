@@ -22,7 +22,7 @@ class PlaylistContentViewController: BaseViewController,
     var currentTrackTimePosition: Int = 0
     var currentTrackTimeProgress: Float = 0.0
     var currentTrackInterval: TimeInterval?
-    var currentTrackPosition: Int = -1
+    var currentTrackPosition: Int = 0
     var currentTrackCell: PlaylistTracksTableCell?
     var currentPlayMode: Int16 = 0
     

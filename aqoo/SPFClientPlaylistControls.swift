@@ -133,7 +133,7 @@ class SPFClientPlaylistControls {
                         switch result {
                         case .failure(let error): if self.debugMode == true { print (error) }
                         case .success(let userInfo): break }
-                }
+                    }
                 )
             }
         }

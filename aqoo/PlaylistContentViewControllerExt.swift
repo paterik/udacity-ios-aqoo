@@ -134,84 +134,77 @@ extension PlaylistContentViewController {
     func handlePlaylistPlayMode(
        _ usedPlayMode: Int16) {
         
-        // reset (all) playMode controls
-        trackControlView.mode = .clear
-        // set current playMode for internal usage
-        currentPlayMode = usedPlayMode
+        //
+        // stop everything and reset cache meta information (from status play to stop) also
+        //
         
-        switch currentPlayMode {
+        // A) always reset (all) playMode controls and stop playback
+        trackControlView.mode = .clear
+        setPlaylistPlayMode( playMode.Stopped.rawValue )
+        togglePlayMode( false )
+        
+        // B) always reset playMode/timeFrame-Meta-Information for all (spotify) playlists and playlistTracks in dbcache
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        tableView.reloadData()
+        
+        //
+        // real playmode change in process? set new playmode and play
+        //
+        
+        if  usedPlayMode != currentPlayMode {
             
-            case playMode.PlayNormal.rawValue:
-                if  playListInDb!.currentPlayMode != playMode.PlayNormal.rawValue {
-                    setPlaylistPlayMode( playMode.PlayNormal.rawValue )
-                    trackControlView.mode = .playNormal
-                    togglePlayMode( true )
-                }   else {
-                    setPlaylistPlayMode( playMode.Default.rawValue )
-                    trackControlView.mode = .clear
-                    togglePlayMode( false )
-                };  break
+            setPlaylistPlayMode( usedPlayMode )
+            togglePlayMode( true )
             
-     
-            case playMode.PlayShuffle.rawValue:
-                if  playListInDb!.currentPlayMode != playMode.PlayShuffle.rawValue {
-                    setPlaylistPlayMode( playMode.PlayShuffle.rawValue )
-                    trackControlView.mode = .playShuffle
-                    togglePlayMode( true )
-                }   else {
-                    setPlaylistPlayMode( playMode.Default.rawValue )
-                    trackControlView.mode = .clear
-                    togglePlayMode( false )
-                };  break
-            
-            case playMode.PlayRepeatAll.rawValue:
-                if  playListInDb!.currentPlayMode != playMode.PlayRepeatAll.rawValue {
-                    setPlaylistPlayMode( playMode.PlayRepeatAll.rawValue )
-                    trackControlView.mode = .playLoop
-                    togglePlayMode( true )
-                }   else {
-                    setPlaylistPlayMode( playMode.Default.rawValue )
-                    trackControlView.mode = .clear
-                    togglePlayMode( false )
-                };  break
-            
-            default:
+            switch usedPlayMode {
                 
-                trackControlView.mode = .clear
-                togglePlayMode( false )
-                break
+                case playMode.PlayNormal.rawValue:
+                     trackControlView.mode = .playNormal
+                    
+                     break
+                
+                case playMode.PlayShuffle.rawValue:
+                     trackControlView.mode = .playShuffle
+                    
+                     break
+                
+                case playMode.PlayRepeatAll.rawValue:
+                     trackControlView.mode = .playLoop
+                    
+                     break
+                
+                default: break
+            }
         }
+        
+        // (re)set current playMode for internal usage
+        currentPlayMode = usedPlayMode
     }
     
     func setPlaylistPlayMode(
        _ usedPlayMode: Int16) {
         
-        // reset playMode for all (spotify) playlists in cache
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
-        
-        if  currentTrackPosition == -1 {
-            
-            if  currentPlayMode != playMode.PlayShuffle.rawValue {
-                currentTrackPosition = 0
-            }   else {
-                if  trackJumpToNext() == false { return }
-            }
+        // start track playing (if usefull playMode is given)
+        if  usedPlayMode != playMode.Stopped.rawValue {
+            trackStartPlaying( currentTrackPosition )
         }
-        
-        trackStartPlaying( currentTrackPosition )
     }
     
     func trackStopPlaying(
        _ number: Int) {
 
-        if playListTracksInCloud == nil || number > playListTracksInCloud!.count { return }
+        if playListTracksInCloud == nil || number > playListTracksInCloud!.count || currentTrackPlaying == nil { return }
         
         jumpToActiveTrackCellByTrackPosition( number )
         
-        // update local persistance layer for tracks, set track to mode "isPlaying"
-        localPlaylistControls.setTrackInPlayState( currentTrackPlaying!, false )
+        // fetch track from current playlist trackSet
+        let track = playListTracksInCloud![number] as! StreamPlayListTracks
+        
+        // update local persistance layer for tracks, set track to mode "isStopped"
+        localPlaylistControls.setTrackInPlayState( track, false )
         
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
@@ -275,11 +268,11 @@ extension PlaylistContentViewController {
             
             case playMode.PlayRepeatAll.rawValue:
         
-                // last track in playlist? jump to first track again otherwise jump to next track in PL
+                // jump to next track in PL
+                currentTrackPosition += 1
+                // ... last track in playlist? jump to first track again
                 if  playlistFinished() == true {
-                    currentTrackPosition  = 0
-                }   else {
-                    currentTrackPosition += 1
+                    currentTrackPosition = 0
                 }
             
                 break

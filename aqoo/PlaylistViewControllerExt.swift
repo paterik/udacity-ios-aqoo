@@ -1341,7 +1341,7 @@ extension PlaylistViewController {
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL
                     _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
-                    _playListInDb!.currentPlayMode = playMode.Default.rawValue // (0: no-action)
+                    _playListInDb!.currentPlayMode = playMode.Stopped.rawValue // (0: no-action)
                     
                     _playListInDb!.metaListInternalName = playListInCloud.name
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
@@ -1642,7 +1642,7 @@ extension PlaylistViewController {
                     playlistCell.mode = .playLoop
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Default.rawValue )
+                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1656,7 +1656,7 @@ extension PlaylistViewController {
                     playlistCell.mode = .playShuffle
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Default.rawValue )
+                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1670,7 +1670,7 @@ extension PlaylistViewController {
                     playlistCell.mode = .playNormal
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Default.rawValue )
+                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1742,7 +1742,7 @@ extension PlaylistViewController {
         
         // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
         _playlistInCellSelectedInPlayMode = nil
-        if  newPlayMode != playMode.Default.rawValue {
+        if  newPlayMode != playMode.Stopped.rawValue {
            _playlistInCellSelectedInPlayMode = playlistCell
             handlePlaylistCellsInPlayMode( playlistCell )
         }
@@ -1752,7 +1752,7 @@ extension PlaylistViewController {
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
         // send out user notification on any relevant playMode changes
-        if  newPlayMode != playMode.Default.rawValue {
+        if  newPlayMode != playMode.Stopped.rawValue {
             self.showUserNotification(
                 "Now playing \(playListInDb.metaListInternalName)",
                 "using \(self.getPlayModeAsString(newPlayMode)) playmode",
