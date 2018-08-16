@@ -139,7 +139,7 @@ extension PlaylistContentViewController {
         //
         
         // A) always reset (all) playMode controls and stop playback first
-        trackControlView.mode = .clear
+        trackControlView.mode = .clear // place pause definition logic here!
         setPlaylistPlayMode( playMode.Stopped.rawValue )
         togglePlayMode( false )
         
