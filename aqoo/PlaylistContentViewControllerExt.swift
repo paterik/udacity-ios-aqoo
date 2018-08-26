@@ -152,8 +152,6 @@ extension PlaylistContentViewController {
         // real playmode change in process? set new playmode and play
         //
         
-        print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
-        
         if  usedPlayMode != playListInDb!.currentPlayMode {
             
             setPlaylistPlayMode( usedPlayMode )
@@ -189,9 +187,19 @@ extension PlaylistContentViewController {
         
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
+        
+        // check shuffle playMode active - reset currentTrackPosition to a nice shuffle-based one
+        if  usedPlayMode == playMode.PlayShuffle.rawValue {
+            currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+        }
+        
         // start track playing (if usefull playMode is given)
         if  usedPlayMode != playMode.Stopped.rawValue {
             trackStartPlaying( currentTrackPosition )
+        }
+        
+        if  debugMode == true {
+            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
         }
     }
     
@@ -247,6 +255,8 @@ extension PlaylistContentViewController {
     
     func trackJumpToNext() -> Bool {
         
+        print ("[JMP] play next track (trackJumpToNext)")
+        
         switch currentPlayMode {
             
             case playMode.PlayNormal.rawValue:
@@ -263,8 +273,8 @@ extension PlaylistContentViewController {
             
                 if playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count { return false }
                 
-                currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
                 playListTracksShuffleKeyPosition += 1
+                currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
                 
                 break
             
@@ -402,12 +412,14 @@ extension PlaylistContentViewController {
     func handleAllTrackCellsPlayStateReset() {
         
         for trackCell in tableView.visibleCells as! [PlaylistTracksTableCell] {
+            
             trackCell.state = .stopped
             trackCell.imageViewTrackIsPlayingIndicator.isHidden = true
             trackCell.imageViewTrackIsPlayingSymbol.isHidden = true
-            trackCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
             
+            trackCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
             trackCell.lblTrackPlaytime.isHidden = false
+            
             trackCell.lblTrackPlaytimeRemaining.isHidden = true
             trackCell.progressBar.setProgress(0.0, animated: false)
         }
@@ -500,6 +512,10 @@ extension PlaylistContentViewController {
                 andUpperBound: playListTracksInCloud!.count,
                 andNumNumbers: playListTracksInCloud!.count
             )
+            
+            if  debugMode == true {
+                print ("dbg [playlist/track/shuffle] : keys = [\(playListTracksShuffleKeys!)]")
+            }
         }
     }
 }
