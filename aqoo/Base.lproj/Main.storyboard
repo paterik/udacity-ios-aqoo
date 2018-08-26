@@ -1291,7 +1291,7 @@
                                                     <color key="tintColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1e-ef-Fbu" userLabel="ui_lbl_playlistTrackPlaytimeRemaining">
-                                                    <rect key="frame" x="310" y="45" width="35" height="9"/>
+                                                    <rect key="frame" x="323" y="45" width="22" height="9"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="9" id="OVo-cp-ssI"/>
                                                     </constraints>
@@ -1309,7 +1309,7 @@
                                                 <constraint firstItem="ECg-if-Jtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="20" symbolic="YES" id="ByA-3B-wHW"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="top" secondItem="m6m-Be-kGR" secondAttribute="bottom" constant="3" id="GF8-Pb-1qW"/>
                                                 <constraint firstItem="m6m-Be-kGR" firstAttribute="leading" secondItem="aat-sa-aqc" secondAttribute="trailing" constant="3" id="GeC-U4-i2j"/>
-                                                <constraint firstItem="K1e-ef-Fbu" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="310" id="HUK-PF-eYw"/>
+                                                <constraint firstItem="K1e-ef-Fbu" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leading" constant="323" id="HUK-PF-eYw"/>
                                                 <constraint firstItem="wft-Db-Fnf" firstAttribute="top" secondItem="UIr-XZ-zCo" secondAttribute="top" constant="7" id="IKO-sO-Qy7"/>
                                                 <constraint firstItem="uiL-aL-qez" firstAttribute="leading" secondItem="UIr-XZ-zCo" secondAttribute="leadingMargin" constant="52" id="KFW-nX-WTQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="ECg-if-Jtc" secondAttribute="trailing" constant="10" id="Tmu-n5-J2K"/>
