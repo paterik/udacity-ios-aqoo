@@ -35,7 +35,7 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
-  - SwiftDate (5.0.5)
+  - SwiftDate (5.0.7)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.1.0)
 
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
-  SwiftDate: 963ed9f6d97e2de396d4ce73174185de04f9cdb6
+  SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
 
