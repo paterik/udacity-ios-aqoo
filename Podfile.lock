@@ -9,9 +9,9 @@ PODS:
   - Kingfisher (4.8.1)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (60.1.0)
-  - MaterialComponents/private/Math (60.1.0)
-  - MaterialComponents/ProgressView (60.1.0):
+  - MaterialComponents/Palettes (60.3.0)
+  - MaterialComponents/private/Math (60.3.0)
+  - MaterialComponents/ProgressView (60.3.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -95,7 +95,7 @@ SPEC CHECKSUMS:
   Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: bd1ebf279041919605fe6133a4173db4148ec1cd
+  MaterialComponents: f78226418ca7bf8fdf2250bd26fe626c769f1e9d
   MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
