@@ -93,6 +93,8 @@ extension PlaylistContentViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
         }   else {
+            
+            // @todo: exit view, return to login page!
             self.handleErrorAsDialogMessage(
                 "Spotify Session Closed",
                 "Oops! your spotify session is not valid anymore, please (re)login again ..."
@@ -402,7 +404,7 @@ extension PlaylistContentViewController {
             self.currentTrackCell = nil
             let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
             if  _trackCell != nil {
-                self.currentTrackCell = _trackCell
+                 self.currentTrackCell = _trackCell
             }
         }
     }
@@ -461,6 +463,7 @@ extension PlaylistContentViewController {
         
         // call playlistPlayMode with currentPlayMode to simmulate users "stop" click
         handlePlaylistPlayMode( currentPlayMode )
+        // reset player meta and track state settings
         resetLocalPlayerMetaSettings()
         resetLocalTrackStateStettings()
         

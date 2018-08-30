@@ -1155,11 +1155,11 @@
                         <viewControllerLayoutGuide type="top" id="UeS-yN-CGS"/>
                         <viewControllerLayoutGuide type="bottom" id="RIY-zE-ros"/>
                     </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="Ufh-7q-PYM" userLabel="ui_primary_view">
+                    <view key="view" contentMode="scaleToFill" id="Ufh-7q-PYM" userLabel="ui_primary_view">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lh7-Nw-6h9" userLabel="ui_tbl_playlist_content">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lh7-Nw-6h9" userLabel="ui_tbl_playlist_content">
                                 <rect key="frame" x="10" y="210" width="355" height="427"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1170,10 +1170,10 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playListContentItem" rowHeight="72" id="ZKM-PP-FYH" customClass="PlaylistTracksTableCell" customModule="aqoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="355" height="72"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="playListContentItem" focusStyle="custom" rowHeight="72" id="ZKM-PP-FYH" customClass="PlaylistTracksTableCell" customModule="aqoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZKM-PP-FYH" id="UIr-XZ-zCo">
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZKM-PP-FYH" id="UIr-XZ-zCo" userLabel="ui_view_track_cell">
                                             <rect key="frame" x="0.0" y="0.0" width="355" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1351,7 +1351,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Uz-M3d" userLabel="ui_view_content_001" customClass="PlaylistTracksControlView" customModule="aqoo" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Uz-M3d" userLabel="ui_view_playlist_controls" customClass="PlaylistTracksControlView" customModule="aqoo" customModuleProvider="target">
                                 <rect key="frame" x="10" y="64" width="355" height="135"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUICoverOverrideDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="dDT-Vi-xfA" userLabel="ui_img_playlistCover">
