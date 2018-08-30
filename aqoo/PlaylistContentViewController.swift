@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
@@ -17,6 +18,7 @@ class PlaylistContentViewController: BaseViewController,
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     let localPlayer = SPFClientPlayer.sharedInstance
+    let kBaseCellHeight: CGFloat = 72.0
     
     var currentTrackPlaying: StreamPlayListTracks?
     var currentTrackTimePosition: Int = 0
@@ -87,7 +89,7 @@ class PlaylistContentViewController: BaseViewController,
        _ tableView: UITableView,
          heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 72.0
+        return kBaseCellHeight
     }
     
     func tableView(
@@ -174,6 +176,32 @@ class PlaylistContentViewController: BaseViewController,
         }
         
         return playlistCell
+    }
+    
+    func tableView(
+       _ tableView: UITableView,
+         editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    
+        let trackCell = tableView.cellForRow(at: indexPath) as! PlaylistTracksTableCell
+        
+        let tblActionControlTrack = BGTableViewRowActionWithImage.rowAction(
+            with: UITableViewRowActionStyle.default,
+            title: nil,
+            backgroundColor: UIColor(netHex: 0x131313),
+            image: UIImage(named: "icnSetPlayMini_1"), // icnSetPauseMini_1
+            forCellHeight: UInt(self.kBaseCellHeight)) { (action, index) in
+                
+                self._pseudoPlayback( index!.row )
+        }
+        
+        return [ tblActionControlTrack! ]
+    }
+    
+    func _pseudoPlayback(_ trackNumer: Int) {
+        
+        if  debugMode == true {
+            print ("dbg [playlist/track/control] : action for track #[\(trackNumer)]")
+        }
     }
     
     func resetPlayer() {

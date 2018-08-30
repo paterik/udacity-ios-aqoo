@@ -255,8 +255,6 @@ extension PlaylistContentViewController {
     
     func trackJumpToNext() -> Bool {
         
-        print ("[JMP] play next track (trackJumpToNext)")
-        
         switch currentPlayMode {
             
             case playMode.PlayNormal.rawValue:
@@ -338,7 +336,7 @@ extension PlaylistContentViewController {
             default: break
         }
         
-        if  _isFinished == true && debugMode == true {
+        if _isFinished == true && debugMode == true {
             print ("dbg [playlist/track] : \(playListInDb!.metaListHash) finished, no more songs available ...\n")
         }
         

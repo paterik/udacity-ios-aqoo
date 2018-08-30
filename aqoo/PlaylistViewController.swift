@@ -225,10 +225,10 @@ class PlaylistViewController: BaseViewController,
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
        
         handlePlaylistCellMetaFields  ( playlistCell, playlistCacheData )
-        handlePlaylistCellCoverImages ( playlistCell, playlistCacheData )
-        handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
+        handlePlaylistCellCoverImages ( playlistCell, playlistCacheData )        
         handlePlaylistTimeAndDateMeta ( playlistCell, playlistCacheData )
         handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
+        handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
         
         playlistCell.durationsForExpandedState = _sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = _sysCellClosingDurations
