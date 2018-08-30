@@ -184,23 +184,40 @@ class PlaylistContentViewController: BaseViewController,
     
         let trackCell = tableView.cellForRow(at: indexPath) as! PlaylistTracksTableCell
         
-        let tblActionControlTrack = BGTableViewRowActionWithImage.rowAction(
+        let tblActionTrackControl = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
             backgroundColor: UIColor(netHex: 0x131313),
             image: UIImage(named: "icnSetPlayMini_1"), // icnSetPauseMini_1
-            forCellHeight: UInt(self.kBaseCellHeight)) { (action, index) in
+            forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
                 
-                self._pseudoPlayback( index!.row )
+                self._pseudoTrackPlayback( index!.row )
         }
         
-        return [ tblActionControlTrack! ]
+        let tblActionTrackEdit = BGTableViewRowActionWithImage.rowAction(
+            with: UITableViewRowActionStyle.default,
+            title: nil,
+            backgroundColor: UIColor(netHex: 0x131313),
+            image: UIImage(named: "icnSettings_v2"),
+            forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
+            
+            self._pseudoTrackEdit( index!.row )
+        }
+        
+        return [ tblActionTrackControl!, tblActionTrackEdit! ]
     }
     
-    func _pseudoPlayback(_ trackNumer: Int) {
+    func _pseudoTrackPlayback(_ trackNumer: Int) {
         
         if  debugMode == true {
             print ("dbg [playlist/track/control] : action for track #[\(trackNumer)]")
+        }
+    }
+    
+    func _pseudoTrackEdit(_ trackNumer: Int) {
+        
+        if  debugMode == true {
+            print ("dbg [playlist/track/edit] : action for track #[\(trackNumer)]")
         }
     }
     
