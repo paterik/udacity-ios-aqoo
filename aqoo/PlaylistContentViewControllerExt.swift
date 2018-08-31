@@ -221,6 +221,9 @@ extension PlaylistContentViewController {
         // reset playing flag up to true
         currentTrackIsPlaying = false
         
+        // reset track
+        currentTrackPlaying = nil
+        
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
             self.handleAllTrackCellsPlayStateReset()
@@ -302,7 +305,7 @@ extension PlaylistContentViewController {
     
     func trackIsFinished() -> Bool {
         
-        var _isFinished: Bool = false
+        var _isFinished: Bool = true
         
         if  currentTrackPlaying != nil {
            _isFinished = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
@@ -315,7 +318,7 @@ extension PlaylistContentViewController {
             currentTrackTimeProgress = 0.0
             
             if  debugMode == true {
-                print ("dbg [playlist/track] : \(currentTrackPlaying!.trackIdentifier!) finished, try to start next song ...\n")
+                print ("dbg [playlist/track] : last track finished, try to start next song ...\n")
             }
         }
         
@@ -330,15 +333,19 @@ extension PlaylistContentViewController {
             
             case playMode.PlayRepeatAll.rawValue:
                 _isFinished = false
-                break
+                 break
             
             case playMode.PlayShuffle.rawValue:
                 _isFinished = playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count
-                break
+                 break
             
             case playMode.PlayNormal.rawValue:
                 _isFinished = currentTrackPosition == playListTracksInCloud!.count - 1
-                break
+                 break
+            
+            case playMode.Stopped.rawValue:
+                _isFinished = true
+                 break
         
             default: break
         }
@@ -360,6 +367,7 @@ extension PlaylistContentViewController {
         trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = active
         trackControlView.btnPlayNormalMode.isUserInteractionEnabled = active
         trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = active
+        
     }
 
     func togglePlayMode (

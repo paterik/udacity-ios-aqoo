@@ -28,6 +28,7 @@ class PlaylistContentViewController: BaseViewController,
     var currentTrackCell: PlaylistTracksTableCell?
     var currentPlayMode: Int16 = 0
     var currentTrackIsPlaying: Bool = false
+    var currentTrackIsPlayingInManualMode: Bool = false
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -209,16 +210,17 @@ class PlaylistContentViewController: BaseViewController,
     
     func _pseudoTrackPlayback(_ trackNumber: Int) {
         
-        if  debugMode == true {
-            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)]")
-        }
-        
         currentTrackPosition = trackNumber
-        handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
         
-        /*handleActiveTrackCellByTrackPosition( currentTrackPosition )
-        trackStartPlaying( currentTrackPosition )*/
+        if  currentTrackIsPlayingInManualMode == false {
+            handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
+        }   else {
+            handlePlaylistPlayMode ( playMode.Stopped.rawValue )
+        };  currentTrackIsPlayingInManualMode = !currentTrackIsPlayingInManualMode
         
+        if  debugMode == true {
+            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)], playing=\(currentTrackIsPlayingInManualMode)")
+        }
     }
     
     func _pseudoTrackEdit(_ trackNumber: Int) {
