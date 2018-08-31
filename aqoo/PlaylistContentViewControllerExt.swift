@@ -404,13 +404,6 @@ extension PlaylistContentViewController {
         if tableView.isEditing == true { return }
         
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
-     
-        /*print (self.currentTrackCell)
-        
-        let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
-        if  _trackCell != nil {
-            
-        }*/
         
         tableView.reloadRows(at: [trackIndexPath], with: .none)
     }
