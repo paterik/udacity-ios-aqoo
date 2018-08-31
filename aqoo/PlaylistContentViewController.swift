@@ -201,23 +201,30 @@ class PlaylistContentViewController: BaseViewController,
             image: UIImage(named: "icnSettings_v2"),
             forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
             
-            self._pseudoTrackEdit( index!.row )
+                self._pseudoTrackEdit( index!.row )
         }
         
         return [ tblActionTrackControl!, tblActionTrackEdit! ]
     }
     
-    func _pseudoTrackPlayback(_ trackNumer: Int) {
+    func _pseudoTrackPlayback(_ trackNumber: Int) {
         
         if  debugMode == true {
-            print ("dbg [playlist/track/control] : action for track #[\(trackNumer)]")
+            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)]")
         }
+        
+        currentTrackPosition = trackNumber
+        handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
+        
+        /*handleActiveTrackCellByTrackPosition( currentTrackPosition )
+        trackStartPlaying( currentTrackPosition )*/
+        
     }
     
-    func _pseudoTrackEdit(_ trackNumer: Int) {
+    func _pseudoTrackEdit(_ trackNumber: Int) {
         
         if  debugMode == true {
-            print ("dbg [playlist/track/edit] : action for track #[\(trackNumer)]")
+            print ("dbg [playlist/track/edit] : action for track #[\(trackNumber)]")
         }
     }
     

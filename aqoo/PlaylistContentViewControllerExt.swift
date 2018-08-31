@@ -218,6 +218,9 @@ extension PlaylistContentViewController {
         // update local persistance layer for tracks, set track to mode "isStopped"
         localPlaylistControls.setTrackInPlayState( track, false )
         
+        // reset playing flag up to true
+        currentTrackIsPlaying = false
+        
         // stop playback
         try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
             self.handleAllTrackCellsPlayStateReset()
@@ -238,6 +241,8 @@ extension PlaylistContentViewController {
         let track = playListTracksInCloud![number] as! StreamPlayListTracks
         // set active meta object of active (playing) track
         currentTrackPlaying = track
+        // set playing flag up to true
+        currentTrackIsPlaying = true
         // update local persistance layer for tracks, set track to mode "isPlaying"
         localPlaylistControls.setTrackInPlayState( track, true )
         // set active meta object, (re)evaluate current trackInterval
@@ -387,7 +392,17 @@ extension PlaylistContentViewController {
     
     func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
+        // do not update cell completely if in edit (swiped) mode
+        if tableView.isEditing == true { return }
+        
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
+     
+        /*print (self.currentTrackCell)
+        
+        let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
+        if  _trackCell != nil {
+            
+        }*/
         
         tableView.reloadRows(at: [trackIndexPath], with: .none)
     }
