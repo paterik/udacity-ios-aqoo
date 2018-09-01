@@ -153,7 +153,7 @@ extension PlaylistContentViewController {
         //
         // real playmode change in process? set new playmode and play
         //
-        
+
         if  usedPlayMode != playListInDb!.currentPlayMode {
             
             setPlaylistPlayMode( usedPlayMode )
@@ -205,62 +205,75 @@ extension PlaylistContentViewController {
         }
     }
     
+    func trackHandleCellPlaying(
+       _ number: Int) -> StreamPlayListTracks?  {
+        
+        // evaluate plausible object range, return in case of invalid value
+        if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return nil }
+        
+        // fetch/cast track from current playlist trackSet, dialog-error on any kind of problem there
+        guard let track = playListTracksInCloud![number] as? StreamPlayListTracks else {
+            self.handleErrorAsDialogMessage("Track Rendering Error", "unable to fetch track #\(number) as playable object")
+            
+            return nil
+        }
+        
+        // visual jump to track position inside corresponding table
+        jumpToActiveTrackCellByTrackPosition( number )
+        
+        return track
+    }
+    
     func trackStopPlaying(
        _ number: Int) {
 
-        if playListTracksInCloud == nil || number > playListTracksInCloud!.count || currentTrackPlaying == nil { return }
+        if  let track = trackHandleCellPlaying( number ) as? StreamPlayListTracks {
+            // update local persistance layer for tracks, set track to mode "isStopped"
+            localPlaylistControls.setTrackInPlayState( track, false )
+            
+            // API_CALL : stop playback
+            try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
+                self.handleAllTrackCellsPlayStateReset()
+                if (error != nil) {
+                    self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
+                }
+            })
+        }
         
-        jumpToActiveTrackCellByTrackPosition( number )
-        
-        // fetch track from current playlist trackSet
-        let track = playListTracksInCloud![number] as! StreamPlayListTracks
-        
-        // update local persistance layer for tracks, set track to mode "isStopped"
-        localPlaylistControls.setTrackInPlayState( track, false )
-        
-        // reset playing flag up to true
-        currentTrackIsPlaying = false
-        
-        // reset track
+        // set active meta object (track and index) of active (playing) track
         currentTrackPlaying = nil
-        
-        // stop playback
-        try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
-            self.handleAllTrackCellsPlayStateReset()
-            if (error != nil) {
-                self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
-            }
-        })
+        currentTrackPlayingIndex = 0
+        currentTrackIsPlaying = false
     }
     
     func trackStartPlaying(
        _ number: Int) {
         
-        if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return }
-
-        jumpToActiveTrackCellByTrackPosition( number )
-        
-        // fetch track from current playlist trackSet
-        let track = playListTracksInCloud![number] as! StreamPlayListTracks
-        // set active meta object of active (playing) track
-        currentTrackPlaying = track
-        // set playing flag up to true
-        currentTrackIsPlaying = true
-        // update local persistance layer for tracks, set track to mode "isPlaying"
-        localPlaylistControls.setTrackInPlayState( track, true )
-        // set active meta object, (re)evaluate current trackInterval
-        currentTrackInterval = TimeInterval(currentTrackTimePosition)
-        // start playback using spotify api call
-        localPlayer.player?.playSpotifyURI(
-            currentTrackPlaying!.trackURIInternal,
-            startingWith: 0,
-            startingWithPosition: currentTrackInterval!,
-            callback: { (error) in
-                if (error != nil) {
-                    self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
+        if  let track = trackHandleCellPlaying( number ) as? StreamPlayListTracks {
+            // update local persistance layer for tracks, set track to mode "isPlaying"
+            localPlaylistControls.setTrackInPlayState( track, true )
+            
+            // set active meta object (track and index) of active (playing) track, (re)evaluate current trackInterval
+            currentTrackPlayingIndex = number
+            currentTrackPlaying = track
+            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            
+            // API_CALL :: start playback using spotify api call
+            localPlayer.player?.playSpotifyURI(
+                track.trackURIInternal,
+                startingWith: 0,
+                startingWithPosition: currentTrackInterval!,
+                callback: { (error) in
+                    if (error != nil) {
+                        self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
+                        
+                        return
+                    }
                 }
-            }
-        )
+            )
+            
+            currentTrackIsPlaying = true
+        }
     }
     
     func trackJumpToNext() -> Bool {
@@ -288,9 +301,9 @@ extension PlaylistContentViewController {
             
             case playMode.PlayRepeatAll.rawValue:
         
-                // jump to next track in PL
+                // jump to next track in current playlist
                 currentTrackPosition += 1
-                // ... last track in playlist? jump to first track again
+                // check playlist finished state, jump to first track again on "repeatAll" mode
                 if  playlistFinished() == true {
                     currentTrackPosition = 0
                 }
@@ -400,7 +413,7 @@ extension PlaylistContentViewController {
     
     func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
-        // do not update cell completely if in edit (swiped) mode
+        // do not update cell completely if in editMode (swiped)
         if tableView.isEditing == true { return }
         
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)

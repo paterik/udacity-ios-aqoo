@@ -21,6 +21,7 @@ class PlaylistContentViewController: BaseViewController,
     let kBaseCellHeight: CGFloat = 72.0
     
     var currentTrackPlaying: StreamPlayListTracks?
+    var currentTrackPlayingIndex: Int = 0
     var currentTrackTimePosition: Int = 0
     var currentTrackTimeProgress: Float = 0.0
     var currentTrackInterval: TimeInterval?
@@ -141,7 +142,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsExplicit.isHidden = false
         }
         
-        // playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
+        // *** playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
         if  usedCoverImageURL != nil {
             handleCoverImageByCache(
                 playlistCoverView,
@@ -154,6 +155,7 @@ class PlaylistContentViewController: BaseViewController,
         //
         // dynamic meta data payload
         //
+        
         if  playlistTrackCacheData.metaTrackIsPlaying == true {
             
             playlistCell.state = .playing
@@ -192,7 +194,7 @@ class PlaylistContentViewController: BaseViewController,
             image: UIImage(named: "icnSetPlayMini_1"), // icnSetPauseMini_1
             forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
                 
-                self._pseudoTrackPlayback( index!.row )
+                self.trackPlaybackByCell( index!.row )
         }
         
         let tblActionTrackEdit = BGTableViewRowActionWithImage.rowAction(
@@ -202,19 +204,23 @@ class PlaylistContentViewController: BaseViewController,
             image: UIImage(named: "icnSettings_v2"),
             forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
             
-                self._pseudoTrackEdit( index!.row )
+                self.trackEditByCell( index!.row )
         }
         
         return [ tblActionTrackControl!, tblActionTrackEdit! ]
     }
     
-    func _pseudoTrackPlayback(_ trackNumber: Int) {
+    func trackPlaybackByCell(
+       _ trackNumber: Int) {
         
         currentTrackPosition = trackNumber
         
+        // check current "file-of-action" (play || stop)
         if  currentTrackIsPlayingInManualMode == false {
+            // play selected track
             handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
         }   else {
+            // stop selected track
             handlePlaylistPlayMode ( playMode.Stopped.rawValue )
         };  currentTrackIsPlayingInManualMode = !currentTrackIsPlayingInManualMode
         
@@ -223,7 +229,8 @@ class PlaylistContentViewController: BaseViewController,
         }
     }
     
-    func _pseudoTrackEdit(_ trackNumber: Int) {
+    func trackEditByCell(
+       _ trackNumber: Int) {
         
         if  debugMode == true {
             print ("dbg [playlist/track/edit] : action for track #[\(trackNumber)]")

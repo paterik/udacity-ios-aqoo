@@ -299,7 +299,6 @@
 				B189892C1F72B99300516A53 /* extension */,
 				B1F88B721F7033450005FE43 /* PlaylistViewController.swift */,
 				B10198AA2038197400232EB6 /* PlaylistCollectionViewController.swift */,
-				B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */,
 				B1D33DCF20D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift */,
 				B1D33DD120D17F2D00DCDC5F /* PlaylistEditViewFirstPage.swift */,
 				B1D33DD520D18AC100DCDC5F /* PlaylistEditViewSecondPage.swift */,
@@ -321,7 +320,6 @@
 			children = (
 				B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */,
 				B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */,
-				B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */,
 				B1F367F020FE083F00C3C21C /* PlaylistEditViewFirstPageExt.swift */,
 				B1F367F220FE0AAD00C3C21C /* PlaylistEditViewSecondPageExt.swift */,
 				B1F367F420FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift */,
@@ -390,6 +388,23 @@
 				B1A6206C1F700D820093CAEF /* Info.plist */,
 			);
 			path = aqooUITests;
+			sourceTree = "<group>";
+		};
+		B1ACE8C3213ADC3500D0AB30 /* _tracklists */ = {
+			isa = PBXGroup;
+			children = (
+				B1ACE8C4213ADC5000D0AB30 /* extension */,
+				B159C3C020FF5A0E007A460E /* PlaylistContentViewController.swift */,
+			);
+			name = _tracklists;
+			sourceTree = "<group>";
+		};
+		B1ACE8C4213ADC5000D0AB30 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */,
+			);
+			name = extension;
 			sourceTree = "<group>";
 		};
 		B1B3E17D2102269800F05ABE /* proxy */ = {
@@ -503,6 +518,7 @@
 		B1F88B791F70458E0005FE43 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				B1ACE8C3213ADC3500D0AB30 /* _tracklists */,
 				B18989281F72B95C00516A53 /* _playlists */,
 				B18989271F72B95000516A53 /* _login */,
 				B19C52691F7046700064E1A5 /* base */,
