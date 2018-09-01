@@ -20,22 +20,15 @@ class PlaylistContentViewController: BaseViewController,
     let localPlayer = SPFClientPlayer.sharedInstance
     let kBaseCellHeight: CGFloat = 72.0
     
-    var currentTrackPlaying: StreamPlayListTracks?
-    var currentTrackPlayingIndex: Int = 0
-    var currentTrackTimePosition: Int = 0
-    var currentTrackTimeProgress: Float = 0.0
-    var currentTrackInterval: TimeInterval?
-    var currentTrackPosition: Int = 0
-    var currentTrackCell: PlaylistTracksTableCell?
-    var currentPlayMode: Int16 = 0
-    var currentTrackIsPlaying: Bool = false
-    var currentTrackIsPlayingInManualMode: Bool = false
+    let currentTrack = PlaylistTrack.sharedInstance
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
     var playListTracksShuffleKeys: [Int]?
     var playListTracksShuffleKeyPosition: Int = 0
+    var playListPlayMode: Int16 = 0
+    
     var _trackTimer: Timer!
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
@@ -163,10 +156,10 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsPlayingSymbol.isHidden = false
             playlistCell.lblTrackPlaytime.isHidden = true
             playlistCell.lblTrackPlaytimeRemaining.isHidden = false
-            playlistCell.lblTrackPlaytimeRemaining.text = getSecondsAsMinutesSecondsDigits(Int(_ctd) - currentTrackTimePosition)
-            playlistCell.progressBar.setProgress(currentTrackTimeProgress, animated: false)
+            playlistCell.lblTrackPlaytimeRemaining.text = getSecondsAsMinutesSecondsDigits(Int(_ctd) - currentTrack.timePosition)
+            playlistCell.progressBar.setProgress(currentTrack.timeProgress, animated: false)
             
-        }   else if currentPlayMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
+        }   else if playListPlayMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
             
             playlistCell.state = .stopped
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
@@ -213,19 +206,19 @@ class PlaylistContentViewController: BaseViewController,
     func trackPlaybackByCell(
        _ trackNumber: Int) {
         
-        currentTrackPosition = trackNumber
+        currentTrack.index = trackNumber
         
         // check current "file-of-action" (play || stop)
-        if  currentTrackIsPlayingInManualMode == false {
+        if  currentTrack.isPlayingInManualMode == false {
             // play selected track
             handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
         }   else {
             // stop selected track
             handlePlaylistPlayMode ( playMode.Stopped.rawValue )
-        };  currentTrackIsPlayingInManualMode = !currentTrackIsPlayingInManualMode
+        };  currentTrack.isPlayingInManualMode = !currentTrack.isPlayingInManualMode
         
         if  debugMode == true {
-            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)], playing=\(currentTrackIsPlayingInManualMode)")
+            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)], playing=\(currentTrack.isPlayingInManualMode)")
         }
     }
     

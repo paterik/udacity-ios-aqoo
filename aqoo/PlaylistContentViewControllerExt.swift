@@ -142,7 +142,7 @@ extension PlaylistContentViewController {
         
         // A) always reset (all) playMode controls and stop playback first
         trackControlView.mode = .clear // place pause definition logic here!
-        setPlaylistPlayMode( playMode.Stopped.rawValue )
+        setPlaylistInPlayMode( playMode.Stopped.rawValue )
         togglePlayMode( false )
         
         // B) also reset playMode/timeFrame-Meta-Information for all (spotify) playlists and playlistTracks in dbcache
@@ -156,7 +156,7 @@ extension PlaylistContentViewController {
 
         if  usedPlayMode != playListInDb!.currentPlayMode {
             
-            setPlaylistPlayMode( usedPlayMode )
+            setPlaylistInPlayMode( usedPlayMode )
             togglePlayMode( true )
             
             switch usedPlayMode {
@@ -181,27 +181,27 @@ extension PlaylistContentViewController {
         }
         
         // (re)set current playMode for internal usage
-        currentPlayMode = usedPlayMode
+        playListPlayMode = usedPlayMode
     }
     
-    func setPlaylistPlayMode(
+    func setPlaylistInPlayMode(
        _ usedPlayMode: Int16) {
         
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb!, usedPlayMode )
         
-        // check shuffle playMode active - reset currentTrackPosition to a nice shuffle-based one
+        // check shuffle playMode active - reset currentTrack.index to a nice shuffle-based one
         if  usedPlayMode == playMode.PlayShuffle.rawValue {
-            currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+            currentTrack.index = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
         }
         
         // start track playing (if usefull playMode is given)
         if  usedPlayMode != playMode.Stopped.rawValue {
-            trackStartPlaying( currentTrackPosition )
+            trackStartPlaying( currentTrack.index )
         }
         
         if  debugMode == true {
-            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
+            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(playListPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
         }
     }
     
@@ -241,9 +241,9 @@ extension PlaylistContentViewController {
         }
         
         // set active meta object (track and index) of active (playing) track
-        currentTrackPlaying = nil
-        currentTrackPlayingIndex = 0
-        currentTrackIsPlaying = false
+        currentTrack.index = 0
+        currentTrack.selected = nil
+        currentTrack.isPlaying = false
     }
     
     func trackStartPlaying(
@@ -254,15 +254,16 @@ extension PlaylistContentViewController {
             localPlaylistControls.setTrackInPlayState( track, true )
             
             // set active meta object (track and index) of active (playing) track, (re)evaluate current trackInterval
-            currentTrackPlayingIndex = number
-            currentTrackPlaying = track
-            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            currentTrack.index = number
+            currentTrack.selected = track
+            currentTrack.interval = TimeInterval(currentTrack.timePosition)
+            currentTrack.isPlaying = true
             
             // API_CALL :: start playback using spotify api call
             localPlayer.player?.playSpotifyURI(
-                track.trackURIInternal,
+                currentTrack.selected!.trackURIInternal,
                 startingWith: 0,
-                startingWithPosition: currentTrackInterval!,
+                startingWithPosition: currentTrack.interval!,
                 callback: { (error) in
                     if (error != nil) {
                         self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
@@ -271,14 +272,12 @@ extension PlaylistContentViewController {
                     }
                 }
             )
-            
-            currentTrackIsPlaying = true
         }
     }
     
     func trackJumpToNext() -> Bool {
         
-        switch currentPlayMode {
+        switch playListPlayMode {
             
             case playMode.PlayNormal.rawValue:
                 
@@ -286,7 +285,7 @@ extension PlaylistContentViewController {
                 if playlistFinished() == true { return false }
                 
                 // otherwise jump to next track in playlist
-                currentTrackPosition += 1
+                currentTrack.index += 1
                 
                 break
             
@@ -295,17 +294,17 @@ extension PlaylistContentViewController {
                 if playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count { return false }
                 
                 playListTracksShuffleKeyPosition += 1
-                currentTrackPosition = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+                currentTrack.index = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
                 
                 break
             
             case playMode.PlayRepeatAll.rawValue:
         
                 // jump to next track in current playlist
-                currentTrackPosition += 1
+                currentTrack.index += 1
                 // check playlist finished state, jump to first track again on "repeatAll" mode
                 if  playlistFinished() == true {
-                    currentTrackPosition = 0
+                    currentTrack.index = 0
                 }
             
                 break
@@ -320,15 +319,15 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = true
         
-        if  currentTrackPlaying != nil {
-           _isFinished = currentTrackTimePosition == Int(currentTrackPlaying!.trackDuration)
+        if  currentTrack.selected != nil {
+           _isFinished = currentTrack.timePosition == Int(currentTrack.selected!.trackDuration)
         }
         
         if _isFinished == true {
             
-            currentTrackTimePosition = 0
-            currentTrackInterval = TimeInterval(currentTrackTimePosition)
-            currentTrackTimeProgress = 0.0
+            currentTrack.timePosition = 0
+            currentTrack.interval = TimeInterval(currentTrack.timePosition)
+            currentTrack.timeProgress = 0.0
             
             if  debugMode == true {
                 print ("dbg [playlist/track] : last track finished, try to start next song ...\n")
@@ -342,7 +341,7 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = false
         
-        switch currentPlayMode {
+        switch playListPlayMode {
             
             case playMode.PlayRepeatAll.rawValue:
                 _isFinished = false
@@ -353,7 +352,7 @@ extension PlaylistContentViewController {
                  break
             
             case playMode.PlayNormal.rawValue:
-                _isFinished = currentTrackPosition == playListTracksInCloud!.count - 1
+                _isFinished = currentTrack.index == playListTracksInCloud!.count - 1
                  break
             
             case playMode.Stopped.rawValue:
@@ -399,7 +398,7 @@ extension PlaylistContentViewController {
             _trackTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
                 target       : self,
-                selector     : #selector(handleTrackTimerEvent),
+                selector     : #selector(handlePlaylistTrackTimerEvent),
                 userInfo     : nil,
                 repeats      : true
             );  trackControlView.state = .playing
@@ -407,7 +406,7 @@ extension PlaylistContentViewController {
         }   else {
         
             // stop playback using direct api call
-            trackStopPlaying( currentTrackPosition )
+            trackStopPlaying( currentTrack.index )
         }
     }
     
@@ -430,10 +429,10 @@ extension PlaylistContentViewController {
         // try to postFetch ballistic meta data from current tableQueue to get active track cell (majic)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
             
-            self.currentTrackCell = nil
+            self.currentTrack.cell = nil
             let _trackCell = self.tableView.cellForRow(at: trackIndexPath) as? PlaylistTracksTableCell
             if  _trackCell != nil {
-                 self.currentTrackCell = _trackCell
+                 self.currentTrack.cell = _trackCell
             }
         }
     }
@@ -455,29 +454,38 @@ extension PlaylistContentViewController {
     }
     
     @objc
-    func handleTrackTimerEvent() {
+    func handleSingleTrackTimerEvent() {
+        //  track still runnning? update track timeFrama position and progressBar
+        if  trackIsFinished() == false {
+            
+        }
+        
+    }
+    
+    @objc
+    func handlePlaylistTrackTimerEvent() {
 
         // trace cell for this track
-        handleActiveTrackCellByTrackPosition( currentTrackPosition )
+        handleActiveTrackCellByTrackPosition( currentTrack.index )
 
         //  track still runnning? update track timeFrama position and progressBar
         if  trackIsFinished() == false {
             
-            currentTrackTimePosition += 1
-            currentTrackTimeProgress = (Float(currentTrackTimePosition) / Float(currentTrackPlaying!.trackDuration))
-            currentTrackInterval = TimeInterval(currentTrackTimePosition)
+            currentTrack.timePosition += 1
+            currentTrack.timeProgress = (Float(currentTrack.timePosition) / Float(currentTrack.selected!.trackDuration))
+            currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
-            localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrackPlaying!, currentTrackTimePosition )
+            localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrack.selected!, currentTrack.timePosition )
         }
         
         if  trackIsFinished() == true {
             
-            trackStopPlaying( currentTrackPosition )
+            trackStopPlaying( currentTrack.index )
             
             if  playlistFinished() == false {
                 
                 if  trackJumpToNext() == true {
-                    trackStartPlaying( currentTrackPosition )
+                    trackStartPlaying( currentTrack.index )
                 }
                 
             }   else {
@@ -490,8 +498,8 @@ extension PlaylistContentViewController {
     
     func handlePlaylistCompleted() {
         
-        // call playlistPlayMode with currentPlayMode to simmulate users "stop" click
-        handlePlaylistPlayMode( currentPlayMode )
+        // call playlistPlayMode with playListPlayMode to simmulate users "stop" click
+        handlePlaylistPlayMode( playListPlayMode )
         // reset player meta and track state settings
         resetLocalPlayerMetaSettings()
         resetLocalTrackStateStettings()
@@ -507,17 +515,17 @@ extension PlaylistContentViewController {
 
         playListTracksShuffleKeyPosition = 0
         playListTracksShuffleKeys = []
-        currentPlayMode = 0
-        currentTrackCell = nil
+        playListPlayMode = 0
+        currentTrack.cell = nil
     }
     
     func resetLocalTrackStateStettings() {
         
-        currentTrackTimePosition = 0
-        currentTrackPlaying = nil
-        currentTrackIsPlaying = false
-        currentTrackInterval = 0
-        currentTrackPosition = 0
+        currentTrack.timePosition = 0
+        currentTrack.selected = nil
+        currentTrack.isPlaying = false
+        currentTrack.interval = 0
+        currentTrack.index = 0
     }
     
     func loadMetaPlaylistTracksFromDb() {

@@ -1637,12 +1637,12 @@ extension PlaylistViewController {
             case playMode.PlayRepeatAll.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayRepeatAll.rawValue {
-                    setPlaylistPlayMode( playlistCell, playMode.PlayRepeatAll.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.PlayRepeatAll.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playLoop
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1651,12 +1651,12 @@ extension PlaylistViewController {
             case playMode.PlayShuffle.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayShuffle.rawValue {
-                    setPlaylistPlayMode( playlistCell, playMode.PlayShuffle.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.PlayShuffle.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playShuffle
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1665,12 +1665,12 @@ extension PlaylistViewController {
             case playMode.PlayNormal.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayNormal.rawValue {
-                    setPlaylistPlayMode( playlistCell, playMode.PlayNormal.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.PlayNormal.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playNormal
                     
                 }   else {
-                    setPlaylistPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1734,7 +1734,7 @@ extension PlaylistViewController {
         }
     }
     
-    func setPlaylistPlayMode(
+    /*func setPlaylistPlayMode(
        _ playlistCell: PlaylistTableFoldingCell,
        _ newPlayMode: Int16) {
         
@@ -1758,7 +1758,7 @@ extension PlaylistViewController {
                 "using \(self.getPlayModeAsString(newPlayMode)) playmode",
                 nil, 0.9275)
         }
-    }
+    }*/
     
     func getRatingLabel(
        _ x: CGFloat,
