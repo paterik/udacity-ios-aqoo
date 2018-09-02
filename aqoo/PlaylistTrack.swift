@@ -24,6 +24,8 @@ class PlaylistTrack {
     var selected: StreamPlayListTracks?
     
     var index: Int = 0
+    var shuffleIndex: Int = 0
+    
     var timePosition: Int = 0
     var timeProgress: Float = 0.0
     var interval: TimeInterval?

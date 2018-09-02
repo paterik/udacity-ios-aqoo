@@ -25,8 +25,8 @@ class PlaylistContentViewController: BaseViewController,
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     var playListTracksInCloud: [StreamPlayListTracks]?
+    
     var playListTracksShuffleKeys: [Int]?
-    var playListTracksShuffleKeyPosition: Int = 0
     var playListPlayMode: Int16 = 0
     
     var _trackTimer: Timer!
@@ -172,62 +172,6 @@ class PlaylistContentViewController: BaseViewController,
         }
         
         return playlistCell
-    }
-    
-    func tableView(
-       _ tableView: UITableView,
-         editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-    
-        let trackCell = tableView.cellForRow(at: indexPath) as! PlaylistTracksTableCell
-        
-        let tblActionTrackControl = BGTableViewRowActionWithImage.rowAction(
-            with: UITableViewRowActionStyle.default,
-            title: nil,
-            backgroundColor: UIColor(netHex: 0x131313),
-            image: UIImage(named: "icnSetPlayMini_1"), // icnSetPauseMini_1
-            forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
-                
-                self.trackPlaybackByCell( index!.row )
-        }
-        
-        let tblActionTrackEdit = BGTableViewRowActionWithImage.rowAction(
-            with: UITableViewRowActionStyle.default,
-            title: nil,
-            backgroundColor: UIColor(netHex: 0x131313),
-            image: UIImage(named: "icnSettings_v2"),
-            forCellHeight: UInt(self.kBaseCellHeight - 10)) { (action, index) in
-            
-                self.trackEditByCell( index!.row )
-        }
-        
-        return [ tblActionTrackControl!, tblActionTrackEdit! ]
-    }
-    
-    func trackPlaybackByCell(
-       _ trackNumber: Int) {
-        
-        currentTrack.index = trackNumber
-        
-        // check current "file-of-action" (play || stop)
-        if  currentTrack.isPlayingInManualMode == false {
-            // play selected track
-            handlePlaylistPlayMode ( playMode.PlayNormal.rawValue )
-        }   else {
-            // stop selected track
-            handlePlaylistPlayMode ( playMode.Stopped.rawValue )
-        };  currentTrack.isPlayingInManualMode = !currentTrack.isPlayingInManualMode
-        
-        if  debugMode == true {
-            print ("dbg [playlist/track/control] : action for track #[\(trackNumber)], playing=\(currentTrack.isPlayingInManualMode)")
-        }
-    }
-    
-    func trackEditByCell(
-       _ trackNumber: Int) {
-        
-        if  debugMode == true {
-            print ("dbg [playlist/track/edit] : action for track #[\(trackNumber)]")
-        }
     }
     
     func resetPlayer() {

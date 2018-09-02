@@ -192,7 +192,7 @@ extension PlaylistContentViewController {
         
         // check shuffle playMode active - reset currentTrack.index to a nice shuffle-based one
         if  usedPlayMode == playMode.PlayShuffle.rawValue {
-            currentTrack.index = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+            currentTrack.index = playListTracksShuffleKeys![currentTrack.shuffleIndex]
         }
         
         // start track playing (if usefull playMode is given)
@@ -291,12 +291,12 @@ extension PlaylistContentViewController {
             
             case playMode.PlayShuffle.rawValue:
                 
-                if playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count - 1 { return false }
+                if currentTrack.shuffleIndex == playListTracksShuffleKeys!.count - 1 { return false }
                 
-                playListTracksShuffleKeyPosition += 1
-                currentTrack.index = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+                currentTrack.shuffleIndex += 1
+                currentTrack.index = playListTracksShuffleKeys![currentTrack.shuffleIndex]
                 
-                print ("dbg [playlist/track/shuffle] : currentPosition = \(playListTracksShuffleKeyPosition) of \(playListTracksShuffleKeys!.count - 1)")
+                print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(playListTracksShuffleKeys!.count - 1)")
                 
                 break
             
@@ -350,7 +350,7 @@ extension PlaylistContentViewController {
                  break
             
             case playMode.PlayShuffle.rawValue:
-                _isFinished = playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count - 1
+                _isFinished = currentTrack.shuffleIndex == playListTracksShuffleKeys!.count - 1
                  break
             
             case playMode.PlayNormal.rawValue:
@@ -515,10 +515,10 @@ extension PlaylistContentViewController {
     
     func resetLocalPlayerMetaSettings() {
 
-        playListTracksShuffleKeyPosition = 0
         playListTracksShuffleKeys = []
         playListPlayMode = 0
         currentTrack.cell = nil
+        currentTrack.shuffleIndex = 0
     }
     
     func resetLocalTrackStateStettings() {
