@@ -235,7 +235,7 @@ extension PlaylistContentViewController {
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
                 self.handleAllTrackCellsPlayStateReset()
                 if (error != nil) {
-                    self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
+                    self.handleErrorAsDialogMessage("Player Controls Error PCE.02", "\(error?.localizedDescription)")
                 }
             })
         }
@@ -266,7 +266,7 @@ extension PlaylistContentViewController {
                 startingWithPosition: currentTrack.interval!,
                 callback: { (error) in
                     if (error != nil) {
-                        self.handleErrorAsDialogMessage("Player Controls Error", "\(error?.localizedDescription)")
+                        self.handleErrorAsDialogMessage("Player Controls Error PCE.01", "\(error?.localizedDescription)")
                         
                         return
                     }
@@ -290,11 +290,13 @@ extension PlaylistContentViewController {
                 break
             
             case playMode.PlayShuffle.rawValue:
-            
-                if playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count { return false }
+                
+                if playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count - 1 { return false }
                 
                 playListTracksShuffleKeyPosition += 1
                 currentTrack.index = playListTracksShuffleKeys![playListTracksShuffleKeyPosition]
+                
+                print ("dbg [playlist/track/shuffle] : currentPosition = \(playListTracksShuffleKeyPosition) of \(playListTracksShuffleKeys!.count - 1)")
                 
                 break
             
@@ -348,7 +350,7 @@ extension PlaylistContentViewController {
                  break
             
             case playMode.PlayShuffle.rawValue:
-                _isFinished = playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count
+                _isFinished = playListTracksShuffleKeyPosition == playListTracksShuffleKeys!.count - 1
                  break
             
             case playMode.PlayNormal.rawValue:
