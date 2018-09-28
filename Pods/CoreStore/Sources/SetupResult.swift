@@ -2,7 +2,7 @@
 //  SetupResult.swift
 //  CoreStore
 //
-//  Copyright © 2014 John Rommel Estropia
+//  Copyright © 2018 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -105,16 +105,18 @@ public enum SetupResult<T: StorageInterface>: Hashable {
     
     
     // MARK: Hashable
-    
-    public var hashValue: Int {
+
+    public func hash(into hasher: inout Hasher) {
         
         switch self {
             
         case .success(let storage):
-            return true.hashValue ^ ObjectIdentifier(storage).hashValue
+            hasher.combine(true)
+            hasher.combine(ObjectIdentifier(storage))
             
         case .failure(let error):
-            return false.hashValue ^ error.hashValue
+            hasher.combine(false)
+            hasher.combine(error)
         }
     }
     

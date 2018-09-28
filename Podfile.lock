@@ -1,17 +1,18 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.4)
-  - CoreStore (5.2.0)
-  - CryptoSwift (0.11.0)
-  - fluid-slider (0.0.6):
+  - CoreStore (5.3.1)
+  - CryptoSwift (0.12.0)
+  - fluid-slider (1.0.0):
     - pop
-  - FoldingCell (3.1.4)
-  - GradientLoadingBar (1.1.11)
-  - Kingfisher (4.8.1)
+  - FoldingCell (4.0.0)
+  - GradientLoadingBar (1.1.12):
+    - Observable
+  - Kingfisher (4.10.0)
   - LetterAvatarKit (1.1.5)
-  - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (62.0.0)
-  - MaterialComponents/private/Math (62.0.0)
-  - MaterialComponents/ProgressView (62.0.0):
+  - MarqueeLabel/Swift (3.2.0)
+  - MaterialComponents/Palettes (65.0.0)
+  - MaterialComponents/private/Math (65.0.0)
+  - MaterialComponents/ProgressView (65.0.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -20,14 +21,15 @@ PODS:
   - MotionAnimator (2.8.1):
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
-  - NotificationBannerSwift (1.6.3):
-    - MarqueeLabel/Swift
-    - SnapKit (~> 4.0)
+  - NotificationBannerSwift (1.7.1):
+    - MarqueeLabel/Swift (~> 3.2.0)
+    - SnapKit (~> 4.0.1)
+  - Observable (1.3.3)
   - Persei (3.1.1)
-  - PKHUD (5.1.0)
+  - PKHUD (5.2.0)
   - pop (1.0.10)
   - Reachability (3.2)
-  - SnapKit (4.0.0)
+  - SnapKit (4.0.1)
   - Spotify-iOS-SDK (0.25.0):
     - Spotify-iOS-SDK/Authentication (= 0.25.0)
     - Spotify-iOS-SDK/Metadata (= 0.25.0)
@@ -35,9 +37,9 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
-  - SwiftDate (5.0.7)
+  - SwiftDate (5.0.9)
   - SwiftRandom (1.0.0)
-  - WSTagsField (3.1.0)
+  - WSTagsField (3.2.0)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage
@@ -75,6 +77,7 @@ SPEC REPOS:
     - MotionAnimator
     - MotionInterchange
     - NotificationBannerSwift
+    - Observable
     - Persei
     - PKHUD
     - pop
@@ -87,28 +90,29 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
-  CoreStore: e26bfee25eb03cc724246356ce80a0cf5cbfe27f
-  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
-  fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: 5f8a482ce0502bc0d5a1732782c305e0cefe6f81
-  GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
-  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  CoreStore: 89d0c8e7a9d76d0c533018b4850245c973f4ecbd
+  CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
+  fluid-slider: a19a991606a34a545cba9341e7422073b4ec3a66
+  FoldingCell: 56aea84b6cf5badd8753efef33738936789f8fbd
+  GradientLoadingBar: 311b3f67e8ee1d47005444afb2b01e3eadc1a421
+  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
-  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: bad29aec8c4dd416aa35f87afb8d65d44456d712
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  MaterialComponents: ea21a99bd4da688f9becf8c3e9416016343cbe32
   MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
-  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
+  NotificationBannerSwift: 5d0191ae57c4b38e484dab4912e32d1ed99fce61
+  Observable: 360b0132cef970a50bc69611df7fcbda46e91c34
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
-  PKHUD: 62ea46a1e88c4def1da784878d199bb54c841e3c
+  PKHUD: dd5357ac65f26115c35c4a68e9b328053326c5fe
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
-  SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
+  SwiftDate: 52b718d32ec006861a2be2756cbfa482d438e781
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
-  WSTagsField: 53055749c03769b2b297f2a629ba23a26931e3ff
+  WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
 PODFILE CHECKSUM: 008b7f590742fffab5c256c7024fbd525603a1c1
 

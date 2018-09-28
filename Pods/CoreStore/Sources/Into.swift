@@ -2,7 +2,7 @@
 //  Into.swift
 //  CoreStore
 //
-//  Copyright © 2014 John Rommel Estropia
+//  Copyright © 2018 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -112,12 +112,12 @@ public struct Into<D: DynamicObject>: Hashable {
     
     
     // MARK: Hashable
-    
-    public var hashValue: Int {
-    
-        return ObjectIdentifier(self.entityClass).hashValue
-            ^ (self.configuration?.hashValue ?? 0)
-            ^ self.inferStoreIfPossible.hashValue
+
+    public func hash(into hasher: inout Hasher) {
+
+        hasher.combine(ObjectIdentifier(self.entityClass))
+        hasher.combine(self.configuration)
+        hasher.combine(self.inferStoreIfPossible)
     }
     
     
