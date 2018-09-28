@@ -1,5 +1,5 @@
 //
-//  PlaylistTrack.swift
+//  ProxyPlaylistTrack.swift
 //  aqoo
 //
 //  Created by Patrick Paechnatz on 01.09.18.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class PlaylistTrack {
+class ProxyPlaylistTrack {
     
     //
     // MARK: Constants (Statics)
     //
     
-    static let sharedInstance = PlaylistTrack()
+    static let sharedInstance = ProxyPlaylistTrack()
     
     //
     // MARK: Properties

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Patrick Paechnatz. All rights reserved.
 //
 
-import Foundation
 import Spotify
 
 class ProxyStreamPlayListTrack {

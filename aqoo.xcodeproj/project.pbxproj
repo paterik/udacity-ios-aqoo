@@ -24,6 +24,7 @@
 		B15E031821130C49003124E4 /* SPFClientPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E031721130C49003124E4 /* SPFClientPlayer.swift */; };
 		B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */; };
 		B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */; };
+		B17B2235213BE05300649AB2 /* ProxyPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
 		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
@@ -43,7 +44,7 @@
 		B1A620601F700D820093CAEF /* aqooTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6205F1F700D820093CAEF /* aqooTests.swift */; };
 		B1A6206B1F700D820093CAEF /* aqooUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6206A1F700D820093CAEF /* aqooUITests.swift */; };
 		B1A7E0262040C0B100A9805C /* StreamProviderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A7E0252040C0B100A9805C /* StreamProviderConfig.swift */; };
-		B1ACE8C7213AE25600D0AB30 /* PlaylistTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ACE8C6213AE25600D0AB30 /* PlaylistTrack.swift */; };
+		B1ACE8C7213AE25600D0AB30 /* ProxyPlaylistTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ACE8C6213AE25600D0AB30 /* ProxyPlaylistTrack.swift */; };
 		B1B3E17C210081C000F05ABE /* ProxyStreamPlayListExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B3E17B210081C000F05ABE /* ProxyStreamPlayListExtended.swift */; };
 		B1B8DD22202E189A008CE9EB /* PlaylistFilterNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B8DD21202E189A008CE9EB /* PlaylistFilterNotification.xib */; };
 		B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */; };
@@ -113,6 +114,7 @@
 		B15E031721130C49003124E4 /* SPFClientPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlayer.swift; sourceTree = "<group>"; };
 		B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListTrack.swift; sourceTree = "<group>"; };
 		B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTracks.swift; sourceTree = "<group>"; };
+		B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyPlaylist.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
 		B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTriangleView.swift; sourceTree = "<group>"; };
 		B181B06C1F717C8200F29E8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -141,7 +143,7 @@
 		B1A6206A1F700D820093CAEF /* aqooUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aqooUITests.swift; sourceTree = "<group>"; };
 		B1A6206C1F700D820093CAEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1A7E0252040C0B100A9805C /* StreamProviderConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamProviderConfig.swift; sourceTree = "<group>"; };
-		B1ACE8C6213AE25600D0AB30 /* PlaylistTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTrack.swift; sourceTree = "<group>"; };
+		B1ACE8C6213AE25600D0AB30 /* ProxyPlaylistTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyPlaylistTrack.swift; sourceTree = "<group>"; };
 		B1B3E17B210081C000F05ABE /* ProxyStreamPlayListExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListExtended.swift; sourceTree = "<group>"; };
 		B1B8DD21202E189A008CE9EB /* PlaylistFilterNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistFilterNotification.xib; sourceTree = "<group>"; };
 		B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistFilterNotification.swift; sourceTree = "<group>"; };
@@ -412,7 +414,6 @@
 		B1ACE8C5213AE23300D0AB30 /* _tracks */ = {
 			isa = PBXGroup;
 			children = (
-				B1ACE8C6213AE25600D0AB30 /* PlaylistTrack.swift */,
 			);
 			name = _tracks;
 			sourceTree = "<group>";
@@ -420,6 +421,8 @@
 		B1B3E17D2102269800F05ABE /* proxy */ = {
 			isa = PBXGroup;
 			children = (
+				B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */,
+				B1ACE8C6213AE25600D0AB30 /* ProxyPlaylistTrack.swift */,
 				B1B3E17B210081C000F05ABE /* ProxyStreamPlayListExtended.swift */,
 				B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */,
 			);
@@ -861,11 +864,12 @@
 				B1B8DD28202E5756008CE9EB /* Dictionary.swift in Sources */,
 				B15E03142112E6D9003124E4 /* SPFClientPlaylistControls.swift in Sources */,
 				B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */,
+				B17B2235213BE05300649AB2 /* ProxyPlaylist.swift in Sources */,
 				B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */,
 				B13DB8DC210629BB0013CAC5 /* PlaylistTracksControlView.swift in Sources */,
 				B1A117A120F618B3002C4CA9 /* Integer.swift in Sources */,
 				B1B3E17C210081C000F05ABE /* ProxyStreamPlayListExtended.swift in Sources */,
-				B1ACE8C7213AE25600D0AB30 /* PlaylistTrack.swift in Sources */,
+				B1ACE8C7213AE25600D0AB30 /* ProxyPlaylistTrack.swift in Sources */,
 				B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */,
 				B15E03122112D3A7003124E4 /* BaseNotificationProtocol.swift in Sources */,
 				B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */,

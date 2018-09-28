@@ -20,16 +20,11 @@ class PlaylistContentViewController: BaseViewController,
     let localPlayer = SPFClientPlayer.sharedInstance
     let kBaseCellHeight: CGFloat = 72.0
     
-    let currentTrack = PlaylistTrack.sharedInstance
+    let currentTrack = ProxyPlaylistTrack.sharedInstance
+    let currentPlaylist = ProxyPlaylist.sharedInstance
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
-    var playListTracksInCloud: [StreamPlayListTracks]?
-    
-    var playListTracksShuffleKeys: [Int]?
-    var playListPlayMode: Int16 = 0
-    
-    var _trackTimer: Timer!
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
@@ -59,8 +54,8 @@ class PlaylistContentViewController: BaseViewController,
     override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
-        if  _trackTimer != nil {
-            _trackTimer.invalidate()
+        if  currentPlaylist.trackCheckTimer != nil {
+            currentPlaylist.trackCheckTimer.invalidate()
         }
     }
     
@@ -77,7 +72,7 @@ class PlaylistContentViewController: BaseViewController,
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
         
-        return playListTracksInCloud!.count
+        return currentPlaylist.tracks!.count
     }
     
     func tableView(
@@ -91,7 +86,7 @@ class PlaylistContentViewController: BaseViewController,
        _ tableView: UITableView,
          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        let playlistTrackCacheData = playListTracksInCloud![indexPath.row] as StreamPlayListTracks
+        let playlistTrackCacheData = currentPlaylist.tracks![indexPath.row] as StreamPlayListTracks
         let playlistCell = tableView.dequeueReusableCell(
             withIdentifier: "playListContentItem",
             for: indexPath) as! PlaylistTracksTableCell
@@ -159,7 +154,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.lblTrackPlaytimeRemaining.text = getSecondsAsMinutesSecondsDigits(Int(_ctd) - currentTrack.timePosition)
             playlistCell.progressBar.setProgress(currentTrack.timeProgress, animated: false)
             
-        }   else if playListPlayMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
+        }   else if currentPlaylist.playMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
             
             playlistCell.state = .stopped
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true

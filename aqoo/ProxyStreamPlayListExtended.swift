@@ -6,8 +6,6 @@
 //  Copyright © 2018 Patrick Paechnatz. All rights reserved.
 //
 
-import Foundation
-
 class ProxyStreamPlayListExtended {
     
     var playlistIdentifier: String

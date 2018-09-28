@@ -68,7 +68,7 @@ extension PlaylistContentViewController {
     func setupUIPlayModeControls() {
         
         toggleActiveMode( true )
-        if  playListTracksInCloud?.count == 0 {
+        if  currentPlaylist.tracks?.count == 0 {
             toggleActiveMode( false )
         }
         
@@ -140,6 +140,8 @@ extension PlaylistContentViewController {
         // stop everything and reset cache meta information (from status play to stop) also
         //
         
+        
+        
         // A) always reset (all) playMode controls and stop playback first
         trackControlView.mode = .clear // place pause definition logic here!
         setPlaylistInPlayMode( playMode.Stopped.rawValue )
@@ -181,7 +183,7 @@ extension PlaylistContentViewController {
         }
         
         // (re)set current playMode for internal usage
-        playListPlayMode = usedPlayMode
+        currentPlaylist.playMode = usedPlayMode
     }
     
     func setPlaylistInPlayMode(
@@ -192,7 +194,7 @@ extension PlaylistContentViewController {
         
         // check shuffle playMode active - reset currentTrack.index to a nice shuffle-based one
         if  usedPlayMode == playMode.PlayShuffle.rawValue {
-            currentTrack.index = playListTracksShuffleKeys![currentTrack.shuffleIndex]
+            currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
         }
         
         // start track playing (if usefull playMode is given)
@@ -201,7 +203,7 @@ extension PlaylistContentViewController {
         }
         
         if  debugMode == true {
-            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(playListPlayMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
+            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlaylist.playMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
         }
     }
     
@@ -209,10 +211,10 @@ extension PlaylistContentViewController {
        _ number: Int) -> StreamPlayListTracks?  {
         
         // evaluate plausible object range, return in case of invalid value
-        if playListTracksInCloud == nil || number >= playListTracksInCloud!.count { return nil }
+        if currentPlaylist.tracks == nil || number >= (currentPlaylist.tracks?.count)! { return nil }
         
         // fetch/cast track from current playlist trackSet, dialog-error on any kind of problem there
-        guard let track = playListTracksInCloud![number] as? StreamPlayListTracks else {
+        guard let track = currentPlaylist.tracks![number] as? StreamPlayListTracks else {
             self.handleErrorAsDialogMessage("Track Rendering Error", "unable to fetch track #\(number) as playable object")
             
             return nil
@@ -277,7 +279,7 @@ extension PlaylistContentViewController {
     
     func trackJumpToNext() -> Bool {
         
-        switch playListPlayMode {
+        switch currentPlaylist.playMode {
             
             case playMode.PlayNormal.rawValue:
                 
@@ -291,12 +293,12 @@ extension PlaylistContentViewController {
             
             case playMode.PlayShuffle.rawValue:
                 
-                if currentTrack.shuffleIndex == playListTracksShuffleKeys!.count - 1 { return false }
+                if currentTrack.shuffleIndex == currentPlaylist.shuffleKeys!.count - 1 { return false }
                 
                 currentTrack.shuffleIndex += 1
-                currentTrack.index = playListTracksShuffleKeys![currentTrack.shuffleIndex]
+                currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
                 
-                print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(playListTracksShuffleKeys!.count - 1)")
+                print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
                 
                 break
             
@@ -343,18 +345,18 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = false
         
-        switch playListPlayMode {
+        switch currentPlaylist.playMode {
             
             case playMode.PlayRepeatAll.rawValue:
                 _isFinished = false
                  break
             
             case playMode.PlayShuffle.rawValue:
-                _isFinished = currentTrack.shuffleIndex == playListTracksShuffleKeys!.count - 1
+                _isFinished = currentTrack.shuffleIndex == currentPlaylist.shuffleKeys!.count - 1
                  break
             
             case playMode.PlayNormal.rawValue:
-                _isFinished = currentTrack.index == playListTracksInCloud!.count - 1
+                _isFinished = currentTrack.index == currentPlaylist.tracks!.count - 1
                  break
             
             case playMode.Stopped.rawValue:
@@ -387,8 +389,8 @@ extension PlaylistContentViewController {
     func togglePlayMode (
        _ active: Bool) {
         
-        if  _trackTimer != nil {
-            _trackTimer.invalidate()
+        if  currentPlaylist.trackCheckTimer != nil {
+            currentPlaylist.trackCheckTimer.invalidate()
         }
         
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
@@ -397,7 +399,7 @@ extension PlaylistContentViewController {
         if  active == true {
             
             // start playback meta timer
-            _trackTimer = Timer.scheduledTimer(
+            currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
                 target       : self,
                 selector     : #selector(handlePlaylistTrackTimerEvent),
@@ -492,7 +494,6 @@ extension PlaylistContentViewController {
                 
             }   else {
                 
-               _trackTimer.invalidate()
                 handlePlaylistCompleted()
             }
         }
@@ -501,7 +502,8 @@ extension PlaylistContentViewController {
     func handlePlaylistCompleted() {
         
         // call playlistPlayMode with playListPlayMode to simmulate users "stop" click
-        handlePlaylistPlayMode( playListPlayMode )
+        handlePlaylistPlayMode( currentPlaylist.playMode )
+        
         // reset player meta and track state settings
         resetLocalPlayerMetaSettings()
         resetLocalTrackStateStettings()
@@ -511,12 +513,17 @@ extension PlaylistContentViewController {
         
         // reset playMode/timeFrame-Meta-Information for all (spotify) playlistTracks in cache
         localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+        
+        // reset primary track/check timer
+        if  currentPlaylist.trackCheckTimer != nil {
+            currentPlaylist.trackCheckTimer.invalidate()
+        }
     }
     
     func resetLocalPlayerMetaSettings() {
 
-        playListTracksShuffleKeys = []
-        playListPlayMode = 0
+        currentPlaylist.shuffleKeys = []
+        currentPlaylist.playMode = 0
         currentTrack.cell = nil
         currentTrack.shuffleIndex = 0
     }
@@ -533,29 +540,29 @@ extension PlaylistContentViewController {
     func loadMetaPlaylistTracksFromDb() {
         
         // load all tracks from db
-        playListTracksInCloud = CoreStore.defaultStack.fetchAll(
+        currentPlaylist.tracks = CoreStore.defaultStack.fetchAll(
              From<StreamPlayListTracks>()
                 .where(\StreamPlayListTracks.playlist == playListInDb)
                 .orderBy(.ascending(\StreamPlayListTracks.trackAddedAt))
         )
+        
+        // init shuffled key stack for shuffle-play-mode
+        if  currentPlaylist.tracks != nil {
+            currentPlaylist.shuffleKeys = getRandomUniqueNumberArray(
+                forLowerBound: 0,
+                andUpperBound: currentPlaylist.tracks!.count,
+                andNumNumbers: currentPlaylist.tracks!.count
+            )
+            
+            if  debugMode == true {
+                print ("dbg [playlist/track/shuffle] : keys = [\(currentPlaylist.shuffleKeys!)]")
+            }
+        }
         
         // load playlist local cache from db (refresh)
         playListInDb = CoreStore.defaultStack.fetchOne(
             From<StreamPlayList>()
                 .where(\StreamPlayList.metaListHash == playListInDb!.getMD5Identifier())
         )
-        
-        // init shuffled key stack for shuffle-play-mode
-        if  playListTracksInCloud != nil {
-            playListTracksShuffleKeys = getRandomUniqueNumberArray(
-                forLowerBound: 0,
-                andUpperBound: playListTracksInCloud!.count,
-                andNumNumbers: playListTracksInCloud!.count
-            )
-            
-            if  debugMode == true {
-                print ("dbg [playlist/track/shuffle] : keys = [\(playListTracksShuffleKeys!)]")
-            }
-        }
     }
 }
