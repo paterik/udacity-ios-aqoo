@@ -2,7 +2,7 @@
 //  Value.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -138,45 +138,45 @@ public enum ValueContainer<O: CoreStoreObject> {
             get {
                 
                 CoreStore.assert(
-                    self.rawObject != nil,
+                    self.parentObject != nil,
                     "Attempted to access values from a \(cs_typeName(O.self)) meta object. Meta objects are only used for querying keyPaths and infering types."
                 )
-                return withExtendedLifetime(self.rawObject!) { (object) in
+                return withExtendedLifetime(self.parentObject! as! O) { (object: O) in
                     
                     CoreStore.assert(
-                        object.isRunningInAllowedQueue() == true,
+                        object.rawObject!.isRunningInAllowedQueue() == true,
                         "Attempted to access \(cs_typeName(O.self))'s value outside it's designated queue."
                     )
                     if let customGetter = self.customGetter {
                         
-                        return customGetter(PartialObject<O>(object))
+                        return customGetter(PartialObject<O>(object.rawObject!))
                     }
                     return V.cs_fromQueryableNativeType(
-                        object.value(forKey: self.keyPath)! as! V.QueryableNativeType
+                        object.rawObject!.value(forKey: self.keyPath)! as! V.QueryableNativeType
                     )!
                 }
             }
             set {
                 
                 CoreStore.assert(
-                    self.rawObject != nil,
+                    self.parentObject != nil,
                     "Attempted to access values from a \(cs_typeName(O.self)) meta object. Meta objects are only used for querying keyPaths and infering types."
                 )
-                return withExtendedLifetime(self.rawObject!) { (object) in
+                return withExtendedLifetime(self.parentObject! as! O) { (object: O) in
                     
                     CoreStore.assert(
-                        object.isRunningInAllowedQueue() == true,
+                        object.rawObject!.isRunningInAllowedQueue() == true,
                         "Attempted to access \(cs_typeName(O.self))'s value outside it's designated queue."
                     )
                     CoreStore.assert(
-                        object.isEditableInContext() == true,
+                        object.rawObject!.isEditableInContext() == true,
                         "Attempted to update a \(cs_typeName(O.self))'s value from outside a transaction."
                     )
                     if let customSetter = self.customSetter {
                         
-                        return customSetter(PartialObject<O>(object), newValue)
+                        return customSetter(PartialObject<O>(object.rawObject!), newValue)
                     }
-                    return object.setValue(
+                    return object.rawObject!.setValue(
                         newValue.cs_toQueryableNativeType(),
                         forKey: self.keyPath
                     )
@@ -200,7 +200,7 @@ public enum ValueContainer<O: CoreStoreObject> {
         internal let renamingIdentifier: () -> String?
         internal let defaultValue: () -> Any?
         internal let affectedByKeyPaths: () -> Set<String>
-        internal var rawObject: CoreStoreManagedObject?
+        internal weak var parentObject: CoreStoreObject?
         
         internal private(set) lazy var getter: CoreStoreManagedObject.CustomGetter? = cs_lazy { [unowned self] in
             
@@ -351,44 +351,44 @@ public enum ValueContainer<O: CoreStoreObject> {
             get {
                 
                 CoreStore.assert(
-                    self.rawObject != nil,
+                    self.parentObject != nil,
                     "Attempted to access values from a \(cs_typeName(O.self)) meta object. Meta objects are only used for querying keyPaths and infering types."
                 )
-                return withExtendedLifetime(self.rawObject!) { (object) in
+                return withExtendedLifetime(self.parentObject! as! O) { (object: O) in
                     
                     CoreStore.assert(
-                        object.isRunningInAllowedQueue() == true,
+                        object.rawObject!.isRunningInAllowedQueue() == true,
                         "Attempted to access \(cs_typeName(O.self))'s value outside it's designated queue."
                     )
                     if let customGetter = self.customGetter {
                         
-                        return customGetter(PartialObject<O>(object))
+                        return customGetter(PartialObject<O>(object.rawObject!))
                     }
-                    return (object.value(forKey: self.keyPath) as! V.QueryableNativeType?)
+                    return (object.rawObject!.value(forKey: self.keyPath) as! V.QueryableNativeType?)
                         .flatMap(V.cs_fromQueryableNativeType)
                 }
             }
             set {
                 
                 CoreStore.assert(
-                    self.rawObject != nil,
+                    self.parentObject != nil,
                     "Attempted to access values from a \(cs_typeName(O.self)) meta object. Meta objects are only used for querying keyPaths and infering types."
                 )
-                return withExtendedLifetime(self.rawObject!) { (object) in
+                return withExtendedLifetime(self.parentObject! as! O) { (object: O) in
                     
                     CoreStore.assert(
-                        object.isRunningInAllowedQueue() == true,
+                        object.rawObject!.isRunningInAllowedQueue() == true,
                         "Attempted to access \(cs_typeName(O.self))'s value outside it's designated queue."
                     )
                     CoreStore.assert(
-                        object.isEditableInContext() == true,
+                        object.rawObject!.isEditableInContext() == true,
                         "Attempted to update a \(cs_typeName(O.self))'s value from outside a transaction."
                     )
                     if let customSetter = self.customSetter {
                         
-                        return customSetter(PartialObject<O>(object), newValue)
+                        return customSetter(PartialObject<O>(object.rawObject!), newValue)
                     }
-                    object.setValue(
+                    object.rawObject!.setValue(
                         newValue?.cs_toQueryableNativeType(),
                         forKey: self.keyPath
                     )
@@ -412,7 +412,7 @@ public enum ValueContainer<O: CoreStoreObject> {
         internal let renamingIdentifier: () -> String?
         internal let defaultValue: () -> Any?
         internal let affectedByKeyPaths: () -> Set<String>
-        internal var rawObject: CoreStoreManagedObject?
+        internal weak var parentObject: CoreStoreObject?
         
         internal private(set) lazy var getter: CoreStoreManagedObject.CustomGetter? = cs_lazy { [unowned self] in
             

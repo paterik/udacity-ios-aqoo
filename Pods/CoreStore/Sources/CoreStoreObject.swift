@@ -2,7 +2,7 @@
 //  CoreStoreObject.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -93,19 +93,18 @@ open /*abstract*/ class CoreStoreObject: DynamicObject, Hashable {
         }
         if lhs.isMeta {
             
-            return cs_dynamicType(of: lhs) == cs_dynamicType(of: rhs)
+            return type(of: lhs) == type(of: rhs)
         }
         return lhs.rawObject!.isEqual(rhs.rawObject!)
     }
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self.isMeta)
-        hasher.combine(ObjectIdentifier(self))
-        hasher.combine(self.rawObject)
+    
+    public var hashValue: Int {
+    
+        return ObjectIdentifier(self).hashValue
+            ^ (self.isMeta ? 0 : self.rawObject!.hashValue)
     }
     
     
@@ -125,10 +124,10 @@ open /*abstract*/ class CoreStoreObject: DynamicObject, Hashable {
             switch child.value {
                 
             case let property as AttributeProtocol:
-                property.rawObject = parentObject.rawObject
+                property.parentObject = parentObject
                     
             case let property as RelationshipProtocol:
-                property.rawObject = parentObject.rawObject
+                property.parentObject = parentObject
                 
             default:
                 continue

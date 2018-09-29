@@ -2,7 +2,7 @@
 //  Select.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2015 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -257,26 +257,19 @@ public enum SelectTerm<D: DynamicObject>: ExpressibleByStringLiteral, Hashable {
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
+    
+    public var hashValue: Int {
+        
         switch self {
             
         case ._attribute(let keyPath):
-            hasher.combine(0)
-            hasher.combine(keyPath)
+            return 0 ^ keyPath.hashValue
             
         case ._aggregate(let function, let keyPath, let alias, let nativeType):
-            hasher.combine(1)
-            hasher.combine(function)
-            hasher.combine(keyPath)
-            hasher.combine(alias)
-            hasher.combine(nativeType)
+            return 1 ^ function.hashValue ^ keyPath.hashValue ^ alias.hashValue ^ nativeType.hashValue
             
         case ._identity(let alias, let nativeType):
-            hasher.combine(2)
-            hasher.combine(alias)
-            hasher.combine(nativeType)
+            return 3 ^ alias.hashValue ^ nativeType.hashValue
         }
     }
     
@@ -707,10 +700,10 @@ public struct Select<D: DynamicObject, T: SelectResultType>: SelectClause, Hasha
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self.selectTerms)
+    
+    public var hashValue: Int {
+        
+        return self.selectTerms.map { $0.hashValue }.reduce(0, ^)
     }
     
     

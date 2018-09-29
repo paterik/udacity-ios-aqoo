@@ -2,7 +2,7 @@
 //  CSObjectMonitor.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2016 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import CoreData
  
  - SeeAlso: `ObjectMonitor`
  */
-@available(macOS 10.12, *)
+@available(OSX 10.12, *)
 @objc
 public final class CSObjectMonitor: NSObject {
     
@@ -102,10 +102,8 @@ public final class CSObjectMonitor: NSObject {
     // MARK: NSObject
     
     public override var hash: Int {
-
-        var hasher = Hasher()
-        self.bridgeToSwift.hash(into: &hasher)
-        return hasher.finalize()
+        
+        return self.bridgeToSwift.hashValue
     }
     
     public override func isEqual(_ object: Any?) -> Bool {
@@ -139,7 +137,7 @@ public final class CSObjectMonitor: NSObject {
 
 // MARK: - ObjectMonitor
 
-@available(macOS 10.12, *)
+@available(OSX 10.12, *)
 extension ObjectMonitor where ObjectMonitor.ObjectType: NSManagedObject {
     
     // MARK: CoreStoreSwiftType

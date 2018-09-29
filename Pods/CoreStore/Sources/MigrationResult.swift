@@ -2,7 +2,7 @@
 //  MigrationResult.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2015 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -64,6 +64,40 @@ public enum MigrationResult: Hashable {
             
         case .success: return true
         case .failure: return false
+        }
+    }
+    
+    
+    // MARK: Equatable
+    
+    public static func == (lhs: MigrationResult, rhs: MigrationResult) -> Bool {
+        
+        switch (lhs, rhs) {
+            
+        case (.success(let migrationTypes1), .success(let migrationTypes2)):
+            return migrationTypes1 == migrationTypes2
+            
+        case (.failure(let error1), .failure(let error2)):
+            return error1 == error2
+            
+        default:
+            return false
+        }
+    }
+    
+    
+    // MARK: Hashable
+    
+    public var hashValue: Int {
+        
+        switch self {
+            
+        case .success(let migrationTypes):
+            return true.hashValue
+                ^ migrationTypes.map { $0.hashValue }.reduce(0, ^).hashValue
+            
+        case .failure(let error):
+            return false.hashValue ^ error.hashValue
         }
     }
     

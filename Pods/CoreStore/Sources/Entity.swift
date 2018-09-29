@@ -2,7 +2,7 @@
 //  Entity.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -167,13 +167,15 @@ public /*abstract*/ class DynamicEntity: Hashable {
     }
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(ObjectIdentifier(self.type))
-        hasher.combine(self.entityName)
-        hasher.combine(self.isAbstract)
-        hasher.combine(self.versionHashModifier ?? "")
+    
+    public var hashValue: Int {
+        
+        return ObjectIdentifier(self.type).hashValue
+            ^ self.entityName.hashValue
+            ^ self.isAbstract.hashValue
+            ^ (self.versionHashModifier ?? "").hashValue
+//            ^ self.indexes.hashValue
+//            ^ self.uniqueConstraints.hashValue
     }
     
     

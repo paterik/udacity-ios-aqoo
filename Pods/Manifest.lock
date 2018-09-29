@@ -1,13 +1,13 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.4)
-  - CoreStore (5.3.1)
+  - CoreStore (5.2.0)
   - CryptoSwift (0.12.0)
   - fluid-slider (1.0.0):
     - pop
-  - FoldingCell (4.0.0)
+  - FoldingCell (3.1.4)
   - GradientLoadingBar (1.1.12):
     - Observable
-  - Kingfisher (4.10.0)
+  - Kingfisher (4.8.1)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.2.0)
   - MaterialComponents/Palettes (65.0.0)
@@ -42,24 +42,24 @@ PODS:
   - WSTagsField (3.2.0)
 
 DEPENDENCIES:
-  - BGTableViewRowActionWithImage
-  - CoreStore
-  - CryptoSwift
-  - fluid-slider
-  - FoldingCell
-  - GradientLoadingBar
-  - Kingfisher
-  - LetterAvatarKit
+  - BGTableViewRowActionWithImage (= 0.4.4)
+  - CoreStore (= 5.2.0)
+  - CryptoSwift (= 0.12.0)
+  - fluid-slider (= 1.0.0)
+  - FoldingCell (= 3.1.4)
+  - GradientLoadingBar (= 1.1.12)
+  - Kingfisher (= 4.8.1)
+  - LetterAvatarKit (= 1.1.5)
   - MaterialComponents/ProgressView
-  - NotificationBannerSwift
+  - NotificationBannerSwift (= 1.7.1)
   - Persei (~> 3.0)
-  - PKHUD (~> 5.0)
-  - Reachability
-  - SnapKit
+  - PKHUD (= 5.2.0)
+  - Reachability (= 3.2)
+  - SnapKit (= 4.0.1)
   - Spotify-iOS-SDK
-  - SwiftDate (~> 5.0)
-  - SwiftRandom
-  - WSTagsField (~> 3.1)
+  - SwiftDate (= 5.0.9)
+  - SwiftRandom (= 1.0.0)
+  - WSTagsField (= 3.2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -90,12 +90,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
-  CoreStore: 89d0c8e7a9d76d0c533018b4850245c973f4ecbd
+  CoreStore: e26bfee25eb03cc724246356ce80a0cf5cbfe27f
   CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
   fluid-slider: a19a991606a34a545cba9341e7422073b4ec3a66
-  FoldingCell: 56aea84b6cf5badd8753efef33738936789f8fbd
+  FoldingCell: 5f8a482ce0502bc0d5a1732782c305e0cefe6f81
   GradientLoadingBar: 311b3f67e8ee1d47005444afb2b01e3eadc1a421
-  Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   MaterialComponents: ea21a99bd4da688f9becf8c3e9416016343cbe32
@@ -114,6 +114,6 @@ SPEC CHECKSUMS:
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: 008b7f590742fffab5c256c7024fbd525603a1c1
+PODFILE CHECKSUM: 416f9e584a01e957e62f34c29dbce19930919740
 
 COCOAPODS: 1.5.3

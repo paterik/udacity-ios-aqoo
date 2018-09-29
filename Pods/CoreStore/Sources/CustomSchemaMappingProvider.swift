@@ -2,7 +2,7 @@
 //  CustomSchemaMappingProvider.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -146,28 +146,24 @@ public class CustomSchemaMappingProvider: Hashable, SchemaMappingProvider {
         
         
         // MARK: Hashable
-
-        public func hash(into hasher: inout Hasher) {
+        
+        public var hashValue: Int {
             
             switch self {
                 
             case .deleteEntity(let sourceEntity):
-                hasher.combine(0)
-                hasher.combine(sourceEntity)
+                return sourceEntity.hashValue
                 
             case .insertEntity(let destinationEntity):
-                hasher.combine(1)
-                hasher.combine(destinationEntity)
+                return destinationEntity.hashValue
                 
             case .copyEntity(let sourceEntity, let destinationEntity):
-                hasher.combine(2)
-                hasher.combine(sourceEntity)
-                hasher.combine(destinationEntity)
+                return sourceEntity.hashValue
+                    ^ destinationEntity.hashValue
                 
             case .transformEntity(let sourceEntity, let destinationEntity, _):
-                hasher.combine(3)
-                hasher.combine(sourceEntity)
-                hasher.combine(destinationEntity)
+                return sourceEntity.hashValue
+                    ^ destinationEntity.hashValue
             }
         }
         
@@ -328,17 +324,16 @@ public class CustomSchemaMappingProvider: Hashable, SchemaMappingProvider {
         
         return lhs.sourceVersion == rhs.sourceVersion
             && lhs.destinationVersion == rhs.destinationVersion
-            && cs_dynamicType(of: lhs) == cs_dynamicType(of: rhs)
+            && type(of: lhs) == type(of: rhs)
     }
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self.sourceVersion)
-        hasher.combine(self.destinationVersion)
-        hasher.combine(ObjectIdentifier(cs_dynamicType(of: self)))
+    
+    public var hashValue: Int {
+        
+        return self.sourceVersion.hashValue
+            ^ self.destinationVersion.hashValue
     }
     
     

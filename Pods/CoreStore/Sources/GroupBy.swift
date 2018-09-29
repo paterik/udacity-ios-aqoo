@@ -2,7 +2,7 @@
 //  GroupBy.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2015 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -96,10 +96,10 @@ public struct GroupBy<D: DynamicObject>: GroupByClause, QueryClause, Hashable {
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self.keyPaths)
+    
+    public var hashValue: Int {
+        
+        return (self.keyPaths as NSArray).hashValue
     }
 }
 

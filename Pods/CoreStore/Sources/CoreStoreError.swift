@@ -2,7 +2,7 @@
 //  CoreStoreError.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2014 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -173,6 +173,9 @@ public enum CoreStoreError: Error, CustomNSError, Hashable {
             
             case (let error1 as NSError, let error2 as NSError):
                 return error1.isEqual(error2)
+                
+            default:
+                return false // shouldn't happen
             }
             
         case (.userCancelled, .userCancelled):
@@ -185,37 +188,35 @@ public enum CoreStoreError: Error, CustomNSError, Hashable {
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self._code)
+    
+    public var hashValue: Int {
+        
+        let code = self._code
         switch self {
-
+            
         case .unknown:
-            break
-
+            return code.hashValue
+            
         case .differentStorageExistsAtURL(let existingPersistentStoreURL):
-            hasher.combine(existingPersistentStoreURL)
-
+            return code.hashValue ^ existingPersistentStoreURL.hashValue
+            
         case .mappingModelNotFound(let localStoreURL, let targetModel, let targetModelVersion):
-            hasher.combine(localStoreURL)
-            hasher.combine(targetModel)
-            hasher.combine(targetModelVersion)
-
+            return code.hashValue ^ localStoreURL.hashValue ^ targetModel.hashValue ^ targetModelVersion.hashValue
+            
         case .progressiveMigrationRequired(let localStoreURL):
-            hasher.combine(localStoreURL)
-
+            return code.hashValue ^ localStoreURL.hashValue
+            
         case .internalError(let nsError):
-            hasher.combine(nsError)
-
+            return code.hashValue ^ nsError.hashValue
+            
         case .userError(let error):
-            hasher.combine(error as NSError)
-
+            return code.hashValue ^ (error as NSError).hashValue
+            
         case .userCancelled:
-            break
+            return code.hashValue
         }
     }
-
+    
     
     // MARK: Internal
     

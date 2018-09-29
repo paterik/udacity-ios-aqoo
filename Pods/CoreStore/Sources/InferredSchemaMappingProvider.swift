@@ -2,7 +2,7 @@
 //  InferredSchemaMappingProvider.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -43,10 +43,10 @@ public final class InferredSchemaMappingProvider: Hashable, SchemaMappingProvide
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(ObjectIdentifier(type(of: self)))
+    
+    public var hashValue: Int {
+        
+        return ObjectIdentifier(type(of: self)).hashValue
     }
     
     

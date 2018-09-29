@@ -2,7 +2,7 @@
 //  EntityIdentifier.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2017 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -84,5 +84,23 @@ internal struct EntityIdentifier: Hashable {
             self.category = .coreData
             self.interfacedClassName = entityDescription.managedObjectClassName!
         }
+    }
+    
+    
+    // MARK: Equatable
+    
+    static func == (lhs: EntityIdentifier, rhs: EntityIdentifier) -> Bool {
+        
+        return lhs.category == rhs.category
+            && lhs.interfacedClassName == rhs.interfacedClassName
+    }
+    
+    
+    // MARK: Hashable
+    
+    var hashValue: Int {
+        
+        return self.category.hashValue
+            ^ self.interfacedClassName.hashValue
     }
 }

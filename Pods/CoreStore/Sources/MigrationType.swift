@@ -2,7 +2,7 @@
 //  MigrationType.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2015 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -144,23 +144,20 @@ public enum MigrationType: Hashable {
     
     
     // MARK: Hashable
-
-    public func hash(into hasher: inout Hasher) {
-
-        hasher.combine(self.hasMigration)
-        hasher.combine(self.isHeavyweightMigration)
+    
+    public var hashValue: Int {
+        
+        let preHash = self.hasMigration.hashValue ^ self.isHeavyweightMigration.hashValue
         switch self {
             
         case .none(let version):
-            hasher.combine(version)
+            return preHash ^ version.hashValue
             
         case .lightweight(let sourceVersion, let destinationVersion):
-            hasher.combine(sourceVersion)
-            hasher.combine(destinationVersion)
+            return preHash ^ sourceVersion.hashValue ^ destinationVersion.hashValue
             
         case .heavyweight(let sourceVersion, let destinationVersion):
-            hasher.combine(sourceVersion)
-            hasher.combine(destinationVersion)
+            return preHash ^ sourceVersion.hashValue ^ destinationVersion.hashValue
         }
     }
 }
