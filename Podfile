@@ -8,12 +8,12 @@ def aq_ui
     pod 'BGTableViewRowActionWithImage', '0.4.4'
     pod 'FoldingCell', '3.1.4'
     pod 'SnapKit', '4.0.1'
-    pod 'fluid-slider', '1.0.0'
-    pod 'GradientLoadingBar', '1.1.12'
+    pod 'fluid-slider', '0.0.6'
+    pod 'GradientLoadingBar', '1.1.11'
     pod 'Persei', '~> 3.0'
     pod 'PKHUD', '5.2.0'
     pod 'WSTagsField', '3.2.0'
-    pod 'NotificationBannerSwift', '1.7.1'
+    pod 'NotificationBannerSwift', '1.6.3'
     pod 'MaterialComponents/ProgressView'
 end
 

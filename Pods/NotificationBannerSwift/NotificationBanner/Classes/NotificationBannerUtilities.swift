@@ -1,7 +1,7 @@
 /*
  
  The MIT License (MIT)
- Copyright (c) 2017-2018 Dalton Hinterscher
+ Copyright (c) 2017 Dalton Hinterscher
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -20,16 +20,10 @@ import UIKit
 
 class NotificationBannerUtilities: NSObject {
 
-    class func isNotchFeaturedIPhone() -> Bool {
-        if #available(iOS 11, *) {
-            if UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0 > CGFloat(0) {
-                return true
-            } else {
-                return false
-            }
-        } else {
+    class func isiPhoneX() -> Bool {
+        if UIDevice.current.userInterfaceIdiom != .phone {
             return false
         }
+        return UIScreen.main.nativeBounds.height == 2436
     }
-    
 }
