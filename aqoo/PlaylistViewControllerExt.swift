@@ -13,7 +13,7 @@ import PKHUD
 import CoreStore
 import CryptoSwift
 import Kingfisher
-import NotificationBannerSwift
+// import NotificationBannerSwift
 import GradientLoadingBar
 import SwiftDate
 
@@ -314,11 +314,11 @@ extension PlaylistViewController {
             bannerView.imgViewNotificationDefault.image = UIImage(named: "mnu_pl_fltr_icn_\(imageKey!)_nfo")
         }
         
-        let banner = NotificationBanner(customView: bannerView)
+        /*let banner = NotificationBanner(customView: bannerView)
             banner.duration = 0.9375
             banner.onTap = {
             banner.dismiss()
-        };  banner.show(bannerPosition: .top)
+        };  banner.show(bannerPosition: .top)*/
     }
 
     func setupUITableView() {
@@ -1590,11 +1590,11 @@ extension PlaylistViewController {
             bannerView.imgViewNotificationDefault.image = UIImage(named: "\(iconImageName)")
         }
         
-        let banner = NotificationBanner(customView: bannerView)
+        /*let banner = NotificationBanner(customView: bannerView)
         banner.duration = duration // 0.9275
         banner.onTap = {
             banner.dismiss()
-        };  banner.show(bannerPosition: .bottom)
+        };  banner.show(bannerPosition: .bottom)*/
     }
     
     //
