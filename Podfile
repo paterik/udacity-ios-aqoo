@@ -14,6 +14,8 @@ def aq_ui
     pod 'PKHUD', '5.0.0'
     pod 'WSTagsField', '3.2.0'
     pod 'MaterialComponents/ProgressView'
+    pod 'NotificationBannerSwift', '1.6.3'
+    pod 'MarqueeLabel/Swift', '3.1.6'
 end
 
 def aq_base
