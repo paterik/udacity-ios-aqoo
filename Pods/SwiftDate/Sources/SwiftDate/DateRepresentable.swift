@@ -414,8 +414,7 @@ public extension DateRepresentable {
 	}
 
 	public var quarter: Int {
-		let monthsInQuarter = Double(Calendar.current.monthSymbols.count) / 4.0
-		return Int(ceil( Double(self.month) / monthsInQuarter))
+		return self.dateComponents.quarter!
 	}
 
 	public var isToday: Bool {

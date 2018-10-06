@@ -24,7 +24,6 @@ public enum HUDContentType {
 
     case label(String?)
     case systemActivity
-    case customView(view: UIView)
 }
 
 public final class HUD {
@@ -38,16 +37,6 @@ public final class HUD {
     public static var allowsInteraction: Bool {
         get { return PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled  }
         set { PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = newValue }
-    }
-
-    public static var leadingMargin: CGFloat {
-        get { return PKHUD.sharedHUD.leadingMargin  }
-        set { PKHUD.sharedHUD.leadingMargin = newValue }
-    }
-
-    public static var trailingMargin: CGFloat {
-        get { return PKHUD.sharedHUD.trailingMargin  }
-        set { PKHUD.sharedHUD.trailingMargin = newValue }
     }
 
     public static var isVisible: Bool { return PKHUD.sharedHUD.isVisible }
@@ -110,8 +99,6 @@ public final class HUD {
             return PKHUDTextView(text: text)
         case .systemActivity:
             return PKHUDSystemActivityIndicatorView()
-        case let .customView(view):
-            return view
         }
     }
 }

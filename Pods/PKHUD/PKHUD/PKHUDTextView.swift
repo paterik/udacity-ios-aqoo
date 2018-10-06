@@ -34,7 +34,7 @@ open class PKHUDTextView: PKHUDWideBaseView {
         titleLabel.frame = bounds.insetBy(dx: padding, dy: padding)
     }
 
-    public let titleLabel: UILabel = {
+    open let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 17.0)

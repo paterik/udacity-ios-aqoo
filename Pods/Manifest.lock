@@ -1,17 +1,16 @@
 PODS:
   - BGTableViewRowActionWithImage (0.4.4)
   - CoreStore (5.2.0)
-  - CryptoSwift (0.12.0)
+  - CryptoSwift (0.11.0)
   - fluid-slider (0.0.6):
     - pop
-  - FoldingCell (3.1.4)
+  - FoldingCell (3.1.5)
   - GradientLoadingBar (1.1.11)
-  - Kingfisher (4.8.1)
+  - Kingfisher (4.9.0)
   - LetterAvatarKit (1.1.5)
-  - MarqueeLabel/Swift (3.2.0)
-  - MaterialComponents/Palettes (65.0.0)
-  - MaterialComponents/private/Math (65.0.0)
-  - MaterialComponents/ProgressView (65.0.0):
+  - MaterialComponents/Palettes (66.0.0)
+  - MaterialComponents/private/Math (66.0.0)
+  - MaterialComponents/ProgressView (66.0.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -20,14 +19,10 @@ PODS:
   - MotionAnimator (2.8.1):
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
-  - NotificationBannerSwift (1.6.3):
-    - MarqueeLabel/Swift
-    - SnapKit (~> 4.0)
   - Persei (3.1.1)
-  - PKHUD (5.2.0)
+  - PKHUD (5.0.0)
   - pop (1.0.10)
-  - Reachability (3.2)
-  - SnapKit (4.0.1)
+  - SnapKit (4.0.0)
   - Spotify-iOS-SDK (0.25.0):
     - Spotify-iOS-SDK/Authentication (= 0.25.0)
     - Spotify-iOS-SDK/Metadata (= 0.25.0)
@@ -35,27 +30,25 @@ PODS:
   - Spotify-iOS-SDK/Authentication (0.25.0)
   - Spotify-iOS-SDK/Metadata (0.25.0)
   - Spotify-iOS-SDK/Playback (0.25.0)
-  - SwiftDate (5.0.9)
+  - SwiftDate (5.0.7)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.2.0)
 
 DEPENDENCIES:
   - BGTableViewRowActionWithImage (= 0.4.4)
   - CoreStore (= 5.2.0)
-  - CryptoSwift (= 0.12.0)
+  - CryptoSwift (= 0.11.0)
   - fluid-slider (= 0.0.6)
-  - FoldingCell (= 3.1.4)
+  - FoldingCell (= 3.1.5)
   - GradientLoadingBar (= 1.1.11)
-  - Kingfisher (= 4.8.1)
+  - Kingfisher (= 4.9.0)
   - LetterAvatarKit (= 1.1.5)
   - MaterialComponents/ProgressView
-  - NotificationBannerSwift (= 1.6.3)
-  - Persei (~> 3.0)
-  - PKHUD (= 5.2.0)
-  - Reachability (= 3.2)
-  - SnapKit (= 4.0.1)
+  - Persei (= 3.1.1)
+  - PKHUD (= 5.0.0)
+  - SnapKit (= 4.0.0)
   - Spotify-iOS-SDK
-  - SwiftDate (= 5.0.9)
+  - SwiftDate (= 5.0.7)
   - SwiftRandom (= 1.0.0)
   - WSTagsField (= 3.2.0)
 
@@ -69,16 +62,13 @@ SPEC REPOS:
     - GradientLoadingBar
     - Kingfisher
     - LetterAvatarKit
-    - MarqueeLabel
     - MaterialComponents
     - MDFInternationalization
     - MotionAnimator
     - MotionInterchange
-    - NotificationBannerSwift
     - Persei
     - PKHUD
     - pop
-    - Reachability
     - SnapKit
     - Spotify-iOS-SDK
     - SwiftDate
@@ -88,28 +78,25 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
   CoreStore: e26bfee25eb03cc724246356ce80a0cf5cbfe27f
-  CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
+  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
-  FoldingCell: 5f8a482ce0502bc0d5a1732782c305e0cefe6f81
+  FoldingCell: 0b0fe83d826634f6c79105330da5423832ea1340
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
-  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
+  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
-  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
-  MaterialComponents: ea21a99bd4da688f9becf8c3e9416016343cbe32
+  MaterialComponents: 2b92bfea789f775ddb5a7060aec9edb8f7bb971b
   MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
-  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
-  PKHUD: dd5357ac65f26115c35c4a68e9b328053326c5fe
+  PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
-  SwiftDate: 52b718d32ec006861a2be2756cbfa482d438e781
+  SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: df7a3f55e44da1378ca5ebdedcd9f1ce2cd92df4
+PODFILE CHECKSUM: 4aa591c6d462ebfef8c358237a2f565174d727d5
 
 COCOAPODS: 1.5.3

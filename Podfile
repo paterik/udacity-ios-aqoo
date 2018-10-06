@@ -10,7 +10,7 @@ def aq_ui
     pod 'SnapKit', '4.0.0'
     pod 'fluid-slider', '0.0.6'
     pod 'GradientLoadingBar', '1.1.11'
-    pod 'Persei', '3.0.1'
+    pod 'Persei', '3.1.1'
     pod 'PKHUD', '5.0.0'
     pod 'WSTagsField', '3.2.0'
     pod 'MaterialComponents/ProgressView'
