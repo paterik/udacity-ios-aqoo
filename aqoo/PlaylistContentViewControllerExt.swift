@@ -93,9 +93,10 @@ extension PlaylistContentViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             
             if  localPlayer.player?.loggedIn == true {
-                print ("__ player was previously initialized, start refresshing session")
-                localPlayer.player?.logout()
-            };  localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+                if  self.debugMode == true {
+                    print ("dbg [playlist/track] : player was previously initialized, start refreshing session")
+                };  localPlayer.player?.logout()
+            };      localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
             
         }   else {
             

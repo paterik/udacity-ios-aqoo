@@ -1689,9 +1689,7 @@ extension PlaylistViewController {
             default:
                 
                 togglePlayModeIcons( playlistCell, false )
-                if  self.debugMode == true {
-                    print ("dbg [playlist] : playMode for [\(playlistInCache.metaListInternalName)] not handled! TAG [\(button.tag)] unknown")
-                };  break
+                break
         }
     }
     
@@ -1700,9 +1698,10 @@ extension PlaylistViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             
             if  localPlayer.player?.loggedIn == true {
-                print ("__ player was previously initialized, start refresshing session")
-                localPlayer.player?.logout()
-            };  localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : player was previously initialized, start refreshing session")
+                };  localPlayer.player?.logout()
+            };      localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
             
         }   else {
             
@@ -1723,7 +1722,9 @@ extension PlaylistViewController {
         if newPlayMode == playMode.Stopped.rawValue {
             // API_CALL : stop playback - ignore incoming error, just reset cell playState
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
-                print ("__ stop playlist playback at all")
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : stop playlist playback at all")
+                }
             })
         }
         
@@ -1739,8 +1740,6 @@ extension PlaylistViewController {
                 startingWith: 0,
                 startingWithPosition: 0,
                 callback: { (error) in
-                    
-                    print ("__ playing [\(playListInDb.playableURI)]")
                     
                     if (error != nil) {
                         self.handleErrorAsDialogMessage("Player Controls Error PCE.01", "\(error?.localizedDescription)")
