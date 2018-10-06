@@ -1630,6 +1630,10 @@ extension PlaylistViewController {
         // reset (all) playMode controls of this cell
         playlistCell.mode = .clear
         
+        // get playmode from button tag directly
+        let designatedPlaymode: Int16 = Int16 ( button.tag )
+        
+        // (re)fetch playlist from database to handle property changes on playMode definition
         guard let playlistInCache = CoreStore.fetchOne(
             From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistCell.metaPlaylistInDb!.getMD5Identifier())
             ) as? StreamPlayList else {
@@ -1638,7 +1642,7 @@ extension PlaylistViewController {
                 );   return
         }
         
-        switch Int16 ( button.tag ) {
+        switch designatedPlaymode {
             
             case playMode.PlayRepeatAll.rawValue:
                 
