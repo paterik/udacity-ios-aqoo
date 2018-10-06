@@ -299,7 +299,6 @@ extension PlaylistViewController {
             // - filter1, filter2 or filter3 ...
         }
         
-        // tableView.reloadData()
         handlePlaylistReloadData()
     }
     
@@ -1416,7 +1415,7 @@ extension PlaylistViewController {
        _ playlistInCloud: SPTPartialPlaylist,
        _ playlistInDb: StreamPlayList) -> String {
         
-        var _updatedMetaString: String = ""
+        var _updatedMetaString: String   = ""
         var _updatedDateString: NSString = ""
         var _createdDateString: NSString = ""
 
@@ -1628,22 +1627,28 @@ extension PlaylistViewController {
        _ button: UIButton,
        _ playlistCell: PlaylistTableFoldingCell) {
         
-        var playlistInCache = playlistCell.metaPlaylistInDb!
-        
         // reset (all) playMode controls of this cell
         playlistCell.mode = .clear
+        
+        guard let playlistInCache = CoreStore.fetchOne(
+            From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistCell.metaPlaylistInDb!.getMD5Identifier())
+            ) as? StreamPlayList else {
+                self.handleErrorAsDialogMessage(
+                    "Cache Error", "unable to handle playlist from local cache"
+                );   return
+        }
         
         switch Int16 ( button.tag ) {
             
             case playMode.PlayRepeatAll.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayRepeatAll.rawValue {
-                    //setPlaylistInPlayMode( playlistCell, playMode.PlayRepeatAll.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.PlayRepeatAll.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playLoop
                     
                 }   else {
-                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1652,12 +1657,12 @@ extension PlaylistViewController {
             case playMode.PlayShuffle.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayShuffle.rawValue {
-                    //setPlaylistInPlayMode( playlistCell, playMode.PlayShuffle.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.PlayShuffle.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playShuffle
                     
                 }   else {
-                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1666,12 +1671,12 @@ extension PlaylistViewController {
             case playMode.PlayNormal.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayNormal.rawValue {
-                    //setPlaylistInPlayMode( playlistCell, playMode.PlayNormal.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.PlayNormal.rawValue )
                     togglePlayModeIcons( playlistCell, true )
                     playlistCell.mode = .playNormal
                     
                 }   else {
-                    //setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
+                    setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
                     togglePlayModeIcons( playlistCell, false )
                     playlistCell.mode = .clear
                     
@@ -1683,6 +1688,35 @@ extension PlaylistViewController {
                 if  self.debugMode == true {
                     print ("dbg [playlist] : playMode for [\(playlistInCache.metaListInternalName)] not handled! TAG [\(button.tag)] unknown")
                 };  break
+        }
+    }
+    
+    func setPlaylistInPlayMode(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ newPlayMode: Int16) {
+     
+        var playListInDb: StreamPlayList = playlistCell.metaPlaylistInDb!
+
+        // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
+        playlistInCellSelectedInPlayMode = nil
+        if  newPlayMode != playMode.Stopped.rawValue {
+            playlistInCellSelectedInPlayMode = playlistCell
+            handlePlaylistCellsInPlayMode( playlistCell )
+        }
+
+        // reset playMode for all (spotify) playlists in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // set new playMode to corrsponding playlist now
+        localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
+
+        // send out user notification on any relevant playMode changes
+        if  newPlayMode != playMode.Stopped.rawValue {
+            self.showUserNotification(
+                "Now playing \(playListInDb.metaListInternalName)",
+                "using \(self.getPlayModeAsString(newPlayMode)) playmode",
+                nil,
+                0.9275
+            )
         }
     }
     
