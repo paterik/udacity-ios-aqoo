@@ -67,9 +67,9 @@ extension PlaylistViewController {
                         highlightedImage : UIImage(named: "mnu_pl_fltr_icn_\(imageKey)_hl")!
                     )
                     
-                    basicFilterItem.backgroundColor = _sysPlaylistFilterColorBackground
-                    basicFilterItem.highlightedBackgroundColor = _sysPlaylistFilterColorHighlight
-                    basicFilterItem.shadowColor = _sysPlaylistFilterColorShadow
+                    basicFilterItem.backgroundColor = sysPlaylistFilterBackgroundColor
+                    basicFilterItem.highlightedBackgroundColor = sysPlaylistFilterHighlightColor
+                    basicFilterItem.shadowColor = sysPlaylistFilterShadowColor
                     
                     playListBasicFilterItems.append(basicFilterItem)
                 }
@@ -328,11 +328,11 @@ extension PlaylistViewController {
         // will be work until someone had a playlist containing more than 9999
         // playlists -> still looking for an alternative logic implementation here 🤔
         
-       _cellHeights = Array(repeating: kCloseCellHeight, count: kRowsCount)
+       _cellHeights = Array(repeating: sysCloseCellHeight, count: sysPreRenderRowsCount)
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = kCloseCellHeight
+        tableView.estimatedRowHeight = sysCloseCellHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         
         let backgroundImgView : UIImageView! = UIImageView(frame: view.bounds)
@@ -374,9 +374,9 @@ extension PlaylistViewController {
     
     func setupUICacheProcessor() {
         
-        ImageCache.default.maxDiskCacheSize = _sysImgCacheInMb * 1024 * 1024
-        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * _sysImgCacheRevalidateInDays)
-        ImageDownloader.default.downloadTimeout = _sysImgCacheRevalidateTimeoutInSeconds
+        ImageCache.default.maxDiskCacheSize = sysImgCacheInMb * 1024 * 1024
+        ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * sysImgCacheRevalidateInDays)
+        ImageDownloader.default.downloadTimeout = sysImgCacheRevalidateTimeoutInSeconds
         if  debugMode == true {
             ImageCache.default.calculateDiskCacheSize { size in
                 print("\n=== used kingfisher cache disk size in bytes: \(size)\n")
@@ -384,7 +384,7 @@ extension PlaylistViewController {
         }
         
         _cacheTimer = Timer.scheduledTimer(
-            timeInterval : TimeInterval(_sysCacheCheckInSeconds),
+            timeInterval : TimeInterval(sysCacheCheckInSeconds),
             target       : self,
             selector     : #selector(handleCacheTimerEvent),
             userInfo     : nil,
@@ -448,7 +448,7 @@ extension PlaylistViewController {
                         
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
-                        var profileImageMin = _rawImage.kf.resize(to: self._sysPlaylistFilterOwnerImageSize)
+                        var profileImageMin = _rawImage.kf.resize(to: self.sysPlaylistFilterOwnerImageSize)
                         var profileImageActive = profileImageMin
                         var profileImageNormal = profileImageMin.kf.overlaying(
                             with: UIColor(netHex: 0x222222),
@@ -460,9 +460,9 @@ extension PlaylistViewController {
                             highlightedImage : profileImageActive
                         )
                         
-                        ownerFilterItem.backgroundColor = self._sysPlaylistFilterColorBackground
-                        ownerFilterItem.highlightedBackgroundColor = self._sysPlaylistFilterColorHighlight
-                        ownerFilterItem.shadowColor = self._sysPlaylistFilterColorShadow
+                        ownerFilterItem.backgroundColor = self.sysPlaylistFilterBackgroundColor
+                        ownerFilterItem.highlightedBackgroundColor = self.sysPlaylistFilterHighlightColor
+                        ownerFilterItem.shadowColor = self.sysPlaylistFilterShadowColor
                         
                         // extend previously set basic filter meta description block by profile filter description
                         self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
@@ -535,8 +535,8 @@ extension PlaylistViewController {
         for (index, cell) in cells.enumerated() {
             if  cell.isUnfolded {
                 cell.unfold(false, animated: false, completion: nil)
-                duration = kCloseCellDuration
-               _cellHeights[index] = kCloseCellHeight
+                duration = sysCloseCellDuration
+               _cellHeights[index] = sysCloseCellHeight
                 UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
                     self.tableView.beginUpdates()
                     self.tableView.endUpdates()
@@ -688,22 +688,22 @@ extension PlaylistViewController {
         
         playlistCell.lblPlaylistMetaFollowerCount.alpha = 1.0
         if  playlistItem.metaNumberOfFollowers == 0 {
-            playlistCell.lblPlaylistMetaFollowerCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+            playlistCell.lblPlaylistMetaFollowerCount.alpha = sysPlaylistMetaFieldEmptyAlpha
         }
         
         playlistCell.lblPlaylistMetaShareCount.alpha = 1.0
         if  playlistItem.metaNumberOfShares == 0 {
-            playlistCell.lblPlaylistMetaShareCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+            playlistCell.lblPlaylistMetaShareCount.alpha = sysPlaylistMetaFieldEmptyAlpha
         }
         
         playlistCell.lblPlaylistMetaUpdateCount.alpha = 1.0
         if  playlistItem.metaNumberOfUpdates == 0 {
-            playlistCell.lblPlaylistMetaUpdateCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+            playlistCell.lblPlaylistMetaUpdateCount.alpha = sysPlaylistMetaFieldEmptyAlpha
         }
         
         playlistCell.lblPlaylistMetaPlayCount.alpha = 1.0
         if  playlistItem.metaNumberOfPlayed == 0 {
-            playlistCell.lblPlaylistMetaPlayCount.alpha = _sysPlaylistMetaFieldEmptyAlpha
+            playlistCell.lblPlaylistMetaPlayCount.alpha = sysPlaylistMetaFieldEmptyAlpha
         }
     }
     
@@ -711,14 +711,14 @@ extension PlaylistViewController {
        _ playlistCell: PlaylistTableFoldingCell,
        _ playlistItem: StreamPlayList) {
         
-        playlistCell.lblPlaylistUpdatedAt.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistUpdatedAt.alpha = sysPlaylistMetaFieldEmptyAlpha
         playlistCell.lblPlaylistUpdatedAt.text = "not yet"
         if  let playlistUpdatedAt = playlistItem.updatedAt as? Date {
             playlistCell.lblPlaylistUpdatedAt.alpha = 1.0
             playlistCell.lblPlaylistUpdatedAt.text = getHumanReadableDate(playlistUpdatedAt)
         }
         
-        playlistCell.lblPlaylistCreatedAt.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistCreatedAt.alpha = sysPlaylistMetaFieldEmptyAlpha
         playlistCell.lblPlaylistCreatedAt.text = "not yet"
         if  let playlistCreatedAt = playlistItem.createdAt as? Date {
             playlistCell.lblPlaylistCreatedAt.alpha = 1.0
@@ -726,7 +726,7 @@ extension PlaylistViewController {
         }
         
         // metaListOverallPlaytimeInSeconds
-        playlistCell.lblPlaylistPlaytimeInDetail.alpha = _sysPlaylistMetaFieldEmptyAlpha
+        playlistCell.lblPlaylistPlaytimeInDetail.alpha = sysPlaylistMetaFieldEmptyAlpha
         playlistCell.lblPlaylistPlaytimeInDetail.text = "unknown"
         if  let playlistOverallPlaytime = playlistItem.metaListOverallPlaytimeInSeconds as? Int32 {
             playlistCell.lblPlaylistPlaytimeInDetail.alpha = 1.0
@@ -782,7 +782,7 @@ extension PlaylistViewController {
         
         if  self.debugMode == true {
             ImageCache.default.calculateDiskCacheSize { size in
-                print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self._sysImgCacheInMb * 1024)")
+                print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self.sysImgCacheInMb * 1024)")
             }
             
         };  handlePlaylistCloudRefresh()

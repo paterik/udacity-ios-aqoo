@@ -233,12 +233,9 @@ extension PlaylistContentViewController {
             // update local persistance layer for tracks, set track to mode "isStopped"
             localPlaylistControls.setTrackInPlayState( track, false )
             
-            // API_CALL : stop playback .. weazL
+            // API_CALL : stop playback - ignore incoming error, just reset cell playState
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
                 self.handleAllTrackCellsPlayStateReset()
-                if (error != nil) {
-                    self.handleErrorAsDialogMessage("Player Controls Error PCE.02", "\(error?.localizedDescription)")
-                }
             })
         }
         

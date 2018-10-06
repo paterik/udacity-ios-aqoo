@@ -34,28 +34,29 @@ class PlaylistViewController: BaseViewController,
     // MARK: Constants (special)
     //
     
-    let kCloseCellHeight: CGFloat = 100 // 90
-    let kOpenCellHeight: CGFloat = 345 // 310
-    let kOpenCellDuration: Double = 0.5125
-    let kCloseCellDuration: Double = 0.1275
-    let kRowsCount = 9999
-    let _sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
-    let _sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
-    let _sysCacheCheckInSeconds = 3600 // 1h
-    let _sysImgCacheInMb: UInt = 512
-    let _sysImgCacheRevalidateInDays: UInt = 30
-    let _sysImgCacheRevalidateTimeoutInSeconds: Double = 10.0
-    let _sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     
     //
-    // MARK: Constants (normal)
+    // MARK: Constants (system)
     //
     
-    let _sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
-    let _sysPlaylistFilterColorShadow = UIColor(netHex: 0x191919)
-    let _sysPlaylistFilterColorHighlight = UIColor(netHex: 0x191919)
-    let _sysPlaylistFilterColorBackground = UIColor(netHex: 0x222222)
+    let sysImgCacheInMb: UInt = 512
+    let sysImgCacheRevalidateInDays: UInt = 30
+    let sysImgCacheRevalidateTimeoutInSeconds: Double = 9.0
+    let sysCloseCellHeight: CGFloat = 100
+    let sysOpenCellHeight: CGFloat = 345
+    let sysOpenCellDuration: Double = 0.5125
+    let sysCloseCellDuration: Double = 0.1275
+    let sysPreRenderRowsCount: Int = 9999
+    let sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
+    let sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
+    let sysCacheCheckInSeconds: UInt = 3600 // 3600 = 1h
+    let sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475    
+    let sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
+    let sysPlaylistFilterShadowColor = UIColor(netHex: 0x191919)
+    let sysPlaylistFilterHighlightColor = UIColor(netHex: 0x191919)
+    let sysPlaylistFilterBackgroundColor = UIColor(netHex: 0x222222)
+    let sysPlaylistSwipeBackgroundColor = UIColor(netHex: 0x222222)
     
     //
     // MARK: Class Variables
@@ -230,8 +231,8 @@ class PlaylistViewController: BaseViewController,
         handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
         handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
         
-        playlistCell.durationsForExpandedState = _sysCellOpeningDurations
-        playlistCell.durationsForCollapsedState = _sysCellClosingDurations
+        playlistCell.durationsForExpandedState = sysCellOpeningDurations
+        playlistCell.durationsForCollapsedState = sysCellClosingDurations
         
         // set marker for manually updated playlistItem
         playlistCell.imageViewContentChangedManually.alpha = 0.475
@@ -281,14 +282,14 @@ class PlaylistViewController: BaseViewController,
         }
         
         // prevent cell row actions on open cell views (unfolded cells)
-        if playlistCell.frame.height > kCloseCellHeight { return [] }
+        if playlistCell.frame.height > sysCloseCellHeight { return [] }
         
         let tblActionEdit = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
-            backgroundColor: UIColor(netHex: 0x222222),
+            backgroundColor: sysPlaylistSwipeBackgroundColor,
             image: UIImage(named: "icnSettings_v2"),
-            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+            forCellHeight: UInt(self.sysCloseCellHeight)) { (action, index) in
                 
                 self.performSegue(withIdentifier: "showPlaylistEditViewTabController", sender: self)
         }
@@ -296,9 +297,9 @@ class PlaylistViewController: BaseViewController,
         let tblActionHide = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
-            backgroundColor: UIColor(netHex: 0x222222),
+            backgroundColor: sysPlaylistSwipeBackgroundColor,
             image: UIImage(named: "icnHide_v3"),
-            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+            forCellHeight: UInt(self.sysCloseCellHeight)) { (action, index) in
                 
             self.handlePlaylistHiddenFlag(self._playlistInCacheSelected!)
         }
@@ -306,9 +307,9 @@ class PlaylistViewController: BaseViewController,
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
             with: UITableViewRowActionStyle.default,
             title: nil,
-            backgroundColor: UIColor(netHex: 0x222222),
+            backgroundColor: sysPlaylistSwipeBackgroundColor,
             image: UIImage(named: "icnShowPlaylist_v2"),
-            forCellHeight: UInt(self.kCloseCellHeight)) { (action, index) in
+            forCellHeight: UInt(self.sysCloseCellHeight)) { (action, index) in
                 
                 self.performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
         }
@@ -322,7 +323,7 @@ class PlaylistViewController: BaseViewController,
         
         cell.backgroundColor = .clear
         
-        if _cellHeights[indexPath.row] == kCloseCellHeight {
+        if _cellHeights[indexPath.row] == sysCloseCellHeight {
             cell.unfold(false, animated: false, completion: nil)
         }   else {
             cell.unfold(true, animated: false, completion: nil)
@@ -340,11 +341,11 @@ class PlaylistViewController: BaseViewController,
         var duration = 0.0
         
         // is cell currently opening
-        if _cellHeights[indexPath.row] == kCloseCellHeight {
-           _cellHeights[indexPath.row] = kOpenCellHeight
+        if _cellHeights[indexPath.row] == sysCloseCellHeight {
+           _cellHeights[indexPath.row] = sysOpenCellHeight
             
             cell.metaIndexPathRow = indexPath.row
-            cell.unfold(true, animated: true, completion: nil); duration = kOpenCellDuration // 0.5
+            cell.unfold(true, animated: true, completion: nil); duration = sysOpenCellDuration
             
            _playlistInCellSelected  = cell
            _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
@@ -352,9 +353,9 @@ class PlaylistViewController: BaseViewController,
             
         }   else {
             
-           _cellHeights[indexPath.row] = kCloseCellHeight
+           _cellHeights[indexPath.row] = sysCloseCellHeight
             
-            cell.unfold(false, animated: true, completion: nil); duration = kCloseCellDuration // 0.8
+            cell.unfold(false, animated: true, completion: nil); duration = sysCloseCellDuration
         }
         
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
