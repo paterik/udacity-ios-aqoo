@@ -1719,13 +1719,20 @@ extension PlaylistViewController {
      
         var playListInDb: StreamPlayList = playlistCell.metaPlaylistInDb!
         
-        if newPlayMode == playMode.Stopped.rawValue {
+        if  newPlayMode == playMode.Stopped.rawValue {
             // API_CALL : stop playback - ignore incoming error, just reset cell playState
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
                 if  self.debugMode == true {
-                    print ("dbg [playlist] : stop playlist playback at all")
+                    print ("dbg [playlist] : stop playlist playback in player directly")
                 }
             })
+        }
+        
+        localPlayer.player?.setRepeat( SPTRepeatMode.off, callback: { _ in })
+        localPlayer.player?.setShuffle( (newPlayMode == playMode.PlayShuffle.rawValue), callback: { _ in })
+            
+        if  newPlayMode == playMode.PlayRepeatAll.rawValue {
+            localPlayer.player?.setRepeat(SPTRepeatMode.context, callback: { _ in })
         }
         
         // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
