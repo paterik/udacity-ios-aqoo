@@ -299,7 +299,8 @@ extension PlaylistViewController {
             // - filter1, filter2 or filter3 ...
         }
         
-        tableView.reloadData()
+        // tableView.reloadData()
+        handlePlaylistReloadData()
     }
     
     func showFilterNotification(
@@ -452,7 +453,7 @@ extension PlaylistViewController {
                         var profileImageActive = profileImageMin
                         var profileImageNormal = profileImageMin.kf.overlaying(
                             with: UIColor(netHex: 0x222222),
-                            fraction: 0.675
+                            fraction: 0.67
                         )
                         
                         var ownerFilterItem = MenuItem(
@@ -496,7 +497,7 @@ extension PlaylistViewController {
                     // sync-db-calls.
                     //
                     
-                    /*for playlistInDb in _playListCache {
+                    for playlistInDb in _playListCache {
                         
                         // ignore self owned image profiles (already fetched)
                         if playlistInDb.ownerImageURL == _userProfileImageURL { continue }
@@ -511,7 +512,7 @@ extension PlaylistViewController {
                         // DispatchQueue.main.async {
                         //     self.handlePlaylistDbCacheOwnerProfileData ...
                         // }
-                    }*/
+                    }
                 }
             }
             
@@ -871,7 +872,7 @@ extension PlaylistViewController {
                 
                 if  debugMode == true {
                     print ("dbg [playlist] : using playlist cache, no update required now")
-                    tableView.reloadData()
+                    handlePlaylistReloadData()
                 };  return
  
             }
@@ -1721,6 +1722,12 @@ extension PlaylistViewController {
         
         // add parem-given playlistCell to cells-in-playmode cache
         playlistCellsInPlayMode.append( playlistCell )
+    }
+    
+    func handlePlaylistReloadData() {
+        
+        setupUICollapseAllVisibleOpenCells()
+        tableView.reloadData()
     }
     
     func togglePlayModeIcons(
