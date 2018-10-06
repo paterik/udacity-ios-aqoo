@@ -18,7 +18,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
     let coverCellIdent = "CoverCollectionCell"
     let coverCellImageCornerRadius: CGFloat = 4.0
     
-    var _cacheTimer: Timer!
+    var cacheTimer: Timer!
     
     //
     // MARK: Class Method Overloads
@@ -49,8 +49,8 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         
         super.viewWillDisappear(animated)
         
-        if  _cacheTimer != nil {
-            _cacheTimer.invalidate()
+        if  cacheTimer != nil {
+            cacheTimer.invalidate()
         }
     }
     

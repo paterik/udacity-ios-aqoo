@@ -51,7 +51,7 @@ class PlaylistViewController: BaseViewController,
     let sysCellOpeningDurations: [TimeInterval] = [0.255, 0.215, 0.225]
     let sysCellClosingDurations: [TimeInterval] = [0.075, 0.065, 0.015]
     let sysCacheCheckInSeconds: UInt = 3600 // 3600 = 1h
-    let sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475    
+    let sysPlaylistMetaFieldEmptyAlpha: CGFloat = 0.475
     let sysPlaylistFilterOwnerImageSize = CGSize(width: 75, height: 75)
     let sysPlaylistFilterShadowColor = UIColor(netHex: 0x191919)
     let sysPlaylistFilterHighlightColor = UIColor(netHex: 0x191919)
@@ -62,25 +62,25 @@ class PlaylistViewController: BaseViewController,
     // MARK: Class Variables
     //
     
-    var _cellHeights = [CGFloat]()
-    var _defaultStreamingProvider: StreamProvider?
-    var _cacheTimer: Timer!
-    var _userProfilesHandled = [String]()
-    var _userProfilesHandledWithImages = [String: String]()
-    var _userProfilesInPlaylists = [String]()
-    var _userProfilesInPlaylistsUnique = [String]()
-    var _userProfilesCachedForFilter : Int = 0
+    var cellHeights = [CGFloat]()
+    var defaultStreamingProvider: StreamProvider?
+    var cacheTimer: Timer!
+    var userProfilesHandled = [String]()
+    var userProfilesHandledWithImages = [String: String]()
+    var userProfilesInPlaylists = [String]()
+    var userProfilesInPlaylistsUnique = [String]()
+    var userProfilesCachedForFilter : Int = 0
     
-    var _playlistInCloudSelected: SPTPartialPlaylist?
-    var _playlistInCacheSelected: StreamPlayList?
-    var _playlistInCellSelected: PlaylistTableFoldingCell?
-    var _playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
+    var playlistInCloudSelected: SPTPartialPlaylist?
+    var playlistInCacheSelected: StreamPlayList?
+    var playlistInCellSelected: PlaylistTableFoldingCell?
+    var playlistInCellSelectedInPlayMode: PlaylistTableFoldingCell?
     
-    var _playlistCellsInPlayMode = [PlaylistTableFoldingCell]()
+    var playlistCellsInPlayMode = [PlaylistTableFoldingCell]()
     
-    var _playlistChanged: Bool?
-    var _playlistChangedItem: StreamPlayList?
-    var _playlistGradientLoadingBar = GradientLoadingBar()
+    var playlistChanged: Bool?
+    var playlistChangedItem: StreamPlayList?
+    var playlistGradientLoadingBar = GradientLoadingBar()
     var playListMenuBasicFilters: MenuView!
     var playListBasicFilterItems = [MenuItem]()
     
@@ -161,8 +161,8 @@ class PlaylistViewController: BaseViewController,
         
         super.viewWillDisappear(animated)
         
-        if  _cacheTimer != nil {
-            _cacheTimer.invalidate()
+        if  cacheTimer != nil {
+            cacheTimer.invalidate()
         }
     }
     
@@ -172,8 +172,8 @@ class PlaylistViewController: BaseViewController,
             if  let nvc = segue.destination as? UINavigationController {
                 nvc.viewControllers.forEach {
                     if  let vc = $0 as? PlaylistContentViewController {
-                        vc.playListInDb = self._playlistInCacheSelected!
-                        vc.playListInCloud = self._playlistInCloudSelected!
+                        vc.playListInDb = self.playlistInCacheSelected!
+                        vc.playListInCloud = self.playlistInCloudSelected!
                     }
                 }
             }
@@ -185,8 +185,8 @@ class PlaylistViewController: BaseViewController,
                     if  let nvc = $0 as? UINavigationController {
                         nvc.viewControllers.forEach {
                             if  let vc = $0 as? BasePlaylistEditViewController {
-                                vc.playListInDb = self._playlistInCacheSelected!
-                                vc.playListInCloud = self._playlistInCloudSelected!
+                                vc.playListInDb = self.playlistInCacheSelected!
+                                vc.playListInCloud = self.playlistInCloudSelected!
                                 vc.playListChanged = false
                                 vc.delegate = self
                             }
@@ -212,7 +212,7 @@ class PlaylistViewController: BaseViewController,
        _ tableView: UITableView,
          heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return _cellHeights[indexPath.row]
+        return cellHeights[indexPath.row]
     }
     
     func tableView(
@@ -270,10 +270,10 @@ class PlaylistViewController: BaseViewController,
             );   return []
         }
         
-        _playlistInCacheSelected = playlistCell.metaPlaylistInDb
-        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        playlistInCacheSelected = playlistCell.metaPlaylistInDb
+        playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(playlistInCacheSelected!)
         
-        playlistCell.metaPlayListInCloud = _playlistInCloudSelected
+        playlistCell.metaPlayListInCloud = playlistInCloudSelected
         if  playlistCell.metaPlayListInCloud == nil {
             handleErrorAsDialogMessage(
                 "Error Loading Cloud Playlist",
@@ -301,7 +301,7 @@ class PlaylistViewController: BaseViewController,
             image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.sysCloseCellHeight)) { (action, index) in
                 
-            self.handlePlaylistHiddenFlag(self._playlistInCacheSelected!)
+            self.handlePlaylistHiddenFlag(self.playlistInCacheSelected!)
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -323,7 +323,7 @@ class PlaylistViewController: BaseViewController,
         
         cell.backgroundColor = .clear
         
-        if _cellHeights[indexPath.row] == sysCloseCellHeight {
+        if  cellHeights[indexPath.row] == sysCloseCellHeight {
             cell.unfold(false, animated: false, completion: nil)
         }   else {
             cell.unfold(true, animated: false, completion: nil)
@@ -341,19 +341,19 @@ class PlaylistViewController: BaseViewController,
         var duration = 0.0
         
         // is cell currently opening
-        if _cellHeights[indexPath.row] == sysCloseCellHeight {
-           _cellHeights[indexPath.row] = sysOpenCellHeight
+        if  cellHeights[indexPath.row] == sysCloseCellHeight {
+            cellHeights[indexPath.row] = sysOpenCellHeight
             
             cell.metaIndexPathRow = indexPath.row
             cell.unfold(true, animated: true, completion: nil); duration = sysOpenCellDuration
             
-           _playlistInCellSelected  = cell
-           _playlistInCacheSelected = _playlistInCellSelected!.metaPlaylistInDb
-           _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+            playlistInCellSelected  = cell
+            playlistInCacheSelected = playlistInCellSelected!.metaPlaylistInDb
+            playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(playlistInCacheSelected!)
             
         }   else {
             
-           _cellHeights[indexPath.row] = sysCloseCellHeight
+            cellHeights[indexPath.row] = sysCloseCellHeight
             
             cell.unfold(false, animated: true, completion: nil); duration = sysCloseCellDuration
         }
@@ -399,7 +399,7 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
         
-        handlePlaylistHiddenFlag( _playlistInCacheSelected! )
+        handlePlaylistHiddenFlag( playlistInCacheSelected! )
         setupUICollapseAllVisibleOpenCells()
         tableView.reloadData()
     }
@@ -411,12 +411,12 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnShowPlaylistSharingAction(_ sender: Any) {
         
-        let playlistShareTitle = "I'm just listening to \"\(_playlistInCacheSelected!.metaListInternalName)\" 🎧 - you can find this playlist here: \"\(_playlistInCacheSelected!.playableURI)\" (copy the URI into spotifys search)"
+        let playlistShareTitle = "I'm just listening to \"\(playlistInCacheSelected!.metaListInternalName)\" 🎧 - you can find this playlist here: \"\(playlistInCacheSelected!.playableURI)\" (copy the URI into spotifys search)"
         
         for cell in tableView.visibleCells as! Array<PlaylistTableFoldingCell> {
             // find current opened/valid cell
             if  cell.isUnfolded &&
-                cell.metaPlaylistInDb?.getMD5Identifier() == _playlistInCacheSelected?.getMD5Identifier() {
+                cell.metaPlaylistInDb?.getMD5Identifier() == playlistInCacheSelected?.getMD5Identifier() {
                 // get first low quality image from cell cache as fallback
                 var playlistShareImage = cell.imageViewPlaylistCoverRaw.image
                 // retrieve primary image url (should conatin hq version of cover image)

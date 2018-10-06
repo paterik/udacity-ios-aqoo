@@ -21,8 +21,8 @@ extension PlaylistViewController {
     
     func setupUIEventObserver() {
         
-        _playlistChanged = false
-        _playlistChangedItem = nil
+        playlistChanged = false
+        playlistChangedItem = nil
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.setupUILoadUserProfileImages),
@@ -328,7 +328,7 @@ extension PlaylistViewController {
         // will be work until someone had a playlist containing more than 9999
         // playlists -> still looking for an alternative logic implementation here 🤔
         
-       _cellHeights = Array(repeating: sysCloseCellHeight, count: sysPreRenderRowsCount)
+        cellHeights = Array(repeating: sysCloseCellHeight, count: sysPreRenderRowsCount)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -358,7 +358,7 @@ extension PlaylistViewController {
         playListBasicFilterItems.removeAll()
         
         // define our loading bar
-       _playlistGradientLoadingBar = GradientLoadingBar(
+        playlistGradientLoadingBar = GradientLoadingBar(
             height: 3,
             durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
@@ -369,7 +369,7 @@ extension PlaylistViewController {
         )
         
         // and show loading bar now ...
-        _playlistGradientLoadingBar.show()
+        playlistGradientLoadingBar.show()
     }
     
     func setupUICacheProcessor() {
@@ -383,7 +383,7 @@ extension PlaylistViewController {
             }
         }
         
-        _cacheTimer = Timer.scheduledTimer(
+        cacheTimer = Timer.scheduledTimer(
             timeInterval : TimeInterval(sysCacheCheckInSeconds),
             target       : self,
             selector     : #selector(handleCacheTimerEvent),
@@ -406,7 +406,7 @@ extension PlaylistViewController {
         playListMenuBasicFilters.selectedIndex = getConfigTableFilterKeyByProviderTag()
         
         // finalize the preload process, hide loading bar now ...
-       _playlistGradientLoadingBar.hide()
+        playlistGradientLoadingBar.hide()
     }
     
     @objc
@@ -419,19 +419,19 @@ extension PlaylistViewController {
               let profileImageURLAvailable = userInfo["profileImageURLAvailable"] as? Bool,
               let date = userInfo["date"] as? Date else { return }
         
-       _userProfilesHandled.append(profileUser.canonicalUserName)
+        userProfilesHandled.append(profileUser.canonicalUserName)
         
         var profileImageURLFinal: String = "\(_sysDefaultAvatarFallbackURL)/\(profileUser.canonicalUserName!)"
         if  profileImageURLAvailable {
             profileImageURLFinal = profileImageURL.absoluteString
-        }; _userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURLFinal
+        };  userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURLFinal
         
         // all userProfiles handled? start refresh/enrichment cache process
-        if _userProfilesHandled.count == _userProfilesInPlaylistsUnique.count {
+        if  userProfilesHandled.count == userProfilesInPlaylistsUnique.count {
 
             let playlistFilterMetaKeyStart = self.playlistFilterMeta.count - 1
             
-            for (_userName, _userProfileImageURL) in _userProfilesHandledWithImages {
+            for (_userName, _userProfileImageURL) in userProfilesHandledWithImages {
                 
                 // persisting user images by using an separate cache stack
                 ImageDownloader.default.downloadImage(
@@ -444,7 +444,7 @@ extension PlaylistViewController {
                     
                     if let _rawImage = image {
                         
-                        self._userProfilesCachedForFilter += 1
+                        self.userProfilesCachedForFilter += 1
                         
                         ImageCache.default.store( _rawImage, forKey: "\(_userProfileImageURL)", toDisk: true)
                        
@@ -465,7 +465,7 @@ extension PlaylistViewController {
                         ownerFilterItem.shadowColor = self.sysPlaylistFilterShadowColor
                         
                         // extend previously set basic filter meta description block by profile filter description
-                        self.playlistFilterMeta += [playlistFilterMetaKeyStart + self._userProfilesCachedForFilter : [
+                        self.playlistFilterMeta += [playlistFilterMetaKeyStart + self.userProfilesCachedForFilter : [
                             "title": "All Playlists of \(_userName)",
                             "description": "Fetch all \(_userName)'s playlists",
                             "image_key": -1,
@@ -477,7 +477,7 @@ extension PlaylistViewController {
                         self.playListBasicFilterItems.append(ownerFilterItem)
                         
                         // final user profile image handled? good init/load filterMenu now
-                        if  self._userProfilesCachedForFilter == self._userProfilesHandledWithImages.count {
+                        if  self.userProfilesCachedForFilter == self.userProfilesHandledWithImages.count {
                             self.setupUILoadMenuFilterItems( self.playListBasicFilterItems )
                         }
                     }
@@ -486,7 +486,7 @@ extension PlaylistViewController {
                 // fetch all known playlists for corresponding (profile available) user
                 if  let _playListCache = CoreStore.defaultStack.fetchAll(
                     From<StreamPlayList>().where(
-                        (\StreamPlayList.provider == _defaultStreamingProvider) &&
+                        (\StreamPlayList.provider == defaultStreamingProvider) &&
                         (\StreamPlayList.owner    == _userName))
                     ) {
 
@@ -536,7 +536,7 @@ extension PlaylistViewController {
             if  cell.isUnfolded {
                 cell.unfold(false, animated: false, completion: nil)
                 duration = sysCloseCellDuration
-               _cellHeights[index] = sysCloseCellHeight
+                cellHeights[index] = sysCloseCellHeight
                 UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: { () -> Void in
                     self.tableView.beginUpdates()
                     self.tableView.endUpdates()
@@ -576,15 +576,15 @@ extension PlaylistViewController {
         spotifyClient.playListHashesInCache = []
         
         // clear internal cache for user profiles
-       _userProfilesHandledWithImages = [:]
-       _userProfilesHandled = []
-       _userProfilesInPlaylistsUnique = []
-       _userProfilesInPlaylists = []
+        userProfilesHandledWithImages = [:]
+        userProfilesHandled = []
+        userProfilesInPlaylistsUnique = []
+        userProfilesInPlaylists = []
         
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
             _playListFingerprint = playListInCloud.getMD5Identifier()
-            _userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName!)
+            userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName!)
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
@@ -904,7 +904,7 @@ extension PlaylistViewController {
     func handlePlaylistExtendedMetaEnrichment() {
 
         if  let _playListCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
+            From<StreamPlayList>().where((\StreamPlayList.provider == defaultStreamingProvider))
             ) {
             
             for playlist in _playListCache {
@@ -1022,14 +1022,14 @@ extension PlaylistViewController {
     func handlePlaylistProfileEnrichment() {
         
         // unify current userProfile array, remove double entries
-        _userProfilesInPlaylistsUnique = Array(Set(_userProfilesInPlaylists))
+        userProfilesInPlaylistsUnique = Array(Set(userProfilesInPlaylists))
         
         if  debugMode == true {
-            print ("dbg [playlist] : enrich playlists by adding \(_userProfilesInPlaylistsUnique.count) user profiles")
-            print ("dbg [playlist] : playlist profiles ➡ \(_userProfilesInPlaylistsUnique.joined(separator: ", "))")
+            print ("dbg [playlist] : enrich playlists by adding \(userProfilesInPlaylistsUnique.count) user profiles")
+            print ("dbg [playlist] : playlist profiles ➡ \(userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
-        for _profileUserName in _userProfilesInPlaylistsUnique {
+        for _profileUserName in userProfilesInPlaylistsUnique {
             
             if  debugMode == true {
                 print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
@@ -1044,7 +1044,7 @@ extension PlaylistViewController {
     func handlePlaylistDbCacheCoreDataOrphans () {
         
         if let _playListCache = CoreStore.defaultStack.fetchAll(
-            From<StreamPlayList>().where((\StreamPlayList.provider == _defaultStreamingProvider))
+            From<StreamPlayList>().where((\StreamPlayList.provider == defaultStreamingProvider))
         ) {
             
             for playlist in _playListCache {
@@ -1501,7 +1501,7 @@ extension PlaylistViewController {
             
             asynchronous: { (transaction) -> [StreamPlayList]? in
                 
-                self._defaultStreamingProvider = provider
+                self.defaultStreamingProvider = provider
                 
                 return transaction.fetchAll(From<StreamPlayList>().where(\StreamPlayList.provider == provider))
             },
@@ -1610,14 +1610,14 @@ extension PlaylistViewController {
             {
                 handleErrorAsDialogMessage(
                     "Error Handling Playback Controls",
-                    "The local playlist '\(_playlistInCacheSelected!.metaListInternalName)' couldn't handled by playback events!"
+                    "The local playlist '\(playlistInCacheSelected!.metaListInternalName)' couldn't handled by playback events!"
                 );  return
         }
         
         // update current selected cell/cache/cloud variable stack
-        _playlistInCellSelected  = _cell
-        _playlistInCacheSelected = _cell.metaPlaylistInDb!
-        _playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist(_playlistInCacheSelected!)
+        playlistInCellSelected  = _cell
+        playlistInCacheSelected = _cell.metaPlaylistInDb!
+        playlistInCloudSelected = getCloudVersionOfDbCachedPlaylist( playlistInCacheSelected! )
         
         // majic : now decide based on tapped-button what action should provide into business logic
         handlePlaylistControlActionByButton( button, _cell )
@@ -1689,7 +1689,7 @@ extension PlaylistViewController {
        _ currentCellPlayingHash: String) {
         
         // iterate through all cells-in-playmode and reset corresponding controls
-        for playlistCell in _playlistCellsInPlayMode {
+        for playlistCell in playlistCellsInPlayMode {
             
             if (playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash) { continue }
             
@@ -1706,21 +1706,21 @@ extension PlaylistViewController {
         
         var _inputHash = playlistCell.metaPlaylistInDb!.getMD5Identifier()
         
-        if _playlistInCellSelectedInPlayMode != nil {
-            resetPlayModeControls ( _playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.getMD5Identifier() )
+        if  playlistInCellSelectedInPlayMode != nil {
+            resetPlayModeControls ( playlistInCellSelectedInPlayMode!.metaPlaylistInDb!.getMD5Identifier() )
         }
         
         // remove cell from cells-in-playmode queue if the given playlistCell already enlisted in
-        for (index, _playlistCell) in _playlistCellsInPlayMode.enumerated() {
-            if  _playlistCell.metaPlaylistInDb!.getMD5Identifier() == _inputHash {
-                _playlistCellsInPlayMode.index(of: _playlistCell).map { _playlistCellsInPlayMode.remove(at: $0) }
+        for (index, _playlistCell) in playlistCellsInPlayMode.enumerated() {
+            if _playlistCell.metaPlaylistInDb!.getMD5Identifier() == _inputHash {
+                playlistCellsInPlayMode.index(of: _playlistCell).map { playlistCellsInPlayMode.remove(at: $0) }
                 // break loop after handling to add given cell in lines below
                 break
             }
         }
         
         // add parem-given playlistCell to cells-in-playmode cache
-       _playlistCellsInPlayMode.append( playlistCell )
+        playlistCellsInPlayMode.append( playlistCell )
     }
     
     func togglePlayModeIcons(
@@ -1734,32 +1734,6 @@ extension PlaylistViewController {
         }
     }
     
-    /*func setPlaylistPlayMode(
-       _ playlistCell: PlaylistTableFoldingCell,
-       _ newPlayMode: Int16) {
-        
-        var playListInDb: StreamPlayList = playlistCell.metaPlaylistInDb!
-        
-        // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
-        _playlistInCellSelectedInPlayMode = nil
-        if  newPlayMode != playMode.Stopped.rawValue {
-           _playlistInCellSelectedInPlayMode = playlistCell
-            handlePlaylistCellsInPlayMode( playlistCell )
-        }
-        
-        // reset playMode for all (spotify) playlists in cache
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
-        // set new playMode to corrsponding playlist now
-        localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
-        // send out user notification on any relevant playMode changes
-        if  newPlayMode != playMode.Stopped.rawValue {
-            self.showUserNotification(
-                "Now playing \(playListInDb.metaListInternalName)",
-                "using \(self.getPlayModeAsString(newPlayMode)) playmode",
-                nil, 0.9275)
-        }
-    }*/
-    
     func getRatingLabel(
        _ x: CGFloat,
        _ y: CGFloat,
@@ -1771,7 +1745,7 @@ extension PlaylistViewController {
         playlistRatingLabel.frame = CGRect(x, y, width, height)
         playlistRatingLabel.lineBreakMode = .byWordWrapping
         playlistRatingLabel.textColor = UIColor.white
-        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x12AD5E) // UIColor(netHex: 0x12AD5E)
+        playlistRatingLabel.backgroundColor = UIColor(netHex: 0x12AD5E)
         playlistRatingLabel.textAlignment = .right
         playlistRatingLabel.numberOfLines = 1
         playlistRatingLabel.font = UIFont(name: "Helvetica-Neue", size: 9)
@@ -1812,6 +1786,6 @@ extension PlaylistViewController {
         
         setupUICollapseAllVisibleOpenCells()
         setupUILoadExtendedPlaylists()
-       _playlistChangedItem = playlistItem
+        playlistChangedItem = playlistItem
     }
 }
