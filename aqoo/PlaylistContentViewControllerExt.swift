@@ -233,7 +233,7 @@ extension PlaylistContentViewController {
             // update local persistance layer for tracks, set track to mode "isStopped"
             localPlaylistControls.setTrackInPlayState( track, false )
             
-            // API_CALL : stop playback
+            // API_CALL : stop playback .. weazL
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
                 self.handleAllTrackCellsPlayStateReset()
                 if (error != nil) {
