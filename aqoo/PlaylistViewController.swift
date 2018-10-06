@@ -35,6 +35,7 @@ class PlaylistViewController: BaseViewController,
     //
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
+    let localPlayer = SPFClientPlayer.sharedInstance
     
     //
     // MARK: Constants (system)
@@ -146,6 +147,7 @@ class PlaylistViewController: BaseViewController,
         setupUIEventObserver()
         setupUITableView()
         setupUITableBasicMenuView()
+        setupPlayerAuth()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,6 +171,9 @@ class PlaylistViewController: BaseViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "showPlaylistContentViewController" {
+            // logout from player
+            // localPlayer.player?.logout()
+            
             if  let nvc = segue.destination as? UINavigationController {
                 nvc.viewControllers.forEach {
                     if  let vc = $0 as? PlaylistContentViewController {

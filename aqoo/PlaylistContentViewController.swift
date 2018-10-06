@@ -182,7 +182,7 @@ class PlaylistContentViewController: BaseViewController,
         // clear local track playback meta
         resetLocalTrackStateStettings()
         // logout from player
-        localPlayer.player?.logout()
+        // localPlayer.player?.logout()
     }
     
     @IBAction func btnClosePlayistContentView(_ sender: Any) {

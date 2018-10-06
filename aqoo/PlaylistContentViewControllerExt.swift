@@ -91,7 +91,12 @@ extension PlaylistContentViewController {
     func setupPlayerAuth() {
         
         if  spotifyClient.isSpotifyTokenValid() {
-            localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+            
+            if  localPlayer.player?.loggedIn == true {
+                print ("__ player was previously initialized, start refresshing session")
+                localPlayer.player?.logout()
+            };  localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
+            
         }   else {
             
             // @todo: exit view, return to login page!
