@@ -27,7 +27,7 @@ extension PlaylistContentViewController {
             if  let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
                 trackControlView.imageViewPlaylistCover.image = _image
             }   else {
-                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted cover image for your playlist")
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load own cover image for your playlist")
             }
             
         }   else {
@@ -120,6 +120,8 @@ extension PlaylistContentViewController {
     func setupUITrackControls() -> Bool {
         
         trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
+        trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
+        trackSubControlBanner!.autoDismiss = false
         
         guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
             self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls for current view")
@@ -156,10 +158,6 @@ extension PlaylistContentViewController {
         sliderView.valueViewColor = .white
         
         sliderView.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
-        
-        trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
-        trackSubControlBanner!.show(bannerPosition: .bottom)
-        trackSubControlBanner!.autoDismiss = false
         
         return true
     }
@@ -431,6 +429,21 @@ extension PlaylistContentViewController {
         }
         
         return _isFinished
+    }
+    
+    func toggleTrackSubControls(
+       _ active: Bool) {
+        
+        // prevent calls on uninitialized controls
+        if  trackSubControlBanner == nil {
+            return
+        }
+        
+        if  active == true {
+            trackSubControlBanner!.show(bannerPosition: .bottom)
+        }   else {
+            trackSubControlBanner!.dismiss()
+        }
     }
     
     func toggleActiveMode(

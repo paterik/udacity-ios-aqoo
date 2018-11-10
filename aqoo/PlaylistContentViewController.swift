@@ -101,6 +101,9 @@ class PlaylistContentViewController: BaseViewController,
         var usedCoverImageCacheKey: String?
         var usedCoverImageURL: URL?
         
+        // handle sub controls for current track, based on playing state
+        toggleTrackSubControls( playlistTrackCacheData.metaTrackIsPlaying )
+        
         playlistCell.state = .stopped
         
         playlistCell.lblAlbumName.text = playlistTrackCacheData.albumName
@@ -134,7 +137,6 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsExplicit.isHidden = false
         }
         
-        // *** playlistCell.imageViewAlbumCover.image = UIImage.makeLetterAvatar(withUsername: playlistTrackCacheData.trackName)
         if  usedCoverImageURL != nil {
             handleCoverImageByCache(
                 playlistCoverView,
@@ -169,7 +171,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.lblTrackPlaytimeRemaining.isHidden = true
             playlistCell.progressBar.progress = 0.0
         }
-        
+
         return playlistCell
     }
     
@@ -185,11 +187,11 @@ class PlaylistContentViewController: BaseViewController,
         resetLocalPlayerMetaSettings()
         // clear local track playback meta
         resetLocalTrackStateStettings()
-        // logout from player
-        // localPlayer.player?.logout()
+        // deactivate trackControls on bottom of this view
+        toggleTrackSubControls( false )
         
-        // close trackControls on bottom of this view
-        trackSubControlBanner?.dismiss()
+        // logout from player -> not used yet!
+        // localPlayer.player?.logout()
     }
     
     @IBAction func btnClosePlayistContentView(_ sender: Any) {
