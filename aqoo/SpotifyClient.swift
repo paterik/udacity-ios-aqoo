@@ -248,7 +248,6 @@ class SpotifyClient: SPFClientPlaylists {
         
         spfAuth.sessionUserDefaultsKey = spfSessionUserDefaultsKey
         spfAuth.requestedScopes = [
-            SPTAuthStreamingScope,
             SPTAuthPlaylistReadPrivateScope,
             SPTAuthPlaylistReadCollaborativeScope,
             SPTAuthPlaylistModifyPublicScope,
@@ -259,7 +258,9 @@ class SpotifyClient: SPFClientPlaylists {
             SPTAuthUserLibraryModifyScope,
             SPTAuthUserReadPrivateScope,
             SPTAuthUserReadTopScope,
-            SPTAuthUserReadEmailScope
+            SPTAuthUserReadEmailScope,
+            SPTAuthStreamingScope,
+            SPTAuthPlaylistReadCollaborativeScope
         ]
         
         spfLoginUrl = spfAuth.spotifyWebAuthenticationURL()

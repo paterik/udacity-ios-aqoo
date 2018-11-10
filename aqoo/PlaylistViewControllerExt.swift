@@ -19,6 +19,52 @@ import SwiftDate
 
 extension PlaylistViewController {
     
+    func togglePlayMode (
+       _ active: Bool) {
+        
+        if  currentPlaylist.trackCheckTimer != nil {
+            currentPlaylist.trackCheckTimer.invalidate()
+        }
+        
+        if  active == true {
+            
+            // start playback meta timer
+            currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
+                timeInterval : TimeInterval(1),
+                target       : self,
+                selector     : #selector(handlePlaylistTrackTimerEvent),
+                userInfo     : nil,
+                repeats      : true
+            )
+            
+        }   else {
+            
+            
+            
+        }
+    }
+    
+    @objc
+    func handlePlaylistTrackTimerEvent() {
+        
+        let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
+        let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
+        let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
+        
+        if  localPlayer.player!.playbackState.isPlaying {
+            print ("_track:  \(currentTrackName)")
+            print ("_album:  \(currentAlbumName)")
+            print ("_artist: \(currentArtistName)")
+            print ("----------------------------------------------------------------------------")
+            print ("_player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
+            print ("_player_is_repeating: \(localPlayer.player!.playbackState.isRepeating)")
+            print ("_player_is_shuffle: \(localPlayer.player!.playbackState.isShuffling)")
+            print ("_player_is_playling: \(localPlayer.player!.playbackState.isPlaying)")
+        }   else {
+            print ("__ not playing, ignore metablock print out")
+        }
+    }
+    
     func setupUIEventObserver() {
         
         playlistChanged = false
@@ -1726,13 +1772,14 @@ extension PlaylistViewController {
                     print ("dbg [playlist] : stop playlist playback in player directly")
                 }
             })
+            
+            togglePlayMode( false )
         }
         
-        localPlayer.player?.setRepeat( SPTRepeatMode.off, callback: { _ in })
-        localPlayer.player?.setShuffle( (newPlayMode == playMode.PlayShuffle.rawValue), callback: { _ in })
-            
-        if  newPlayMode == playMode.PlayRepeatAll.rawValue {
-            localPlayer.player?.setRepeat(SPTRepeatMode.context, callback: { _ in })
+        var isShuffleActive: Bool = false
+        if  newPlayMode == playMode.PlayShuffle.rawValue {
+            print ("___ try to play shuffle ___")
+            isShuffleActive = true
         }
         
         // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
@@ -1752,6 +1799,29 @@ extension PlaylistViewController {
                         self.handleErrorAsDialogMessage("Player Controls Error PCE.01", "\(error?.localizedDescription)")
                         
                         return
+                        
+                    }   else {
+                        // handle shuffle/repeatMode depending on selected playMode
+                        self.localPlayer.player?.setShuffle( isShuffleActive, callback: { (error) in
+                            
+                            if  error != nil {
+                                print ("!!! error !!!")
+                                print (error)
+                            }   else {
+                                
+                                print ("___ shuffleSet was successful!")
+                                // self.localPlayer.player?.setIsPlaying(false, callback: { _ in })
+                                // self.localPlayer.player?.setIsPlaying(true, callback: { _ in })
+                            }
+                        })
+                            
+                        if  newPlayMode == playMode.PlayRepeatAll.rawValue {
+                            self.localPlayer.player?.setRepeat( SPTRepeatMode.context, callback: { _ in } )
+                        }   else {
+                            self.localPlayer.player?.setRepeat( SPTRepeatMode.off, callback: { _ in })
+                        }
+                        
+                        self.togglePlayMode( true )
                     }
                 }
             )

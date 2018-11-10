@@ -36,6 +36,7 @@ class PlaylistViewController: BaseViewController,
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     let localPlayer = SPFClientPlayer.sharedInstance
+    let currentPlaylist = ProxyPlaylist.sharedInstance
     
     //
     // MARK: Constants (system)
