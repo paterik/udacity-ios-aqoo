@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Represents the base class of a "partial" object on the Spotify service.. */
 @protocol SPTPartialObject <NSObject>
 
@@ -30,3 +32,5 @@
 @property (nonatomic, readonly, copy) NSURL *uri;
 
 @end
+
+NS_ASSUME_NONNULL_END

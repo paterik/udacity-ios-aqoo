@@ -24,6 +24,9 @@
  -isActiveDevice
  -positionMs
  */
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTPlaybackState : NSObject
 
 @property (nonatomic, readonly) BOOL isPlaying;
@@ -38,3 +41,5 @@
 						   isActiveDevice:(BOOL)isActiveDevice
 							   position:(NSTimeInterval)position;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import "SPTConnectButton.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SPTEmbeddedImages : NSObject
 
 +(UIImage *)buttonImage;
@@ -25,3 +27,5 @@
 +(UIImage *)newButtonImage;
 
 @end
+
+NS_ASSUME_NONNULL_END

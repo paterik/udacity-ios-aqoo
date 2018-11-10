@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
  @param size The maximum size of the buffer, in bytes. 
  @return Returns the newly created SPTCircularBuffer.
  */
--(id)initWithMaximumLength:(NSUInteger)size;
+-(instancetype)initWithMaximumLength:(NSUInteger)size NS_DESIGNATED_INITIALIZER;
 
 /** Clears all data from the buffer. */
 -(void)clear;

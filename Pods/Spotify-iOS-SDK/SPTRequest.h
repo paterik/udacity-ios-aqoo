@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,12 +17,14 @@
 #import <Foundation/Foundation.h>
 #import "SPTPartialObject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Callback for requests
  
  @param error An optional error indicating that the operation failed, or `nil` if it succeeded.
  @param object The result of the operation
  */
-typedef void (^SPTRequestCallback)(NSError *error, id object);
+typedef void (^SPTRequestCallback)(NSError  * _Nullable error, id _Nullable object);
 
 /** Callback for `SPTRequestHandlerProtocol` 
  
@@ -30,7 +32,7 @@ typedef void (^SPTRequestCallback)(NSError *error, id object);
  @param response The `NSURLResponse` for the request
  @param data An `NSData` containing the result of the request
  */
-typedef void (^SPTRequestDataCallback)(NSError *error, NSURLResponse *response, NSData *data);
+typedef void (^SPTRequestDataCallback)(NSError * _Nullable error, NSURLResponse * _Nullable response, NSData * _Nullable data);
 
 /// Defines types of result objects that can be searched for.
 typedef NS_ENUM(NSUInteger, SPTSearchQueryType) {
@@ -146,7 +148,7 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  
  @param handler New handler for requests
  */
-+ (void)setSharedHandler:(id<SPTRequestHandlerProtocol>)handler;
++ (void)setSharedHandler:(id<SPTRequestHandlerProtocol> _Nullable)handler;
 
 ///-------------------------------
 /// @name Request creation helpers
@@ -160,17 +162,17 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  @param values The arguments to send to the URL
  @param encodeAsJSON Encode arguments as an JSON object in the body of the request instead of QueryString encoding them.
  @param dataAsQueryString Send arguments as a part of the query string instead of in the body of the request.
- @param error An optional `NSError` that will receive an error if request creation failed.
  @return A `NSURLRequest`
  */
 
 + (NSURLRequest *)createRequestForURL:(NSURL *)url
-					  withAccessToken:(NSString *)accessToken
+					  withAccessToken:(NSString * _Nullable)accessToken
 						   httpMethod:(NSString *)httpMethod
-							   values:(id)values
+							   values:(id _Nullable)values
 					  valueBodyIsJSON:(BOOL)encodeAsJSON
-				sendDataAsQueryString:(BOOL)dataAsQueryString
-								error:(NSError **)error;
+				sendDataAsQueryString:(BOOL)dataAsQueryString;
 
 
 @end
+
+NS_ASSUME_NONNULL_END

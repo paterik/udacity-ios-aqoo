@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 #import <StoreKit/SKStoreProductViewController.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol SPTStoreControllerDelegate;
 
 /**
@@ -24,10 +26,10 @@
  
  To present the store controller on top of your view controller:
  
- ```
+ @code
     SPTStoreViewController *storeVC = [[SPTStoreViewController alloc] initWithCampaignToken:@"your_campaign_token" storeDelegate:self];
     [self presentViewController:storeVC animated:YES completion:nil];
- ```
+ @endcode
  */
 @interface SPTStoreViewController : SKStoreProductViewController
 
@@ -45,7 +47,7 @@
 /// Unavailable, use the designated initializer.
 - (instancetype)init NS_UNAVAILABLE;
 /// Unavailable, use the designated initializer.
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil NS_UNAVAILABLE;
 /// Unavailable, use the designated initializer.
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 /// Unavailable, use the designated initializer.
@@ -68,3 +70,5 @@
 - (void)productViewControllerDidFinish:(SPTStoreViewController *)viewController;
 
 @end
+
+NS_ASSUME_NONNULL_END

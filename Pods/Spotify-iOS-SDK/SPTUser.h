@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTJSONDecoding.h"
 #import "SPTRequest.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class SPTImage;
 
@@ -40,10 +42,6 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  */
 @interface SPTUser : SPTJSONObjectBase
 
-
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -53,7 +51,7 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  Will be `nil` unless your session has been granted the
  ``user-read-private`` scope.
  */
-@property (nonatomic, readonly, copy) NSString *displayName;
+@property (nonatomic, readonly, copy, nullable) NSString *displayName;
 
 /** The canonical user name of the user. Not necessarily appropriate
  for UI use.
@@ -68,7 +66,7 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  Will be `nil` unless your session has been granted the
  `user-read-email` scope.
  */
-@property (nonatomic, readonly, copy) NSString *emailAddress;
+@property (nonatomic, readonly, copy, nullable) NSString *emailAddress;
 
 /** The Spotify URI of the user. */
 @property (nonatomic, readonly, copy) NSURL *uri;
@@ -81,21 +79,21 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  Will be `nil` unless your session has been granted the
  ``user-read-private`` scope.
  */
-@property (nonatomic, readonly, copy) NSArray *images;
+@property (nonatomic, readonly, copy, nullable) NSArray<SPTImage *> *images;
 
 /** Convenience method that returns the smallest available user image.
  
  Will be `nil` unless your session has been granted the
  ``user-read-private`` scope.
  */
-@property (nonatomic, readonly) SPTImage *smallestImage;
+@property (nonatomic, readonly, nullable) SPTImage *smallestImage;
 
 /** Convenience method that returns the largest available user image.
  
  Will be `nil` unless your session has been granted the
  ``user-read-private`` scope.
  */
-@property (nonatomic, readonly) SPTImage *largestImage;
+@property (nonatomic, readonly, nullable) SPTImage *largestImage;
 
 /** The product of the user. For example, only Premium users can stream audio.
  
@@ -106,11 +104,6 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
 
 /** The number of followers this user has. */
 @property (nonatomic, readonly) long followerCount;
-
-
-
-
-
 
 ///-------------------------------
 /// @name Request creation methods
@@ -124,7 +117,7 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  @param accessToken An authenticated access token. Must be valid and authorized.
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
-+ (NSURLRequest *)createRequestForCurrentUserWithAccessToken:(NSString *)accessToken error:(NSError **)error;
++ (NSURLRequest *)createRequestForCurrentUserWithAccessToken:(NSString *)accessToken error:(NSError ** _Nullable)error;
 
 /**
  Request current user
@@ -145,11 +138,7 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  @param accessToken An authenticated access token that must be valid and authorized or `nil`. 
  @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
  */
-+(void)requestUser:(NSString *)username withAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
-
-
-
-
++(void)requestUser:(NSString *)username withAccessToken:(NSString * _Nullable)accessToken callback:(SPTRequestCallback)block;
 
 ///-------------------------------
 /// @name Response parsing methods
@@ -166,7 +155,7 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  */
 + (instancetype)userFromData:(NSData *)data
 				withResponse:(NSURLResponse *)response
-					   error:(NSError **)error;
+					   error:(NSError ** _Nullable)error;
 
 
 /**
@@ -178,6 +167,8 @@ typedef NS_ENUM(NSUInteger, SPTProduct) {
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
 + (instancetype)userFromDecodedJSON:(id)decodedObject
-							  error:(NSError **)error;
+							  error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

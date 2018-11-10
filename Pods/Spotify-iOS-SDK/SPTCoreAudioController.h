@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@
 #if TARGET_OS_IPHONE
 #import <UIKit/UIApplication.h>
 #endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class SPTCoreAudioController;
 @class SPTCoreAudioDevice;
@@ -73,7 +75,7 @@
 -(NSInteger)attemptToDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount streamDescription:(AudioStreamBasicDescription)audioDescription;
 
 /** Returns the number of bytes in the audio buffer. */
--(uint32_t)bytesInAudioBuffer;
+@property (NS_NONATOMIC_IOSONLY, readonly) uint32_t bytesInAudioBuffer;
 
 ///----------------------------
 /// @name Customizing the audio pipeline
@@ -133,10 +135,10 @@
 #if !TARGET_OS_IPHONE
 
 /** Returns the available audio output devices. Mac only. */
-@property (readonly, nonatomic, copy) NSArray *availableOutputDevices;
+@property (readonly, nonatomic, copy) NSArray<SPTCoreAudioDevice *> *availableOutputDevices;
 
 /** Returns the current output device. Set to `nil` to use the system default. Mac only. */
-@property (readwrite, nonatomic, strong) SPTCoreAudioDevice *currentOutputDevice;
+@property (readwrite, nonatomic, strong, nullable) SPTCoreAudioDevice *currentOutputDevice;
 
 #endif
 
@@ -148,3 +150,5 @@
 #endif
  
 @end
+
+NS_ASSUME_NONNULL_END

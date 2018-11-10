@@ -16,8 +16,12 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Defines a callback block for an operation that has a chance of generating an error.
 
  If the operation was successful, `error` will be `nil`, otherwise it will contain an `NSError`
  object describing the failure.*/
-typedef void (^SPTMetadataErrorableOperationCallback)(NSError *error);
+typedef void (^SPTMetadataErrorableOperationCallback)(NSError * _Nullable error);
+
+NS_ASSUME_NONNULL_END

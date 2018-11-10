@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  @brief SPTSession is a class that represents a user session authenticated through the Spotify OAuth service.
@@ -46,7 +48,7 @@
  @param expirationDate The expiration date of the access token.
  @return An initialized `SPTSession` object.
  */
-- (instancetype)initWithUserName:(NSString *)userName accessToken:(NSString *)accessToken encryptedRefreshToken:(NSString *)encryptedRefreshToken expirationDate:(NSDate *)expirationDate;
+- (instancetype)initWithUserName:(NSString *)userName accessToken:(NSString *)accessToken encryptedRefreshToken:(NSString * _Nullable)encryptedRefreshToken expirationDate:(NSDate *)expirationDate;
 
 /**
  @brief Initializer that takes an `NSTimeInterval` until the access token expires, instead of an `NSDate`.
@@ -75,7 +77,7 @@
 @property (nonatomic, copy, readonly) NSString *accessToken;
 
 /** @brief The encrypted refresh token. */
-@property (nonatomic, copy, readonly) NSString *encryptedRefreshToken;
+@property (nonatomic, copy, readonly, nullable) NSString *encryptedRefreshToken;
 
 /** @brief The expiration date of the access token. */
 @property (nonatomic, copy, readonly) NSDate *expirationDate;
@@ -84,3 +86,5 @@
 @property (nonatomic, copy, readonly) NSString *tokenType;
 
 @end
+
+NS_ASSUME_NONNULL_END

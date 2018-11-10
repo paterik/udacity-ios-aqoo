@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 #import "SPTRequest.h"
 #import "SPTTrackProvider.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class represents a page within a paginated list.
  
  For the sake of conserving resources, lists that have the potential to be very large
@@ -28,10 +30,6 @@
  API Model: https://developer.spotify.com/web-api/object-model/#paging-object
  */
 @interface SPTListPage : NSObject<SPTTrackProvider>
-
-
-
-
 
 ///-----------------
 /// @name Properties
@@ -50,32 +48,16 @@
 @property (nonatomic, readonly) BOOL hasPreviousPage;
 
 /** Returns the API url to the next page of items if it exist, otherwise `nil`. */
-@property (nonatomic, readonly, copy) NSURL *nextPageURL;
+@property (nonatomic, readonly, copy, nullable) NSURL *nextPageURL;
 
 /** Returns the API url to the previous page of items if it exist, otherwise `nil`. */
-@property (nonatomic, readonly, copy) NSURL *previousPageURL;
+@property (nonatomic, readonly, copy, nullable) NSURL *previousPageURL;
 
 /** Returns `YES` if the page contains every single item in the source list, otherwise `NO`. */
 @property (nonatomic, readonly) BOOL isComplete;
 
 /** The items contained in the page the receiver represents. */
 @property (nonatomic, readonly, copy) NSArray *items;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///----------------------------
 /// @name API Request Factories
@@ -86,20 +68,14 @@
  @param accessToken An authenticated access token. Must be valid and authorized.
  @param error An optional `NSError` that will be set if an error occured.
  */
-- (NSURLRequest*)createRequestForNextPageWithAccessToken:(NSString *)accessToken error:(NSError**)error;
+- (NSURLRequest*)createRequestForNextPageWithAccessToken:(NSString *)accessToken error:(NSError ** _Nullable)error;
 
 /** Create a request for fetching the previous page in the source list.
  
  @param accessToken An authenticated access token. Must be valid and authorized.
  @param error An optional `NSError` that will be set if an error occured.
  */
-- (NSURLRequest*)createRequestForPreviousPageWithAccessToken:(NSString *)accessToken error:(NSError**)error;
-
-
-
-
-
-
+- (NSURLRequest*)createRequestForPreviousPageWithAccessToken:(NSString *)accessToken error:(NSError ** _Nullable)error;
 
 ///---------------------------
 /// @name API Response Parsers
@@ -114,11 +90,11 @@
  @param error An optional pointer to a `NSError` object that will be set if an error occured.
  @return A `SPTListPage`, or nil if an error occured.
  */
-+ (instancetype)listPageFromData:(NSData *)data
-					withResponse:(NSURLResponse *)response
++ (instancetype _Nullable)listPageFromData:(NSData *)data
+					withResponse:(NSURLResponse * _Nullable)response
 		expectingPartialChildren:(BOOL)hasPartialChildren
-				   rootObjectKey:(NSString *)rootObjectKey
-						   error:(NSError **)error;
+				   rootObjectKey:(NSString * _Nullable)rootObjectKey
+						   error:(NSError ** _Nullable)error;
 
 /** Create a SPTListPage from a decoded JSON structure
  
@@ -128,15 +104,10 @@
  @param error An optional pointer to a `NSError` object that will be set if an error occured.
  @return A `SPTListPage`, or nil if an error occured.
  */
-+ (instancetype)listPageFromDecodedJSON:(id)decodedObject
++ (instancetype _Nullable)listPageFromDecodedJSON:(id)decodedObject
 			   expectingPartialChildren:(BOOL)hasPartialChildren
-						  rootObjectKey:(NSString *)rootObjectKey
-								  error:(NSError **)error;
-
-
-
-
-
+						  rootObjectKey:(NSString * _Nullable)rootObjectKey
+								  error:(NSError ** _Nullable)error;
 
 ///----------------------------
 /// @name Navigation and Manipulation
@@ -154,11 +125,11 @@
 
 /** Request the next page in the source list.
  
- @param accessToken An authenticated access token. Must be valid and authorized.
+ @param accessToken An authenticated access token. Must be valid and authorized or 'nils.
  @param block The block to be called when the operation is complete. This block will pass an error if the operation
  failed, otherwise the next `SPTListPage` in the source list.
  */
-- (void)requestNextPageWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
+- (void)requestNextPageWithAccessToken:(NSString * _Nullable)accessToken callback:(SPTRequestCallback)block;
 
 /** Request the previous page in the source list.
 
@@ -168,7 +139,6 @@
  */
 - (void)requestPreviousPageWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 
-
-
-
 @end
+
+NS_ASSUME_NONNULL_END

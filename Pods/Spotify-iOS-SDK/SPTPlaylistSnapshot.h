@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,6 +20,9 @@
 #import "SPTPartialPlaylist.h"
 #import "SPTImage.h"
 #import "SPTMetadataTypes.h"
+#import "SPTPartialTrack.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class SPTPlaylistSnapshot;
 @class SPTUser;
@@ -58,10 +61,6 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 @interface SPTPlaylistSnapshot : SPTPartialPlaylist <SPTJSONObject>
 
 
-
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -77,10 +76,6 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 
 /** The description of the playlist */
 @property (nonatomic, readonly, copy) NSString *descriptionText;
-
-
-
-
 
 
 ///----------------------------
@@ -105,7 +100,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param accessToken An authenticated access token. Must be valid and authorized with the unspecified or `playlist-read-private` scope as necessary.
  @param block The block to be called when the operation is complete. The block will pass an array of Spotify SDK metadata objects on success, otherwise an error.
  */
-+(void)playlistsWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
++(void)playlistsWithURIs:(NSArray<NSURL *> *)uris accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 
 /** Check if a `NSURL` is a valid playlist uri.
  @param uri The Spotify URI of the playlist.
@@ -139,7 +134,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param accessToken An authenticated access token. Must be valid and authorized with the playlist-modify-public` or `playlist-modify-private` scope as necessary.
  @param block The block to be called when the operation is started. This block will pass an error if the operation failed.
  */
--(void)addTracksToPlaylist:(NSArray *)tracks
+-(void)addTracksToPlaylist:(NSArray<SPTPartialTrack *> *)tracks
 		   withAccessToken:(NSString *)accessToken
 				  callback:(SPTMetadataErrorableOperationCallback)block;
 
@@ -152,7 +147,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param accessToken An authenticated access token. Must be valid and authorized with the `playlist-modify-public` or `playlist-modify-private` scope as necessary.
  @param block The block to be called when the operation is started. This block will pass an error if the operation failed.
  */
--(void)addTracksWithPositionToPlaylist:(NSArray *)tracks
+-(void)addTracksWithPositionToPlaylist:(NSArray<SPTPartialTrack *> *)tracks
 						  withPosition:(int)position
 						   accessToken:(NSString *)accessToken
 							  callback:(SPTMetadataErrorableOperationCallback)block;
@@ -165,7 +160,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param accessToken An authenticated access token. Must be valid and authorized with the `playlist-modify-public` or `playlist-modify-private` scope as necessary.
  @param block The block to be called when the operation is started. This block will pass an error if the operation failed.
  */
--(void)replaceTracksInPlaylist:(NSArray *)tracks
+-(void)replaceTracksInPlaylist:(NSArray<SPTPartialTrack *> *)tracks
 			   withAccessToken:(NSString *)accessToken
 					  callback:(SPTMetadataErrorableOperationCallback)block;
 
@@ -190,7 +185,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param accessToken An authenticated access token. Must be valid and authorized with the `playlist-modify-public` or `playlist-modify-private` scope as necessary.
  @param block The block to be called when the operation is started. This block will pass an error if the operation failed.
  */
--(void)removeTracksFromPlaylist:(NSArray *)tracks
+-(void)removeTracksFromPlaylist:(NSArray<SPTPartialTrack *> *)tracks
 				withAccessToken:(NSString *)accessToken
 					   callback:(SPTMetadataErrorableOperationCallback)block;
 
@@ -205,12 +200,6 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 -(void)removeTracksWithPositionsFromPlaylist:(NSArray *)tracks
 							 withAccessToken:(NSString *)accessToken
 									callback:(SPTMetadataErrorableOperationCallback)block;
-
-
-
-
-
-
 
 ///-----------------------------------------------------
 /// @name Playlist manipulation request creation methods
@@ -229,7 +218,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 + (NSURLRequest*)createRequestForAddingTracks:(NSArray *)tracks
 								   toPlaylist:(NSURL*)playlist
 							  withAccessToken:(NSString *)accessToken
-										error:(NSError **)error;
+										error:(NSError ** _Nullable)error;
 
 /** Create a request for adding tracks to the playlist at a certain position.
  
@@ -246,7 +235,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 									atPosition:(int)position
 									toPlaylist:(NSURL *)playlist
 							   withAccessToken:(NSString *)accessToken
-										 error:(NSError **)error;
+										 error:(NSError ** _Nullable)error;
 
 /** Replace all the tracks in a playlist, overwriting any tracks already in it
  
@@ -261,7 +250,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 + (NSURLRequest *)createRequestForSettingTracks:(NSArray *)tracks
 									 inPlaylist:(NSURL *)playlist
 								withAccessToken:(NSString *)accessToken
-										  error:(NSError **)error;
+										  error:(NSError ** _Nullable)error;
 
 /** Change playlist details
  
@@ -288,7 +277,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 + (NSURLRequest *)createRequestForChangingDetails:(NSDictionary *)data
 									   inPlaylist:(NSURL *)playlist
 								  withAccessToken:(NSString *)accessToken
-											error:(NSError **)error;
+											error:(NSError ** _Nullable)error;
 
 /** Remove tracks that are in specific positions from playlist.
  
@@ -323,7 +312,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 												fromPlaylist:(NSURL *)playlist
 											 withAccessToken:(NSString *)accessToken
 													snapshot:(NSString *)snapshotId
-													   error:(NSError **)error;
+													   error:(NSError ** _Nullable)error;
 
 /** Remove tracks from playlist.
  
@@ -340,7 +329,7 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
 									fromPlaylist:(NSURL *)playlist
 								 withAccessToken:(NSString *)accessToken
 										snapshot:(NSString *)snapshotId
-										   error:(NSError **)error;
+										   error:(NSError ** _Nullable)error;
 
 /** Create a request to fetch a single playlist
  
@@ -351,11 +340,9 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @param error An optional pointer to a `NSError` object that will be set if an error occured.
  @return A `NSURLRequest` object
  */
-+ (NSURLRequest *)createRequestForPlaylistWithURI:(NSURL *)uri
++ (NSURLRequest * _Nullable)createRequestForPlaylistWithURI:(NSURL *)uri
 									  accessToken:(NSString *)accessToken
-											error:(NSError **)error;
-
-
+											error:(NSError ** _Nullable)error;
 
 ///------------------------------
 /// @name Response parser methods
@@ -365,13 +352,11 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  Parse the response from an API call into an `SPTPlaylistSnapshot` object
  
  @param data The API response data
- @param response The API response object
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  @return The `SPTPlaylistSnapshot` object
  */
 + (instancetype)playlistSnapshotFromData:(NSData*)data
-							withResponse:(NSURLResponse*)response
-								   error:(NSError **)error;
+								   error:(NSError ** _Nullable)error;
 
 /**
  Parse the response from an API call into an `SPTPlaylistSnapshot` object
@@ -381,6 +366,8 @@ FOUNDATION_EXPORT NSString * const SPTPlaylistSnapshotNameKey;
  @return The `SPTPlaylistSnapshot` object
  */
 + (instancetype)playlistSnapshotFromDecodedJSON:(id)decodedObject
-										  error:(NSError **)error;
+										  error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

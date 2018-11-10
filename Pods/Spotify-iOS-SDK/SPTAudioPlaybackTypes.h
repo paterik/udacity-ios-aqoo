@@ -20,4 +20,4 @@
  
  If the operation was successful, `error` will be `nil`, otherwise it will contain an `NSError` 
  object describing the failure.*/
-typedef void (^SPTErrorableOperationCallback)(NSError *error);
+typedef void (^SPTErrorableOperationCallback)(NSError * _Nullable error);

@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 ///----------------------------
 /// @name Scope constants, see: https://developer.spotify.com/web-api/using-scopes/
@@ -75,7 +77,7 @@ FOUNDATION_EXPORT NSString * const SPTAuthSessionUserDefaultsKey;
  @param error An `NSError` object if an error occurred, is `nil` if no error.
  @param session An `SPTSession` object containing information about the user.
  */
-typedef void (^SPTAuthCallback)(NSError *error, SPTSession *session);
+typedef void (^SPTAuthCallback)(NSError * _Nullable error, SPTSession  * _Nullable session);
 
 ///----------------------------
 /// @name Convenience Getters
@@ -96,38 +98,38 @@ typedef void (^SPTAuthCallback)(NSError *error, SPTSession *session);
 /**
  Your client ID.
  */
-@property (strong, readwrite) NSString *clientID;
+@property (strong, readwrite, nullable) NSString *clientID;
 
 /**
  Your redirect URL.
  */
-@property (strong, readwrite) NSURL *redirectURL;
+@property (strong, readwrite, nullable) NSURL *redirectURL;
 
 /**
  Required scopes for the app, used by authentication steps
  */
-@property (strong, readwrite) NSArray *requestedScopes;
+@property (strong, readwrite, nullable) NSArray<NSString *> *requestedScopes;
 
 /**
  The current session, Note: setting this will persist it in `NSUserDefaults standardUserDefaults` if
  a `sessionUserDefaultsKey` is set.
  */
-@property (strong, readwrite) SPTSession *session;
+@property (strong, readwrite, nullable) SPTSession *session;
 
 /**
  User defaults key, if you want to automatically save the session from user defaults when it changes.
  */
-@property (strong, readwrite) NSString *sessionUserDefaultsKey;
+@property (strong, readwrite, nullable) NSString *sessionUserDefaultsKey;
 
 /**
  Your token swap URL, if not specified the authentication flow will be limited to implicit grant flow.
  */
-@property (strong, readwrite) NSURL *tokenSwapURL;
+@property (strong, readwrite, nullable) NSURL *tokenSwapURL;
 
 /**
  Your token refresh URL, if not specified the refresh token flow will be disabled.
  */
-@property (strong, readwrite) NSURL *tokenRefreshURL;
+@property (strong, readwrite, nullable) NSURL *tokenRefreshURL;
 
 /**
  Returns true if there's a valid token swap url specified.
@@ -158,7 +160,7 @@ typedef void (^SPTAuthCallback)(NSError *error, SPTSession *session);
  */
 + (NSURL *)loginURLForClientId:(NSString *)clientId
                withRedirectURL:(NSURL *)redirectURL
-                        scopes:(NSArray *)scopes
+                        scopes:(NSArray<NSString *> * _Nullable)scopes
                   responseType:(NSString *)responseType;
 
 /**
@@ -176,7 +178,7 @@ typedef void (^SPTAuthCallback)(NSError *error, SPTSession *session);
  */
 + (NSURL *)loginURLForClientId:(NSString *)clientId
                withRedirectURL:(NSURL *)redirectURL
-                        scopes:(NSArray *)scopes
+                        scopes:(NSArray<NSString *> * _Nullable)scopes
                   responseType:(NSString *)responseType
                     campaignId:(NSString *)campaignId;
 
@@ -261,3 +263,6 @@ typedef void (^SPTAuthCallback)(NSError *error, SPTSession *session);
 
 
 @end
+
+NS_ASSUME_NONNULL_END
+

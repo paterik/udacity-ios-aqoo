@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface SPTPlaybackTrack : NSObject
 
@@ -60,3 +61,5 @@
                                   nextTrack:(SPTPlaybackTrack* _Nullable)nextTrack;
 
 @end
+
+NS_ASSUME_NONNULL_END

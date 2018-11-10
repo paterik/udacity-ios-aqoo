@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,12 +18,10 @@
 #import "SPTRequest.h"
 #import "SPTListPage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class provides helpers for using the search features in the Spotify API, See: https://developer.spotify.com/web-api/console/search/ */
 @interface SPTSearch : NSObject
-
-
-
-
 
 ///----------------------------
 /// @name Search
@@ -43,8 +41,8 @@
 +(void)performSearchWithQuery:(NSString *)searchQuery
 					queryType:(SPTSearchQueryType)searchQueryType
 					   offset:(NSInteger)offset
-				  accessToken:(NSString *)accessToken
-					   market:(NSString *)market
+				  accessToken:(NSString * _Nullable)accessToken
+					   market:(NSString * _Nullable)market
 					 callback:(SPTRequestCallback)block;
 
 /** Create a request for searching with a given query, offset and market filtering
@@ -59,9 +57,9 @@
 +(NSURLRequest*)createRequestForSearchWithQuery:(NSString *)searchQuery
 									  queryType:(SPTSearchQueryType)searchQueryType
 										 offset:(NSInteger)offset
-									accessToken:(NSString *)accessToken
-										 market:(NSString *)market
-										  error:(NSError**)error;
+									accessToken:(NSString * _Nullable)accessToken
+										 market:(NSString * _Nullable)market
+										  error:(NSError** _Nullable)error;
 
 /** Performs a search with a given query and market filtering
  
@@ -75,8 +73,8 @@
  */
 +(void)performSearchWithQuery:(NSString *)searchQuery
 					queryType:(SPTSearchQueryType)searchQueryType
-				  accessToken:(NSString *)accessToken
-					   market:(NSString *)market
+				  accessToken:(NSString * _Nullable)accessToken
+					   market:(NSString * _Nullable)market
 					 callback:(SPTRequestCallback)block;
 
 /** Createa a query for searching with a given query and market filtering
@@ -89,9 +87,9 @@
  */
 + (NSURLRequest*)createRequestForSearchWithQuery:(NSString *)searchQuery
 									   queryType:(SPTSearchQueryType)searchQueryType
-									 accessToken:(NSString *)accessToken
-										  market:(NSString *)market
-										   error:(NSError**)error;
+									 accessToken:(NSString * _Nullable)accessToken
+										  market:(NSString * _Nullable)market
+										   error:(NSError** _Nullable)error;
 
 /** Performs a search with a given query and offset
  
@@ -106,7 +104,7 @@
 + (void)performSearchWithQuery:(NSString *)searchQuery
 					 queryType:(SPTSearchQueryType)searchQueryType
 						offset:(NSInteger)offset
-				   accessToken:(NSString *)accessToken
+				   accessToken:(NSString * _Nullable)accessToken
 					  callback:(SPTRequestCallback)block;
 
 /** Create a request for searching with a given query and offset
@@ -120,8 +118,8 @@
 + (NSURLRequest*)createRequestForSearchWithQuery:(NSString *)searchQuery
 									   queryType:(SPTSearchQueryType)searchQueryType
 										  offset:(NSInteger)offset
-									 accessToken:(NSString *)accessToken
-										   error:(NSError**)error;
+									 accessToken:(NSString * _Nullable)accessToken
+										   error:(NSError** _Nullable)error;
 
 /** Performs a search with a given query.
  
@@ -134,7 +132,7 @@
  */
 + (void)performSearchWithQuery:(NSString *)searchQuery
 					 queryType:(SPTSearchQueryType)searchQueryType
-				   accessToken:(NSString *)accessToken
+				   accessToken:(NSString * _Nullable)accessToken
 					  callback:(SPTRequestCallback)block;
 
 /** Create a request for searching with a given query.
@@ -146,12 +144,8 @@
  */
 + (NSURLRequest*)createRequestForSearchWithQuery:(NSString *)searchQuery
 									   queryType:(SPTSearchQueryType)searchQueryType
-									 accessToken:(NSString *)accessToken
-										   error:(NSError**)error;
-
-
-
-
+									 accessToken:(NSString * _Nullable)accessToken
+										   error:(NSError** _Nullable)error;
 
 ///------------------------------
 /// @name Parsers / Deserializers
@@ -166,9 +160,9 @@
  @return The list of search results as an `SPTListPage` object
  */
 + (SPTListPage *)searchResultsFromData:(NSData *)data
-						  withResponse:(NSURLResponse *)response
+						  withResponse:(NSURLResponse * _Nullable)response
 							 queryType:(SPTSearchQueryType)searchQueryType
-								 error:(NSError **)error;
+								 error:(NSError ** _Nullable)error;
 
 /** Parse the response from createRequestForSearch into a list of search results
  
@@ -179,6 +173,8 @@
  */
 + (SPTListPage *)searchResultsFromDecodedJSON:(id)decodedObject
 									queryType:(SPTSearchQueryType)searchQueryType
-										error:(NSError **)error;
+										error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

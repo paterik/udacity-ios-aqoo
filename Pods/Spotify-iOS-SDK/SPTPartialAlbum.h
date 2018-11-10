@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTPartialObject.h"
 #import "SPTJSONDecoding.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /// Defines the various types albums can be in relation to a given artist.
 typedef NS_ENUM(NSUInteger, SPTAlbumType) {
@@ -38,10 +40,6 @@ typedef NS_ENUM(NSUInteger, SPTAlbumType) {
  */
 @interface SPTPartialAlbum : SPTJSONObjectBase <SPTPartialObject>
 
-
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -62,7 +60,7 @@ typedef NS_ENUM(NSUInteger, SPTAlbumType) {
 @property (nonatomic, readonly, copy) NSURL *sharingURL;
 
 /** Returns a list of album covers in various sizes, as `SPTImage` objects. */
-@property (nonatomic, readonly, copy) NSArray *covers;
+@property (nonatomic, readonly, copy) NSArray<SPTImage *> *covers;
 
 /** Convenience method that returns the smallest available cover image. */
 @property (nonatomic, readonly) SPTImage *smallestCover;
@@ -74,11 +72,7 @@ typedef NS_ENUM(NSUInteger, SPTAlbumType) {
 @property (nonatomic, readonly) SPTAlbumType type;
 
 /** An array of ISO 3166 country codes in which the album is available. */
-@property (nonatomic, readonly, copy) NSArray *availableTerritories;
-
-
-
-
+@property (nonatomic, readonly, copy) NSArray<NSString *> *availableTerritories;
 
 ///------------------------------
 /// @name Parsers / Deserializers
@@ -88,3 +82,5 @@ typedef NS_ENUM(NSUInteger, SPTAlbumType) {
 									  error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

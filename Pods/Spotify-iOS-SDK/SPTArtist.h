@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 #import "SPTPartialArtist.h"
 #import "SPTAlbum.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class SPTImage;
 
 /** This class represents an artist on the Spotify service.
@@ -32,9 +34,6 @@
  */
 @interface SPTArtist : SPTPartialArtist<SPTJSONObject>
 
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -43,10 +42,10 @@
 @property (nonatomic, readonly, copy) NSDictionary *externalIds;
 
 /** Returns a list of genre strings for the artist. */
-@property (nonatomic, readonly, copy) NSArray *genres;
+@property (nonatomic, readonly, copy) NSArray<NSString *> *genres;
 
 /** Returns a list of artist images in various sizes, as `SPTImage` objects. */
-@property (nonatomic, readonly, copy) NSArray *images;
+@property (nonatomic, readonly, copy) NSArray<SPTImage *> *images;
 
 /** Convenience method that returns the smallest available artist image. */
 @property (nonatomic, readonly) SPTImage *smallestImage;
@@ -59,10 +58,6 @@
 
 /** The number of followers this artist has. */
 @property (nonatomic, readonly) long followerCount;
-
-
-
-
 
 ///----------------------------
 /// @name API Request Factories
@@ -78,8 +73,8 @@
  @return A NSURLRequest for requesting the album
  */
 + (NSURLRequest*)createRequestForArtist:(NSURL *)uri
-						withAccessToken:(NSString *)accessToken
-								  error:(NSError **)error;
+						withAccessToken:(NSString * _Nullable)accessToken
+								  error:(NSError ** _Nullable)error;
 
 /** Create a request for fetching a multiple artists
  
@@ -90,9 +85,9 @@
  @param error An optional `NSError` that will be set if an error occured.
  @return A NSURLRequest for requesting the albums
  */
-+ (NSURLRequest*)createRequestForArtists:(NSArray *)uris
-						 withAccessToken:(NSString *)accessToken
-								   error:(NSError **)error;
++ (NSURLRequest*)createRequestForArtists:(NSArray<NSURL *> *)uris
+						 withAccessToken:(NSString * _Nullable)accessToken
+								   error:(NSError ** _Nullable)error;
 
 /** Request the artist's albums.
  
@@ -108,9 +103,9 @@
  */
 + (NSURLRequest*)createRequestForAlbumsByArtist:(NSURL*)artist
 										 ofType:(SPTAlbumType)type
-								withAccessToken:(NSString *)accessToken
-										 market:(NSString *)market
-										  error:(NSError **)error;
+								withAccessToken:(NSString * _Nullable)accessToken
+										 market:(NSString * _Nullable)market
+										  error:(NSError ** _Nullable)error;
 
 /** Request the artist's top tracks.
  
@@ -123,9 +118,9 @@
  @param error An optional `NSError` that will be set if an error occured.
  */
 + (NSURLRequest*)createRequestForTopTracksForArtist:(NSURL *)artist
-									withAccessToken:(NSString *)accessToken
+									withAccessToken:(NSString * _Nullable)accessToken
 											 market:(NSString *)market
-											  error:(NSError **)error;
+											  error:(NSError ** _Nullable)error;
 
 /** Request the artist's related artists.
  
@@ -134,14 +129,8 @@
  @param error An optional `NSError` that will be set if an error occured.
  */
 + (NSURLRequest*)createRequestForArtistsRelatedTo:(NSURL *)artist
-								  withAccessToken:(NSString *)accessToken
-											error:(NSError **)error;
-
-
-
-
-
-
+								  withAccessToken:(NSString * _Nullable)accessToken
+											error:(NSError ** _Nullable)error;
 
 
 ///---------------------------
@@ -151,13 +140,11 @@
 /** Parse an API response into an `SPTArtist` object.
  
  @param data The API response data.
- @param response The API response object.
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (instancetype)artistFromData:(NSData *)data
-				  withResponse:(NSURLResponse *)response
-						 error:(NSError **)error;
++ (instancetype _Nullable)artistFromData:(NSData *)data
+						 error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTAlbum` object.
  
@@ -165,19 +152,17 @@
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (instancetype)artistFromDecodedJSON:(id)decodedObject
-								error:(NSError **)error;
++ (instancetype _Nullable)artistFromDecodedJSON:(id)decodedObject
+								error:(NSError ** _Nullable)error;
 
 /** Parse an API response into an array of `SPTArtist` objects.
  
  @param data The API response data.
- @param response The API response object.
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (NSArray*)artistsFromData:(NSData *)data
-			   withResponse:(NSURLResponse *)response
-					  error:(NSError **)error;
++ (NSArray<SPTAlbum *> * _Nullable)artistsFromData:(NSData *)data
+					  error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTAlbum` object.
  
@@ -185,12 +170,8 @@
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (NSArray*)artistsFromDecodedJSON:(id)decodedObject
-							 error:(NSError **)error;
-
-
-
-
++ (NSArray<SPTAlbum *> * _Nullable)artistsFromDecodedJSON:(id)decodedObject
+							 error:(NSError ** _Nullable)error;
 
 ///--------------------------
 /// @name Convenience Methods
@@ -206,7 +187,7 @@
  @param accessToken An optional access token. Can be `nil`.
  @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
  */
-+(void)artistWithURI:(NSURL *)uri accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
++(void)artistWithURI:(NSURL *)uri accessToken:(NSString * _Nullable)accessToken callback:(SPTRequestCallback)block;
 
 /** Request multiple artists given an array of Spotify URIs.
  
@@ -218,7 +199,7 @@
  @param accessToken An optional access token. Can be `nil`.
  @param block The block to be called when the operation is complete. The block will pass an array of `SPTArtist` objects on success, otherwise an error.
  */
-+(void)artistsWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
++(void)artistsWithURIs:(NSArray<NSURL *> *)uris accessToken:(NSString * _Nullable)accessToken callback:(SPTRequestCallback)block;
 
 /** Request the artist's albums.
  
@@ -233,8 +214,8 @@
  `SPTListPage` object on success, otherwise an error.
  */
 -(void)requestAlbumsOfType:(SPTAlbumType)type
-		   withAccessToken:(NSString *)accessToken
-	  availableInTerritory:(NSString *)territory
+		   withAccessToken:(NSString * _Nullable)accessToken
+	  availableInTerritory:(NSString * _Nullable)territory
 				  callback:(SPTRequestCallback)block;
 
 /** Request the artist's top tracks.
@@ -248,7 +229,7 @@
  `NSArray` object containing `SPTTrack`s on success, otherwise an error.
  */
 -(void)requestTopTracksForTerritory:(NSString *)territory
-		   withAccessToken:(NSString *)accessToken
+		   withAccessToken:(NSString * _Nullable)accessToken
 						   callback:(SPTRequestCallback)block;
 
 /** Request the artist's related artists.
@@ -257,16 +238,8 @@
  @param block The block to be called when the operation is complete. The block will pass an
  `NSArray` object containing `SPTArtist`s on success, otherwise an error.
  */
--(void)requestRelatedArtistsWithAccessToken:(NSString *)accessToken
+-(void)requestRelatedArtistsWithAccessToken:(NSString * _Nullable)accessToken
 								   callback:(SPTRequestCallback)block;
-
-
-
-
-
-
-
-
 
 ///--------------------
 /// @name Miscellaneous
@@ -288,6 +261,8 @@
  @param uri The Spotify URI to check.
  @return The identifier part of the artist URI.
  */
-+ (NSString *)identifierFromURI:(NSURL *)uri;
++ (NSString * _Nullable)identifierFromURI:(NSURL *)uri;
 
 @end
+
+NS_ASSUME_NONNULL_END

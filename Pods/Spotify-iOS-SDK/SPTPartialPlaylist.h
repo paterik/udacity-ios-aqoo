@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 #import "SPTTrackProvider.h"
 #import "SPTImage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class SPTUser;
 
 /** Represents a "partial" playlist on the Spotify service. You can promote this
@@ -30,10 +32,6 @@
  Playlist Guide: https://developer.spotify.com/web-api/working-with-playlists/
  */
 @interface SPTPartialPlaylist : SPTJSONObjectBase<SPTPartialObject, SPTTrackProvider>
-
-
-
-
 
 ///----------------------------
 /// @name Properties
@@ -64,22 +62,19 @@
  
  Will be `nil` if the playlist doesn't have a custom image.
  */
-@property (nonatomic, readonly, copy) NSArray *images;
+@property (nonatomic, readonly, copy, nullable) NSArray<SPTImage *> *images;
 
 /** Convenience method that returns the smallest available playlist image.
  
  Will be `nil` if the playlist doesn't have a custom image.
  */
-@property (nonatomic, readonly) SPTImage *smallestImage;
+@property (nonatomic, readonly, nullable) SPTImage *smallestImage;
 
 /** Convenience method that returns the largest available playlist image.
  
  Will be `nil` if the playlist doesn't have a custom image.
  */
-@property (nonatomic, readonly) SPTImage *largestImage;
-
-
-
+@property (nonatomic, readonly, nullable) SPTImage *largestImage;
 
 ///------------------------------
 /// @name Parsers / Deserializers
@@ -89,3 +84,5 @@
 										 error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

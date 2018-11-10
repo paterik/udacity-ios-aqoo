@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@
 #import "SPTRequest.h"
 #import "SPTTrackProvider.h"
 #import "SPTPartialAlbum.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class SPTImage;
 @class SPTPartialArtist;
@@ -46,10 +48,6 @@
  */
 @interface SPTAlbum : SPTPartialAlbum <SPTJSONObject, SPTTrackProvider>
 
-
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -58,7 +56,7 @@
 @property (nonatomic, readonly, copy) NSDictionary *externalIds;
 
 /** An array of artists for this album, as `SPTPartialArtist` objects. */
-@property (nonatomic, readonly) NSArray *artists;
+@property (nonatomic, readonly) NSArray<SPTPartialArtist *> *artists;
 
 /** The tracks contained by this album, as a page of `SPTPartialTrack` objects. */
 @property (nonatomic, readonly) SPTListPage *firstTrackPage;
@@ -67,10 +65,10 @@
 @property (nonatomic, readonly) NSInteger releaseYear;
 
 /** Day-accurate release date of the track if known, otherwise `nil`. */
-@property (nonatomic, readonly) NSDate *releaseDate;
+@property (nonatomic, readonly, nullable) NSDate *releaseDate;
 
 /** Returns a list of genre strings for the album. */
-@property (nonatomic, readonly, copy) NSArray *genres;
+@property (nonatomic, readonly, copy) NSArray<NSString *> *genres;
 
 /** The popularity of the album as a value between 0.0 (least popular) to 100.0 (most popular). */
 @property (nonatomic, readonly) double popularity;
@@ -97,10 +95,10 @@
  @param error An optional `NSError` that will be set if an error occured.
  @return A `NSURLRequest` for requesting the album
  */
-+ (NSURLRequest*)createRequestForAlbum:(NSURL *)uri
-					   withAccessToken:(NSString *)accessToken
-								market:(NSString *)market
-								 error:(NSError **)error;
++ (NSURLRequest * _Nullable)createRequestForAlbum:(NSURL *)uri
+								  withAccessToken:(NSString * _Nullable)accessToken
+										   market:(NSString * _Nullable)market
+											error:(NSError ** _Nullable)error;
 
 /** Create a request for getting multiple albums.
  
@@ -116,14 +114,10 @@
  @param error An optional `NSError` that will be set if an error occured.
  @return A `NSURLRequest` for requesting the albums
  */
-+ (NSURLRequest*)createRequestForAlbums:(NSArray *)uris
-						withAccessToken:(NSString *)accessToken
-								 market:(NSString *)market
-								  error:(NSError **)error;
-
-
-
-
++ (NSURLRequest * _Nullable)createRequestForAlbums:(NSArray<NSURL *> *)uris
+								   withAccessToken:(NSString * _Nullable)accessToken
+											market:(NSString * _Nullable)market
+											 error:(NSError ** _Nullable)error;
 
 ///---------------------------
 /// @name API Response Parsers
@@ -132,13 +126,10 @@
 /** Parse an API Response into an `SPTAlbum` object.
  
  @param data The API response data
- @param response The API response object
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (instancetype)albumFromData:(NSData *)data
-				 withResponse:(NSURLResponse *)response
-						error:(NSError **)error;
++ (instancetype _Nullable)albumFromData:(NSData *)data error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an `SPTAlbum` object.
  
@@ -146,8 +137,7 @@
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (instancetype)albumFromDecodedJSON:(id)decodedObject
-							   error:(NSError **)error;
++ (instancetype _Nullable)albumFromDecodedJSON:(id)decodedObject error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTAlbum` object.
  
@@ -155,12 +145,7 @@
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTAlbum` object, or nil if the parsing failed.
  */
-+ (NSArray*)albumsFromDecodedJSON:(id)decodedObject
-							error:(NSError **)error;
-
-
-
-
++ (NSArray<SPTAlbum *> * _Nullable)albumsFromDecodedJSON:(id)decodedObject error:(NSError ** _Nullable)error;
 
 ///--------------------------
 /// @name Convenience Methods
@@ -178,8 +163,8 @@
  @param block The block to be called when the operation is complete. The block will pass a SPTAlbum object on success, otherwise an error.
  */
 + (void)albumWithURI:(NSURL *)uri
-		 accessToken:(NSString *)accessToken
-			  market:(NSString *)market
+		 accessToken:(NSString * _Nullable)accessToken
+			  market:(NSString * _Nullable)market
 			callback:(SPTRequestCallback)block;
 
 /** Request multiple albums given an array of Spotify URIs.
@@ -193,21 +178,10 @@
  @param market An optional market parameter. Can be `nil`.
  @param block The block to be called when the operation is complete. The block will pass an array of SPTAlbum objects on success, otherwise an error.
  */
-+ (void)albumsWithURIs:(NSArray *)uris
-		   accessToken:(NSString *)accessToken
-				market:(NSString *)market
++ (void)albumsWithURIs:(NSArray<NSURL *> *)uris
+		   accessToken:(NSString * _Nullable)accessToken
+				market:(NSString * _Nullable)market
 			  callback:(SPTRequestCallback)block;
-
-
-
-
-
-
-
-
-
-
-
 
 ///--------------------
 /// @name Miscellaneous
@@ -221,10 +195,6 @@
  */
 + (BOOL)isAlbumURI:(NSURL*)uri;
 
-
-
-
-
-
-
 @end
+
+NS_ASSUME_NONNULL_END

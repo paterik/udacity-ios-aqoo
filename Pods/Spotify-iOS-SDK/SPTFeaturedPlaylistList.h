@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTListPage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This object represents a list of featured playlists created from the `SPTBrowse` class
 
  API Docs: https://developer.spotify.com/web-api/get-list-featured-playlists/
@@ -25,10 +27,6 @@
  */
 @interface SPTFeaturedPlaylistList : SPTListPage
 
-
-
-
-
 ///-----------------
 /// @name Properties
 ///-----------------
@@ -36,20 +34,16 @@
 /** If there's a message associated with the paginated list. */
 @property (nonatomic, readonly) NSString *message;
 
-
-
-
-
-
 ///---------------------------
 /// @name API Response Parsers
 ///---------------------------
 
 + (instancetype)featuredPlaylistListFromData:(NSData *)data
-								withResponse:(NSURLResponse *)response
 									   error:(NSError **)error;
 
-+ (instancetype)featuredPlaylistListFromDecodedJSON:(id)decodedObject
++ (instancetype _Nullable)featuredPlaylistListFromDecodedJSON:(id)decodedObject
 											  error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,8 +20,10 @@
 #import "SPTDiskCache.h"
 #import "SPTDiskCaching.h"
 #import "SPTPlaybackMetadata.h"
-#import "SpPlaybackEvent.h"
+#import "SPTPlaybackEvent.h"
 #import "SPTPlaybackState.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** A volume value, in the range 0.0..1.0. */
 typedef double SPTVolume;
@@ -63,7 +65,7 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
 ///----------------------------
 
 // Hide parameterless init
-- (id)init __attribute__((unavailable("init not available, use +sharedInstance")));
+- (instancetype)init __attribute__((unavailable("init not available, use +sharedInstance")));
 +(id)new __attribute__((unavailable("new not available, use +sharedInstance")));
 
 
@@ -83,7 +85,20 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
  @param allowCaching YES of persisten disk caching is allowed
  @return Returns YES if initialization was successful
  */
-- (BOOL)startWithClientId:(NSString *)clientId audioController:(SPTCoreAudioController *)audioController allowCaching:(BOOL)allowCaching error:(NSError *__autoreleasing*)error;
+- (BOOL)startWithClientId:(NSString *)clientId audioController:(SPTCoreAudioController * _Nullable)audioController allowCaching:(BOOL)allowCaching error:(NSError *__autoreleasing*)error;
+
+/** Start the `SPAudioStreamingController` thread with a custom audio controller.
+
+ @note You MUST initialize the `SPAudioStreamingController sharedInstance` before calling any other method.
+
+ @param clientId Your client id found at developer.spotify.com
+ @param audioController Custom audio controller
+ @param error If method returns NO, error will be set
+ @param allowCaching YES of persisten disk caching is allowed
+ @param connectName Name to appear in the Spotify app when listing available devices.
+ @return Returns YES if initialization was successful
+ */
+- (BOOL)startWithClientId:(NSString *)clientId audioController:(SPTCoreAudioController * _Nullable)audioController allowCaching:(BOOL)allowCaching error:(NSError *__autoreleasing *)error connectName:(NSString *)connectName;
 
 /** Start the `SPAudioStreamingController` thread with the default audioController.
  
@@ -145,7 +160,7 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
  * @discussion The object is an instance of a class that implements the `SPTDiskCaching` protocol.
  * If `nil`, no caching will be performed.
  */
-@property (nonatomic, strong) id <SPTDiskCaching> diskCache;
+@property (nonatomic, strong, nullable) id <SPTDiskCaching> diskCache;
 
 ///----------------------------
 /// @name Controlling Playback
@@ -188,7 +203,7 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
  received, which will pass back an `NSError` object if an error ocurred.
  @see -playbackState
  */
-- (void)setIsPlaying:(BOOL)playing callback:(SPTErrorableOperationCallback)block;
+- (void)setIsPlaying:(BOOL)playing callback:(SPTErrorableOperationCallback _Nullable)block;
 
 /** Play a Spotify URI.
  
@@ -235,13 +250,14 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
  */
 - (void)setShuffle:(BOOL)enable callback:(SPTErrorableOperationCallback)block;
 
-/** Set repeat state, on, off or repeat-one
+/** Set repeat mode, on, off or repeat-one
  
  @param mode The state to set, SPTRepeatOff, SPTRepeatContext or SPTRepeatOne.
  @param block The callback block to be executed when the command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
 - (void)setRepeat:(SPTRepeatMode)mode callback:(SPTErrorableOperationCallback)block;
+
 
 /** Returns current volume */
 @property (atomic, readonly) SPTVolume volume;
@@ -254,6 +270,9 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
 
 /** Returns the current streaming bitrate the receiver is using. */
 @property (atomic, readonly) SPTBitrate targetBitrate;
+
+/** Returns the current repeat mode, SPTRepeatOff, SPTRepeatContext or SPTRepeatOne. */
+@property (atomic, readonly) SPTRepeatMode repeatMode;
 
 @end
 
@@ -420,3 +439,5 @@ typedef NS_ENUM(NSUInteger, SPTRepeatMode) {
 
 
 @end
+
+NS_ASSUME_NONNULL_END

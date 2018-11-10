@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,15 +17,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class represents an image from the Spotify service. It could be an
  album's cover art or a user image, for example. 
 
  API Model: https://developer.spotify.com/web-api/object-model/#image-object
  */
 @interface SPTImage : NSObject
-
-
-
 
 ///----------------------------
 /// @name Properties
@@ -42,11 +41,6 @@
 /** The HTTP URL to the image. */
 @property (nonatomic, readonly, copy) NSURL *imageURL;
 
-
-
-
-
-
 ///-------------------------------
 /// @name Response parsing methods
 ///-------------------------------
@@ -55,3 +49,5 @@
 							   error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

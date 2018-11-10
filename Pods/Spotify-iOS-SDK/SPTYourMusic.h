@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class provides helpers for using the your music features in the Spotify API.
  
  API Docs: https://developer.spotify.com/web-api/browse-endpoints/
@@ -24,10 +26,6 @@
  API Console: https://developer.spotify.com/web-api/console/user%20library/
  */
 @interface SPTYourMusic : NSObject
-
-
-
-
 
 ///----------------------------
 /// @name API Request Factories
@@ -39,7 +37,7 @@
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
 + (NSURLRequest*)createRequestForCurrentUsersSavedTracksWithAccessToken:(NSString *)accessToken
-																  error:(NSError **)error;
+																  error:(NSError ** _Nullable)error;
 
 /** Create a request for adding a set of tracks to the authenticated user's Your Music library.
  
@@ -49,7 +47,7 @@
  */
 + (NSURLRequest*)createRequestForSavingTracks:(NSArray *)tracks
 					   forUserWithAccessToken:(NSString *)accessToken
-										error:(NSError **)error;
+										error:(NSError ** _Nullable)error;
 
 /** Create a request for checking whether the authenticated user's Your Music library contains a set of tracks.
  
@@ -59,7 +57,7 @@
  */
 + (NSURLRequest*)createRequestForCheckingIfSavedTracksContains:(NSArray *)tracks
 										forUserWithAccessToken:(NSString *)accessToken
-														 error:(NSError **)error;
+														 error:(NSError ** _Nullable)error;
 
 /** Create a request for removing a set of tracks from the authenticated user's Your Music library.
  
@@ -69,11 +67,7 @@
  */
 + (NSURLRequest*)createRequestForRemovingTracksFromSaved:(NSArray *)tracks
 								  forUserWithAccessToken:(NSString *)accessToken
-												   error:(NSError **)error;
-
-
-
-
+												   error:(NSError ** _Nullable)error;
 
 ///--------------------------
 /// @name Convenience Methods
@@ -125,7 +119,6 @@ forUserWithAccessToken:(NSString *)accessToken
 	   forUserWithAccessToken:(NSString *)accessToken
 					 callback:(SPTRequestCallback)block;
 
-
-
-
 @end
+
+NS_ASSUME_NONNULL_END

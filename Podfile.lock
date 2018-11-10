@@ -9,9 +9,9 @@ PODS:
   - Kingfisher (4.9.0)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (66.0.0)
-  - MaterialComponents/private/Math (66.0.0)
-  - MaterialComponents/ProgressView (66.0.0):
+  - MaterialComponents/Palettes (68.2.0)
+  - MaterialComponents/private/Math (68.2.0)
+  - MaterialComponents/ProgressView (68.2.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -25,15 +25,15 @@ PODS:
     - SnapKit (~> 4.0)
   - Persei (3.1.1)
   - PKHUD (5.0.0)
-  - pop (1.0.10)
+  - pop (1.0.12)
   - SnapKit (4.0.0)
-  - Spotify-iOS-SDK (0.25.0):
-    - Spotify-iOS-SDK/Authentication (= 0.25.0)
-    - Spotify-iOS-SDK/Metadata (= 0.25.0)
-    - Spotify-iOS-SDK/Playback (= 0.25.0)
-  - Spotify-iOS-SDK/Authentication (0.25.0)
-  - Spotify-iOS-SDK/Metadata (0.25.0)
-  - Spotify-iOS-SDK/Playback (0.25.0)
+  - Spotify-iOS-SDK (0.27.0):
+    - Spotify-iOS-SDK/Authentication (= 0.27.0)
+    - Spotify-iOS-SDK/Metadata (= 0.27.0)
+    - Spotify-iOS-SDK/Playback (= 0.27.0)
+  - Spotify-iOS-SDK/Authentication (0.27.0)
+  - Spotify-iOS-SDK/Metadata (0.27.0)
+  - Spotify-iOS-SDK/Playback (0.27.0)
   - SwiftDate (5.0.7)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.2.0)
@@ -93,16 +93,16 @@ SPEC CHECKSUMS:
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: 2b92bfea789f775ddb5a7060aec9edb8f7bb971b
+  MaterialComponents: 0a6202cdfab416518d065eaea869efea2126b605
   MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   PKHUD: 3c001512c6e002091184197a8de7a20420786e3b
-  pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Spotify-iOS-SDK: 58d4092b225578623dd17029f3c7e7042ac3ef6e
+  Spotify-iOS-SDK: f195e9a40a339cf374cab2ece5804aca3cdf7e14
   SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c

@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@
 #import "SPTPartialObject.h"
 #import "SPTTrackProvider.h"
 #import "SPTPartialAlbum.h"
+#import "SPTPartialArtist.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Represents a "partial" track on the Spotify service. You can promote this
  to a full track object using `SPTTrack`.
@@ -28,10 +31,6 @@
  API Docs: https://developer.spotify.com/web-api/track-endpoints/
  */
 @interface SPTPartialTrack : SPTJSONObjectBase<SPTPartialObject, SPTTrackProvider>
-
-
-
-
 
 ///----------------------------
 /// @name Properties
@@ -53,7 +52,7 @@
 @property (nonatomic, readonly) NSTimeInterval duration;
 
 /** The artists of the track, as `SPTPartialArtist` objects. */
-@property (nonatomic, readonly, copy) NSArray *artists;
+@property (nonatomic, readonly, copy) NSArray<SPTPartialArtist *> *artists;
 
 /** The disc number of the track. I.e., if it's the first disc on the album this will be `1`. */
 @property (nonatomic, readonly) NSInteger discNumber;
@@ -68,7 +67,7 @@
 @property (nonatomic, readonly) BOOL hasPlayable;
 
 /** An array of ISO 3166 country codes in which the album is available. */
-@property (nonatomic, readonly, copy) NSArray *availableTerritories;
+@property (nonatomic, readonly, copy) NSArray<NSString *> *availableTerritories;
 
 /** The HTTP URL of a 30-second preview MP3 of the track. */
 @property (nonatomic, readonly, copy) NSURL *previewURL;
@@ -78,8 +77,6 @@
 
 /** The album this track belongs to. */
 @property (nonatomic, readonly, strong) SPTPartialAlbum *album;
-
-
 
 ///-------------------------------
 /// @name Response parsing methods
@@ -92,7 +89,8 @@
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
 + (instancetype)partialTrackFromDecodedJSON:(id)decodedObject
-									  error:(NSError **)error;
-
+									  error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

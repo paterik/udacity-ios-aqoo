@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  @brief The `SPTDiskCaching` protocol is implemented by classes that handle caching of Spotify data to persistent storage.
@@ -37,6 +39,26 @@
                         size:(NSUInteger)size;
 
 /**
+ Closes the existing disk cache.
+
+ This method will be called when a cache is no longer needed to be open.
+
+ @param key The identifier of the cache.
+
+ */
+- (void)closeCacheWithKey:(NSString *)key;
+
+/**
+ Deletes an existing disk cache of certain size or changes the size of an existing cache.
+
+ This method will be called when an existing cache needs to be deleted and the memory it occupies should be freed.
+
+ @param key The identifier of the cache.
+ 
+ */
+- (void)deleteCacheWithKey:(NSString *)key;
+
+/**
  Reads data from the existing disk cache.
 
  This method will be called whenever a data needs to be read from the existing disk cache. The cache is identified by its key.
@@ -46,7 +68,7 @@
  @param offset The amount of bytes to be skipped from the beginning of the cache before reading starts.
  @return An instance of NSData containing the data read from the cache; 'nil' if reading failed.
  */
-- (NSData *)readCacheDataWithKey:(NSString *)key
+- (NSData * _Nullable)readCacheDataWithKey:(NSString *)key
                           length:(NSUInteger)length
                           offset:(NSUInteger)offset;
 
@@ -64,17 +86,9 @@
                          data:(NSData *)data
                        offset:(NSUInteger)offset;
 
-/**
- Closes the existing disk cache.
-
- This method will be called when a cache is no longer needed and can be deleted.
-
- @param key The identifier of the cache.
-
- */
-- (void)closeCacheWithKey:(NSString *)key;
-
 @end
+
+NS_ASSUME_NONNULL_END
 
 
 

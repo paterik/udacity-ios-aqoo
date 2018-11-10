@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTTrack.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class represents a track in the Your Music Library.
 
  API Model: https://developer.spotify.com/web-api/object-model/#saved-track-object
@@ -31,3 +33,5 @@
 @property (nonatomic, readonly, copy) NSDate *addedAt;
 
 @end
+
+NS_ASSUME_NONNULL_END

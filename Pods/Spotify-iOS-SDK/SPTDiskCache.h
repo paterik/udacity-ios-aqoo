@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTDiskCaching.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * @brief The `SPTDiskCache` class implements the `SPTDiskCaching` protocol and provides a caching mechanism based on memory mapped files.
  */
@@ -26,8 +28,10 @@
  * @brief Initialize the disk cache with capacity.
  * @param capacity The maximum capacity of the disk cache, in bytes.
  */
-- (instancetype)initWithCapacity:(NSUInteger)capacity;
+- (instancetype)initWithCapacity:(NSUInteger)capacity NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, readonly) NSUInteger capacity;
 
 @end
+
+NS_ASSUME_NONNULL_END

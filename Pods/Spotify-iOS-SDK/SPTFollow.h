@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 #import "SPTRequest.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** This class provides helpers for using the follow features in the Spotify API.
  
@@ -63,11 +65,6 @@
  */
 @interface SPTFollow : NSObject
 
-
-
-
-
-
 ///----------------------------
 /// @name API Request Factories
 ///----------------------------
@@ -81,11 +78,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForFollowingArtists:(NSArray*)artistUris
++ (NSURLRequest * _Nullable)createRequestForFollowingArtists:(NSArray<NSURL *> *)artistUris
 								  withAccessToken:(NSString *)accessToken
-											error:(NSError **)error;
-
-
+											error:(NSError ** _Nullable)error;
 
 /** Create a request for making the current user unfollow a list of artists.
  
@@ -96,9 +91,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForUnfollowingArtists:(NSArray*)artistUris
++ (NSURLRequest * _Nullable)createRequestForUnfollowingArtists:(NSArray<NSURL *> *)artistUris
 									withAccessToken:(NSString *)accessToken
-											  error:(NSError **)error;
+											  error:(NSError ** _Nullable)error;
 
 
 
@@ -113,9 +108,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForCheckingIfFollowingArtists:(NSArray*)artistUris
++ (NSURLRequest * _Nullable)createRequestForCheckingIfFollowingArtists:(NSArray<NSURL *> *)artistUris
 											withAccessToken:(NSString *)accessToken
-													  error:(NSError **)error;
+													  error:(NSError ** _Nullable)error;
 
 
 
@@ -130,9 +125,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForFollowingUsers:(NSArray*)usernames
++ (NSURLRequest * _Nullable)createRequestForFollowingUsers:(NSArray<NSString *> *)usernames
 								withAccessToken:(NSString *)accessToken
-										  error:(NSError **)error;
+										  error:(NSError ** _Nullable)error;
 
 
 
@@ -145,9 +140,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForUnfollowingUsers:(NSArray*)usernames
++ (NSURLRequest * _Nullable)createRequestForUnfollowingUsers:(NSArray<NSString *> *)usernames
 								  withAccessToken:(NSString *)accessToken
-											error:(NSError **)error;
+											error:(NSError ** _Nullable)error;
 
 
 
@@ -162,9 +157,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForCheckingIfFollowingUsers:(NSArray*)username
++ (NSURLRequest * _Nullable)createRequestForCheckingIfFollowingUsers:(NSArray<NSString *> *)username
 										  withAccessToken:(NSString *)accessToken
-													error:(NSError **)error;
+													error:(NSError ** _Nullable)error;
 
 
 
@@ -179,10 +174,10 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForFollowingPlaylist:(NSURL *)playlistUri
++ (NSURLRequest * _Nullable)createRequestForFollowingPlaylist:(NSURL *)playlistUri
 								   withAccessToken:(NSString *)accessToken
 											secret:(BOOL)secret
-											 error:(NSError **)error;
+											 error:(NSError ** _Nullable)error;
 
 
 
@@ -195,9 +190,9 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForUnfollowingPlaylist:(NSURL *)playlistUri
++ (NSURLRequest * _Nullable)createRequestForUnfollowingPlaylist:(NSURL *)playlistUri
 									 withAccessToken:(NSString *)accessToken
-											   error:(NSError **)error;
+											   error:(NSError ** _Nullable)error;
 
 
 
@@ -213,14 +208,10 @@
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return The created `NSURLRequest`.
  */
-+ (NSURLRequest*)createRequestForCheckingIfUsers:(NSArray *)usernames
++ (NSURLRequest * _Nullable)createRequestForCheckingIfUsers:(NSArray<NSString *> *)usernames
 							areFollowingPlaylist:(NSURL*)playlistUri
-								 withAccessToken:(NSString *)accessToken
+								 withAccessToken:(NSString * _Nullable)accessToken
 										   error:(NSError **)error;
-
-
-
-
 
 ///---------------------------
 /// @name API Response Parsers
@@ -229,12 +220,12 @@
 /** Parse the result of a "am i following this entity"-query into an array of booleans
 
  @param data The API response data
- @param response The API response object
  @param error An optional pointer to a `NSError` that receives an error if request creation failed.
  @return An `NSArray` of booleans
  */
-+ (NSArray*)followingResultFromData:(NSData *)data
-					   withResponse:(NSURLResponse *)response
-							  error:(NSError **)error;
++ (NSArray *)followingResultFromData:(NSData *)data
+							  error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

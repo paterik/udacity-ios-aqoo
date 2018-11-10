@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class SPTAuth;
 @class SPTSession;
@@ -70,7 +72,7 @@ __deprecated_msg("Use `SFSafariViewController` or a `WKWebView` to present the `
 /**
  The delegate which will receive the result of the authentication.
  */
-@property (nonatomic, assign) id<SPTAuthViewDelegate> delegate;
+@property (nonatomic, weak) id<SPTAuthViewDelegate> delegate;
 
 /**
  Creates an authentication view controller for the default application using the authentication information from
@@ -87,13 +89,15 @@ __deprecated_msg("Use `SFSafariViewController` or a `WKWebView` to present the `
 	authentication information from `SPTAuth.defaultInstance`
  @return The authentication view controller.
  */
-+ (SPTAuthViewController*) authenticationViewControllerWithAuth:(SPTAuth *)auth;
++ (SPTAuthViewController*) authenticationViewControllerWithAuth:(SPTAuth * _Nullable)auth;
 
 /**
  Removes all authentication related cookies from the UIWebView.
 
  @param callback Called when cookies are cleared.
  */
-- (void) clearCookies:(void (^)())callback;
+- (void)clearCookies:(void (^)(void))callback;
 
 @end
+
+NS_ASSUME_NONNULL_END

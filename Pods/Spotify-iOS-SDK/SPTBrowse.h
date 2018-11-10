@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "SPTListPage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class provides helpers for using the browse features in the Spotify API
  
  API Docs: https://developer.spotify.com/web-api/browse-endpoints/
@@ -24,11 +26,6 @@
  API Console: https://developer.spotify.com/web-api/console/browse/
  */
 @interface SPTBrowse : NSObject
-
-
-
-
-
 
 ///----------------------------
 /// @name API Request Factories
@@ -49,13 +46,13 @@
  @param error An optional error value, will be set if the creation of the request failed.
  @return The request
  */
-+ (NSURLRequest *)createRequestForFeaturedPlaylistsInCountry:(NSString *)country
++ (NSURLRequest *)createRequestForFeaturedPlaylistsInCountry:(NSString * _Nullable)country
 													   limit:(NSInteger)limit
 													  offset:(NSInteger)offset
-													  locale:(NSString *)locale
-												   timestamp:(NSDate*)timestamp
+													  locale:(NSString * _Nullable)locale
+												   timestamp:(NSDate * _Nullable)timestamp
 												 accessToken:(NSString *)accessToken
-													   error:(NSError **)error;
+													   error:(NSError ** _Nullable)error;
 
 /** Get a list of new releases.
  
@@ -69,16 +66,11 @@
  @param accessToken An authenticated access token. Must be valid and authorized.
  @param error An optional error value, will be set if the creation of the request failed.
  */
-+ (NSURLRequest *)createRequestForNewReleasesInCountry:(NSString *)country
++ (NSURLRequest *)createRequestForNewReleasesInCountry:(NSString * _Nullable)country
 												 limit:(NSInteger)limit
 												offset:(NSInteger)offset
 										   accessToken:(NSString *)accessToken
-												 error:(NSError **)error;
-
-
-
-
-
+												 error:(NSError ** _Nullable)error;
 
 ///---------------------------
 /// @name API Response Parsers
@@ -87,23 +79,11 @@
 /** Parse the response from createRequestForNewReleasesInCountry into a list of new releases
 
  @param data The API response data
- @param response The API response object
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  @return The list of new releases as an `SPTListPage` object
  */
 + (SPTListPage *)newReleasesFromData:(NSData *)data
-						withResponse:(NSURLResponse *)response
-							   error:(NSError **)error;
-
-
-
-
-
-
-
-
-
-
+							   error:(NSError ** _Nullable)error;
 
 ///--------------------------
 /// @name Convenience methods
@@ -124,11 +104,11 @@
  @param accessTokenType The string that describes how the access token may be used. Should always be equal to "Bearer".
  @param block The block to be called when the operation is complete, containing a `SPTFeaturedPlaylistList`
  */
-+ (void)requestFeaturedPlaylistsForCountry:(NSString *)country
++ (void)requestFeaturedPlaylistsForCountry:(NSString * _Nullable)country
 									 limit:(NSInteger)limit
 									offset:(NSInteger)offset
-									locale:(NSString *)locale
-								 timestamp:(NSDate*)timestamp
+									locale:(NSString * _Nullable)locale
+								 timestamp:(NSDate * _Nullable)timestamp
 							   accessToken:(NSString *)accessToken
 						   accessTokenType:(NSString *)accessTokenType
 								  callback:(SPTRequestCallback)block;
@@ -145,7 +125,7 @@
  @param accessToken An authenticated access token. Must be valid and authorized.
  @param block The block to be called when the operation is complete, containing a `SPTListPage`
  */
-+ (void)requestNewReleasesForCountry:(NSString *)country
++ (void)requestNewReleasesForCountry:(NSString * _Nullable)country
 							   limit:(NSInteger)limit
 							  offset:(NSInteger)offset
 						 accessToken:(NSString *)accessToken
@@ -153,3 +133,5 @@
 
 
 @end
+
+NS_ASSUME_NONNULL_END

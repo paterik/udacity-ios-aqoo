@@ -16,13 +16,17 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This protocol defines an object that can be played by `SPTAudioStreamingController`. */
 @protocol SPTTrackProvider <NSObject>
 
 /** Returns the tracks for playback if no player-supported URI. */
--(NSArray *)tracksForPlayback;
+-(NSArray * _Nullable)tracksForPlayback;
 
 /** Returns the URI to this set of tracks, nil if not supported by player. */
--(NSURL *)playableUri;
+-(NSURL * _Nullable)playableUri;
 
 @end
+
+NS_ASSUME_NONNULL_END

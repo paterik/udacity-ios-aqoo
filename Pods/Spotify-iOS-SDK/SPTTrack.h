@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 #import "SPTPartialTrack.h"
 #import "SPTRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** This class represents a track on the Spotify service.
  
  API Docs: https://developer.spotify.com/web-api/track-endpoints/
@@ -31,10 +33,6 @@
 @interface SPTTrack : SPTPartialTrack <SPTJSONObject>
 
 
-
-
-
-
 ///----------------------------
 /// @name Properties
 ///----------------------------
@@ -44,12 +42,6 @@
 
 /** Any external IDs of the track, such as the ISRC code. */
 @property (nonatomic, readonly, copy) NSDictionary *externalIds;
-
-
-
-
-
-
 
 
 ///----------------------------
@@ -68,9 +60,9 @@
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
 + (NSURLRequest *)createRequestForTrack:(NSURL *)uri
-						withAccessToken:(NSString *)accessToken
-								 market:(NSString *)market
-								  error:(NSError **)error;
+						withAccessToken:(NSString * _Nullable)accessToken
+								 market:(NSString * _Nullable)market
+								  error:(NSError ** _Nullable)error;
 
 /** Create a request for fetching multiple rtacks
  
@@ -83,17 +75,10 @@
  @param market Either a ISO 3166-1 country code to filter the results to, or `from_token` to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
-+ (NSURLRequest *)createRequestForTracks:(NSArray *)uris
-						 withAccessToken:(NSString *)accessToken
-								  market:(NSString *)market
-								   error:(NSError **)error;
-
-
-
-
-
-
-
++ (NSURLRequest *)createRequestForTracks:(NSArray<NSURL *> *)uris
+						 withAccessToken:(NSString * _Nullable)accessToken
+								  market:(NSString * _Nullable)market
+								   error:(NSError ** _Nullable)error;
 
 ///---------------------------
 /// @name API Response Parsers
@@ -102,49 +87,38 @@
 /** Parse an JSON object structure into an array of `SPTTrack` object.
  
  @param data The API response data
- @param response The API response object
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an `SPTTrack` object, or nil if the parsing failed.
  */
-+ (instancetype)trackFromData:(NSData *)data
-				 withResponse:(NSURLResponse *)response
-						error:(NSError **)error;
++ (instancetype _Nullable)trackFromData:(NSData *)data
+						error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTTrack` object.
  
  @param decodedObject The decoded JSON structure to parse.
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
- @return an `SPTAlbum` object, or nil if the parsing failed.
+ @return an `SPTTrack` object, or nil if the parsing failed.
  */
-+ (instancetype)trackFromDecodedJSON:(id)decodedObject
-							   error:(NSError **)error;
++ (instancetype _Nullable)trackFromDecodedJSON:(id)decodedObject
+							   error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTTrack` object.
  
  @param data The API response data
- @param response The API response object
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
  @return an array of `SPTTrack` objects, or nil if the parsing failed.
  */
-+ (NSArray *)tracksFromData:(NSData *)data
-			   withResponse:(NSURLResponse *)response
-					  error:(NSError **)error;
++ (NSArray<SPTTrack *> * _Nullable)tracksFromData:(NSData *)data
+					  error:(NSError ** _Nullable)error;
 
 /** Parse an JSON object structure into an array of `SPTTrack` objects.
  
  @param decodedObject The decoded JSON structure to parse.
  @param error An optional `NSError` that will be set if an error occured when parsing the data.
- @return an `SPTAlbum` object, or nil if the parsing failed.
+ @return an `SPTTrack` object, or nil if the parsing failed.
  */
-+ (NSArray*)tracksFromDecodedJSON:(id)decodedObject
-							error:(NSError **)error;
-
-
-
-
-
-
-
++ (NSArray<SPTTrack *> * _Nullable)tracksFromDecodedJSON:(id)decodedObject
+							error:(NSError ** _Nullable)error;
 
 ///--------------------------
 /// @name Convenience Methods
@@ -163,7 +137,7 @@
  @param market Either a ISO 3166-1 country code to filter the results to, or `from_token` to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
  @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
  */
-+ (void)trackWithURI:(NSURL *)uri accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
++ (void)trackWithURI:(NSURL *)uri accessToken:(NSString * _Nullable)accessToken market:(NSString * _Nullable)market callback:(SPTRequestCallback)block;
 
 /** Request multiple tracks with given an array of Spotify URIs.
  
@@ -179,13 +153,7 @@
  @param block The block to be called when the operation is complete. The block will pass an array of Spotify SDK metadata objects on success, otherwise an error.
  */
 
-+ (void)tracksWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
-
-
-
-
-
-
++ (void)tracksWithURIs:(NSArray<NSURL *> *)uris accessToken:(NSString * _Nullable)accessToken market:(NSString * _Nullable)market callback:(SPTRequestCallback)block;
 
 ///--------------------
 /// @name Miscellaneous
@@ -206,27 +174,29 @@
  @param uri An track uri.
  @return The track id, or `nil` if an invalid track uri was passed.
  */
-+ (NSString *)identifierFromURI:(NSURL *)uri;
++ (NSString * _Nullable)identifierFromURI:(NSURL *)uri;
 
 /** Returns a list of track id's from an array containing either `SPTPartialTrack`, `SPTTrack` or `NSURL`'s 
  
  @param tracks An array of tracks.
  @return An array of track id's.
 */
-+ (NSArray*)identifiersFromArray:(NSArray *)tracks;
++ (NSArray<NSString *> *)identifiersFromArray:(NSArray *)tracks;
 
 /** Returns a list of track uri's as `NSURL`'s from an array containing either `SPTPartialTrack`, `SPTTrack` or `NSURL`'s
  
  @param tracks An array of tracks.
  @return An array of track uri's.
  */
-+ (NSArray*)urisFromArray:(NSArray *)tracks;
++ (NSArray<NSURL *> *)urisFromArray:(NSArray *)tracks;
 
 /** Returns a list of track uri's as `NSString`'s from an array containing either `SPTPartialTrack`, `SPTTrack` or `NSURL`'s
  
  @param tracks An array of tracks.
  @return An array of track uri strings.
  */
-+ (NSArray*)uriStringsFromArray:(NSArray *)tracks;
++ (NSArray<NSURL *> *)uriStringsFromArray:(NSArray *)tracks;
 
 @end
+
+NS_ASSUME_NONNULL_END

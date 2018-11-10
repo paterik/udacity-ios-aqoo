@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import "SPTTrack.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class SPTUser;
 
 /** Represents a track in a playlist on the Spotify service. */
@@ -26,4 +28,7 @@
 
 /** The user who added the track. */
 @property (nonatomic, readonly) SPTUser *addedBy;
+
 @end
+
+NS_ASSUME_NONNULL_END

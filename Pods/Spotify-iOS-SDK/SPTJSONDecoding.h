@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** An object that supports decoding from JSON. */
 @protocol SPTJSONObject <NSObject>
 
@@ -26,7 +28,7 @@
  @param error An error pointer that will contain an error if a problem occurred. 
  @return Returns the initalised object, or `nil` if a problem occurred.
  */
--(id)initWithDecodedJSONObject:(id)decodedObject error:(NSError **)error;
+-(instancetype _Nullable)initWithDecodedJSONObject:(id)decodedObject error:(NSError **)error;
 
 /** Returns the original decoded object (typically an `NSDictionary`, but not always)
  that was used to create the object. Useful for serialising. */
@@ -48,7 +50,7 @@
  @param error A pointer to an error object that will be filled if an error occurs.
  @return The generated object, or `nil` if an error occurs.
  */
-+(id)SPObjectFromDecodedJSON:(id)decodedJson error:(NSError **)error;
++(id _Nullable)SPObjectFromDecodedJSON:(id)decodedJson error:(NSError **)error;
 
 /** Convert an object from the given JSON data into a Spotify SDK metadata object.
 
@@ -56,7 +58,7 @@
  @param error A pointer to an error object that will be filled if an error occurs.
  @return The generated object, or `nil` if an error occurs.
  */
-+(id)SPObjectFromEncodedJSON:(NSData *)json error:(NSError **)error;
++(id _Nullable)SPObjectFromEncodedJSON:(NSData *)json error:(NSError **)error;
 
 
 /** Convert an object decoded from JSON into a partial Spotify SDK metadata object.
@@ -65,7 +67,7 @@
  @param error A pointer to an error object that will be filled if an error occurs.
  @return The generated object, or `nil` if an error occurs.
  */
-+(id)partialSPObjectFromDecodedJSON:(id)decodedJson error:(NSError **)error;
++(id _Nullable)partialSPObjectFromDecodedJSON:(id)decodedJson error:(NSError **)error;
 
 /** Convert an object from the given JSON data into a partial Spotify SDK metadata object.
 
@@ -73,7 +75,7 @@
  @param error A pointer to an error object that will be filled if an error occurs.
  @return The generated object, or `nil` if an error occurs.
  */
-+(id)partialSPObjectFromEncodedJSON:(NSData *)json error:(NSError **)error;
++(id _Nullable)partialSPObjectFromEncodedJSON:(NSData *)json error:(NSError **)error;
 
 @end
 
@@ -83,4 +85,6 @@
 @property (nonatomic, readwrite, copy) id decodedJSONObject;
 
 @end
+
+NS_ASSUME_NONNULL_END
 

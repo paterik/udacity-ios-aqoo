@@ -1,5 +1,5 @@
 /*
- Copyright 2015 Spotify AB
+ Copyright 2017 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@
 #import "SPTPlaylistSnapshot.h"
 #import "SPTListPage.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The callback that gets called after a playlist creation, will contain your newly created playlist. */
-typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot *playlist);
+typedef void (^SPTPlaylistCreationCallback)(NSError * _Nullable error, SPTPlaylistSnapshot * _Nullable playlist);
 
 /** This class represents a user's list of playlists, and also contains methods for listing and creating new playlists on behalf of a user.
  
@@ -31,9 +33,6 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
 
  */
 @interface SPTPlaylistList : SPTListPage
-
-
-
 
 ///-------------------------
 /// @name Creating playlists
@@ -55,7 +54,6 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
 					publicFlag:(BOOL)isPublic
 				   accessToken:(NSString *)accessToken
 					  callback:(SPTPlaylistCreationCallback)block;
-
 
 
 ///---------------------------------
@@ -93,7 +91,7 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
 												  forUser:(NSString *)username
 										   withPublicFlag:(BOOL)isPublic
 											  accessToken:(NSString *)accessToken
-													error:(NSError **)error;
+													error:(NSError ** _Nullable)error;
 
 /** Get the a user's playlist list.
  
@@ -123,11 +121,7 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
  */
 + (NSURLRequest*)createRequestForGettingPlaylistsForUser:(NSString *)username
 										 withAccessToken:(NSString *)accessToken
-												   error:(NSError **)error;
-
-
-
-
+												   error:(NSError ** _Nullable)error;
 
 ///------------------------------
 /// @name Parsers / Deserializers
@@ -140,9 +134,9 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
  @param response The API response object
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
-+ (instancetype)playlistListFromData:(NSData*)data
-						withResponse:(NSURLResponse*)response
-							   error:(NSError **)error;
++ (instancetype)playlistListFromData:(NSData *)data
+						withResponse:(NSURLResponse * _Nullable)response
+							   error:(NSError ** _Nullable)error;
 
 /**
  Parse a decoded JSON object into an `SPTPlaylistList` object
@@ -151,6 +145,8 @@ typedef void (^SPTPlaylistCreationCallback)(NSError *error, SPTPlaylistSnapshot 
  @param error An optional pointer to an `NSError` that will receive the error code if operation failed.
  */
 + (instancetype)playlistListFromDecodedJSON:(id)decodedObject
-									  error:(NSError **)error;
+									  error:(NSError ** _Nullable)error;
 
 @end
+
+NS_ASSUME_NONNULL_END
