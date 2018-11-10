@@ -49,7 +49,7 @@ class SPFClientPlaylists: NSObject {
             var _dateAdded : NSDate = track.addedAt as! NSDate
             var _dateAddedHR : String = _dateAdded.dateToString(_dateAdded as Date!, "dd.MM.Y hh:mm") as String
             
-            print("-<n>-[\(playlistIdentifier)] Track=[\(track.name!)]")
+            print("-<n>-[\(playlistIdentifier)] Track=[\(track.name)]")
             print("     id = \(track.identifier)")
             print("     artist = \(track.artists.count)")
             print("     uri_internal = \(track.uri.absoluteString)")
@@ -57,7 +57,7 @@ class SPFClientPlaylists: NSObject {
             print("     accessable = \(track.isPlayable)")
             print("     explicit = \(track.flaggedExplicit)")
             print("     popularity = \(track.popularity)")
-            print("     album_name = \(track.album.name!)")
+            print("     album_name = \(track.album.name)")
             print("     album_disc_number = \(track.discNumber)")
             print("     album_track_number = \(track.trackNumber)")
             print("     added_at = \(_dateAddedHR)")
@@ -83,9 +83,9 @@ class SPFClientPlaylists: NSObject {
             tAddedAt: track.addedAt as! NSDate,
             tTrackNumber : track.trackNumber,
             tDiscNumber : track.discNumber,
-            tName : track.name!,
+            tName : track.name,
             tArtists: trackArtists,
-            aName : track.album.name!
+            aName : track.album.name
         )
         
         // discNumber = 0 means single song / may direct spotify production, no album available
@@ -134,7 +134,7 @@ class SPFClientPlaylists: NSObject {
             
             let uri = URL(string: playlist.uri.absoluteString)
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
-            SPTPlaylistSnapshot.playlist(withURI: uri, accessToken: accessToken) {
+            SPTPlaylistSnapshot.playlist(withURI: uri!, accessToken: accessToken) {
                 (error, snap) in
                 
                 self.playlistInCloudExtendedHandled += 1
@@ -144,7 +144,7 @@ class SPFClientPlaylists: NSObject {
                     // extend playlist with addtional meta information using proxy collection object
                     var playlistsExtended = ProxyStreamPlayListExtended(
                         identifier: playlist.getMD5Identifier(),
-                        snapshotId: _snapshot.snapshotId!,
+                        snapshotId: _snapshot.snapshotId,
                         followerCount: _snapshot.followerCount
                     );  self.playlistsInCloudExtended.append(playlistsExtended)
                     

@@ -467,7 +467,7 @@ extension PlaylistViewController {
         
         userProfilesHandled.append(profileUser.canonicalUserName)
         
-        var profileImageURLFinal: String = "\(_sysDefaultAvatarFallbackURL)/\(profileUser.canonicalUserName!)"
+        var profileImageURLFinal: String = "\(_sysDefaultAvatarFallbackURL)/\(profileUser.canonicalUserName)"
         if  profileImageURLAvailable {
             profileImageURLFinal = profileImageURL.absoluteString
         };  userProfilesHandledWithImages[profileUser.canonicalUserName] = profileImageURLFinal
@@ -630,16 +630,16 @@ extension PlaylistViewController {
         for (playlistIndex, playListInCloud) in spotifyClient.playlistsInCloud.enumerated() {
             
             _playListFingerprint = playListInCloud.getMD5Identifier()
-            userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName!)
+            userProfilesInPlaylists.append(playListInCloud.owner.canonicalUserName)
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
             if  debugMode == true {
-                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name!) ]")
+                print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
-                print ("owner: \(playListInCloud.owner.canonicalUserName!)")
-                print ("playlist covers: \(playListInCloud.images.count) (alternativ covers)")
-                print ("uri: \(playListInCloud.playableUri!)")
+                print ("owner: \(playListInCloud.owner.canonicalUserName)")
+                print ("playlist covers: \(playListInCloud.images?.count) (alternativ covers)")
+                print ("uri: \(playListInCloud.playableUri)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
                 print ("\n--")
@@ -1082,7 +1082,7 @@ extension PlaylistViewController {
             }
             
             spotifyClient.getUserProfileImageURLByUserName(
-                _profileUserName, spotifyClient.spfCurrentSession!.accessToken!
+                _profileUserName, spotifyClient.spfCurrentSession!.accessToken
             )
         }
     }
@@ -1154,7 +1154,7 @@ extension PlaylistViewController {
         
         if playlistInDb.largestImageURL == nil && playlistInDb.smallestImageURL == nil {
             
-            for coverImageAlt in playListInCloud.images {
+            for coverImageAlt in playListInCloud.images! {
                 if let _coverImageAlt = coverImageAlt as? SPTImage {
                     if _coverImageAlt.size != CGSize(width: 0, height: 0) {
                         playlistInDb.smallestImageURL = _coverImageAlt.imageURL.absoluteString
@@ -1236,7 +1236,7 @@ extension PlaylistViewController {
                     playListInDb.ownerImageURL = userProfileImageURL
                     playListInDb.ownerFollowerCount = userProfile.followerCount
                     if  userProfile.sharingURL != nil {
-                        playListInDb.ownerSharingURL = userProfile.sharingURL!.absoluteString
+                        playListInDb.ownerSharingURL = userProfile.sharingURL.absoluteString
                     }
                     
                 } catch {
@@ -1470,7 +1470,7 @@ extension PlaylistViewController {
             _updatedMetaString = ", updated on \(_updatedDateString)"
         };  _createdDateString = getDateAsString(playlistInDb.createdAt!)
         
-        return "This playlist \"\(playlistInCloud.name!)\" is owned by \(playlistInCloud.owner.canonicalUserName!), was firstly seen on \(_createdDateString) \(_updatedMetaString) and can be found in spotify at \(playlistInCloud.playableUri.absoluteString)"
+        return "This playlist \"\(playlistInCloud.name)\" is owned by \(playlistInCloud.owner.canonicalUserName), was firstly seen on \(_createdDateString) \(_updatedMetaString) and can be found in spotify at \(playlistInCloud.playableUri.absoluteString)"
     }
     
     func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
@@ -1539,7 +1539,7 @@ extension PlaylistViewController {
         // first of all fetch new playlists from api for comparision
         spotifyClient.handlePlaylistGetFirstPage(
             spotifyClient.spfUsername,
-            spotifyClient.spfCurrentSession!.accessToken!
+            spotifyClient.spfCurrentSession!.accessToken
         )
         
         // now (pre)fetch corresponding local playlists for sync process

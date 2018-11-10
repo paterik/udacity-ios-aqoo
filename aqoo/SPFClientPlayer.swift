@@ -44,7 +44,7 @@ class SPFClientPlayer: NSObject, SPTAudioStreamingPlaybackDelegate, SPTAudioStre
         player!.playbackDelegate = self
         player!.delegate = self
         
-        try! player!.start(withClientId:    spotifyClient.spfAuth.clientID)
-        try! player!.login(withAccessToken: spotifyClient.spfCurrentSession?.accessToken)
+        try! player!.start(withClientId:    spotifyClient.spfAuth.clientID!)
+        try! player!.login(withAccessToken: (spotifyClient.spfCurrentSession?.accessToken)!)
     }
 }

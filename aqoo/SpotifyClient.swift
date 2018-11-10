@@ -116,7 +116,7 @@ class SpotifyClient: SPFClientPlaylists {
         
         if _profileImageURL == nil {
             
-            for (index, userImageAlt) in user.images.enumerated() {
+            for (index, userImageAlt) in (user.images?.enumerated())! {
                 if let _userImageAlt = userImageAlt as? SPTImage {
                     if _userImageAlt.imageURL != nil {
                        _profileImageURL = _userImageAlt.imageURL
@@ -186,7 +186,7 @@ class SpotifyClient: SPFClientPlaylists {
             
             if  let _currentUser = response as? SPTUser {
                 
-                ImageDownloader.default.downloadImage(with: _currentUser.largestImage.imageURL, options: [], progressBlock: nil) {
+                ImageDownloader.default.downloadImage(with: (_currentUser.largestImage?.imageURL)!, options: [], progressBlock: nil) {
                     
                     (image, error, url, data) in
                     

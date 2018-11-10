@@ -22,6 +22,6 @@ extension SPTPartialPlaylist {
     
     func getMD5Identifier() -> String {
         
-        return self.playableUri!.absoluteString.md5()
+        return self.playableUri.absoluteString.md5()
     }
 }
