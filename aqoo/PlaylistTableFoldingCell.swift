@@ -71,8 +71,6 @@ class PlaylistTableFoldingCell: FoldingCell {
     @IBOutlet weak var btnPlaylistEdit: UIButton!
     @IBOutlet weak var btnPlaylistShowDetail: UIButton!
     
-    @IBOutlet weak var btnPlayRepeatMode: UIButton!
-    @IBOutlet weak var btnPlayShuffleMode: UIButton!
     @IBOutlet weak var btnPlayNormalMode: UIButton!
 
     var mode: PlaylistMusicPlayMode = .playNormal {
@@ -89,27 +87,9 @@ class PlaylistTableFoldingCell: FoldingCell {
                     
                     break
                 
-                case .playShuffle:
-                    
-                    btnPlayShuffleMode.backgroundColor = UIColor(netHex: 0x1ED761)
-                    btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_1"), for: UIControlState.normal)
-                    btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_0"), for: [UIControlState.selected, UIControlState.highlighted])
-                    
-                    break
-                
-                case .playLoop:
-                    
-                    btnPlayRepeatMode.backgroundColor = UIColor(netHex: 0x1ED761)
-                    btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_1"), for: UIControlState.normal)
-                    btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_0"), for: [UIControlState.selected, UIControlState.highlighted])
-                    
-                    break
-                
                 case .clear:
                     
                     resetPlayNormalButton()
-                    resetPlayLoopButton()
-                    resetPlayShuffleButton()
                     
                     break
                 
@@ -123,20 +103,6 @@ class PlaylistTableFoldingCell: FoldingCell {
         btnPlayNormalMode.backgroundColor = UIColor.clear
         btnPlayNormalMode.setImage(UIImage(named : "icnSetPlayNormal_0"), for: UIControlState.normal)
         btnPlayNormalMode.setImage(UIImage(named : "icnSetPlayNormal_1"), for: [UIControlState.selected, UIControlState.highlighted])
-    }
-    
-    func resetPlayLoopButton() {
-        
-        btnPlayRepeatMode.backgroundColor = UIColor.clear
-        btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_0"), for: UIControlState.normal)
-        btnPlayRepeatMode.setImage(UIImage(named : "icnSetPlayRepeatAll_1"), for: [UIControlState.selected, UIControlState.highlighted])
-    }
-    
-    func resetPlayShuffleButton() {
-        
-        btnPlayShuffleMode.backgroundColor = UIColor.clear
-        btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_0"), for: UIControlState.normal)
-        btnPlayShuffleMode.setImage(UIImage(named : "icnSetPlayShuffle_1"), for: [UIControlState.selected, UIControlState.highlighted])
     }
     
     var state: PlaylistMusicIndicatorViewState = .stopped {

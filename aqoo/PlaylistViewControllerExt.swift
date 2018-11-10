@@ -1690,34 +1690,6 @@ extension PlaylistViewController {
         
         switch designatedPlaymode {
             
-            case playMode.PlayRepeatAll.rawValue:
-                
-                if  playlistInCache.currentPlayMode != playMode.PlayRepeatAll.rawValue {
-                    setPlaylistInPlayMode( playlistCell, playMode.PlayRepeatAll.rawValue )
-                    togglePlayModeIcons( playlistCell, true )
-                    playlistCell.mode = .playLoop
-                    
-                }   else {
-                    setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
-                    togglePlayModeIcons( playlistCell, false )
-                    playlistCell.mode = .clear
-                    
-                };  break
-            
-            case playMode.PlayShuffle.rawValue:
-                
-                if  playlistInCache.currentPlayMode != playMode.PlayShuffle.rawValue {
-                    setPlaylistInPlayMode( playlistCell, playMode.PlayShuffle.rawValue )
-                    togglePlayModeIcons( playlistCell, true )
-                    playlistCell.mode = .playShuffle
-                    
-                }   else {
-                    setPlaylistInPlayMode( playlistCell, playMode.Stopped.rawValue )
-                    togglePlayModeIcons( playlistCell, false )
-                    playlistCell.mode = .clear
-                    
-                };  break
-            
             case playMode.PlayNormal.rawValue:
                 
                 if  playlistInCache.currentPlayMode != playMode.PlayNormal.rawValue {
@@ -1773,13 +1745,9 @@ extension PlaylistViewController {
                 }
             })
             
+            // reset playMode for all (spotify) playlists in cache
+            localPlaylistControls.resetPlayModeOnAllPlaylists()
             togglePlayMode( false )
-        }
-        
-        var isShuffleActive: Bool = false
-        if  newPlayMode == playMode.PlayShuffle.rawValue {
-            print ("___ try to play shuffle ___")
-            isShuffleActive = true
         }
         
         // handle cache queue for playlistCells with "active" playModes ( newPlayMode > 0 )
@@ -1795,52 +1763,28 @@ extension PlaylistViewController {
                 startingWithPosition: 0,
                 callback: { (error) in
                     
-                    if (error != nil) {
+                    if  error == nil {
+                        self.togglePlayMode( true )
+                        // send out user notification on any relevant playMode changes
+                        self.showUserNotification(
+                            "Now playing \(playListInDb.metaListInternalName)",
+                            "using \(self.getPlayModeAsString(newPlayMode)) playmode",
+                            nil,
+                            0.9275
+                        )
+                        
+                    }   else {
+                        
                         self.handleErrorAsDialogMessage("Player Controls Error PCE.01", "\(error?.localizedDescription)")
                         
                         return
-                        
-                    }   else {
-                        // handle shuffle/repeatMode depending on selected playMode
-                        self.localPlayer.player?.setShuffle( isShuffleActive, callback: { (error) in
-                            
-                            if  error != nil {
-                                print ("!!! error !!!")
-                                print (error)
-                            }   else {
-                                
-                                print ("___ shuffleSet was successful!")
-                                // self.localPlayer.player?.setIsPlaying(false, callback: { _ in })
-                                // self.localPlayer.player?.setIsPlaying(true, callback: { _ in })
-                            }
-                        })
-                            
-                        if  newPlayMode == playMode.PlayRepeatAll.rawValue {
-                            self.localPlayer.player?.setRepeat( SPTRepeatMode.context, callback: { _ in } )
-                        }   else {
-                            self.localPlayer.player?.setRepeat( SPTRepeatMode.off, callback: { _ in })
-                        }
-                        
-                        self.togglePlayMode( true )
                     }
                 }
             )
         }
-
-        // reset playMode for all (spotify) playlists in cache
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        
         // set new playMode to corrsponding playlist now
         localPlaylistControls.setPlayModeOnPlaylist( playListInDb, newPlayMode )
-
-        // send out user notification on any relevant playMode changes
-        if  newPlayMode != playMode.Stopped.rawValue {
-            self.showUserNotification(
-                "Now playing \(playListInDb.metaListInternalName)",
-                "using \(self.getPlayModeAsString(newPlayMode)) playmode",
-                nil,
-                0.9275
-            )
-        }
     }
     
     func resetPlayModeControls(
