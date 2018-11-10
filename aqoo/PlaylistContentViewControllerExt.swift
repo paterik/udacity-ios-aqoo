@@ -259,10 +259,10 @@ extension PlaylistContentViewController {
             localPlaylistControls.setTrackInPlayState( track, true )
             
             // set active meta object (track and index) of active (playing) track, (re)evaluate current trackInterval
+            currentTrack.isPlaying = true
             currentTrack.index = number
             currentTrack.selected = track
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
-            currentTrack.isPlaying = true
             
             // API_CALL :: start playback using spotify api call
             localPlayer.player?.playSpotifyURI(
@@ -333,8 +333,8 @@ extension PlaylistContentViewController {
         if _isFinished == true {
             
             currentTrack.timePosition = 0
-            currentTrack.interval = TimeInterval(currentTrack.timePosition)
             currentTrack.timeProgress = 0.0
+            currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
             if  debugMode == true {
                 print ("dbg [playlist/track] : last track finished, try to start next song ...\n")
@@ -386,7 +386,6 @@ extension PlaylistContentViewController {
         trackControlView.btnPlayRepeatMode.isUserInteractionEnabled = active
         trackControlView.btnPlayNormalMode.isUserInteractionEnabled = active
         trackControlView.btnPlayShuffleMode.isUserInteractionEnabled = active
-        
     }
 
     func togglePlayMode (
@@ -458,15 +457,6 @@ extension PlaylistContentViewController {
             trackCell.lblTrackPlaytimeRemaining.isHidden = true
             trackCell.progressBar.setProgress(0.0, animated: false)
         }
-    }
-    
-    @objc
-    func handleSingleTrackTimerEvent() {
-        //  track still runnning? update track timeFrama position and progressBar
-        if  trackIsFinished() == false {
-            
-        }
-        
     }
     
     @objc
