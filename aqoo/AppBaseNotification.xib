@@ -50,6 +50,8 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VFd-tz-EyM" secondAttribute="trailing" constant="10" id="mey-PF-s0U"/>
                 <constraint firstItem="VFd-tz-EyM" firstAttribute="trailing" secondItem="VCt-FI-fct" secondAttribute="trailing" id="tbK-Co-juK"/>
             </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>

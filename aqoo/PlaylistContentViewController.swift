@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import NotificationBannerSwift
 import BGTableViewRowActionWithImage
 
 class PlaylistContentViewController: BaseViewController,
@@ -23,6 +24,8 @@ class PlaylistContentViewController: BaseViewController,
     let currentTrack = ProxyPlaylistTrack.sharedInstance
     let currentPlaylist = ProxyPlaylist.sharedInstance
     
+    var trackSubControlView: TrackBaseControls?
+    var trackSubControlBanner: NotificationBanner?
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     
@@ -39,6 +42,7 @@ class PlaylistContentViewController: BaseViewController,
         
         setupUIBase()
         setupUITableView()
+        setupUITrackControls()
         setupPlayerAuth()
         
         loadMetaPlaylistTracksFromDb()
@@ -183,6 +187,9 @@ class PlaylistContentViewController: BaseViewController,
         resetLocalTrackStateStettings()
         // logout from player
         // localPlayer.player?.logout()
+        
+        // close trackControls on bottom of this view
+        trackSubControlBanner?.dismiss()
     }
     
     @IBAction func btnClosePlayistContentView(_ sender: Any) {

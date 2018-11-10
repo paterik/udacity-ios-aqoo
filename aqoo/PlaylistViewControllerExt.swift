@@ -36,11 +36,6 @@ extension PlaylistViewController {
                 userInfo     : nil,
                 repeats      : true
             )
-            
-        }   else {
-            
-            
-            
         }
     }
     

@@ -10,7 +10,9 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import NotificationBannerSwift
 import MaterialComponents.MaterialProgressView
+import fluid_slider
 
 extension PlaylistContentViewController {
  
@@ -113,6 +115,61 @@ extension PlaylistContentViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func setupUITrackControls() -> Bool {
+        
+        trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
+        
+        guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
+            self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls for current view")
+            
+            return false
+        }
+        
+        let labelTextAttributes: [NSAttributedStringKey : Any] = [
+            .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]
+        
+        sliderView.attributedTextForFraction = { fraction in
+            
+            let formatter = NumberFormatter()
+                formatter.maximumIntegerDigits = 3
+                formatter.maximumFractionDigits = 0
+            
+            let string = formatter.string(from: (fraction * 100) as NSNumber) ?? ""
+            
+            return NSAttributedString(string: string, attributes: [
+                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                .foregroundColor: UIColor.black
+                ]
+            )
+        }
+        
+        sliderView.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
+        sliderView.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
+        sliderView.fraction = CGFloat(0.0)
+        
+        sliderView.shadowColor = UIColor(white: 0, alpha: 0.1)
+        sliderView.contentViewColor = UIColor(netHex: 0x1DB954)
+        sliderView.valueViewColor = .white
+        
+        sliderView.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+        
+        trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
+        trackSubControlBanner!.show(bannerPosition: .bottom)
+        trackSubControlBanner!.autoDismiss = false
+        
+        return true
+    }
+    
+    @objc
+    func dbg_handleInputPlaylistRatingChanged(slider: Slider) {
+        
+        let trackIndexValueRaw = (slider.fraction * 100).rounded() / 100
+        
+        print ("trackIndexValue: \(trackIndexValueRaw)")
     }
     
     @objc

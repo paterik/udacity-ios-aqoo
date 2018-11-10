@@ -24,6 +24,8 @@
 		B15E031821130C49003124E4 /* SPFClientPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15E031721130C49003124E4 /* SPFClientPlayer.swift */; };
 		B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */; };
 		B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */; };
+		B16AC2042196E0E200FAAEC0 /* TrackBaseControls.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16AC2032196E0E200FAAEC0 /* TrackBaseControls.xib */; };
+		B16AC2062196E0F200FAAEC0 /* TrackBaseControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */; };
 		B17B2235213BE05300649AB2 /* ProxyPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
 		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
@@ -114,6 +116,8 @@
 		B15E031721130C49003124E4 /* SPFClientPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlayer.swift; sourceTree = "<group>"; };
 		B1698D6B2104742000A2CD37 /* ProxyStreamPlayListTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyStreamPlayListTrack.swift; sourceTree = "<group>"; };
 		B1698D6F21049B3700A2CD37 /* StreamPlayListTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTracks.swift; sourceTree = "<group>"; };
+		B16AC2032196E0E200FAAEC0 /* TrackBaseControls.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackBaseControls.xib; sourceTree = "<group>"; };
+		B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackBaseControls.swift; sourceTree = "<group>"; };
 		B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyPlaylist.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
 		B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTriangleView.swift; sourceTree = "<group>"; };
@@ -581,6 +585,8 @@
 				B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */,
 				B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */,
 				B15E030F2112D332003124E4 /* AppBaseNotification.swift */,
+				B16AC2032196E0E200FAAEC0 /* TrackBaseControls.xib */,
+				B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */,
 				B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */,
 				B15E03112112D3A7003124E4 /* BaseNotificationProtocol.swift */,
 				B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */,
@@ -705,6 +711,7 @@
 			files = (
 				B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */,
 				B1A620551F700D820093CAEF /* LaunchScreen.storyboard in Resources */,
+				B16AC2042196E0E200FAAEC0 /* TrackBaseControls.xib in Resources */,
 				B1B8DD22202E189A008CE9EB /* PlaylistFilterNotification.xib in Resources */,
 				B1A620521F700D820093CAEF /* Assets.xcassets in Resources */,
 				B1BBECEA1F92488D00BD9D39 /* PlaylistTableCell.xib in Resources */,
@@ -833,6 +840,7 @@
 				B159C3C120FF5A0E007A460E /* PlaylistContentViewController.swift in Sources */,
 				B1CDAAA02000D4F5008138F1 /* NSDate.swift in Sources */,
 				B1D33DD220D17F2D00DCDC5F /* PlaylistEditViewFirstPage.swift in Sources */,
+				B16AC2062196E0F200FAAEC0 /* TrackBaseControls.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,
 				B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */,
