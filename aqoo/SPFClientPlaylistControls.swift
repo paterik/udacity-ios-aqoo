@@ -15,7 +15,7 @@ class SPFClientPlaylistControls {
     
     static let sharedInstance = SPFClientPlaylistControls()
     
-    let debugMode: Bool = true
+    let debugMode: Bool = false
     
     func setTrackInPlayState(
        _ trackInDb : StreamPlayListTracks,

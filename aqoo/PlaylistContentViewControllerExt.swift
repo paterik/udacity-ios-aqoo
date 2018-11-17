@@ -119,55 +119,63 @@ extension PlaylistContentViewController {
     
     func handleInitValuesForTrackControl() {
         
-        if  let sliderView = getSliderTrackIndexUIControl() as? Slider {
+        var sliderView = getSliderTrackIndexUIControl() as? Slider
+        if  sliderView == nil {
             
-            sliderView.fraction = CGFloat(0.0)
-            sliderView.shadowColor = UIColor(white: 0, alpha: 0.1)
-            sliderView.contentViewColor = UIColor(netHex: 0x1DB954)
-            sliderView.valueViewColor = .white
-            
-            sliderView.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+            return
         }
+        
+        sliderView!.fraction = CGFloat(0.0)
+        sliderView!.shadowColor = UIColor(white: 0, alpha: 0.1)
+        sliderView!.contentViewColor = UIColor(netHex: 0x1DB954)
+        sliderView!.valueViewColor = .white
+        
+        sliderView!.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
     }
     
-    func handleRuntimeValuesForTrackControl(_ minValue: CGFloat , _ maxValue: CGFloat, _ currentValue: CGFloat) {
+    func handleRuntimeValuesForTrackControl(
+       _ minValue: CGFloat,
+       _ maxValue: CGFloat,
+       _ currentValue: CGFloat) {
         
-        if  let sliderView = getSliderTrackIndexUIControl() as? Slider {
-                sliderView.attributedTextForFraction = { fraction in
-                
-                let formatter = NumberFormatter()
-                    formatter.maximumIntegerDigits = 4
-                    formatter.maximumFractionDigits = 0
-                    
-                let string = formatter.string(from: (currentValue) as NSNumber) ?? ""
-                
-                return NSAttributedString(string: string, attributes: [
-                        .font: UIFont.systemFont(ofSize: 12, weight: .bold),
-                        .foregroundColor: UIColor.black
-                    ]
-                )
-            }
-            
-            let labelTextAttributes: [NSAttributedStringKey : Any] = [
-                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
-                .foregroundColor: UIColor.white
-            ]
-            
-            sliderView.setMinimumLabelAttributedText(NSAttributedString(
-                string: "\(minValue)s", attributes: labelTextAttributes)
-            )
-            
-            sliderView.setMaximumLabelAttributedText(NSAttributedString(
-                string: "\(maxValue)s", attributes: labelTextAttributes)
-            )
-            
-            
-            
-            sliderView.fraction = (CGFloat(currentTrack.timePosition) / 10)
-            
-            print (sliderView.fraction)
-        
+        var sliderView = getSliderTrackIndexUIControl() as? Slider
+        if  sliderView == nil || sliderView!.isSliderTracking {
+            return
         }
+        
+        sliderView!.attributedTextForFraction = { fraction in
+            
+            let formatter = NumberFormatter()
+                formatter.maximumIntegerDigits = 4
+                formatter.maximumFractionDigits = 0
+                
+            let currentTimePosAsString = formatter.string(from: (currentValue) as NSNumber) ?? ""
+            
+            return NSAttributedString(string: currentTimePosAsString, attributes: [
+                    .font: UIFont.systemFont(ofSize: 10, weight: .bold),
+                    .foregroundColor: UIColor.black
+                ]
+            )
+        }
+        
+        let labelTextAttributes: [NSAttributedStringKey : Any] = [
+            .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]
+        
+        sliderView!.setMinimumLabelAttributedText(NSAttributedString(
+            string: "", attributes: labelTextAttributes)
+        )
+         
+        sliderView!.setMaximumLabelAttributedText(NSAttributedString(
+            string: "\(maxValue)s", attributes: labelTextAttributes)
+        )
+        
+        let fractionStepper: CGFloat = 1 / maxValue
+        
+        sliderView!.fraction += (fractionStepper * 1000).rounded() / 1000
+        
+        print ("___ currentFraction == \(sliderView!.fraction)")
     }
     
     func getSliderTrackIndexUIControl() -> Slider? {
@@ -184,11 +192,10 @@ extension PlaylistContentViewController {
     func setupUITrackControls() {
         
         trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
-        
-        handleInitValuesForTrackControl()
-        
         trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
         trackSubControlBanner!.autoDismiss = false
+        
+        handleInitValuesForTrackControl()
     }
     
     @objc
@@ -569,8 +576,7 @@ extension PlaylistContentViewController {
             currentTrack.timeProgress = (Float(currentTrack.timePosition) / Float(currentTrack.selected!.trackDuration))
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
-            // weazL
-            
+            // handle track time position for track control slider
             handleRuntimeValuesForTrackControl(
                 0.0,
                 CGFloat(currentTrack.selected!.trackDuration),
