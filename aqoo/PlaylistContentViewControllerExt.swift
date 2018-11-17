@@ -117,49 +117,78 @@ extension PlaylistContentViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    func setupUITrackControls() -> Bool {
+    func handleInitValuesForTrackControl() {
         
-        trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
-        trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
-        trackSubControlBanner!.autoDismiss = false
+        if  let sliderView = getSliderTrackIndexUIControl() as? Slider {
+            
+            sliderView.fraction = CGFloat(0.0)
+            sliderView.shadowColor = UIColor(white: 0, alpha: 0.1)
+            sliderView.contentViewColor = UIColor(netHex: 0x1DB954)
+            sliderView.valueViewColor = .white
+            
+            sliderView.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+        }
+    }
+    
+    func handleRuntimeValuesForTrackControl(_ minValue: CGFloat , _ maxValue: CGFloat, _ currentValue: CGFloat) {
+        
+        if  let sliderView = getSliderTrackIndexUIControl() as? Slider {
+                sliderView.attributedTextForFraction = { fraction in
+                
+                let formatter = NumberFormatter()
+                    formatter.maximumIntegerDigits = 4
+                    formatter.maximumFractionDigits = 0
+                    
+                let string = formatter.string(from: (currentValue) as NSNumber) ?? ""
+                
+                return NSAttributedString(string: string, attributes: [
+                        .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                        .foregroundColor: UIColor.black
+                    ]
+                )
+            }
+            
+            let labelTextAttributes: [NSAttributedStringKey : Any] = [
+                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                .foregroundColor: UIColor.white
+            ]
+            
+            sliderView.setMinimumLabelAttributedText(NSAttributedString(
+                string: "\(minValue)s", attributes: labelTextAttributes)
+            )
+            
+            sliderView.setMaximumLabelAttributedText(NSAttributedString(
+                string: "\(maxValue)s", attributes: labelTextAttributes)
+            )
+            
+            
+            
+            sliderView.fraction = (CGFloat(currentTrack.timePosition) / 10)
+            
+            print (sliderView.fraction)
+        
+        }
+    }
+    
+    func getSliderTrackIndexUIControl() -> Slider? {
         
         guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
-            self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls for current view")
+            self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls")
             
-            return false
+            return nil
         }
         
-        let labelTextAttributes: [NSAttributedStringKey : Any] = [
-            .font: UIFont.systemFont(ofSize: 12, weight: .bold),
-            .foregroundColor: UIColor.white
-        ]
+        return sliderView
+    }
+    
+    func setupUITrackControls() {
         
-        sliderView.attributedTextForFraction = { fraction in
-            
-            let formatter = NumberFormatter()
-                formatter.maximumIntegerDigits = 3
-                formatter.maximumFractionDigits = 0
-            
-            let string = formatter.string(from: (fraction * 100) as NSNumber) ?? ""
-            
-            return NSAttributedString(string: string, attributes: [
-                .font: UIFont.systemFont(ofSize: 12, weight: .bold),
-                .foregroundColor: UIColor.black
-                ]
-            )
-        }
+        trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
         
-        sliderView.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
-        sliderView.setMaximumLabelAttributedText(NSAttributedString(string: "100", attributes: labelTextAttributes))
-        sliderView.fraction = CGFloat(0.0)
+        handleInitValuesForTrackControl()
         
-        sliderView.shadowColor = UIColor(white: 0, alpha: 0.1)
-        sliderView.contentViewColor = UIColor(netHex: 0x1DB954)
-        sliderView.valueViewColor = .white
-        
-        sliderView.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
-        
-        return true
+        trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
+        trackSubControlBanner!.autoDismiss = false
     }
     
     @objc
@@ -200,8 +229,6 @@ extension PlaylistContentViewController {
         //
         // stop everything and reset cache meta information (from status play to stop) also
         //
-        
-        
         
         // A) always reset (all) playMode controls and stop playback first
         trackControlView.mode = .clear // place pause definition logic here!
@@ -541,6 +568,14 @@ extension PlaylistContentViewController {
             currentTrack.timePosition += 1
             currentTrack.timeProgress = (Float(currentTrack.timePosition) / Float(currentTrack.selected!.trackDuration))
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
+            
+            // weazL
+            
+            handleRuntimeValuesForTrackControl(
+                0.0,
+                CGFloat(currentTrack.selected!.trackDuration),
+                CGFloat(currentTrack.timePosition)
+            )
             
             localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrack.selected!, currentTrack.timePosition )
         }

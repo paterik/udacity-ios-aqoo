@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,24 +17,53 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnA-Fd-Iel" userLabel="ui_view_trackPositionIndex" customClass="Slider" customModule="fluid_slider">
-                    <rect key="frame" x="16" y="0.0" width="343" height="75"/>
+                    <rect key="frame" x="56" y="6" width="263" height="62"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nE-C5-Av8" userLabel="ui_btn_nextTrack">
+                    <rect key="frame" x="327" y="0.0" width="48" height="75"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" image="icnTCNextTrack_v1">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nme-EO-QEz" userLabel="ui_btn_previousTrack">
+                    <rect key="frame" x="0.0" y="0.0" width="48" height="75"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" image="icnTCPreviousTrack_v1">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.11372549019607843" green="0.72549019607843135" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="tnA-Fd-Iel" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="a1m-zM-weo"/>
-                <constraint firstItem="tnA-Fd-Iel" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="mji-sf-Gis"/>
-                <constraint firstItem="tnA-Fd-Iel" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="oiv-IB-soL"/>
-                <constraint firstItem="tnA-Fd-Iel" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="xV1-sE-7R2"/>
+                <constraint firstItem="nme-EO-QEz" firstAttribute="firstBaseline" secondItem="5nE-C5-Av8" secondAttribute="firstBaseline" id="3EF-Xk-Lag"/>
+                <constraint firstItem="nme-EO-QEz" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="CHA-Ut-l7s"/>
+                <constraint firstItem="nme-EO-QEz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DDi-xQ-Dd0"/>
+                <constraint firstAttribute="trailing" secondItem="5nE-C5-Av8" secondAttribute="trailing" id="Dcj-LT-GaW"/>
+                <constraint firstItem="tnA-Fd-Iel" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="6" id="JCM-JQ-0sd"/>
+                <constraint firstItem="nme-EO-QEz" firstAttribute="baseline" secondItem="5nE-C5-Av8" secondAttribute="baseline" id="LXe-8w-LBI"/>
+                <constraint firstItem="tnA-Fd-Iel" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="MTf-QT-E9N"/>
+                <constraint firstItem="5nE-C5-Av8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Wdn-0s-los"/>
+                <constraint firstItem="nme-EO-QEz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Xor-hA-owt"/>
+                <constraint firstItem="5nE-C5-Av8" firstAttribute="leading" secondItem="tnA-Fd-Iel" secondAttribute="trailing" constant="8" symbolic="YES" id="Ydf-dd-qIW"/>
+                <constraint firstItem="tnA-Fd-Iel" firstAttribute="leading" secondItem="nme-EO-QEz" secondAttribute="trailing" constant="8" symbolic="YES" id="hrM-OK-j0w"/>
+                <constraint firstItem="tnA-Fd-Iel" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ov5-of-J3q"/>
+                <constraint firstItem="tnA-Fd-Iel" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yOg-lm-vbK"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="btnSetNextTrack" destination="5nE-C5-Av8" id="HQp-JG-EBr"/>
+                <outlet property="btnSetPreviousTrack" destination="nme-EO-QEz" id="aQb-Rn-6VO"/>
                 <outlet property="cViewTrackPositionIndex" destination="tnA-Fd-Iel" id="0SD-3T-pUU"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="-244.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="icnTCNextTrack_v1" width="25" height="25"/>
+        <image name="icnTCPreviousTrack_v1" width="25" height="25"/>
+    </resources>
 </document>
