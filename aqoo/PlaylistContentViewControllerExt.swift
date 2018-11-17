@@ -134,16 +134,14 @@ extension PlaylistContentViewController {
     }
     
     func handleRuntimeValuesForTrackControl(
-       _ minValue: CGFloat,
-       _ maxValue: CGFloat,
-       _ currentValue: CGFloat) {
+       _ minValue: CGFloat = 0.0,
+       _ maxValue: CGFloat = 0.0,
+       _ currentValue: CGFloat = 0.0) {
         
         var sliderView = getSliderTrackIndexUIControl() as? Slider
         if  sliderView == nil || sliderView!.isSliderTracking || maxValue == 0.0  {
             return
         }
-        
-        let fractionStepper: CGFloat = 1 / maxValue
         
         sliderView!.attributedTextForFraction = { fraction in
             
@@ -160,6 +158,7 @@ extension PlaylistContentViewController {
             )
         }
         
+        let fractionStepper: CGFloat = 1 / maxValue
         let labelTextAttributes: [NSAttributedStringKey : Any] = [
             .font: UIFont.systemFont(ofSize: 12, weight: .bold),
             .foregroundColor: UIColor.white
@@ -201,9 +200,20 @@ extension PlaylistContentViewController {
     @objc
     func dbg_handleInputPlaylistRatingChanged(slider: Slider) {
         
-        let trackIndexValueRaw = (slider.fraction * 100).rounded() / 100
         
-        print ("trackIndexValue: \(trackIndexValueRaw)")
+        let trackIndexValueRaw = (slider.fraction * 100).rounded() / 100
+        let trackIndexValueInSeconds = CGFloat(currentTrack.selected!.trackDuration) * trackIndexValueRaw
+        
+        print ("trackIndexValue: \(trackIndexValueRaw), in seconds: \(Int(trackIndexValueInSeconds))")
+        
+        // currentTrack.timePosition = Int(trackIndexValueInSeconds)
+        // currentTrack.interval = TimeInterval(currentTrack.timePosition)
+        
+        /*localPlayer.player?.seek(to: currentTrack.interval!, callback: { (error) in
+            if error != nil {
+                print ("error ___ ahhhh ___ \(error)")
+            }
+        })*/
     }
     
     @objc
