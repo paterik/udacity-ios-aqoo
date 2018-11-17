@@ -117,20 +117,24 @@ extension PlaylistContentViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    func handleInitValuesForTrackControl() {
+    func handleInitValuesForTrackControl()  {
         
-        var sliderView = getSliderTrackIndexUIControl() as? Slider
-        if  sliderView == nil {
-            
+        guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
+            self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls")
             return
-        }
+        };  trackSliderViewControl = sliderView
         
-        sliderView!.fraction = CGFloat(0.0)
-        sliderView!.shadowColor = UIColor(white: 0, alpha: 0.1)
-        sliderView!.contentViewColor = UIColor(netHex: 0x1DB954)
-        sliderView!.valueViewColor = .white
+        handleResetForTrackSliderControl()
         
-        sliderView!.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+        trackSliderViewControl!.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+    }
+    
+    func handleResetForTrackSliderControl() {
+        
+        trackSliderViewControl!.fraction = CGFloat(0.0)
+        trackSliderViewControl!.shadowColor = UIColor(white: 0, alpha: 0.1)
+        trackSliderViewControl!.contentViewColor = UIColor(netHex: 0x1DB954)
+        trackSliderViewControl!.valueViewColor = .white
     }
     
     func handleRuntimeValuesForTrackControl(
@@ -138,12 +142,11 @@ extension PlaylistContentViewController {
        _ maxValue: CGFloat = 0.0,
        _ currentValue: CGFloat = 0.0) {
         
-        var sliderView = getSliderTrackIndexUIControl() as? Slider
-        if  sliderView == nil || sliderView!.isSliderTracking || maxValue == 0.0  {
+        if  trackSliderViewControl!.isSliderTracking || maxValue == 0.0  {
             return
         }
         
-        sliderView!.attributedTextForFraction = { fraction in
+        trackSliderViewControl!.attributedTextForFraction = { fraction in
             
             let formatter = NumberFormatter()
                 formatter.maximumIntegerDigits = 4
@@ -165,27 +168,29 @@ extension PlaylistContentViewController {
         ]
         
         // remove start(min)value from fluid slider control
-        sliderView!.setMinimumLabelAttributedText(NSAttributedString(
+        trackSliderViewControl!.setMinimumLabelAttributedText(NSAttributedString(
             string: "", attributes: labelTextAttributes)
         )
         
         // add end(max)value to fluid slider control (pure playtime in seconds)
-        sliderView!.setMaximumLabelAttributedText(NSAttributedString(
+        trackSliderViewControl!.setMaximumLabelAttributedText(NSAttributedString(
             string: "\(Int(maxValue))s", attributes: labelTextAttributes)
         )
         
-        sliderView!.fraction += (fractionStepper * 1000).rounded() / 1000
-    }
-    
-    func getSliderTrackIndexUIControl() -> Slider? {
+        trackSliderViewControl!.fraction += (fractionStepper * 1000).rounded() / 1000
         
-        guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
-            self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls")
+        if  trackIndexValueChanged {
+            trackIndexValueChanged = false
+            currentTrack.timePosition = trackIndexNewValueInSeconds
+            currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
-            return nil
+            localPlayer.player?.seek(to: currentTrack.interval!, callback: { (error) in
+                if  error != nil {
+                    self.handleErrorAsDialogMessage("Track Timeframe Error", "unable to seek new position for track \(self.currentTrack.selected!.trackName)! \(error.debugDescription)")
+                    
+                }
+            })
         }
-        
-        return sliderView
     }
     
     func setupUITrackControls() {
@@ -200,20 +205,16 @@ extension PlaylistContentViewController {
     @objc
     func dbg_handleInputPlaylistRatingChanged(slider: Slider) {
         
-        
         let trackIndexValueRaw = (slider.fraction * 100).rounded() / 100
         let trackIndexValueInSeconds = CGFloat(currentTrack.selected!.trackDuration) * trackIndexValueRaw
         
-        print ("trackIndexValue: \(trackIndexValueRaw), in seconds: \(Int(trackIndexValueInSeconds))")
+        trackIndexNewValueInSeconds = Int(trackIndexValueInSeconds)
+        trackIndexOldValueInSeconds = currentTrack.timePosition
+        trackIndexValueChanged = true
         
-        // currentTrack.timePosition = Int(trackIndexValueInSeconds)
-        // currentTrack.interval = TimeInterval(currentTrack.timePosition)
-        
-        /*localPlayer.player?.seek(to: currentTrack.interval!, callback: { (error) in
-            if error != nil {
-                print ("error ___ ahhhh ___ \(error)")
-            }
-        })*/
+        if  debugMode == true {
+            print ("dbg [playlist/track/seek] : rawValue: \(trackIndexValueRaw) (\(trackIndexNewValueInSeconds))s")
+        }
     }
     
     @objc
@@ -308,7 +309,7 @@ extension PlaylistContentViewController {
         }
         
         if  debugMode == true {
-            print ("newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlaylist.playMode), currentPLMode=\(playListInDb!.currentPlayMode)" )
+            print ("dbg [playlist/track] : newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlaylist.playMode), currentPlayMode=\(playListInDb!.currentPlayMode)" )
         }
     }
     
@@ -435,8 +436,10 @@ extension PlaylistContentViewController {
             currentTrack.timeProgress = 0.0
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
+            handleResetForTrackSliderControl( )
+            
             if  debugMode == true {
-                print ("dbg [playlist/track] : last track finished, try to start next song ...\n")
+                print ("dbg [playlist/track] : track finished, try to start next song ...\n")
             }
         }
         

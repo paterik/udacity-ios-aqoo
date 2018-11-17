@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import fluid_slider
 import NotificationBannerSwift
 import BGTableViewRowActionWithImage
 
@@ -26,6 +27,11 @@ class PlaylistContentViewController: BaseViewController,
     
     var trackSubControlView: TrackBaseControls?
     var trackSubControlBanner: NotificationBanner?
+    var trackSliderViewControl: Slider?
+    var trackIndexValueChanged: Bool = false
+    var trackIndexNewValueInSeconds: Int = 0
+    var trackIndexOldValueInSeconds: Int = 0
+    
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
     
