@@ -143,6 +143,8 @@ extension PlaylistContentViewController {
             return
         }
         
+        let fractionStepper: CGFloat = 1 / maxValue
+        
         sliderView!.attributedTextForFraction = { fraction in
             
             let formatter = NumberFormatter()
@@ -163,19 +165,17 @@ extension PlaylistContentViewController {
             .foregroundColor: UIColor.white
         ]
         
+        // remove start(min)value from fluid slider control
         sliderView!.setMinimumLabelAttributedText(NSAttributedString(
             string: "", attributes: labelTextAttributes)
         )
-         
+        
+        // add end(max)value to fluid slider control (pure playtime in seconds)
         sliderView!.setMaximumLabelAttributedText(NSAttributedString(
-            string: "\(maxValue)s", attributes: labelTextAttributes)
+            string: "\(Int(maxValue))s", attributes: labelTextAttributes)
         )
         
-        let fractionStepper: CGFloat = 1 / maxValue
-        
         sliderView!.fraction += (fractionStepper * 1000).rounded() / 1000
-        
-        print ("___ currentFraction == \(sliderView!.fraction)")
     }
     
     func getSliderTrackIndexUIControl() -> Slider? {
