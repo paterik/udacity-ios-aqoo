@@ -139,7 +139,7 @@ extension PlaylistContentViewController {
        _ currentValue: CGFloat) {
         
         var sliderView = getSliderTrackIndexUIControl() as? Slider
-        if  sliderView == nil || sliderView!.isSliderTracking {
+        if  sliderView == nil || sliderView!.isSliderTracking || maxValue == 0.0  {
             return
         }
         
