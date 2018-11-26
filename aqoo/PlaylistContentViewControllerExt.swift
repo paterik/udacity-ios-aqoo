@@ -346,7 +346,6 @@ extension PlaylistContentViewController {
         }
         
         // set active meta object (track and index) of active (playing) track
-        currentTrack.index = 0
         currentTrack.selected = nil
         currentTrack.isPlaying = false
     }
@@ -401,8 +400,10 @@ extension PlaylistContentViewController {
                 currentTrack.shuffleIndex += 1
                 currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
                 
-                print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
-                
+                if  debugMode == true {
+                    print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
+                }
+               
                 break
             
             case playMode.PlayRepeatAll.rawValue:
@@ -607,6 +608,10 @@ extension PlaylistContentViewController {
                 
                 if  trackJumpToNext() == true {
                     trackStartPlaying( currentTrack.index )
+                }   else {
+                    if  debugMode == true {
+                        print ("dbg [playlist/track] : unable to playback next track\n")
+                    }
                 }
                 
             }   else {
