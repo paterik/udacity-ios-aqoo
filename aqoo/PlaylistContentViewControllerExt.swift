@@ -27,7 +27,7 @@ extension PlaylistContentViewController {
             if  let _image = getImageByFileName(playListInDb!.coverImagePathOverride!) {
                 trackControlView.imageViewPlaylistCover.image = _image
             }   else {
-                handleErrorAsDialogMessage("IO Error (Read)", "unable to load own cover image for your playlist")
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load own coverImage for your playlist")
             }
             
         }   else {
@@ -126,7 +126,17 @@ extension PlaylistContentViewController {
         
         handleResetForTrackSliderControl()
         
-        trackSliderViewControl!.addTarget(self, action: #selector(dbg_handleInputPlaylistRatingChanged), for: .valueChanged)
+        trackSliderViewControl!.addTarget(
+            self, action: #selector(handleTrackTimeframePositionChanged), for: .valueChanged
+        )
+        
+        trackSubControlView?.btnSetNextTrack.addTarget(
+            self, action: #selector(handleTrackManualJumpToNext(_:)), for: .touchUpInside
+        )
+        
+        trackSubControlView?.btnSetPreviousTrack.addTarget(
+            self, action: #selector(handleTrackManualJumpToPrev(_:)), for: .touchUpInside
+        )
     }
     
     func handleResetForTrackSliderControl() {
@@ -203,7 +213,7 @@ extension PlaylistContentViewController {
     }
     
     @objc
-    func dbg_handleInputPlaylistRatingChanged(slider: Slider) {
+    func handleTrackTimeframePositionChanged(slider: Slider) {
         
         let trackIndexValueRaw = (slider.fraction * 100).rounded() / 100
         let trackIndexValueInSeconds = CGFloat(currentTrack.selected!.trackDuration) * trackIndexValueRaw
@@ -216,6 +226,27 @@ extension PlaylistContentViewController {
             print ("dbg [playlist/track/seek] : rawValue: \(trackIndexValueRaw) (\(trackIndexNewValueInSeconds))s")
         }
     }
+    
+    @objc
+    func handleTrackManualJumpToNext(_ sender: UIButton) {
+        
+        print ("__ jump to next song") // weazL
+        // currentTrack.timePosition = Int(currentTrack.selected!.trackDuration)
+        // currentTrack.interval = TimeInterval(currentTrack.timePosition)
+        trackIsFinishedByLaw = true
+        
+        /*trackStopPlaying(currentTrack.index)
+        trackJumpToNext()
+        trackStartPlaying(currentTrack.index)*/
+        
+    }
+    
+    @objc
+    func handleTrackManualJumpToPrev(_ sender: UIButton) {
+        
+        print ("__ jump to previous song")
+    }
+    
     
     @objc
     func handlePlaylistPlayShuffleMode(sender: UITapGestureRecognizer) {
@@ -427,16 +458,26 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = true
         
+        if  trackIsFinishedByLaw == true {
+            trackIsFinishedByLaw = false
+            
+            print ("track was finished by law")
+            
+            return true
+        }
+        
         if  currentTrack.selected != nil {
            _isFinished = currentTrack.timePosition == Int(currentTrack.selected!.trackDuration)
         }
         
         if _isFinished == true {
             
-            currentTrack.timePosition = 0
+            /*currentTrack.timePosition = 0
             currentTrack.timeProgress = 0.0
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
+            */
             
+            resetLocalTrackTimeState()
             handleResetForTrackSliderControl( )
             
             if  debugMode == true {
@@ -598,10 +639,10 @@ extension PlaylistContentViewController {
             )
             
             localPlaylistControls.setTrackTimePositionWhilePlaying( currentTrack.selected!, currentTrack.timePosition )
-        }
         
-        if  trackIsFinished() == true {
+        }   else {
             
+            resetLocalTrackTimeState()
             trackStopPlaying( currentTrack.index )
             
             if  playlistFinished() == false {
@@ -628,7 +669,7 @@ extension PlaylistContentViewController {
         
         // reset player meta and track state settings
         resetLocalPlayerMetaSettings()
-        resetLocalTrackStateStettings()
+        resetLocalTrackStates()
         
         // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
@@ -650,13 +691,21 @@ extension PlaylistContentViewController {
         currentTrack.shuffleIndex = 0
     }
     
-    func resetLocalTrackStateStettings() {
+    func resetLocalTrackStates() {
         
-        currentTrack.timePosition = 0
+        resetLocalTrackTimeState()
+        
         currentTrack.selected = nil
         currentTrack.isPlaying = false
         currentTrack.interval = 0
         currentTrack.index = 0
+    }
+    
+    func resetLocalTrackTimeState() {
+        
+        currentTrack.timePosition = 0
+        currentTrack.timeProgress = 0.0
+        currentTrack.interval = TimeInterval(currentTrack.timePosition)
     }
     
     func loadMetaPlaylistTracksFromDb() {

@@ -31,6 +31,7 @@ class PlaylistContentViewController: BaseViewController,
     var trackIndexValueChanged: Bool = false
     var trackIndexNewValueInSeconds: Int = 0
     var trackIndexOldValueInSeconds: Int = 0
+    var trackIsFinishedByLaw: Bool = false
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
@@ -192,7 +193,7 @@ class PlaylistContentViewController: BaseViewController,
         // clear local playlist playback meta
         resetLocalPlayerMetaSettings()
         // clear local track playback meta
-        resetLocalTrackStateStettings()
+        resetLocalTrackStates()
         // deactivate trackControls on bottom of this view
         toggleTrackSubControls( false )
         
