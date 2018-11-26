@@ -238,6 +238,8 @@ extension PlaylistContentViewController {
         if  debugMode == true {
             print ("dbg [playlist/track/ctrl] : jump to previous track")
         }
+        
+        
     }
     
     @objc
@@ -408,25 +410,29 @@ extension PlaylistContentViewController {
             
             case playMode.PlayNormal.rawValue:
                 
-                // last track in playlist? return false (mark this process as 'not available') ...
-                if playlistFinished() == true { return false }
-                
-                // otherwise jump to next track in playlist
-                currentTrack.index += 1
+                //  last track in playlist? return false otherwise jump to next track in playlist
+                if  playlistFinished() == true {
+                    return false
+                }   else {
+                    currentTrack.index += 1
+                }
                 
                 break
             
             case playMode.PlayShuffle.rawValue:
                 
-                if currentTrack.shuffleIndex == currentPlaylist.shuffleKeys!.count - 1 { return false }
-                
-                currentTrack.shuffleIndex += 1
-                currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
-                
-                if  debugMode == true {
-                    print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
+                //  check current shuffle index for key threshold
+                if  currentTrack.shuffleIndex == currentPlaylist.shuffleKeys!.count - 1 {
+                    return false
+                }   else {
+                    currentTrack.shuffleIndex += 1
+                    currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
+                    
+                    if  debugMode == true {
+                        print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
+                    }
                 }
-               
+                
                 break
             
             case playMode.PlayRepeatAll.rawValue:
