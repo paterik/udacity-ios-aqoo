@@ -75,18 +75,15 @@ extension PlaylistContentViewController {
         }
         
         trackControlView.btnPlayShuffleMode.addGestureRecognizer(UITapGestureRecognizer(
-            target: self,
-            action: #selector(PlaylistContentViewController.handlePlaylistPlayShuffleMode))
+            target: self, action: #selector(PlaylistContentViewController.handlePlaylistPlayShuffleMode))
         )
         
         trackControlView.btnPlayNormalMode.addGestureRecognizer(UITapGestureRecognizer(
-            target: self,
-            action: #selector(PlaylistContentViewController.handlePlaylistPlayNormalMode))
+            target: self, action: #selector(PlaylistContentViewController.handlePlaylistPlayNormalMode))
         )
         
         trackControlView.btnPlayRepeatMode.addGestureRecognizer(UITapGestureRecognizer(
-            target: self,
-            action: #selector(PlaylistContentViewController.handlePlaylistPlayRepeatMode))
+            target: self, action: #selector(PlaylistContentViewController.handlePlaylistPlayRepeatMode))
         )
     }
     
@@ -122,8 +119,9 @@ extension PlaylistContentViewController {
         guard let sliderView = trackSubControlView?.cViewTrackPositionIndex as? Slider else {
             self.handleErrorAsDialogMessage("UI Rendering Error", "unable to get track position slider controls")
             return
-        };  trackSliderViewControl = sliderView
+        }
         
+        trackSliderViewControl = sliderView
         handleResetForTrackSliderControl()
         
         trackSliderViewControl!.addTarget(
@@ -152,9 +150,7 @@ extension PlaylistContentViewController {
        _ maxValue: CGFloat = 0.0,
        _ currentValue: CGFloat = 0.0) {
         
-        if  trackSliderViewControl!.isSliderTracking || maxValue == 0.0  {
-            return
-        }
+        if trackSliderViewControl!.isSliderTracking || maxValue == 0.0  { return }
         
         trackSliderViewControl!.attributedTextForFraction = { fraction in
             
@@ -196,8 +192,9 @@ extension PlaylistContentViewController {
             
             localPlayer.player?.seek(to: currentTrack.interval!, callback: { (error) in
                 if  error != nil {
-                    self.handleErrorAsDialogMessage("Track Timeframe Error", "unable to seek new position for track \(self.currentTrack.selected!.trackName)! \(error.debugDescription)")
-                    
+                    self.handleErrorAsDialogMessage(
+                        "Track Timeframe Error",
+                        "unable to seek new position for track \(self.currentTrack.selected!.trackName)! \(error.debugDescription)")
                 }
             })
         }
@@ -230,23 +227,18 @@ extension PlaylistContentViewController {
     @objc
     func handleTrackManualJumpToNext(_ sender: UIButton) {
         
-        print ("__ jump to next song") // weazL
-        // currentTrack.timePosition = Int(currentTrack.selected!.trackDuration)
-        // currentTrack.interval = TimeInterval(currentTrack.timePosition)
-        trackIsFinishedByLaw = true
-        
-        /*trackStopPlaying(currentTrack.index)
-        trackJumpToNext()
-        trackStartPlaying(currentTrack.index)*/
-        
+        if  debugMode == true {
+            print ("dbg [playlist/track/ctrl] : jump to next track")
+        };  trackIsFinishedByLaw = true
     }
     
     @objc
     func handleTrackManualJumpToPrev(_ sender: UIButton) {
         
-        print ("__ jump to previous song")
+        if  debugMode == true {
+            print ("dbg [playlist/track/ctrl] : jump to previous track")
+        }
     }
-    
     
     @objc
     func handlePlaylistPlayShuffleMode(sender: UITapGestureRecognizer) {
