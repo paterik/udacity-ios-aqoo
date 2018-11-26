@@ -168,6 +168,7 @@ extension PlaylistContentViewController {
         }
         
         let fractionStepper: CGFloat = 1 / maxValue
+        let trackDurationFormatted: String = getSecondsAsMinutesSecondsDigits(Int(maxValue))
         let labelTextAttributes: [NSAttributedStringKey : Any] = [
             .font: UIFont.systemFont(ofSize: 12, weight: .bold),
             .foregroundColor: UIColor.white
@@ -177,12 +178,13 @@ extension PlaylistContentViewController {
         trackSliderViewControl!.setMinimumLabelAttributedText(NSAttributedString(
             string: "", attributes: labelTextAttributes)
         )
-        
+
         // add end(max)value to fluid slider control (pure playtime in seconds)
         trackSliderViewControl!.setMaximumLabelAttributedText(NSAttributedString(
-            string: "\(Int(maxValue))s", attributes: labelTextAttributes)
+            string: "\(trackDurationFormatted)", attributes: labelTextAttributes)
         )
         
+        // setup corrsponding fraction based on maxValue
         trackSliderViewControl!.fraction += (fractionStepper * 1000).rounded() / 1000
         
         if  trackIndexValueChanged {
@@ -190,6 +192,7 @@ extension PlaylistContentViewController {
             currentTrack.timePosition = trackIndexNewValueInSeconds
             currentTrack.interval = TimeInterval(currentTrack.timePosition)
             
+            // let's seek to user defined position (direct API call)
             localPlayer.player?.seek(to: currentTrack.interval!, callback: { (error) in
                 if  error != nil {
                     self.handleErrorAsDialogMessage(
@@ -239,7 +242,21 @@ extension PlaylistContentViewController {
             print ("dbg [playlist/track/ctrl] : jump to previous track")
         }
         
-        
+        // handle previousTrack in "normalPlayMode"
+        if  currentPlaylist.playMode == playMode.PlayNormal.rawValue && currentTrack.index != 0 {
+            
+            trackStopPlaying( currentTrack.index )
+            
+            resetLocalTrackTimeState()
+            
+            currentTrack.index -= 1
+            
+            trackStartPlaying( currentTrack.index )
+            
+            
+        }   else {
+            print ("__ previousTrackJump: not supportet, playMode not supported or trackIndex == 0")
+        }
     }
     
     @objc
@@ -459,8 +476,6 @@ extension PlaylistContentViewController {
         if  trackIsFinishedByLaw == true {
             trackIsFinishedByLaw = false
             
-            print ("track was finished by law")
-            
             return true
         }
         
@@ -469,11 +484,6 @@ extension PlaylistContentViewController {
         }
         
         if _isFinished == true {
-            
-            /*currentTrack.timePosition = 0
-            currentTrack.timeProgress = 0.0
-            currentTrack.interval = TimeInterval(currentTrack.timePosition)
-            */
             
             resetLocalTrackTimeState()
             handleResetForTrackSliderControl( )
