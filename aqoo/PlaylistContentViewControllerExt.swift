@@ -160,7 +160,7 @@ extension PlaylistContentViewController {
                 
             let currentTimePosAsString = formatter.string(from: (currentValue) as NSNumber) ?? ""
             
-            return NSAttributedString(string: currentTimePosAsString, attributes: [
+            return NSAttributedString(string: "\(currentTimePosAsString)s", attributes: [
                     .font: UIFont.systemFont(ofSize: 10, weight: .bold),
                     .foregroundColor: UIColor.black
                 ]
