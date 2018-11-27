@@ -242,19 +242,28 @@ extension PlaylistContentViewController {
     @objc
     func handleTrackManualJumpToPrev(_ sender: UIButton) {
         
+        let _trackIndexCurrent  = currentTrack.index
+        if  _trackIndexCurrent == 0 { return }
+        
         if  debugMode == true {
             print ("dbg [playlist/track/ctrl] : jump to previous track")
         }
         
-        let _trackIndexCurrent  = currentTrack.index
-        let _trackIndexPrevious = currentTrack.index - 1
+        resetLocalTrackTimeState()
+        trackStopPlaying( _trackIndexCurrent )
         
-        // handle previousTrack in "normalPlayMode"
-        if  currentPlaylist.playMode == playMode.PlayNormal.rawValue && currentTrack.index != 0 {
-            resetLocalTrackTimeState()
-            trackStopPlaying( _trackIndexCurrent )
-            trackStartPlaying( _trackIndexPrevious )
+        // handle previousTrack in "normalPlayMode" weazL
+        if  currentPlaylist.playMode == playMode.PlayNormal.rawValue {
+            let _trackIndexPrevious = _trackIndexCurrent - 1
             currentTrack.index = _trackIndexPrevious
+            trackStartPlaying( _trackIndexPrevious )
+        }
+        // handle previousTrack in "shufflePlayMode"
+        if  currentPlaylist.playMode == playMode.PlayShuffle.rawValue {
+            let _trackShuffleIndexCurrent = currentTrack.shuffleIndex
+            let _trackShuffleIndexPrevious = _trackShuffleIndexCurrent - 1
+            currentTrack.index = currentPlaylist.shuffleKeys![_trackShuffleIndexPrevious]
+            trackStartPlaying( currentTrack.index )
         }
     }
     
