@@ -232,7 +232,11 @@ extension PlaylistContentViewController {
         
         if  debugMode == true {
             print ("dbg [playlist/track/ctrl] : jump to next track")
-        };  trackIsFinishedByLaw = true
+        }
+        
+        if  playlistIsFinished() == false {
+            trackIsFinishedByLaw = true
+        }
     }
     
     @objc
@@ -242,20 +246,15 @@ extension PlaylistContentViewController {
             print ("dbg [playlist/track/ctrl] : jump to previous track")
         }
         
+        let _trackIndexCurrent  = currentTrack.index
+        let _trackIndexPrevious = currentTrack.index - 1
+        
         // handle previousTrack in "normalPlayMode"
         if  currentPlaylist.playMode == playMode.PlayNormal.rawValue && currentTrack.index != 0 {
-            
-            trackStopPlaying( currentTrack.index )
-            
             resetLocalTrackTimeState()
-            
-            currentTrack.index -= 1
-            
-            trackStartPlaying( currentTrack.index )
-            
-            
-        }   else {
-            print ("__ previousTrackJump: not supportet, playMode not supported or trackIndex == 0")
+            trackStopPlaying( _trackIndexCurrent )
+            trackStartPlaying( _trackIndexPrevious )
+            currentTrack.index = _trackIndexPrevious
         }
     }
     
@@ -428,7 +427,7 @@ extension PlaylistContentViewController {
             case playMode.PlayNormal.rawValue:
                 
                 //  last track in playlist? return false otherwise jump to next track in playlist
-                if  playlistFinished() == true {
+                if  playlistIsFinished() == true {
                     return false
                 }   else {
                     currentTrack.index += 1
@@ -457,7 +456,7 @@ extension PlaylistContentViewController {
                 // jump to next track in current playlist
                 currentTrack.index += 1
                 // check playlist finished state, jump to first track again on "repeatAll" mode
-                if  playlistFinished() == true {
+                if  playlistIsFinished() == true {
                     currentTrack.index = 0
                 }
             
@@ -496,7 +495,7 @@ extension PlaylistContentViewController {
         return _isFinished
     }
     
-    func playlistFinished() -> Bool {
+    func playlistIsFinished() -> Bool {
         
         var _isFinished: Bool = false
         
@@ -653,7 +652,7 @@ extension PlaylistContentViewController {
             resetLocalTrackTimeState()
             trackStopPlaying( currentTrack.index )
             
-            if  playlistFinished() == false {
+            if  playlistIsFinished() == false {
                 
                 if  trackJumpToNext() == true {
                     trackStartPlaying( currentTrack.index )
