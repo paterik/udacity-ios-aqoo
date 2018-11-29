@@ -242,29 +242,31 @@ extension PlaylistContentViewController {
     @objc
     func handleTrackManualJumpToPrev(_ sender: UIButton) {
         
-        let _trackIndexCurrent  = currentTrack.index
-        if  _trackIndexCurrent == 0 { return }
+        let _trackIndexCurrent: Int  = currentTrack.index
+        let _trackShuffleIndexCurrent: Int = currentTrack.shuffleIndex
         
-        if  debugMode == true {
-            print ("dbg [playlist/track/ctrl] : jump to previous track")
+        // handle previousTrack in "normalPlayMode" weazL
+        if  currentPlaylist.playMode == playMode.PlayNormal.rawValue {
+            
+            if  _trackIndexCurrent == 0 { return }
+            let _trackIndexPrevious = _trackIndexCurrent - 1
+            
+            currentTrack.index = _trackIndexPrevious
+        }
+        
+        // handle previousTrack in "shufflePlayMode"
+        if  currentPlaylist.playMode == playMode.PlayShuffle.rawValue {
+            
+            if  _trackShuffleIndexCurrent == 0 { return }
+            let _trackShuffleIndexPrevious = _trackShuffleIndexCurrent - 1
+            
+            currentTrack.shuffleIndex = _trackShuffleIndexPrevious
+            currentTrack.index = currentPlaylist.shuffleKeys![_trackShuffleIndexPrevious]
         }
         
         resetLocalTrackTimeState()
         trackStopPlaying( _trackIndexCurrent )
-        
-        // handle previousTrack in "normalPlayMode" weazL
-        if  currentPlaylist.playMode == playMode.PlayNormal.rawValue {
-            let _trackIndexPrevious = _trackIndexCurrent - 1
-            currentTrack.index = _trackIndexPrevious
-            trackStartPlaying( _trackIndexPrevious )
-        }
-        // handle previousTrack in "shufflePlayMode"
-        if  currentPlaylist.playMode == playMode.PlayShuffle.rawValue {
-            let _trackShuffleIndexCurrent = currentTrack.shuffleIndex
-            let _trackShuffleIndexPrevious = _trackShuffleIndexCurrent - 1
-            currentTrack.index = currentPlaylist.shuffleKeys![_trackShuffleIndexPrevious]
-            trackStartPlaying( currentTrack.index )
-        }
+        trackStartPlaying( currentTrack.index )
     }
     
     @objc
