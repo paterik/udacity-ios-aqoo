@@ -157,14 +157,27 @@ extension PlaylistContentViewController {
             let formatter = NumberFormatter()
                 formatter.maximumIntegerDigits = 4
                 formatter.maximumFractionDigits = 0
+            
+            var trackTimeCurrentInSec = NSMutableAttributedString()
+            var trackTimeCurrentInSecExt = NSMutableAttributedString()
                 
             let currentTimePosAsString = formatter.string(from: (currentValue) as NSNumber) ?? ""
             
-            return NSAttributedString(string: "\(currentTimePosAsString)s", attributes: [
-                    .font: UIFont(name: "HelveticaNeue-CondensedBold", size: 14),
-                    .foregroundColor: UIColor.black
-                ]
-            )
+            trackTimeCurrentInSec = NSMutableAttributedString(string: currentTimePosAsString, attributes:
+            [
+                NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-CondensedBold", size: 12),
+                NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x111111)
+            ])
+            
+            trackTimeCurrentInSecExt = NSMutableAttributedString(string: " s", attributes:
+            [
+                NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-CondensedBold", size: 10),
+                NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x1DB954)
+            ])
+            
+            trackTimeCurrentInSec.append(trackTimeCurrentInSecExt)
+            
+            return trackTimeCurrentInSec
         }
         
         let fractionStepper: CGFloat = 1 / maxValue
