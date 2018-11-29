@@ -161,7 +161,7 @@ extension PlaylistContentViewController {
             let currentTimePosAsString = formatter.string(from: (currentValue) as NSNumber) ?? ""
             
             return NSAttributedString(string: "\(currentTimePosAsString)s", attributes: [
-                    .font: UIFont.systemFont(ofSize: 10, weight: .bold),
+                    .font: UIFont(name: "HelveticaNeue-CondensedBold", size: 14),
                     .foregroundColor: UIColor.black
                 ]
             )
@@ -170,9 +170,11 @@ extension PlaylistContentViewController {
         let fractionStepper: CGFloat = 1 / maxValue
         let trackDurationFormatted: String = getSecondsAsMinutesSecondsDigits(Int(maxValue))
         let labelTextAttributes: [NSAttributedStringKey : Any] = [
-            .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+            .font: UIFont(name: "HelveticaNeue-CondensedBold", size: 12),
             .foregroundColor: UIColor.white
         ]
+        
+        // name: "Helvetica-Neue", size: 9
         
         // remove start(min)value from fluid slider control
         trackSliderViewControl!.setMinimumLabelAttributedText(NSAttributedString(
@@ -230,12 +232,12 @@ extension PlaylistContentViewController {
     @objc
     func handleTrackManualJumpToNext(_ sender: UIButton) {
         
-        if  debugMode == true {
-            print ("dbg [playlist/track/ctrl] : jump to next track")
-        }
-        
         if  playlistIsFinished() == false {
             trackIsFinishedByLaw = true
+        }
+        
+        if  debugMode == true {
+            print ("dbg [playlist/track/ctrl] : jumped to next track")
         }
     }
     
@@ -268,6 +270,10 @@ extension PlaylistContentViewController {
         
         trackStopPlaying( _trackIndexCurrent )
         trackStartPlaying( currentTrack.index )
+        
+        if  debugMode == true {
+            print ("dbg [playlist/track/ctrl] : jumped to previous track")
+        }
     }
     
     @objc
