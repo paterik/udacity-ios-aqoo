@@ -264,7 +264,7 @@ extension PlaylistContentViewController {
             currentTrack.index = currentPlaylist.shuffleKeys![_trackShuffleIndexPrevious]
         }
         
-        resetLocalTrackTimeState()
+        resetLocalTrackTimeMeta()
         trackStopPlaying( _trackIndexCurrent )
         trackStartPlaying( currentTrack.index )
     }
@@ -495,7 +495,7 @@ extension PlaylistContentViewController {
         
         if _isFinished == true {
             
-            resetLocalTrackTimeState()
+            resetLocalTrackTimeMeta()
             handleResetForTrackSliderControl( )
             
             if  debugMode == true {
@@ -660,7 +660,7 @@ extension PlaylistContentViewController {
         
         }   else {
             
-            resetLocalTrackTimeState()
+            resetLocalTrackTimeMeta()
             trackStopPlaying( currentTrack.index )
             
             if  playlistIsFinished() == false {
@@ -687,7 +687,7 @@ extension PlaylistContentViewController {
         
         // reset player meta and track state settings
         resetLocalPlayerMetaSettings()
-        resetLocalTrackStates()
+        resetLocalTrackGlobalMeta()
         
         // reset playMode for all (spotify) playlists in cache
         localPlaylistControls.resetPlayModeOnAllPlaylists()
@@ -709,9 +709,9 @@ extension PlaylistContentViewController {
         currentTrack.shuffleIndex = 0
     }
     
-    func resetLocalTrackStates() {
+    func resetLocalTrackGlobalMeta() {
         
-        resetLocalTrackTimeState()
+        resetLocalTrackTimeMeta()
         
         currentTrack.selected = nil
         currentTrack.isPlaying = false
@@ -719,7 +719,7 @@ extension PlaylistContentViewController {
         currentTrack.index = 0
     }
     
-    func resetLocalTrackTimeState() {
+    func resetLocalTrackTimeMeta() {
         
         currentTrack.timePosition = 0
         currentTrack.timeProgress = 0.0
