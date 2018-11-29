@@ -193,7 +193,7 @@ class PlaylistContentViewController: BaseViewController,
         // clear local playlist playback meta
         resetLocalPlayerMetaSettings()
         // clear local track playback meta
-        resetLocalTrackStates()
+        resetLocalTrackGlobalMeta()
         // deactivate trackControls on bottom of this view
         toggleTrackSubControls( false )
         

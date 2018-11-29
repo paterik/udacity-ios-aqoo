@@ -265,6 +265,7 @@ extension PlaylistContentViewController {
         }
         
         resetLocalTrackTimeMeta()
+        
         trackStopPlaying( _trackIndexCurrent )
         trackStartPlaying( currentTrack.index )
     }
