@@ -24,8 +24,9 @@ class StreamPlayListTracks: NSManagedObject {
     @NSManaged var albumCoverLargestImageURL: String?
     @NSManaged var albumCoverSmallestImageURL: String?
     
-    @NSManaged var metaTrackArtists: String
     @NSManaged var metaNumberOfUpdates: Int64
+    @NSManaged var metaTrackArtists: String
+    @NSManaged var metaTrackOrderNumber: Int64
     @NSManaged var metaTrackLastTrackPosition: Int
     @NSManaged var metaTrackIsPlaying: Bool
     

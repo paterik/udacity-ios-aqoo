@@ -4,8 +4,12 @@
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>AQOO demand access to your photo library to use photos as playlist cover override</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>AQOO demand access to your photo library to use cover photos for sharing</string>
 	<key>NSCameraUsageDescription</key>
 	<string>AQOO demand access to your camera to use own images as playlist covers</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

@@ -924,6 +924,53 @@ extension PlaylistViewController {
         }
     }
     
+    func handleShareContentCompletion(
+         activityType: UIActivityType?,
+         shared: Bool,
+         items: [Any]?,
+         error: Error?) {
+        
+        var _playListInDb: StreamPlayList?
+        var _playListMetaListHash: String?
+        
+        if  shared == false {
+            if debugMode == true {
+                print ("dbg [playlist/share/aborted] : user canceled content share - return ...")
+            }
+            
+            return
+        }
+        
+        CoreStore.defaultStack.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                // render hash for new playlist using corresponding cloud entry
+                _playListMetaListHash = self.playlistInCacheSelected!.getMD5Identifier()
+                
+                // corresponding playlist entry exists in db? Check this entry again and prepare for update
+                _playListInDb = transaction.fetchOne(
+                    From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListMetaListHash!))
+                )
+                
+                // update share meta information block
+                if  _playListInDb != nil {
+                    _playListInDb!.metaNumberOfShares += 1
+                }
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                    case .failure(let error): if self.debugMode == true { print (error) }; break
+                    case .success(let userInfo):
+                    if self.debugMode == true {
+                        print ("dbg [playlist/share/success] number of shares updated")
+                    };  break
+                }
+            }
+        )
+    }
+    
     func getPlaylistTracksFromProxyCache(
        _ playlistIdentifier: String)
          -> ([ProxyStreamPlayListTrack], Int) {
@@ -1289,13 +1336,13 @@ extension PlaylistViewController {
         // played, playedParty, playedCompletly and number of shares during development
         //
         
-        var _played = Int.random(1000, 5550) // 234
+        let _played = Int.random(1000, 5550) // 234
+        let _rate_intensity = Int.random(0, 100)
+        let _rate_emotional = Int.random(0, 100)
+        let _rate_depth = Int.random(0, 100)
+        
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
-        var _shares = Int.random(9, 9999999) // 7
-        var _rate_intensity = Int.random(0, 100)
-        var _rate_emotional = Int.random(0, 100)
-        var _rate_depth = Int.random(0, 100)
         
         CoreStore.defaultStack.perform(
             
@@ -1331,7 +1378,6 @@ extension PlaylistViewController {
                         print ("fixture_load --> \(_played) x played")
                         print ("fixture_load --> \(_playedPartly) x playedPartly")
                         print ("fixture_load --> \(_playedCompletly) x playedCompletly")
-                        print ("fixture_load --> \(_shares) x shared")
                         print ("fixture_load --> \(_rate_intensity) x rate/intensity")
                         print ("fixture_load --> \(_rate_emotional) x rate/emotional")
                         print ("fixture_load --> \(_rate_depth) x rate/depth")
@@ -1363,12 +1409,12 @@ extension PlaylistViewController {
                         _playListInDb!.metaNumberOfPlayed = Int64(_played)
                         _playListInDb!.metaNumberOfPlayedPartly = Int64(_playedPartly)
                         _playListInDb!.metaNumberOfPlayedCompletely = Int64(_playedCompletly)
-                        _playListInDb!.metaNumberOfShares = Int64(_shares)
                         _playListInDb!.metaListRatingArousal = Float(_rate_intensity)
                         _playListInDb!.metaListRatingValence = Float(_rate_emotional)
                         _playListInDb!.metaListRatingDepth = Float(_rate_depth)
                     }
                     
+                    _playListInDb!.metaNumberOfShares = 0
                     _playListInDb!.isPlaylistVotedByStar = false
                     _playListInDb!.isPlaylistRadioSelected = false
                     _playListInDb!.isPlaylistHidden = false
@@ -1437,7 +1483,7 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode == true { print (error) }; break
                 case .success(let userInfo):
                     // save handled hashed in separate collection
                     self.spotifyClient.playListHashesInCloud.append(_playListMetaListHash!)
@@ -1446,7 +1492,7 @@ extension PlaylistViewController {
                     if  playListIndex == (self.spotifyClient.playlistsInCloud.count - 1) {
                         self.handlePlaylistDbCacheCoreDataOrphans()
                         self.handlePlaylistProfileEnrichment()
-                    }
+                    };  break
                 }
             }
         )

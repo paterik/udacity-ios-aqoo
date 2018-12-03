@@ -419,18 +419,18 @@ class PlaylistViewController: BaseViewController,
         let playlistShareTitle = "I'm just listening to \"\(playlistInCacheSelected!.metaListInternalName)\" 🎧 - you can find this playlist here: \"\(playlistInCacheSelected!.playableURI)\" (copy the URI into spotifys search)"
         
         for cell in tableView.visibleCells as! Array<PlaylistTableFoldingCell> {
-            // find current opened/valid cell
+            // find current opened (shareable) cell
             if  cell.isUnfolded &&
                 cell.metaPlaylistInDb?.getMD5Identifier() == playlistInCacheSelected?.getMD5Identifier() {
                 // get first low quality image from cell cache as fallback
                 var playlistShareImage = cell.imageViewPlaylistCoverRaw.image
-                // retrieve primary image url (should conatin hq version of cover image)
-                
                 let vc = UIActivityViewController(
                     activityItems: [playlistShareTitle, playlistShareImage],
                     applicationActivities: []
-                );  present(vc, animated: true)
- 
+                );  vc.completionWithItemsHandler = handleShareContentCompletion
+                
+                present(vc, animated: true)
+                
                 return
             }
         }
