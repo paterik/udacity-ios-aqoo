@@ -1000,6 +1000,7 @@ extension PlaylistViewController {
                 var playlistIdentifier : String = playlist.getMD5Identifier()
                 var trackIdentifier : String
                 var trackInDbCache : StreamPlayListTracks?
+                var trackCount : Int64 = 0
                 
                 CoreStore.defaultStack.perform(
                     
@@ -1020,7 +1021,10 @@ extension PlaylistViewController {
                         playlistToUpdate.metaListSnapshotDate = Date()
                         playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
                         
-                        for track in playlistTracksInCloud.0 {
+                        // handle & persist all tracks in each given playlist
+                        for (index, track) in (playlistTracksInCloud.0).enumerated() {
+                            
+                            trackCount += 1
                             
                             trackInDbCache = transaction.fetchOne(
                                 From<StreamPlayListTracks>()
@@ -1049,18 +1053,21 @@ extension PlaylistViewController {
                                 trackInDbCache!.metaTrackArtists = ""
                                 trackInDbCache!.metaTrackIsPlaying = false
                                 trackInDbCache!.metaTrackLastTrackPosition = 0
+                                trackInDbCache!.metaTrackOrderNumber = Int64(index)
                                 
                                 let playlist = transaction.edit(playlistToUpdate)!
                                 
                                 if  self.debugMode == true {
-                                    print ("dbg [playlist] : track = [\(track.trackName)] NOT found -> CREATED")
+                                    print ("dbg [playlist] : track #\(index) = [\(track.trackName)] NOT found -> CREATED")
                                 }
                                 
                             }   else {
                                 
+                                var _trackIndex = trackInDbCache!.metaTrackOrderNumber
+                                
                                 if  trackInDbCache!.getMD5Fingerprint() == track.getMD5Fingerprint() {
                                     if  self.debugMode == true {
-                                        print ("dbg [playlist] : track = [\(track.trackName)] ignored -> NO_CHANGES")
+                                        print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] ignored -> NO_CHANGES")
                                     }
                                     
                                 }   else {
@@ -1084,7 +1091,7 @@ extension PlaylistViewController {
                                     trackInDbCache!.updatedAt = Date()
                                     
                                     if  self.debugMode == true {
-                                        print ("dbg [playlist] : track = [\(track.trackName)] found -> UPDATED")
+                                        print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] found -> UPDATED")
                                     }
                                 }
                             }
@@ -1097,7 +1104,7 @@ extension PlaylistViewController {
                         case .failure(let error): if self.debugMode == true { print (error) }
                         case .success(let userInfo):
                             if  self.debugMode == true {
-                                print ("dbg [playlist] = [\(playlist.metaListInternalName)] handled -> EXTENDED")
+                                print ("dbg [playlist] = [\(playlist.metaListInternalName)], \(trackCount) tracks handled -> EXTENDED")
                                 print ("---")
                             }
                         }
@@ -1271,7 +1278,7 @@ extension PlaylistViewController {
 
         CoreStore.defaultStack.perform(
             
-            // weazL :: bug_1001 - sometimes this async process will terminate my app
+            // stability issue :: sometimes this async process will terminate the app
             asynchronous: { (transaction) -> Void in
                 
                 do {
