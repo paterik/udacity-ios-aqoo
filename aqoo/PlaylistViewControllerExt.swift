@@ -1347,6 +1347,7 @@ extension PlaylistViewController {
         
         var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
         var _playedCompletly = _played - _playedPartly // 54
+        var _playlistTitleRaw: String = ""
         
         CoreStore.defaultStack.perform(
             
@@ -1378,6 +1379,9 @@ extension PlaylistViewController {
                        _ownerProfileImageStringURL = _ownerProfileImageURL!.absoluteString
                     }
                     
+                    // (raw)fetch all kind of titles including empty/whitespaced ones
+                    _playlistTitleRaw = playListInCloud.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
                     if  self.debugLoadFixtures == true && self.debugMode == true {
                         print ("fixture_load --> \(_played) x played")
                         print ("fixture_load --> \(_playedPartly) x playedPartly")
@@ -1395,8 +1399,8 @@ extension PlaylistViewController {
                     _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                     _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                     _playListInDb!.isPublic = playListInCloud.isPublic
+                    _playListInDb!.isIncomplete = false
                     
-                    _playListInDb!.metaListNameOrigin = playListInCloud.name
                     _playListInDb!.metaLastListenedAt = nil
                     _playListInDb!.metaNumberOfUpdates = 0
                     _playListInDb!.metaNumberOfShares = 0
@@ -1404,6 +1408,17 @@ extension PlaylistViewController {
                     _playListInDb!.metaNumberOfPlayed = 0
                     _playListInDb!.metaNumberOfPlayedPartly = 0
                     _playListInDb!.metaNumberOfPlayedCompletely = 0
+                    _playListInDb!.metaListNameOrigin = _playlistTitleRaw
+                    
+                    // some playlists will be handled icomplete and will (re)fetched during the next viewLoad process, ..
+                    // a single spaced playlistName identify those playlist meta results - I'll tag those also in advance
+                    if (_playlistTitleRaw == "") {
+                        _playListInDb!.metaListNameOrigin = "playlist #\(playListIndex)"
+                        if  playListInCloud.owner.displayName != nil {
+                           _playListInDb!.metaListNameOrigin = "\(playListInCloud.owner.displayName!)'s playlist #\(playListIndex)"
+                           _playListInDb!.isIncomplete = true
+                        }
+                    }
                     
                     //
                     // activate simulated meta values for single playlist entries during loadUp
@@ -1434,7 +1449,7 @@ extension PlaylistViewController {
                     _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
                     _playListInDb!.currentPlayMode = playMode.Stopped.rawValue // (0: no-action)
                     
-                    _playListInDb!.metaListInternalName = playListInCloud.name
+                    _playListInDb!.metaListInternalName = _playListInDb!.metaListNameOrigin
                     _playListInDb!.metaListInternalDescription = self.getPlaylistInternalDescription(
                          playListInCloud,
                         _playListInDb!
@@ -1469,6 +1484,7 @@ extension PlaylistViewController {
                         _playListInDb!.trackCount = Int32(playListInCloud.trackCount)
                         _playListInDb!.isCollaborative = playListInCloud.isCollaborative
                         _playListInDb!.isPublic = playListInCloud.isPublic
+                        _playListInDb!.isIncomplete = false
                         _playListInDb!.metaNumberOfUpdates += 1
                         _playListInDb!.metaPreviouslyUpdatedManually = false
                         _playListInDb!.metaPreviouslyUpdated = true

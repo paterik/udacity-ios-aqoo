@@ -29,6 +29,7 @@ class StreamPlayList: NSManagedObject {
     @NSManaged var isSpotify: Bool
     @NSManaged var isPublic: Bool
     @NSManaged var isCollaborative: Bool
+    @NSManaged var isIncomplete: Bool
     
     @NSManaged var isPlaylistVotedByStar: Bool
     @NSManaged var isPlaylistRadioSelected: Bool

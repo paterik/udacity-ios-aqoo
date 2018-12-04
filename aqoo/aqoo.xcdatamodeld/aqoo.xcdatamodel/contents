@@ -5,6 +5,7 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="currentPlayMode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isCollaborative" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isIncomplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isMine" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPlaylistRadioSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -101,7 +102,7 @@
         <relationship name="provider" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StreamProvider" inverseName="configs" inverseEntity="StreamProvider" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="765"/>
+        <element name="StreamPlayList" positionX="-54" positionY="18" width="128" height="780"/>
         <element name="StreamPlayListTags" positionX="-54" positionY="135" width="128" height="105"/>
         <element name="StreamPlayListTracks" positionX="-54" positionY="135" width="128" height="360"/>
         <element name="StreamProvider" positionX="-63" positionY="-18" width="128" height="135"/>
