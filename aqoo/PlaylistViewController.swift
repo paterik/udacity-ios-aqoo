@@ -269,6 +269,11 @@ class PlaylistViewController: BaseViewController,
         
         let playlistCell = tableView.cellForRow(at: indexPath) as! PlaylistTableFoldingCell
        
+        // prevent edit actions on inclomplete playlists
+        if  playlistCell.metaPlaylistInDb?.isIncomplete == true {
+            return []
+        }
+        
         if  playlistCell.metaPlaylistInDb == nil {
             handleErrorAsDialogMessage(
                 "Error Loading Cache Playlist",
@@ -346,7 +351,7 @@ class PlaylistViewController: BaseViewController,
         
         var duration = 0.0
         
-        // is cell currently opening
+        // is cell currently opening?
         if  cellHeights[indexPath.row] == sysCloseCellHeight {
             cellHeights[indexPath.row] = sysOpenCellHeight
             

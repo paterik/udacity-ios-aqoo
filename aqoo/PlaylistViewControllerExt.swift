@@ -1610,7 +1610,11 @@ extension PlaylistViewController {
                 
                 self.defaultStreamingProvider = provider
                 
-                return transaction.fetchAll(From<StreamPlayList>().where(\StreamPlayList.provider == provider))
+                return transaction.fetchAll(From<StreamPlayList>().where(
+                        (\StreamPlayList.provider == provider) &&
+                        (\StreamPlayList.isIncomplete  == false)
+                    )
+                )
             },
             
             success: { (transactionPlaylists) in
