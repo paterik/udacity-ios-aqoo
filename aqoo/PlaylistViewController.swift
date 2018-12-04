@@ -405,7 +405,7 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
         
-        _ = self.navigationController!.popViewController(animated: true)
+        self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
