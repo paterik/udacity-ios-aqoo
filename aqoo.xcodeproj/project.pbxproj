@@ -415,13 +415,6 @@
 			name = extension;
 			sourceTree = "<group>";
 		};
-		B1ACE8C5213AE23300D0AB30 /* _tracks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = _tracks;
-			sourceTree = "<group>";
-		};
 		B1B3E17D2102269800F05ABE /* proxy */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,7 +528,6 @@
 		B1F88B791F70458E0005FE43 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				B1ACE8C5213AE23300D0AB30 /* _tracks */,
 				B1ACE8C3213ADC3500D0AB30 /* _tracklists */,
 				B18989281F72B95C00516A53 /* _playlists */,
 				B18989271F72B95000516A53 /* _login */,

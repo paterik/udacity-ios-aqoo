@@ -398,19 +398,16 @@ extension PlaylistViewController {
         // cleanUp filter definition
         playListBasicFilterItems.removeAll()
         
-        // define our loading bar
+        // define (and show) our playlist loading bar
         playlistGradientLoadingBar = GradientLoadingBar(
-            height: 3,
+            height: 5,
             durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
                 UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
                 UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
             ],
             onView: self.view
-        )
-        
-        // and show loading bar now ...
-        playlistGradientLoadingBar.show()
+        );  playlistGradientLoadingBar.show()
     }
     
     func setupUICacheProcessor() {

@@ -10,6 +10,7 @@ import UIKit
 import Spotify
 import CoreStore
 import Kingfisher
+import GradientLoadingBar
 import NotificationBannerSwift
 import MaterialComponents.MaterialProgressView
 import fluid_slider
@@ -21,6 +22,17 @@ extension PlaylistContentViewController {
         var _noCoverImageAvailable : Bool = true
         var _usedCoverImageCacheKey : String?
         var _usedCoverImageURL : URL?
+        
+        // define (and show) our tracklist loading bar
+        trackListGradientLoadingBar = GradientLoadingBar(
+            height: 5,
+            durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
+            gradientColorList: [
+                UIColor(netHex: 0x1ED760),
+                UIColor(netHex: 0xff2D55)
+            ],
+            onView: self.trackControlView.imageViewPlaylistCover
+        );  trackListGradientLoadingBar.show()
         
         // try to bound cover image using user generated image (cover override)
         if  playListInDb!.coverImagePathOverride != nil {
@@ -773,5 +785,8 @@ extension PlaylistContentViewController {
             From<StreamPlayList>()
                 .where(\StreamPlayList.metaListHash == playListInDb!.getMD5Identifier())
         )
+        
+        // finalize the preload process, hide loading bar ...
+        trackListGradientLoadingBar.hide()
     }
 }

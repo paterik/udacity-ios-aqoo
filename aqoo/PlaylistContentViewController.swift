@@ -11,6 +11,7 @@ import Spotify
 import CoreStore
 import Kingfisher
 import fluid_slider
+import GradientLoadingBar
 import NotificationBannerSwift
 import BGTableViewRowActionWithImage
 
@@ -32,6 +33,7 @@ class PlaylistContentViewController: BaseViewController,
     var trackIndexNewValueInSeconds: Int = 0
     var trackIndexOldValueInSeconds: Int = 0
     var trackIsFinishedByLaw: Bool = false
+    var trackListGradientLoadingBar = GradientLoadingBar()
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
