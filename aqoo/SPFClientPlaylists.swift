@@ -28,6 +28,7 @@ class SPFClientPlaylists: NSObject {
     var playlistsInCloudExtended = [ProxyStreamPlayListExtended]()
     var playlistTracksInCloud = [ProxyStreamPlayListTrack]()
     var playlistTracksLastUpdate = Date()
+    var playlistRefreshEnforced: Bool = false
     
     // secondary internal proxy meta objects
     var playListHashesInCloud = [String]()

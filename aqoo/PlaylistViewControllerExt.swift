@@ -125,8 +125,7 @@ extension PlaylistViewController {
     }
     
     func getFilterBlockByIndex(
-       _ index : Int)
-         -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
+       _ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
             
         var filterTitle: String = "Playlist Loaded"
         var filterDescription: String = "you can choose any filter from the top menu"
@@ -335,7 +334,7 @@ extension PlaylistViewController {
         }   else {
             HUD.flash(.label("no playlists"), delay: 2.0)
             spotifyClient.playlistsInCache = []
-            // weazL :: feature_1001 : user will be informed using a simple dialog
+            // @todo :: feature_1001 : user will be informed using a simple dialog
             // - do you want to load your playlist using one of your favorite filters instead?
             // - filter1, filter2 or filter3 ...
         }
@@ -364,7 +363,7 @@ extension PlaylistViewController {
 
     func setupUITableView() {
         
-        // weazL :: feature_1002 : thats a bit "majic" here, we've to prepare our
+        // @todo :: feature_1002 : thats a bit "majic" here, we've to prepare our
         // table/cell struture by a minimum of countable cells (as preCache) this
         // will be work until someone had a playlist containing more than 9999
         // playlists -> still looking for an alternative logic implementation here 🤔
@@ -382,7 +381,7 @@ extension PlaylistViewController {
         backgroundImgView.clipsToBounds = true
         backgroundImgView.layoutIfNeeded()
         
-        //backgroundImgView.image = UIImage(named: "img_aqoo_wp_05")
+        // backgroundImgView.image = UIImage(named: "img_aqoo_wp_05")
         backgroundImgView.backgroundColor = UIColor(netHex: 0x222222)
         backgroundImgView.center = view.center
         
@@ -545,10 +544,6 @@ extension PlaylistViewController {
                             "userProfileData": profileUser
                             ]
                         )
-                        
-                        // DispatchQueue.main.async {
-                        //     self.handlePlaylistDbCacheOwnerProfileData ...
-                        // }
                     }
                 }
             }
@@ -600,7 +595,10 @@ extension PlaylistViewController {
     @objc
     func setupUILoadMetaExtendedPlaylists() {
         
+        // in this version of aqoo only a base set of meta data will be extending our playlist rows
         handlePlaylistExtendedMetaEnrichment()
+        // further enrichments are in alpha and will be available soon
+        // ...
     }
     
     @objc
@@ -638,6 +636,22 @@ extension PlaylistViewController {
             }
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
+        }
+    }
+    
+    func handlePlaylistIncompletData(
+       _ playlistCell: PlaylistTableFoldingCell,
+       _ playlistItem: StreamPlayList) {
+     
+        playlistCell.lblPlaylistName.alpha = 1
+        playlistCell.imageViewPlaylistCover.alpha = 1
+        playlistCell.imageViewPlaylistOwner.alpha = 1
+        playlistCell.lblPlaylistMetaTrackCount.backgroundColor = UIColor(netHex: 0x222222)
+        if  playlistCell.metaPlaylistInDb!.isIncomplete == true {
+            playlistCell.imageViewPlaylistCover.alpha = 0.475
+            playlistCell.imageViewPlaylistOwner.alpha = 0.475
+            playlistCell.lblPlaylistName.alpha = 0.475
+            playlistCell.lblPlaylistMetaTrackCount.backgroundColor = UIColor(netHex: 0xFC1155)
         }
     }
     
@@ -873,6 +887,7 @@ extension PlaylistViewController {
                     case .failure(let error): if self.debugMode == true { print (error) }
                     case .success(let userInfo):
                         if  self.debugMode == true {
+                            self.spotifyClient.playlistRefreshEnforced = true
                             self.handlePlaylistCloudRefresh()
                             print ("dbg [playlist] : cache ➡ local db cache removed")
                         }
@@ -900,7 +915,8 @@ extension PlaylistViewController {
             
             if  playlistInCloudLastLocalUpdate == nil ||
                 Date() >= (playlistInCloudLastLocalUpdate! + _sysPlaylistCacheRefreshEnforce) ||
-                spotifyClient.playlistsInCloud.count == 0 {
+                spotifyClient.playlistsInCloud.count == 0 ||
+                spotifyClient.playlistRefreshEnforced == true {
                 
                 loadProvider ( spotifyClient.spfStreamingProviderDbTag )
                 playlistInCloudLastLocalUpdate = Date()
@@ -913,6 +929,7 @@ extension PlaylistViewController {
                 };  return
  
             }
+            
         } else {
             
             if  debugMode == true {
@@ -1545,6 +1562,12 @@ extension PlaylistViewController {
         return nil
     }
     
+    //
+    // primary list load meta method, this function will be used to load all our playlist data including tracks,
+    // owner, extended meta information and media content (only spotify will be supported in this version of aqoo)
+    //
+    // -> loadProviderPlaylists()
+    //
     func loadProvider (
        _ tag: String) {
         
@@ -1561,18 +1584,17 @@ extension PlaylistViewController {
             success: { (transactionProvider) in
                 
                 if transactionProvider != nil {
-                    if  self.debugMode == true {
-                        print ("dbg [playlist] : provider [\(tag)] successfully loaded, fetching playlists now")
-                    }
                     
                     self.spotifyClient.spfStreamingProvider = transactionProvider!
-                    self.loadProviderPlaylists ( self.spotifyClient.spfStreamingProvider! )
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : provider [\(tag)] successfully loaded, fetching playlists now")
+                    };  self.loadProviderPlaylists ( self.spotifyClient.spfStreamingProvider! )
                     
                 }   else {
                     
                     self.handleErrorAsDialogMessage(
                         "Error Loading Provider",
-                        "Oops! No provider were found in database ..."
+                        "Oops! [\(tag)] wasn't found in supported provider stack"
                     )
                 }
             },
@@ -1588,14 +1610,6 @@ extension PlaylistViewController {
     
     func loadProviderPlaylists (
        _ provider: StreamProvider) {
-        
-        if provider.tag != _sysDefaultProviderTag {
-            
-            handleErrorAsDialogMessage(
-                "Error Loading Provider",
-                "Oops! The provider '\(provider.name)' isn't supported yet ..."
-            );  return
-        }
         
         // first of all fetch new playlists from api for comparision
         spotifyClient.handlePlaylistGetFirstPage(

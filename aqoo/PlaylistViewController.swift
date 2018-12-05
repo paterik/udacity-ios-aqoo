@@ -236,6 +236,7 @@ class PlaylistViewController: BaseViewController,
         handlePlaylistTimeAndDateMeta ( playlistCell, playlistCacheData )
         handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
         handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
+        handlePlaylistIncompletData   ( playlistCell, playlistCacheData )
         
         playlistCell.durationsForExpandedState = sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = sysCellClosingDurations
@@ -381,11 +382,7 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnRefreshPlaylistAction(_ sender: Any) {
         
-        if  self.debugMode == true {
-            handlePlaylistCacheCleanUp()
-        }   else {
-            handlePlaylistCloudRefresh()
-        }
+        handlePlaylistCacheCleanUp()
     }
     
     @IBAction func btnPlayRepeatModeAction(_ playModeControlBtn: UIButton) {
@@ -401,11 +398,6 @@ class PlaylistViewController: BaseViewController,
     @IBAction func btnPlayNormalModeAction(_ playModeControlBtn: UIButton) {
         
         handlePlaylistCellObjectsByTapAction( playModeControlBtn )
-    }
-    
-    @IBAction func btnExitLandingPageAction(_ sender: Any) {
-        
-        self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
@@ -444,5 +436,10 @@ class PlaylistViewController: BaseViewController,
     @IBAction func btnShowPlaylistContentAction(_ sender: Any) {
         
         performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
+    }
+    
+    @IBAction func btnExitLandingPageAction(_ sender: Any) {
+        
+        navigationController!.popViewController(animated: true)
     }
 }
