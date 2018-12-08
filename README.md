@@ -59,7 +59,7 @@ After authentication the app will provide you a tableView with all your spotify 
 
 Playlist View | Playlist Cell Controls | Playlist Cell Details 
 :-------------------------:|:-------------------------:|:-------------------------:
-![normal playlist view](github/media/small/aq_playlist_01.png) |  ![playlist cell controls](github/media/small/aq_playlist_03.png) | ![playlist cell details](github/media/small/aq_playlist_02.png)
+![normal playlist view](github/media/small/aq_playlist_04.png) |  ![playlist cell controls](github/media/small/aq_playlist_03.png) | ![playlist cell details](github/media/small/aq_playlist_02.png)
 
 ## Your Playlist Edit View
 
