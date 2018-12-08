@@ -49,11 +49,13 @@ class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
         
         let resetPlaylistStatsRequest = UIAlertController(
             title: "Reset Statistics?",
-            message: "do you want to reset all meta statistics from this playlist?",
+            message: "do you want to reset all meta statistics of this playlist?",
             preferredStyle: UIAlertControllerStyle.alert
         )
         
         let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
+            
+            self.handlePlaylistStatisticReset()
             
             return
         }
