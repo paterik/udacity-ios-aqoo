@@ -205,7 +205,6 @@ class SpotifyClient: SPFClientPlaylists {
     
     func isSpotifyTokenValid() -> Bool {
         
-        // bug !!! this method/logic activate a deep session persistance !!!
         let userDefaults = UserDefaults.standard
         
         if  let sessionObj:AnyObject = userDefaults.object(
@@ -231,6 +230,7 @@ class SpotifyClient: SPFClientPlaylists {
     func closeSpotifySession() {
         
         let storage = HTTPCookieStorage.shared
+        let userDefaults = UserDefaults.standard
         
         SPTAuth.defaultInstance().session = nil
         spfIsLoggedIn = false
@@ -239,14 +239,15 @@ class SpotifyClient: SPFClientPlaylists {
         
         for cookie: HTTPCookie in storage.cookies! {
             
-            print (cookie) // weazL
-            
             if  (cookie.domain as NSString).range(of: "spotify."  ).length > 0 ||
                 (cookie.domain as NSString).range(of: "facebook." ).length > 0 {
                 
                 storage.deleteCookie(cookie)
             }
         }
+        
+        userDefaults.removeObject(forKey: spfSessionUserDefaultsKey)
+        userDefaults.synchronize()
     }
     
     internal func _initAPIContext() {
