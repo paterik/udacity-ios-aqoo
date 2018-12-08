@@ -47,8 +47,6 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         setupUILoginControls()
         
-        // if  spotifyClient.spfEnforceSessionKill == true { return }
-    
         if  spotifyClient.isSpotifyTokenValid() {
 
             lblSpotifySessionStatus.text = "CONNECTED"
