@@ -11,7 +11,7 @@ import Spotify
 
 extension LoginViewController {
 
-    func renewTokenAndShowLandingPage() {
+    func renewTokenAndShowAppLandingPage() {
         
         spotifyClient.spfAuth.renewSession(spotifyClient.spfCurrentSession!) { error, session in
             
@@ -23,15 +23,17 @@ extension LoginViewController {
                 return
             }
             
-            self.showLandingPage()
+            self.showAppLandingPage()
         }
     }
     
-    func showLandingPage() {
+    func showAppLandingPage() {
         
         //
-        // lets start with users playlistView
+        // reset sessionKillSwitch and start with landingPage (playlistView :: "showAllUserPlaylists")
         //
+        
+        spotifyClient.spfEnforceSessionKill == false
         
         performSegue(withIdentifier: _defaultLandingPageSegueId, sender: self)
     }
@@ -55,7 +57,7 @@ extension LoginViewController {
         
         if  spotifyClient.isSpotifyTokenValid() {
             
-            showLandingPage()
+            showAppLandingPage()
             
         }   else {
             

@@ -43,21 +43,23 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         super.viewWillAppear(animated)
         
-        setupUILoginControls() 
+        setupUILoginControls()
+        
+        if  spotifyClient.spfEnforceSessionKill == true {
+            return
+        }
     
-        if  spotifyClient.isSpotifyTokenValid() &&
-            spotifyClient.spfEnforceSessionKill == false {
+        if  spotifyClient.isSpotifyTokenValid() {
 
             lblSpotifySessionStatus.text = "CONNECTED"
-            showLandingPage()
+            showAppLandingPage()
         
         } else {
             
-            if  spotifyClient.spfAuth.hasTokenRefreshService &&
-                spotifyClient.spfEnforceSessionKill == false {
+            if  spotifyClient.spfAuth.hasTokenRefreshService {
         
                 lblSpotifySessionStatus.text = "REFRESH TOKEN"
-                renewTokenAndShowLandingPage() 
+                renewTokenAndShowAppLandingPage() 
             }
         }
     }

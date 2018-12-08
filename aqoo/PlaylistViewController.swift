@@ -443,8 +443,8 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnLogoutFromAppAction(_ sender: Any) {
      
-        // localPlayer.player?.logout()
-        // spotifyClient.closeSpotifySession()
+        localPlayer.player?.logout()
+        spotifyClient.closeSpotifySession()
         
         print ("__ exit, try presentingViewController?.dismiss")
         self.presentingViewController?.dismiss(animated: true, completion: nil)

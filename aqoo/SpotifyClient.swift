@@ -234,8 +234,11 @@ class SpotifyClient: SPFClientPlaylists {
         SPTAuth.defaultInstance().session = nil
         spfIsLoggedIn = false
         spfCurrentSession = nil
+        spfEnforceSessionKill = true
         
         for cookie: HTTPCookie in storage.cookies! {
+            
+            print (cookie) // weazL
             
             if  (cookie.domain as NSString).range(of: "spotify."  ).length > 0 ||
                 (cookie.domain as NSString).range(of: "facebook." ).length > 0 {
