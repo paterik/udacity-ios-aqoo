@@ -49,7 +49,7 @@ AQOO is following the MVC pattern by structural and logical definition. The app 
 
 After starting the app and the launch screen disapears a login view will allow to identify yourself using your spotify credentials. *Please take note, that you’ll require a premium spotify account to use AQOO.*
 
-Splash screen | Login screen
+Splash Screen | Login Screen
 :-------------------------:|:-------------------------:
 ![splash screen](github/media/small/aq_launch_01.png)  |  ![login view](github/media/small/aq_login_01.png)
 
@@ -57,6 +57,7 @@ Splash screen | Login screen
 
 After authentication the app will provide you a tableView with all your spotify playlists available. Here you can filter, edit, hide using background cell controls or open a more detailed cell-view for each entry. *You can also jump from selected playlist into tracklist view directly*.
 
+Playlist View | Playlist Cell Controls | Playlist Cell Details 
 :-------------------------:|:-------------------------:|:-------------------------:
 ![normal playlist view](github/media/small/aq_playlist_01.png) |  ![playlist cell controls](github/media/small/aq_playlist_03.png) | ![playlist cell details](github/media/small/aq_playlist_02.png)
 
@@ -64,6 +65,7 @@ After authentication the app will provide you a tableView with all your spotify 
 
 You can configure your playlist by editing base information like title and description furthermore you can add tags to help categorize you list  and rate you playlist using three different meta values (intensity, emotivness and depth).
 
+Playlist Edit View | Playlist Rating View | Playlist Meta Edit View
 :-------------------------:|:-------------------------:|:-------------------------:
 ![main edit view](github/media/small/aq_playlist_edit_01.png) |  ![rating view](github/media/small/aq_playlist_edit_02.png) | ![playlist details view](github/media/small/aq_playlist_edit_03.png)
 
@@ -71,6 +73,7 @@ You can configure your playlist by editing base information like title and descr
 
 From each playlist entry you can switch to the corresponding tracklist and start playling in shuffle-, repeat- or normal mode. While the track is playing there are additional controls available such as jump between tracks and skipping forward or backward inside the track using the timeframe slider. *In general you can switch between two main views for your playlists stack - the normal table based view and the playlist cover view*. 
 
+Tracklist View | Tracklist Playback | Playlist Cover View
 :-------------------------:|:-------------------------:|:-------------------------:
 ![normal tracklist](github/media/small/aq_tracklist_01.png) |  ![playmode active](github/media/small/aq_tracklist_02.png) | ![playlist cover view](github/media/small/aq_coverlist_01.png)
 
