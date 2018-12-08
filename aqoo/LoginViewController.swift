@@ -45,14 +45,16 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         setupUILoginControls() 
     
-        if spotifyClient.isSpotifyTokenValid() {
+        if  spotifyClient.isSpotifyTokenValid() &&
+            spotifyClient.spfEnforceSessionKill == false {
 
             lblSpotifySessionStatus.text = "CONNECTED"
             showLandingPage()
         
         } else {
             
-            if spotifyClient.spfAuth.hasTokenRefreshService {
+            if  spotifyClient.spfAuth.hasTokenRefreshService &&
+                spotifyClient.spfEnforceSessionKill == false {
         
                 lblSpotifySessionStatus.text = "REFRESH TOKEN"
                 renewTokenAndShowLandingPage() 

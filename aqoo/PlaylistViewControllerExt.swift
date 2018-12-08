@@ -205,7 +205,7 @@ extension PlaylistViewController {
         // fetch logical filterBlock by key selection index
         let filterBlock = getFilterBlockByIndex( index )
         // persist current filter to provider based playlist
-        setConfigTableFilterKeyByProviderTag ( Int16 (index), "_spotify" )
+        setConfigTableFilterKeyByProviderTag ( Int16 (index), _sysDefaultProviderTag )
         // show notification for user about current filter set
         showFilterNotification ( filterBlock.0, filterBlock.1, filterBlock.5 )
         // call specific filter action corresponding to current filter-item menu selection
@@ -232,16 +232,26 @@ extension PlaylistViewController {
             return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
         }
         
-        return 0
+        // no filter set? activate default filter!
+        setConfigTableFilterKeyByProviderTag ( Int16(sysPlaylistDefaultFilterIndex), _sysDefaultProviderTag )
+        
+        return sysPlaylistDefaultFilterIndex
     }
     
     func setConfigTableFilterKeyByProviderTag(
        _ filterKey: Int16 = 0,
        _ filterProviderTag: String = "_spotify") {
         
+        if  spotifyClient.spfCurrentSession == nil {
+            handleErrorAsDialogMessage("Session Error", "unable to save current filter to your playlist - session lost!")
+            return
+        }
+        
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
+                
+                let providerUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
                 
                 // prefetch stream provider entity again to select corresponding config by lines below ...
                 var _configProvider = transaction.fetchOne(
@@ -259,6 +269,7 @@ extension PlaylistViewController {
                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
                    _configKeyRow!.isGlobal = false // this config will be provider dependent
                    _configKeyRow!.provider = _configProvider!
+                   _configKeyRow!.providerUserId = providerUserId
                    _configKeyRow!.createdAt = Date()
                     
                     if  self.debugMode == true {
@@ -332,7 +343,7 @@ extension PlaylistViewController {
             spotifyClient.playlistsInCache = filterQueryResults
             
         }   else {
-            HUD.flash(.label("no playlists"), delay: 2.0)
+            HUD.flash(.label("no playlists for this filter"), delay: 2.275)
             spotifyClient.playlistsInCache = []
             // @todo :: feature_1001 : user will be informed using a simple dialog
             // - do you want to load your playlist using one of your favorite filters instead?
@@ -407,6 +418,33 @@ extension PlaylistViewController {
             ],
             onView: self.view
         );  playlistGradientLoadingBar.show()
+    }
+    
+    func setupDBSessionAuth() {
+        
+        if  spotifyClient.isSpotifyTokenValid() {
+            
+            // get current provider session based userId as primary identifier
+            // and cleanUP foreign/old user based data from app
+            
+            let providerUserId = spotifyClient.spfCurrentSession!.canonicalUsername
+            
+            CoreStore.defaultStack.perform(
+                asynchronous: { (transaction) -> Int? in transaction.deleteAll(
+                    From<StreamPlayList>().where((\StreamPlayList.aqooUserId != providerUserId)))
+                },
+                completion: { (result) -> Void in
+                    
+                    switch result {
+                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .success(let userInfo):
+                        if  self.debugMode == true {
+                            print ("dbg [playlist] : old user playlists cache removed")
+                        }
+                    }
+                }
+            )
+        }
     }
     
     func setupUICacheProcessor() {
@@ -555,10 +593,6 @@ extension PlaylistViewController {
             )
         }
     }
-    
-    //
-    // weazL :: note_1001 : main listView logic, place for filter handling
-    //
     
     func setupUICollapseAllVisibleOpenCells() {
         
@@ -1413,6 +1447,8 @@ extension PlaylistViewController {
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
+                    _playListInDb!.aqooUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
+                    
                     _playListInDb!.createdAt = Date()
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
                     _playListInDb!.trackCountOld = 0
@@ -1636,6 +1672,8 @@ extension PlaylistViewController {
             
             success: { (transactionPlaylists) in
                 
+                HUD.flash(.label("loading playlists"), delay: 2.0)
+                
                 if transactionPlaylists?.isEmpty == false {
                     
                     // store database fetch results in cache collection
@@ -1649,6 +1687,7 @@ extension PlaylistViewController {
                     if  self.debugMode == true {
                         print ("dbg [playlist] : no cached playlist data for this provider found ...")
                     };  self.spotifyClient.playlistsInCache = []
+                        self.playlistGradientLoadingBar.hide()
                 }
             },
             
@@ -1850,9 +1889,7 @@ extension PlaylistViewController {
                         // send out user notification on any relevant playMode changes
                         self.showUserNotification(
                             "Now playing \(playListInDb.metaListInternalName)",
-                            "using \(self.getPlayModeAsString(newPlayMode)) playmode",
-                            nil,
-                            0.9275
+                            "using \(self.getPlayModeAsString(newPlayMode)) playmode", nil, 0.9275
                         )
                         
                     }   else {

@@ -7,7 +7,6 @@
 //
 
 import CoreStore
-import CryptoSwift
 
 class StreamProviderConfig: NSManagedObject {
     
@@ -16,4 +15,5 @@ class StreamProviderConfig: NSManagedObject {
     @NSManaged var updatedAt: Date?
     @NSManaged var isGlobal: Bool
     @NSManaged var provider: StreamProvider?
+    @NSManaged var providerUserId: String
 }

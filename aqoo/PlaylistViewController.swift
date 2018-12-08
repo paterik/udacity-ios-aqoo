@@ -27,6 +27,7 @@ class PlaylistViewController: BaseViewController,
     // MARK: Class IBOutlet definitions
     //
     
+    @IBOutlet weak var btnLogoutFromApp: UIBarButtonItem!
     @IBOutlet weak var btnRefreshPlaylist: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
@@ -59,6 +60,7 @@ class PlaylistViewController: BaseViewController,
     let sysPlaylistFilterHighlightColor = UIColor(netHex: 0x191919)
     let sysPlaylistFilterBackgroundColor = UIColor(netHex: 0x222222)
     let sysPlaylistSwipeBackgroundColor = UIColor(netHex: 0x222222)
+    let sysPlaylistDefaultFilterIndex: Int = 0
     
     //
     // MARK: Class Variables
@@ -143,6 +145,8 @@ class PlaylistViewController: BaseViewController,
         
         super.viewDidLoad()
         
+        setupDBSessionAuth()
+        
         setupUIBase()
         setupUICacheProcessor()
         setupUIEventObserver()
@@ -172,8 +176,6 @@ class PlaylistViewController: BaseViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "showPlaylistContentViewController" {
-            // logout from player
-            // localPlayer.player?.logout()
             
             if  let nvc = segue.destination as? UINavigationController {
                 nvc.viewControllers.forEach {
@@ -186,6 +188,7 @@ class PlaylistViewController: BaseViewController,
         }
         
         if  segue.identifier == "showPlaylistEditViewTabController" {
+            
             if  let editViewTabBarController = segue.destination as? PlaylistEditViewTabBarController {
                 editViewTabBarController.viewControllers?.forEach {
                     if  let nvc = $0 as? UINavigationController {
@@ -436,6 +439,17 @@ class PlaylistViewController: BaseViewController,
     @IBAction func btnShowPlaylistContentAction(_ sender: Any) {
         
         performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
+    }
+    
+    @IBAction func btnLogoutFromAppAction(_ sender: Any) {
+     
+        localPlayer.player?.logout()
+        spotifyClient.closeSpotifySession()
+        
+        print ("!!! EXIT_APP_MAINVIEW 01 !!!")
+        
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {

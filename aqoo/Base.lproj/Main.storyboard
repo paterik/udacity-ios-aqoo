@@ -89,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="136.28185907046478"/>
+            <point key="canvasLocation" x="959" y="137"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="c1N-0K-ZsT">
@@ -862,6 +862,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Playlists" id="vBT-KK-rGM" userLabel="ui_nav_playlists_main">
+                        <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="k5v-SG-6XA" userLabel="btnLogoutFromApp">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="btnLogoutFromAppAction:" destination="ldu-zH-OI7" id="t7b-HX-TnK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">
                             <color key="tintColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -870,6 +876,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnLogoutFromApp" destination="k5v-SG-6XA" id="KcV-Ru-dz9"/>
                         <outlet property="btnRefreshPlaylist" destination="Mbz-BF-aJM" id="mfo-iz-ttJ"/>
                         <outlet property="tableView" destination="6bT-aE-8Bz" id="zoI-lA-Crz"/>
                         <segue destination="Ps3-kk-VSI" kind="showDetail" identifier="showPlaylistEditViewTabController" id="avI-XT-aBv"/>
@@ -878,7 +885,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3560.8000000000002" y="-174.06296851574214"/>
+            <point key="canvasLocation" x="3561" y="-704"/>
         </scene>
         <!--VCPlaylistEditViewFirstPage-->
         <scene sceneID="9oS-mC-jbO">
@@ -1068,7 +1075,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fid-O6-mIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3560.8000000000002" y="557.27136431784118"/>
+            <point key="canvasLocation" x="3561" y="791"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k0q-vn-cbX">

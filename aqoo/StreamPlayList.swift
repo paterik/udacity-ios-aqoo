@@ -11,6 +11,8 @@ import CryptoSwift
 
 class StreamPlayList: NSManagedObject {
     
+    @NSManaged var aqooUserId: String
+    
     @NSManaged var owner: String
     @NSManaged var ownerSharingURL: String
     @NSManaged var ownerImageURL: String

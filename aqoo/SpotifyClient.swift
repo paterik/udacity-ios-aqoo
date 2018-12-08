@@ -36,6 +36,7 @@ class SpotifyClient: SPFClientPlaylists {
     var spfCurrentSession: SPTSession?
     var spfStreamingProvider: StreamProvider?
     var spfIsLoggedIn: Bool = false
+    var spfEnforceSessionKill: Bool = false
     var spfUsername: String = "unknown"
     var spfUserDefaultImage: UIImage?
     var spfUserDefaultImageUrl: URL?
