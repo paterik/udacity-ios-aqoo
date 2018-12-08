@@ -19,7 +19,7 @@
 - AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
 and run ```pod install``` on your console before starting the app as your XCode workspace.
 
-- AQOO uses multiple API endpoints (https://developer.spotify.com/documentation/web-api/quick-start/) by spotifies iOS SDK webAPI-wrapper.
+- AQOO uses multiple API endpoints by [spotifies iOS SDK](https://developer.spotify.com/documentation/web-api/quick-start/) webAPI-wrapper.
 
 - AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from icons8. A complete list of used libraries and assets can be found inside the projects [COPYRIGHT.md](COPYRIGHT.md) file.
 
