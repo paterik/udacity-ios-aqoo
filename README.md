@@ -25,7 +25,7 @@ and run ```pod install``` on your console before starting the app as your XCode 
 
 ## App Requirements
 
-AQOO uses a dedicated Spotify-API-Access-KeyPair (spfClientSecret, spfClientId) including a valid Callback-URL that must be provided by yourself and has to provided into a Keys.plist file using the corresponding spfClient-KeyIds. Please create this file first and add the KeyValues generated from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) later. 
+AQOO uses a dedicated Spotify-API-Access-KeyPair (spfClientSecret, spfClientId) including a valid Callback-URL that must be provided by yourself (e.g. ```aqoo://``` for this project) and has to provided into a Keys.plist file using the corresponding spfClient-KeyIds. Please create this file first and add the KeyValues generated from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) later. 
 
 ![Keys.plist file](github/media/aq_keys_plist.jpg) 
 
