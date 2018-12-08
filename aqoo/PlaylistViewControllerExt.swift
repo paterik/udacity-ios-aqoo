@@ -1450,7 +1450,7 @@ extension PlaylistViewController {
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
                     
-                    _playListInDb!.aqooUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
+                    
                     
                     _playListInDb!.createdAt = Date()
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString
@@ -1505,6 +1505,7 @@ extension PlaylistViewController {
                     _playListInDb!.isSpotify = _playlistIsSpotify
                     _playListInDb!.owner = playListInCloud.owner.canonicalUserName
                     _playListInDb!.ownerImageURL = _ownerProfileImageStringURL
+                    _playListInDb!.aqooUserId = _currentUserName!
                     _playListInDb!.metaWeight = filterInternalWeight.Default.rawValue
                     _playListInDb!.currentPlayMode = playMode.Stopped.rawValue // (0: no-action)
                     
