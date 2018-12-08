@@ -36,6 +36,8 @@ class PlaylistEditViewSecondPage: BasePlaylistEditViewController {
         super.viewWillAppear(animated)
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
+        appDelegate.restrictRotation = .portrait
     }
     
     //

@@ -1718,6 +1718,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="hoq-g6-Ze2" userLabel="btn_ui_action_reset_stats">
+                                <rect key="frame" x="16" y="578" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JHJ-HV-RHW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="RESET STATISTICS">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnResetPlaylistStatisticsAction:" destination="vso-N8-E91" eventType="touchUpInside" id="iGc-O5-QmI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1727,10 +1741,13 @@
                             <constraint firstItem="9x9-bX-K5U" firstAttribute="top" secondItem="ifi-5z-gUH" secondAttribute="bottom" constant="271" id="NGy-GV-pqG"/>
                             <constraint firstItem="ifi-5z-gUH" firstAttribute="top" secondItem="GxM-wY-rC2" secondAttribute="bottom" constant="4" id="O9Z-aB-rSl"/>
                             <constraint firstItem="ifi-5z-gUH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tjo-Af-05b" secondAttribute="leading" constant="20" symbolic="YES" id="UbA-bQ-vRs"/>
+                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="bottom" secondItem="9x9-bX-K5U" secondAttribute="top" id="VY3-qF-x5O"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="trailing" secondItem="GxM-wY-rC2" secondAttribute="trailing" id="cdj-c3-OIX"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="kZ8-cw-Vaf"/>
+                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="qqi-Yg-Ka4"/>
                             <constraint firstItem="GxM-wY-rC2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="s9t-9d-QJI"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="leading" secondItem="Tjo-Af-05b" secondAttribute="leadingMargin" id="sTr-6P-dnB"/>
+                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="u5P-ie-G3F"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notes" id="9dl-4Q-p7i">
@@ -1749,6 +1766,7 @@
                     </navigationItem>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="btnResetPlaylistStatistics" destination="hoq-g6-Ze2" id="A9y-LY-IyY"/>
                         <outlet property="btnSavePlaylistChanges" destination="ZRW-r5-PjN" id="SOj-rk-Af4"/>
                         <outlet property="textFieldPlaylistDetails" destination="Qkm-w6-Fb5" id="Ndx-w3-FSD"/>
                     </connections>

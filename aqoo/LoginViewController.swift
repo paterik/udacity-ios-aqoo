@@ -43,11 +43,11 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         super.viewWillAppear(animated)
         
+        appDelegate.restrictRotation = .portrait
+        
         setupUILoginControls()
         
-        if  spotifyClient.spfEnforceSessionKill == true {
-            return
-        }
+        // if  spotifyClient.spfEnforceSessionKill == true { return }
     
         if  spotifyClient.isSpotifyTokenValid() {
 

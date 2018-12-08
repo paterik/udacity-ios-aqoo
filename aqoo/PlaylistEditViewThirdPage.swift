@@ -14,6 +14,7 @@ class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
     
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var textFieldPlaylistDetails: UITextView!
+    @IBOutlet weak var btnResetPlaylistStatistics: UIButton!
     
     //
     // MARK: Class Method Overloads
@@ -42,5 +43,9 @@ class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
         
         handlePlaylistMetaUpdate()
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func btnResetPlaylistStatisticsAction(_ sender: Any) {
+        
     }
 }

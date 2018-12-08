@@ -62,6 +62,8 @@ class PlaylistContentViewController: BaseViewController,
         super.viewWillAppear(animated)
         
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
+        appDelegate.restrictRotation = .all
     }
     
     override func viewWillDisappear(_ animated: Bool) {

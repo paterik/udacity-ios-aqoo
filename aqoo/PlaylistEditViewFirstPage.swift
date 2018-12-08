@@ -52,6 +52,8 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         super.viewWillAppear(animated); UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
         subscribeToKeyboardNotifications()
+        
+        appDelegate.restrictRotation = .portrait
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -162,6 +162,8 @@ class PlaylistViewController: BaseViewController,
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
    
         handlePlaylistCloudRefresh()
+        
+        appDelegate.restrictRotation = .all
     }
     
     override func viewWillDisappear(_ animated: Bool) {

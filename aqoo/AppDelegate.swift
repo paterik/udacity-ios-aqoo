@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     ]
 
     var window: UIWindow?
+    var restrictRotation:UIInterfaceOrientationMask = .all
     
     func application(
        _ application: UIApplication,
@@ -37,6 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
         spotifyClient.initAPI()
         
         return true
+    }
+    
+    func application(
+       _ application: UIApplication,
+         supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        
+        return self.restrictRotation
     }
     
     func application(
