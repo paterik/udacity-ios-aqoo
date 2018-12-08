@@ -118,6 +118,8 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 self.playListChanged = true
                 self.handleBtnSavePlaylistChangesState( active: true )
                 
+                self.setupUICoverImages()
+                
                 return
             }
             
@@ -213,7 +215,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
             )
             
             playListInDb!.coverImagePathOverride = getSavedImageFileName(_imageDataCropped, String.random().md5())
-            
             imgPlaylistCoverBig.image = pickedImage
             imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
             imagePickerSuccess = true
