@@ -1950,6 +1950,7 @@ extension PlaylistViewController {
     func handlePlaylistReloadData() {
         
         setupUICollapseAllVisibleOpenCells()
+        playlistGradientLoadingBar.hide()
         tableView.reloadData()
     }
     
