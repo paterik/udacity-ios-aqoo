@@ -3,21 +3,68 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Udacity Course Id](https://img.shields.io/badge/course-ND003-37C6EE.svg)](COURSE)
-[![System Version](https://img.shields.io/badge/version-0.9.9-blue.svg)](VERSION)
-[![Language](https://img.shields.io/badge/swift-3.0-orange.svg)](http://swift.org)
+[![System Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION)
+[![Language](https://img.shields.io/badge/swift-4.0-orange.svg)](http://swift.org)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
 
 ## App Description
 
+„AQOO“ (AQ) is an iOS 11 mobile app that allows users to manage and listen their [spotify](http://spotify.com/) playlists. This app using the 0.27.n spotify sdk/api framework including some nice improvements like dedicated list sorting mechanics and better rating options.
+
 ## App Specifications
+
+AQOO (currently 1.0.0) was developed using the latest XCode 9.4.1 (9F2000) build and will be able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
+
+AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
+and run ```pod install``` on your console before starting the app as your XCode workspace.
+
+AQOO uses multiple API endpoints (https://developer.spotify.com/documentation/web-api/quick-start/) by spotifies iOS SDK webAPI-wrapper.
+
+AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from icons8. A complete list of used libraries and assets can be found inside the projects [COPYRIGHT.md](COPYRIGHT.md) file.
+
+## App Requirements
+
+AQOO uses a dedicated Spotify-API-Access-KeyPair (spfClientSecret, spfClientId) including a valid Callback-URL that must be provided by yourself and has to provided into a Keys.plist file using the corresponding spfClient-KeyIds. Please create this file first and add the KeyValues generated from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) later. 
+
+AQOO needs a valid spotify premium account to authenticate yourself and gain access to your personal playlist information. Unfortunately spotify free-accounts are currently not supported by this app.
 
 ## App Features
 
+AQOO manage your complete spotify playlist stack and extend some origin meta information by additional functionality and statistics. All playlists and Tracks handled by this app will stored as dedicated data into your device and leave your origin meta source on spotify untouched. You can rename, rate, tag and add detailed notes to your playlists. You also can switch playlist cover images by your own without touching your origin dataset at spotify.
+
+AQOO playback your playlists in different modes (normal, repeat and shuffle). You can start playing your lists directly from the corresponding list or from our tracklist view. The player controls are more suffisticated inside the tracklist view - here you can jump between tracks or traveling inside the timeframe of current song played.
+
+AQOO helps you filtering your playlist by your own provided list rating, owner, most-frequently heard or by track count. Additional filter will be provided with next version of this app (see „App Future“ section). You will also be able to „hide“ some playlists from your main stack - those playlists will be available selecting your „my hidden playlist“ filter option. You can always (re)enable those playlists from that view later.
+
+*For details about application functions and features take a look into our screenshot sections down below*.
+
 ## App Structure
 
+AQOO is following the MVC pattern by structural and logical definition. The app is using dedicated view partials instead of base sub views of collection cells and annotations. This app also using async handlers and event observer to provide better performance during long term execution of processes. 
+
+## AppStart
+
+After starting the app and the launch screen disapears a login view will allow to identify yourself using your spotify credentials. *Please take note, that you’ll require a premium spotify account to use AQOO.*
+
+##  Your Playlist View
+
+After authentication the app will provide you a tableView with all your spotify playlists available. Here you can filter, edit, hide open a more detailed cell-view for each entry. You can also jump from selected playlist into tracklist view directly.
+
+## Your Playlist Cover View
+
+You can choose between two kind of view states of your playlist stack - the normal table based view and the playlist cover view. 
+
+## Your Playlist Edit View
+
+You can configure your playlist by editing base information like title and description furthermore you can add tags to help categorize you list  and rate you playlist using three different meta values (intensity, emotivness and depth).
+
+## Your Tracklist View
+
+From each playlist entry you can switch to the corresponding tracklist and start playling in shuffle-, repeat- or normal mode. While the track is playing there are additional controls available such as jump between tracks and skipping forward or backward inside the track using the timeframe slider.
+
 ## Keywords
-swift, swift-3, udacity, extension, uikit, foundation, app
+swift, swift-4, udacity, extension, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
 
 ## Releases
 
@@ -27,7 +74,7 @@ All notable changes of the AQOO release series are documented in project [CHANGE
 
 ## License-Term
 
-Copyright (c) 2017 Patrick Paechnatz <patrick.paechnatz@gmail.com>
+Copyright (c) 2017-2018 Patrick Paechnatz <patrick.paechnatz@gmail.com>
                                                                            
 Permission is hereby granted,  free of charge,  to any  person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction,  including without limitation the rights to use,  copy, modify, merge, publish,  distribute, sublicense, and/or sell copies  of the  Software,  and to permit  persons to whom  the Software is furnished to do so, subject to the following conditions:       
                                                                            
