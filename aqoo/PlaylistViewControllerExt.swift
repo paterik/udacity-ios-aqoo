@@ -1581,16 +1581,9 @@ extension PlaylistViewController {
        _ playlistInCloud: SPTPartialPlaylist,
        _ playlistInDb: StreamPlayList) -> String {
         
-        var _updatedMetaString: String   = ""
-        var _updatedDateString: NSString = ""
-        var _createdDateString: NSString = ""
-
-        if playlistInDb.updatedAt != nil {
-            _updatedDateString = getDateAsString(playlistInDb.updatedAt!)
-            _updatedMetaString = ", updated on \(_updatedDateString)"
-        };  _createdDateString = getDateAsString(playlistInDb.createdAt!)
+        let _createdDateString: NSString = getDateAsString(playlistInDb.createdAt!)
         
-        return "This playlist \"\(playlistInCloud.name)\" is owned by \(playlistInCloud.owner.canonicalUserName), was firstly seen on \(_createdDateString) \(_updatedMetaString) and can be found in spotify at \(playlistInCloud.playableUri.absoluteString)"
+        return "\"\(playlistInCloud.name)\" is a playlist belonging to [\(playlistInCloud.owner.canonicalUserName)]. It was created on \(_createdDateString). Copy the following link to directly access this playlist in Spotify: \(playlistInCloud.playableUri.absoluteString)"
     }
     
     func getCloudVersionOfDbCachedPlaylist(_ playlistInDb: StreamPlayList) -> SPTPartialPlaylist? {
