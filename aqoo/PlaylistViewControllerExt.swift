@@ -898,6 +898,7 @@ extension PlaylistViewController {
         
         let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
             
+            self.spotifyClient.playlistRefreshEnforced = true
             self.handlePlaylistCloudRefresh()
             
             return
@@ -919,7 +920,9 @@ extension PlaylistViewController {
                 spotifyClient.playlistRefreshEnforced == true {
                 
                 loadProvider ( spotifyClient.spfStreamingProviderDbTag )
+                
                 playlistInCloudLastLocalUpdate = Date()
+                spotifyClient.playlistRefreshEnforced = false
                 
             }   else {
                 
