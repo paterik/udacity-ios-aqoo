@@ -16,9 +16,8 @@ extension LoginViewController {
         spotifyClient.spfAuth.renewSession(spotifyClient.spfCurrentSession!) { error, session in
             
             SPTAuth.defaultInstance().session = session
-            if error != nil {
+            if  error != nil {
                 self.lblSpotifySessionStatus.text = "REFRESH TOKEN FAIL"
-                print("_dbg: error renewing session: \(error!.localizedDescription)")
                 
                 return
             }

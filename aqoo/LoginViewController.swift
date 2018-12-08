@@ -74,9 +74,9 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
             
         }   else {
             
-            self.authViewController = self.getAuthViewController(withURL: spotifyClient.spfLoginUrl!)
-            self.definesPresentationContext = true
-            self.present(self.authViewController!, animated: true)
+            authViewController = getAuthViewController(withURL: spotifyClient.spfLoginUrl!)
+            definesPresentationContext = true
+            present(self.authViewController!, animated: true)
         }
     }
     
