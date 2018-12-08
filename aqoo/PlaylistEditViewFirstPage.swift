@@ -118,6 +118,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                 self.playListChanged = true
                 self.handleBtnSavePlaylistChangesState( active: true )
                 
+                // refresh coverImage view after reset
                 self.setupUICoverImages()
                 
                 return

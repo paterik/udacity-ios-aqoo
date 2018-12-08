@@ -901,7 +901,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:zKh-6R-yfg:image" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-6R-yfg" userLabel="ui_playlist_cover_big">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:zKh-6R-yfg:image" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-6R-yfg" userLabel="ui_playlist_cover_big">
                                 <rect key="frame" x="16" y="79" width="343" height="343"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Best of TVOTR 2018" placeholder="please enter playlist title" minimumFontSize="21" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Ex-cS-ID1" userLabel="ui_inp_playlist_name">
