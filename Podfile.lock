@@ -9,14 +9,14 @@ PODS:
   - Kingfisher (4.9.0)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (70.0.0)
-  - MaterialComponents/private/Math (70.0.0)
-  - MaterialComponents/ProgressView (70.0.0):
+  - MaterialComponents/Palettes (72.0.1)
+  - MaterialComponents/private/Math (72.0.1)
+  - MaterialComponents/ProgressView (72.0.1):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
     - MotionAnimator (~> 2.1)
-  - MDFInternationalization (1.1.0)
+  - MDFInternationalization (2.0.0)
   - MotionAnimator (2.8.1):
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
@@ -84,7 +84,7 @@ SPEC REPOS:
     - WSTagsField
 
 SPEC CHECKSUMS:
-  BGTableViewRowActionWithImage: 5dbd2542917bc7024084d1c54a1a093b541b3af1
+  BGTableViewRowActionWithImage: e8404ef8c971e6271ab27749359e5ffd3f439d6a
   CoreStore: e26bfee25eb03cc724246356ce80a0cf5cbfe27f
   CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
@@ -93,8 +93,8 @@ SPEC CHECKSUMS:
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: 7c107af5ae6566de2f1ba94bde3db99d1b874bab
-  MDFInternationalization: b5b8626628abf026e630e5ebaeee563037712cbb
+  MaterialComponents: fb709eff8adee8021cc55b3de93adb0f1050aa4a
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
