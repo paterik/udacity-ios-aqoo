@@ -53,6 +53,12 @@ Splash Screen | Login Screen
 :-------------------------:|:-------------------------:
 ![splash screen](github/media/small/aq_launch_01.png)  |  ![login view](github/media/small/aq_login_01.png)
 
+## Spotify Login/Auth
+
+Spotify Login | Spotify Auth
+:-------------------------:|:-------------------------:
+![spotify login](github/media/small/aq_spotify_login_01.png)  |  ![spotify auth](github/media/small/aq_spotify_auth_02.png)
+
 ##  Your Playlist View
 
 After authentication the app will provide you a tableView with all your spotify playlists available. Here you can filter, edit, hide using background cell controls or open a more detailed cell-view for each entry. *You can also jump from selected playlist into tracklist view directly*.
