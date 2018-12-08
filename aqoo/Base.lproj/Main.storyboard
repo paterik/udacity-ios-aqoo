@@ -865,7 +865,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="k5v-SG-6XA" userLabel="btnLogoutFromApp">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="goBackToOneButtonTapped:" destination="ldu-zH-OI7" id="Vqe-op-VHN"/>
+                                <action selector="btnLogoutFromAppAction:" destination="ldu-zH-OI7" id="Nqs-7u-zxy"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">

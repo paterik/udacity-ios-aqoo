@@ -441,14 +441,30 @@ class PlaylistViewController: BaseViewController,
         performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
     }
     
-    @IBAction func goBackToOneButtonTapped(_ sender: Any) {
+    @IBAction func btnLogoutFromAppAction(_ sender: Any) {
         
-        print ("___ try to unwind to login view")
+        let logoutFromAppRequest = UIAlertController(
+            title: "Logout?",
+            message: "do you want to logout from current spotify session?",
+            preferredStyle: UIAlertControllerStyle.alert
+        )
         
-        localPlayer.player?.logout()
-        spotifyClient.closeSpotifySession()
+        let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
+            
+            self.localPlayer.player?.logout()
+            self.spotifyClient.closeSpotifySession()
+            self.performSegue(withIdentifier: "unwindToLoginView", sender: self)
+        }
         
-        performSegue(withIdentifier: "unwindToLoginView", sender: self)
+        let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
+            
+            return
+        }
+        
+        logoutFromAppRequest.addAction(dlgBtnYesAction)
+        logoutFromAppRequest.addAction(dlgBtnCancelAction)
+        
+        present(logoutFromAppRequest, animated: true, completion: nil)
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
