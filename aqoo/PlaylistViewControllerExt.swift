@@ -438,6 +438,9 @@ extension PlaylistViewController {
                     switch result {
                     case .failure(let error): if self.debugMode == true { print (error) }
                     case .success(let userInfo):
+                        // enforce playlistView table reload
+                        self.handlePlaylistReloadData()
+                        
                         if  self.debugMode == true {
                             print ("dbg [playlist] : old user playlists cache removed")
                         }
