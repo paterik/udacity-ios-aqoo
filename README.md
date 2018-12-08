@@ -47,13 +47,15 @@ AQOO is following the MVC pattern by structural and logical definition. The app 
 
 ## AppStart
 
-After starting the app and the launch screen disapears a login view will allow to identify yourself using your spotify credentials. *Please take note, that you’ll require a premium spotify account to use AQOO.*
+After starting the app and the launch screen disapears a login view will allow to identify yourself using your spotify credentials. 
 
 Splash Screen | Login Screen
 :-------------------------:|:-------------------------:
 ![splash screen](github/media/small/aq_launch_01.png)  |  ![login view](github/media/small/aq_login_01.png)
 
 ## Spotify Login/Auth
+
+*Please take note, that you’ll require a premium spotify account to use AQOO.*
 
 Spotify Login | Spotify Auth
 :-------------------------:|:-------------------------:
