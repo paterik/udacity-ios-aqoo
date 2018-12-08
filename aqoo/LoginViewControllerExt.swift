@@ -38,10 +38,10 @@ extension LoginViewController {
     
     func getAuthViewController(withURL url: URL) -> UIViewController {
         
-        let webView = WebViewController(url: url)
-            webView.delegate = self
+        let spotifyWebView = WebViewController(url: url)
+            spotifyWebView.delegate = self
         
-        return UINavigationController(rootViewController: webView)
+        return UINavigationController(rootViewController: spotifyWebView)
     }
     
     @objc
@@ -54,6 +54,7 @@ extension LoginViewController {
     func updateAfterSuccessLogin(_ notification: NSNotification?) {
         
         if  spotifyClient.isSpotifyTokenValid() {
+            
             showLandingPage()
             
         }   else {
