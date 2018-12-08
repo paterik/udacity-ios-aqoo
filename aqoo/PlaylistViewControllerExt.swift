@@ -1336,6 +1336,7 @@ extension PlaylistViewController {
             asynchronous: { (transaction) -> Void in
                 
                 do {
+                    
                     playListInDb.ownerImageURL = userProfileImageURL
                     playListInDb.ownerFollowerCount = userProfile.followerCount
                     if  userProfile.sharingURL != nil {
@@ -1449,8 +1450,6 @@ extension PlaylistViewController {
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
-                    
-                    
                     
                     _playListInDb!.createdAt = Date()
                     _playListInDb!.playableURI = playListInCloud.playableUri.absoluteString

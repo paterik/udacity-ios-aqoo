@@ -62,6 +62,9 @@ extension PlaylistEditViewFirstPage {
         
         var _playListCoverURL: String?
         
+        noCoverImageAvailable = true
+        noCoverOverrideImageAvailable = true
+        
         imgPlaylistCoverBig.isUserInteractionEnabled = true
         imgPlaylistCoverBig.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
@@ -76,7 +79,7 @@ extension PlaylistEditViewFirstPage {
                 imgPlaylistCoverBig.alpha = _sysPlaylistCoverOriginInActiveAlpha
                 imgPlaylistCoverBig.image = _image
             }   else {
-                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your own persisted image for your playlist")
+                handleErrorAsDialogMessage("IO Error (Read)", "unable to load your selected cover image for this playlist")
             }
             
         }   else {
