@@ -24,8 +24,16 @@ extension PlaylistEditViewThirdPage {
     
     func setupUIPlaylistDetails() {
         
+        textFieldPlaylistDetails.alpha = 1
+        textFieldPlaylistDetails.backgroundColor = UIColor(netHex: 0x131313)
+        textFieldPlaylistDetails.layer.cornerRadius =  0
+        textFieldPlaylistDetails.layer.borderColor = UIColor(netHex: 0x131313).cgColor
+        textFieldPlaylistDetails.layer.borderWidth = 7
+        
         textFieldPlaylistDetails.text = playListInDb!.metaListInternalDescription
     }
+    
+    
     
     func handlePlaylistStatisticReset() {
         

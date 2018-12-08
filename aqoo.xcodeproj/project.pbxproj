@@ -76,6 +76,7 @@
 		B1F88B731F7033450005FE43 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B721F7033450005FE43 /* PlaylistViewController.swift */; };
 		B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7C1F7045C10005FE43 /* UIColor.swift */; };
 		B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F88B7E1F7045E80005FE43 /* UIImage.swift */; };
+		B1F89F8A21BC799800309D02 /* UITextViewPLDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		B1F88B721F7033450005FE43 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		B1F88B7C1F7045C10005FE43 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		B1F88B7E1F7045E80005FE43 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewPLDetail.swift; sourceTree = "<group>"; };
 		B2B8C7E3A35BF5D2131839B4 /* Pods_aqoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aqoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF148C225F4CDC81757308B8 /* Pods-aqoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aqoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aqoo/Pods-aqoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -554,6 +556,7 @@
 				B1B8DD25202E1EE3008CE9EB /* UIView.swift */,
 				B1B8DD27202E5756008CE9EB /* Dictionary.swift */,
 				B1A117A020F618B3002C4CA9 /* Integer.swift */,
+				B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 				B15E03142112E6D9003124E4 /* SPFClientPlaylistControls.swift in Sources */,
 				B1CDAA9A1FFE84DF008138F1 /* UITableView.swift in Sources */,
 				B17B2235213BE05300649AB2 /* ProxyPlaylist.swift in Sources */,
+				B1F89F8A21BC799800309D02 /* UITextViewPLDetail.swift in Sources */,
 				B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */,
 				B13DB8DC210629BB0013CAC5 /* PlaylistTracksControlView.swift in Sources */,
 				B1A117A120F618B3002C4CA9 /* Integer.swift in Sources */,

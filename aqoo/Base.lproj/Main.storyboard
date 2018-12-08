@@ -1694,17 +1694,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Qkm-w6-Fb5" userLabel="ui_txt_playlist_details">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Qkm-w6-Fb5" userLabel="ui_txt_playlist_details" customClass="UITextViewPLDetail" customModule="aqoo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="79" width="343" height="239"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803921568626" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxM-wY-rC2">
                                 <rect key="frame" x="16" y="318" width="343" height="8"/>
-                                <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803921568626" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="XQG-1Y-e0j"/>
                                 </constraints>
@@ -1719,10 +1719,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="hoq-g6-Ze2" userLabel="btn_ui_action_reset_stats">
-                                <rect key="frame" x="16" y="578" width="343" height="40"/>
+                                <rect key="frame" x="16" y="560" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.99215686270000003" green="0.3921568627" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="JHJ-HV-RHW"/>
+                                    <constraint firstAttribute="height" constant="40" id="FZ9-Qh-AUZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="RESET STATISTICS">
@@ -1735,19 +1735,19 @@
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="0ET-qs-0a6"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="top" secondItem="jxt-qP-LYX" secondAttribute="bottom" constant="15" id="1qE-30-Ili"/>
                             <constraint firstItem="GxM-wY-rC2" firstAttribute="top" secondItem="Qkm-w6-Fb5" secondAttribute="bottom" id="Dlj-bg-308"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="trailing" secondItem="Tjo-Af-05b" secondAttribute="trailingMargin" id="KfE-uk-E9d"/>
                             <constraint firstItem="9x9-bX-K5U" firstAttribute="top" secondItem="ifi-5z-gUH" secondAttribute="bottom" constant="271" id="NGy-GV-pqG"/>
                             <constraint firstItem="ifi-5z-gUH" firstAttribute="top" secondItem="GxM-wY-rC2" secondAttribute="bottom" constant="4" id="O9Z-aB-rSl"/>
                             <constraint firstItem="ifi-5z-gUH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tjo-Af-05b" secondAttribute="leading" constant="20" symbolic="YES" id="UbA-bQ-vRs"/>
-                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="bottom" secondItem="9x9-bX-K5U" secondAttribute="top" id="VY3-qF-x5O"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="trailing" secondItem="GxM-wY-rC2" secondAttribute="trailing" id="cdj-c3-OIX"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="kZ8-cw-Vaf"/>
-                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="qqi-Yg-Ka4"/>
+                            <constraint firstItem="9x9-bX-K5U" firstAttribute="top" secondItem="hoq-g6-Ze2" secondAttribute="bottom" constant="18" id="lPz-zH-c4y"/>
                             <constraint firstItem="GxM-wY-rC2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="s9t-9d-QJI"/>
                             <constraint firstItem="Qkm-w6-Fb5" firstAttribute="leading" secondItem="Tjo-Af-05b" secondAttribute="leadingMargin" id="sTr-6P-dnB"/>
-                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="trailing" secondItem="ifi-5z-gUH" secondAttribute="trailing" id="u5P-ie-G3F"/>
+                            <constraint firstItem="hoq-g6-Ze2" firstAttribute="leading" secondItem="GxM-wY-rC2" secondAttribute="leading" id="wlb-ey-ocK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notes" id="9dl-4Q-p7i">
