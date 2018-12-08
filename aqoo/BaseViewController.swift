@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
-    let debugKFCMode: Bool = false
+    let debugKFCMode: Bool = true
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let spotifyClient = SpotifyClient.sharedInstance
@@ -213,7 +213,7 @@ class BaseViewController: UIViewController {
                 print ("--- use large cover for [\(playlistItem.metaListInternalName)]")
             }
         }
-        
+                
         // no large image found? try smallestImageURL instead
         if  playlistItem.smallestImageURL != nil && _noCoverImageAvailable == true {
             _usedCoverImageURL = URL(string: playlistItem.smallestImageURL!)
