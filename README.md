@@ -14,14 +14,14 @@
 
 ## App Specifications
 
-AQOO (currently 1.0.0) was developed using the latest XCode 9.4.1 (9F2000) build and will be able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
+- AQOO (currently 1.0.0) was developed using the latest XCode 9.4.1 (9F2000) build and will be able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
 
-AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
+- AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
 and run ```pod install``` on your console before starting the app as your XCode workspace.
 
-AQOO uses multiple API endpoints (https://developer.spotify.com/documentation/web-api/quick-start/) by spotifies iOS SDK webAPI-wrapper.
+- AQOO uses multiple API endpoints (https://developer.spotify.com/documentation/web-api/quick-start/) by spotifies iOS SDK webAPI-wrapper.
 
-AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from icons8. A complete list of used libraries and assets can be found inside the projects [COPYRIGHT.md](COPYRIGHT.md) file.
+- AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from icons8. A complete list of used libraries and assets can be found inside the projects [COPYRIGHT.md](COPYRIGHT.md) file.
 
 ## App Requirements
 
