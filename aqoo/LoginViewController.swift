@@ -84,5 +84,13 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         
         spotifyClient.closeSpotifySession()
     }
+    
+    @IBAction func unwindToLoginView(segue:UIStoryboardSegue) {
+        
+        spotifyClient.closeSpotifySession()
+        setupUILoginControls(
+        )
+        print ("!!! FOO !!!")
+    }
 }
 

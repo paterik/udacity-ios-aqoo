@@ -865,7 +865,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icnExitView_v1" id="k5v-SG-6XA" userLabel="btnLogoutFromApp">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="btnLogoutFromAppAction:" destination="ldu-zH-OI7" id="t7b-HX-TnK"/>
+                                <action selector="goBackToOneButtonTapped:" destination="ldu-zH-OI7" id="Vqe-op-VHN"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icnPLRefresh" id="Mbz-BF-aJM" userLabel="btnRefreshPlaylist">
@@ -881,9 +881,11 @@
                         <outlet property="tableView" destination="6bT-aE-8Bz" id="zoI-lA-Crz"/>
                         <segue destination="Ps3-kk-VSI" kind="showDetail" identifier="showPlaylistEditViewTabController" id="avI-XT-aBv"/>
                         <segue destination="c1H-Hc-tHN" kind="showDetail" identifier="showPlaylistContentViewController" id="Rq6-SS-BoJ"/>
+                        <segue destination="WX9-gt-dOj" kind="unwind" identifier="unwindToLoginView" unwindAction="unwindToLoginViewWithSegue:" id="7MD-hG-eff"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Sg-6M-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="WX9-gt-dOj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3561" y="-704"/>
         </scene>
@@ -1775,7 +1777,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvj-9F-2zM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4417" y="-546"/>
+            <point key="canvasLocation" x="4417" y="-705"/>
         </scene>
     </scenes>
     <resources>

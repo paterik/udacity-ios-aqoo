@@ -205,6 +205,7 @@ class SpotifyClient: SPFClientPlaylists {
     
     func isSpotifyTokenValid() -> Bool {
         
+        // bug !!! this method/logic activate a deep session persistance !!!
         let userDefaults = UserDefaults.standard
         
         if  let sessionObj:AnyObject = userDefaults.object(

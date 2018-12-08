@@ -441,16 +441,14 @@ class PlaylistViewController: BaseViewController,
         performSegue(withIdentifier: "showPlaylistContentViewController", sender: self)
     }
     
-    @IBAction func btnLogoutFromAppAction(_ sender: Any) {
-     
+    @IBAction func goBackToOneButtonTapped(_ sender: Any) {
+        
+        print ("___ try to unwind to login view")
+        
         localPlayer.player?.logout()
         spotifyClient.closeSpotifySession()
         
-        print ("__ exit, try presentingViewController?.dismiss")
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
-        
-        print ("__ exit, try .dismiss")
-        self.dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToLoginView", sender: self)
     }
     
     @IBAction func btnExitLandingPageAction(_ sender: Any) {
