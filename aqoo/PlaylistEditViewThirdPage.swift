@@ -47,5 +47,25 @@ class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
     
     @IBAction func btnResetPlaylistStatisticsAction(_ sender: Any) {
         
+        let resetPlaylistStatsRequest = UIAlertController(
+            title: "Reset Statistics?",
+            message: "do you want to reset all meta statistics from this playlist?",
+            preferredStyle: UIAlertControllerStyle.alert
+        )
+        
+        let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
+            
+            return
+        }
+        
+        let dlgBtnCancelAction = UIAlertAction(title: "No", style: .default) { (action: UIAlertAction!) in
+            
+            return
+        }
+        
+        resetPlaylistStatsRequest.addAction(dlgBtnYesAction)
+        resetPlaylistStatsRequest.addAction(dlgBtnCancelAction)
+        
+        present(resetPlaylistStatsRequest, animated: true, completion: nil)
     }
 }
