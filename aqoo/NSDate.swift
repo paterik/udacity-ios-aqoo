@@ -11,18 +11,18 @@ import Foundation
 extension NSDate {
     
     func dateToString(
-        _ date: Date!,
-        _ format: String) -> NSString {
+       _ date: Date!,
+       _ format: String) -> NSString {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
+            dateFormatter.dateFormat = format
         
         return dateFormatter.string(from: date) as NSString
     }
     
     func dateFromString(
-        _ date: NSString,
-        _ format: String) -> NSDate {
+       _ date: NSString,
+       _ format: String) -> NSDate {
         
         let formatter = DateFormatter()
         let locale = NSLocale(localeIdentifier: "en_US_POSIX")

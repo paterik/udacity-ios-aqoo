@@ -9,6 +9,7 @@
 import Foundation
 
 extension Int {
+    
     // max: 2.147.483.647
     var hrFormatted: String {
         
@@ -34,6 +35,7 @@ extension Int {
 }
 
 extension Int32 {
+    
     // max: 2.147.483.647
     var hrFormatted: String {
         
@@ -59,6 +61,7 @@ extension Int32 {
 }
 
 extension Int64 {
+    
     // max: 9.223.372.036.854.775.807
     var hrFormatted: String {
         

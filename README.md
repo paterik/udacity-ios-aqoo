@@ -65,7 +65,7 @@ Playlist View | Playlist Cell Controls | Playlist Cell Details
 
 ## Your Playlist Edit View
 
-You can configure your playlist by editing base information like title and description furthermore you can add tags to help categorize you list  and rate you playlist using three different meta values (intensity, emotivness and depth).
+You can configure your playlist by editing base information like title and description furthermore you can add tags to help categorize you list  and [rate you playlist](https://www.digitalmusicnews.com/2016/05/17/music-genres-three-attributes/) using three different meta values (intensity, emotivness and depth).
 
 Playlist Edit View | Playlist Rating View | Playlist Meta Edit View
 :-------------------------:|:-------------------------:|:-------------------------:

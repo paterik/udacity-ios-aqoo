@@ -11,6 +11,7 @@ import UIKit
 extension UITableView {
     
     func refreshTable() {
+        
         let indexPathForSection = NSIndexSet(index: 0)
         self.reloadSections(indexPathForSection as IndexSet, with: UITableViewRowAnimation.middle)
     }

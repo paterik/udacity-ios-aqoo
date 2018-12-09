@@ -15,14 +15,14 @@ extension Dictionary {
         lhs.merge(rhs) { (_, new) in new }
     }
     
-    mutating func update( _ other: Dictionary ) {
+    mutating func update(_ other: Dictionary ) {
         
         for (key,value) in other {
             self.updateValue(value, forKey:key)
         }
     }
     
-    func combinedWith( _ other: Dictionary<Key,Value> ) -> Dictionary<Key,Value> {
+    func combinedWith(_ other: Dictionary<Key,Value> ) -> Dictionary<Key,Value> {
         var other = other
         for (key, value) in self {
             other[key] = value

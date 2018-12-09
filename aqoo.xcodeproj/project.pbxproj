@@ -34,7 +34,6 @@
 		B18C61EE20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */; };
 		B19C526D1F705C3F0064E1A5 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = B19C526C1F705C3F0064E1A5 /* Keys.plist */; };
 		B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C526E1F7060230064E1A5 /* BaseViewController.swift */; };
-		B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */; };
 		B1A117A120F618B3002C4CA9 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A117A020F618B3002C4CA9 /* Integer.swift */; };
 		B1A3D2461F8E3B660098330D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A3D2451F8E3B660098330D /* String.swift */; };
 		B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A620471F700D820093CAEF /* AppDelegate.swift */; };
@@ -52,7 +51,6 @@
 		B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */; };
 		B1B8DD26202E1EE3008CE9EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD25202E1EE3008CE9EB /* UIView.swift */; };
 		B1B8DD28202E5756008CE9EB /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8DD27202E5756008CE9EB /* Dictionary.swift */; };
-		B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BBECED1F93642B00BD9D39 /* UILabel.swift */; };
 		B1BD1EE81F778621001FC294 /* StreamPlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE71F778621001FC294 /* StreamPlayList.swift */; };
 		B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD1EE91F778646001FC294 /* StreamProvider.swift */; };
 		B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */; };
@@ -128,7 +126,6 @@
 		B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistContentViewControllerExt.swift; sourceTree = "<group>"; };
 		B19C526C1F705C3F0064E1A5 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		B19C526E1F7060230064E1A5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFilterMenuItem.swift; sourceTree = "<group>"; };
 		B1A117A020F618B3002C4CA9 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		B1A3D2451F8E3B660098330D /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		B1A620441F700D820093CAEF /* aqoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aqoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,7 +149,6 @@
 		B1B8DD23202E1A1F008CE9EB /* PlaylistFilterNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistFilterNotification.swift; sourceTree = "<group>"; };
 		B1B8DD25202E1EE3008CE9EB /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		B1B8DD27202E5756008CE9EB /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
-		B1BBECED1F93642B00BD9D39 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		B1BD1EE71F778621001FC294 /* StreamPlayList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamPlayList.swift; sourceTree = "<group>"; };
 		B1BD1EE91F778646001FC294 /* StreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamProvider.swift; sourceTree = "<group>"; };
 		B1C4B05020F48AB600E43D89 /* StreamPlayListTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamPlayListTags.swift; sourceTree = "<group>"; };
@@ -228,26 +224,12 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B10198A72030EC3500232EB6 /* adorable.io */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = adorable.io;
-			sourceTree = "<group>";
-		};
 		B119C20C201C75E5009B78BF /* delegates */ = {
 			isa = PBXGroup;
 			children = (
 				B1C4B05220F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift */,
 			);
 			name = delegates;
-			sourceTree = "<group>";
-		};
-		B129B9332042CA5300D7F589 /* protocol */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = protocol;
 			sourceTree = "<group>";
 		};
 		B13D6EFC1F91B6AB00486487 /* _playlists */ = {
@@ -273,21 +255,6 @@
 				B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */,
 			);
 			name = _events;
-			sourceTree = "<group>";
-		};
-		B13D6F031F91BDC500486487 /* _session */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = _session;
-			sourceTree = "<group>";
-		};
-		B1891D4B1FA74CAE009E463C /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				B19DBB0E202A0FEF0072E79C /* StreamFilterMenuItem.swift */,
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 		B18989271F72B95000516A53 /* _login */ = {
@@ -424,13 +391,6 @@
 			name = proxy;
 			sourceTree = "<group>";
 		};
-		B1B4A0BF1FFCBE8B00E83E92 /* _profile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = _profile;
-			sourceTree = "<group>";
-		};
 		B1BD1EE61F7785F9001FC294 /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,8 +408,6 @@
 		B1D6A3911F90FE23006E1DBC /* clients */ = {
 			isa = PBXGroup;
 			children = (
-				B10198A72030EC3500232EB6 /* adorable.io */,
-				B1D6A3931F90FE3E006E1DBC /* google.com */,
 				B1D6A3921F90FE31006E1DBC /* spotify.com */,
 			);
 			name = clients;
@@ -458,27 +416,17 @@
 		B1D6A3921F90FE31006E1DBC /* spotify.com */ = {
 			isa = PBXGroup;
 			children = (
-				B1B4A0BF1FFCBE8B00E83E92 /* _profile */,
 				B13D6F001F91BD3D00486487 /* _events */,
 				B13D6EFD1F91B6C500486487 /* _player */,
 				B13D6EFC1F91B6AB00486487 /* _playlists */,
-				B13D6F031F91BDC500486487 /* _session */,
 				B1D6A3941F90FE6A006E1DBC /* SpotifyClient.swift */,
 			);
 			name = spotify.com;
 			sourceTree = "<group>";
 		};
-		B1D6A3931F90FE3E006E1DBC /* google.com */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = google.com;
-			sourceTree = "<group>";
-		};
 		B1D6A3961F910F74006E1DBC /* extension */ = {
 			isa = PBXGroup;
 			children = (
-				B1891D4B1FA74CAE009E463C /* Core */,
 				B1D6A3971F910F94006E1DBC /* SpotifyPlaylist */,
 			);
 			name = extension;
@@ -537,7 +485,7 @@
 		B1F88B7A1F7045A40005FE43 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				B129B9332042CA5300D7F589 /* protocol */,
+				B1F89F8B21BCABEB00309D02 /* class */,
 				B1F88B7B1F7045AD0005FE43 /* extension */,
 			);
 			name = common;
@@ -549,14 +497,12 @@
 				B1F88B7C1F7045C10005FE43 /* UIColor.swift */,
 				B1F88B7E1F7045E80005FE43 /* UIImage.swift */,
 				B1A3D2451F8E3B660098330D /* String.swift */,
-				B1BBECED1F93642B00BD9D39 /* UILabel.swift */,
 				B17FC7CC1FF6508D00CA3166 /* CGDim.swift */,
 				B1CDAA991FFE84DF008138F1 /* UITableView.swift */,
 				B1CDAA9F2000D4F5008138F1 /* NSDate.swift */,
 				B1B8DD25202E1EE3008CE9EB /* UIView.swift */,
 				B1B8DD27202E5756008CE9EB /* Dictionary.swift */,
 				B1A117A020F618B3002C4CA9 /* Integer.swift */,
-				B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */,
 			);
 			name = extension;
 			sourceTree = "<group>";
@@ -581,6 +527,14 @@
 				B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */,
 			);
 			name = partials;
+			sourceTree = "<group>";
+		};
+		B1F89F8B21BCABEB00309D02 /* class */ = {
+			isa = PBXGroup;
+			children = (
+				B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */,
+			);
+			name = class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -819,7 +773,6 @@
 				B1698D7021049B3700A2CD37 /* StreamPlayListTracks.swift in Sources */,
 				B1D33DD820D18B1000DCDC5F /* PlaylistEditViewThirdPage.swift in Sources */,
 				B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */,
-				B1BBECEE1F93642B00BD9D39 /* UILabel.swift in Sources */,
 				B1F367F520FE0B3300C3C21C /* PlaylistEditViewThirdPageExt.swift in Sources */,
 				B1F88B7D1F7045C10005FE43 /* UIColor.swift in Sources */,
 				B1C4B05320F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift in Sources */,
@@ -843,7 +796,6 @@
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 				B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */,
 				B1B8DD24202E1A1F008CE9EB /* PlaylistFilterNotification.swift in Sources */,
-				B19DBB0F202A0FEF0072E79C /* StreamFilterMenuItem.swift in Sources */,
 				B1D45007204AC5F900B1BAF4 /* PlaylistMusicIndicatorContentView.swift in Sources */,
 				B1A7E0262040C0B100A9805C /* StreamProviderConfig.swift in Sources */,
 				B1C4B05120F48AB600E43D89 /* StreamPlayListTags.swift in Sources */,

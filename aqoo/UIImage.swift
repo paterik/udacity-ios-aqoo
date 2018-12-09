@@ -16,7 +16,7 @@ extension UIImage {
         draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+            UIGraphicsEndImageContext()
         
         return newImage!
     }
@@ -24,11 +24,9 @@ extension UIImage {
     func resized(withPercentage percentage: CGFloat) -> UIImage? {
         
         let canvasSize = CGSize(width: size.width * percentage, height: size.height * percentage)
-        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+            UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
         
-        defer {
-            UIGraphicsEndImageContext()
-        }
+        defer { UIGraphicsEndImageContext() }
         
         draw(in: CGRect(origin: .zero, size: canvasSize))
         
@@ -38,11 +36,9 @@ extension UIImage {
     func resized(toWidth width: CGFloat) -> UIImage? {
         
         let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
-        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+            UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
         
-        defer {
-            UIGraphicsEndImageContext()
-        }
+        defer { UIGraphicsEndImageContext() }
         
         draw(in: CGRect(origin: .zero, size: canvasSize))
         
