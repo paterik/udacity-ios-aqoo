@@ -10,6 +10,10 @@ import UIKit
 
 class PlaylistMusicPlayModeControls {
     
+    //
+    // MARK: Class Properties
+    //
+    
     var btnPlayNormalMode: UIButton!
     var btnPlayShuffleMode: UIButton!
     var btnPlayRepeatMode: UIButton!

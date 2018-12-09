@@ -19,6 +19,7 @@ extension PlaylistEditViewThirdPage {
     func setupUIBase() {
         
         // playlist details will always be updateable
+        
         btnSavePlaylistChanges.isEnabled = true
     }
     
@@ -32,8 +33,6 @@ extension PlaylistEditViewThirdPage {
         
         textFieldPlaylistDetails.text = playListInDb!.metaListInternalDescription
     }
-    
-    
     
     func handlePlaylistStatisticReset() {
         

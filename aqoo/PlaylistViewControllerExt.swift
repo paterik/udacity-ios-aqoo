@@ -19,48 +19,9 @@ import SwiftDate
 
 extension PlaylistViewController {
     
-    func togglePlayMode (
-       _ active: Bool) {
-        
-        if  currentPlaylist.trackCheckTimer != nil {
-            currentPlaylist.trackCheckTimer.invalidate()
-        }
-        
-        if  active == true {
-            
-            // start playback meta timer
-            currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
-                timeInterval : TimeInterval(1),
-                target       : self,
-                selector     : #selector(handlePlaylistTrackTimerEvent),
-                userInfo     : nil,
-                repeats      : true
-            )
-        }
-    }
-    
-    @objc
-    func handlePlaylistTrackTimerEvent() {
-        
-        if debugMode == false { return }
-        
-        let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
-        let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
-        let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
-        
-        if  localPlayer.player!.playbackState.isPlaying {
-            print ("_track:  \(currentTrackName)")
-            print ("_album:  \(currentAlbumName)")
-            print ("_artist: \(currentArtistName)")
-            print ("----------------------------------------------------------------------------")
-            print ("_player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
-            print ("_player_is_repeating: \(localPlayer.player!.playbackState.isRepeating)")
-            print ("_player_is_shuffle: \(localPlayer.player!.playbackState.isShuffling)")
-            print ("_player_is_playling: \(localPlayer.player!.playbackState.isPlaying)")
-        }   else {
-            print ("__ not playing, ignore metablock print out")
-        }
-    }
+    //
+    // MARK: Class Setup UI/UX Functions
+    //
     
     func setupUIEventObserver() {
         
@@ -126,254 +87,6 @@ extension PlaylistViewController {
         playListMenuBasicFilters.delegate = self as! MenuViewDelegate
     }
     
-    func getFilterBlockByIndex(
-       _ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
-            
-        var filterTitle: String = "Playlist Loaded"
-        var filterDescription: String = "you can choose any filter from the top menu"
-        var filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey?
-        var filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>?
-        var filterQueryUseDefaults: Bool = false
-        var filterImageKey: Int?
-        var filterTargetIndex: Int = index
-        var filterMaxIndex: Int = playlistFilterMeta.count
-        
-        // prevent filter collision on dynamic parts of current filter set
-        if  index > filterMaxIndex {
-            filterTargetIndex = 0
-        }
-        
-        // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
-        for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
-            
-            if _index == filterTargetIndex {
-                
-                if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
-                    
-                    // fetch filter image key from config dictionary stack
-                    if  let _metaImageKey = _metaValue["image_key"] as? Int {
-                        if  _metaImageKey != -1 {
-                            filterImageKey = _metaImageKey
-                        }
-                    }
-                    
-                    // fetch filter title from config dictionary stack
-                    if  let _metaTitle = _metaValue["title"] as? String {
-                        filterTitle = _metaTitle
-                    }
-                    
-                    // fetch filter description/subTitle from dictionary stack
-                    if  let _metaDescription = _metaValue["description"] as? String {
-                        filterDescription = _metaDescription
-                    }
-                    
-                    // fetch 'order-by' query enforce-default-order flag from dictionary stack
-                    if  let _metaQueryUseDefaults = _metaValue["query_order_use_internals"] as? Bool {
-                        filterQueryUseDefaults = _metaQueryUseDefaults
-                    }
-                    
-                    // fetch base 'order-by' query sortKeys from dictionary stack
-                    if  let _metaQueryOrderBy = _metaValue["query_order_by"] as? OrderBy<StreamPlayList>.SortKey {
-                        filterQueryOrderByClause = _metaQueryOrderBy
-                    }
-                    
-                    // fetch base 'where' query override statement from dictionary stack
-                    if  let _metaQueryWhere = _metaValue["query_override"] as? FetchChainBuilder<StreamPlayList> {
-                        filterQueryFetchChainBuilder = _metaQueryWhere
-                    }
-                }
-                
-                break
-            }
-        }
-            
-        return (
-            filterTitle,
-            filterDescription,
-            filterQueryOrderByClause,
-            filterQueryFetchChainBuilder,
-            filterQueryUseDefaults,
-            filterImageKey
-        )
-    }
-    
-    //
-    // this method will handle main filter menu tap events and notification
-    //
-    func menu(
-       _ menu: MenuView,
-         didSelectItemAt index: Int) {
-        
-        // fetch logical filterBlock by key selection index
-        let filterBlock = getFilterBlockByIndex( index )
-        // persist current filter to provider based playlist
-        setConfigTableFilterKeyByProviderTag ( Int16 (index), _sysDefaultProviderTag )
-        // show notification for user about current filter set
-        showFilterNotification ( filterBlock.0, filterBlock.1, filterBlock.5 )
-        // call specific filter action corresponding to current filter-item menu selection
-        handleTableFilterByFetchChainQuery(
-            filterBlock.2,
-            filterBlock.3,
-            filterBlock.4
-        )
-    }
-    
-    func getConfigTableFilterKeyByProviderTag(
-       _ filterProviderTag: String = "_spotify") -> Int {
-        
-        // prefetch stream provider entity to select corresponding config by lines below ...
-        var _configProvider = CoreStore.defaultStack.fetchOne(
-            From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
-        )
-        
-        // try to fetch config value object by given provider entity ...
-        if  let _configKeyRow = CoreStore.defaultStack.fetchOne(
-            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
-            ) as? StreamProviderConfig {
-            
-            return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
-        }
-        
-        // no filter set? activate default filter!
-        setConfigTableFilterKeyByProviderTag ( Int16(sysPlaylistDefaultFilterIndex), _sysDefaultProviderTag )
-        
-        return sysPlaylistDefaultFilterIndex
-    }
-    
-    func setConfigTableFilterKeyByProviderTag(
-       _ filterKey: Int16 = 0,
-       _ filterProviderTag: String = "_spotify") {
-        
-        if  spotifyClient.spfCurrentSession == nil {
-            handleErrorAsDialogMessage("Session Error", "unable to save current filter to your playlist - session lost!")
-            return
-        }
-        
-        CoreStore.perform(
-            
-            asynchronous: { (transaction) -> Void in
-                
-                let providerUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
-                
-                // prefetch stream provider entity again to select corresponding config by lines below ...
-                var _configProvider = transaction.fetchOne(
-                    From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
-                )
-                
-                // try to fetch config value object by given provider entity ...
-                var _configKeyRow = transaction.fetchOne(
-                    From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
-                )
-                
-                // stream provider config entry in local db not available or not fetchable yet? Create a new one ...
-                if _configKeyRow == nil {
-                   _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
-                   _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
-                   _configKeyRow!.isGlobal = false // this config will be provider dependent
-                   _configKeyRow!.provider = _configProvider!
-                   _configKeyRow!.providerUserId = providerUserId
-                   _configKeyRow!.createdAt = Date()
-                    
-                    if  self.debugMode == true {
-                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
-                    }
-                
-                // stream provider config available? ... update corresponding property (so filterKey in this case)
-                }   else {
-                    
-                   _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
-                   _configKeyRow!.provider = _configProvider!
-                   _configKeyRow!.updatedAt = Date()
-                    
-                    if  self.debugMode == true {
-                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
-                    }
-                }
-            },
-            completion: { (result) -> Void in
-                
-                switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
-                case .success(let userInfo): break
-                    if  self.debugMode == true {
-                        print ("dbg [playlist] : config_key ➡ finaly persisted")
-                    }
-                }
-            }
-        )
-    }
-    
-    func handleTableFilterByFetchChainQuery(
-       _ filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey? = nil,
-       _ filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>? = nil,
-       _ filterQueryUseDefaults: Bool = false ) {
-        
-        var filterQueryOrderBy = OrderBy<StreamPlayList>()
-        var filterQueryResults = [StreamPlayList]()
-        
-        if  filterQueryOrderByClause == nil &&
-            filterQueryFetchChainBuilder == nil {
-            if  self.debugMode == true {
-                print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter process aborted!")
-                
-                return
-            }
-        }
-        
-        if  filterQueryOrderByClause != nil {
-            filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
-            if  filterQueryUseDefaults == true {
-                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.metaWeight) )
-            }
-        }
-        
-        if  filterQueryFetchChainBuilder != nil {
-            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll( filterQueryFetchChainBuilder! ) {
-                filterQueryResults = _playListFilterResults
-            }
-            
-        }   else {
-            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll(
-                From<StreamPlayList>(),
-                Where<StreamPlayList>("isPlaylistHidden = %d", false),
-                filterQueryOrderBy
-            ) { filterQueryResults = _playListFilterResults }
-        }
-        
-        if  filterQueryResults.count > 0 {
-            // reset table cache and reload table view only on existing (countable) results
-            spotifyClient.playlistsInCache = filterQueryResults
-            
-        }   else {
-            HUD.flash(.label("no playlists for this filter"), delay: 2.275)
-            spotifyClient.playlistsInCache = []
-            // @todo :: feature_1001 : user will be informed using a simple dialog
-            // - do you want to load your playlist using one of your favorite filters instead?
-            // - filter1, filter2 or filter3 ...
-        }
-        
-        handlePlaylistReloadData()
-    }
-    
-    func showFilterNotification(
-       _ title: String,
-       _ description: String,
-       _ imageKey: Int? ) {
-        
-        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
-            bannerView.lblTitle.text = title
-            bannerView.lblSubTitle.text = description
-        if  imageKey != nil {
-            bannerView.imgViewNotificationDefault.image = UIImage(named: "mnu_pl_fltr_icn_\(imageKey!)_nfo")
-        }
-        
-        let banner = NotificationBanner(customView: bannerView)
-            banner.duration = 0.9375
-            banner.onTap = {
-            banner.dismiss()
-        };  banner.show(bannerPosition: .top)
-    }
-
     func setupUITableView() {
         
         // @todo :: feature_1002 : thats a bit "majic" here, we've to prepare our
@@ -675,6 +388,297 @@ extension PlaylistViewController {
             }
             
             handlePlaylistDbCacheCoreData (playListInCloud, playlistIndex, spotifyClient.spfStreamingProviderDbTag)
+        }
+    }
+    
+    func togglePlayMode (
+       _ active: Bool) {
+        
+        if  currentPlaylist.trackCheckTimer != nil {
+            currentPlaylist.trackCheckTimer.invalidate()
+        }
+        
+        if  active == true {
+            
+            // start playback meta timer
+            currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
+                timeInterval : TimeInterval(1),
+                target       : self,
+                selector     : #selector(handlePlaylistTrackTimerEvent),
+                userInfo     : nil,
+                repeats      : true
+            )
+        }
+    }
+    
+    func getFilterBlockByIndex(
+       _ index : Int) -> (String,String,OrderBy<StreamPlayList>.SortKey?,FetchChainBuilder<StreamPlayList>?,Bool,Int?) {
+        
+        var filterTitle: String = "Playlist Loaded"
+        var filterDescription: String = "you can choose any filter from the top menu"
+        var filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey?
+        var filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>?
+        var filterQueryUseDefaults: Bool = false
+        var filterImageKey: Int?
+        var filterTargetIndex: Int = index
+        var filterMaxIndex: Int = playlistFilterMeta.count
+        
+        // prevent filter collision on dynamic parts of current filter set
+        if  index > filterMaxIndex {
+            filterTargetIndex = 0
+        }
+        
+        // majic: iterate through predefined playlistFilterMeta dictionary sorted by key (desc)
+        for (_index, _filterMeta) in playlistFilterMeta.sorted(by: { $0.0 < $1.0 }).enumerated() {
+            
+            if _index == filterTargetIndex {
+                
+                if  let _metaValue = _filterMeta.value as? [String: AnyObject] {
+                    
+                    // fetch filter image key from config dictionary stack
+                    if  let _metaImageKey = _metaValue["image_key"] as? Int {
+                        if  _metaImageKey != -1 {
+                            filterImageKey = _metaImageKey
+                        }
+                    }
+                    
+                    // fetch filter title from config dictionary stack
+                    if  let _metaTitle = _metaValue["title"] as? String {
+                        filterTitle = _metaTitle
+                    }
+                    
+                    // fetch filter description/subTitle from dictionary stack
+                    if  let _metaDescription = _metaValue["description"] as? String {
+                        filterDescription = _metaDescription
+                    }
+                    
+                    // fetch 'order-by' query enforce-default-order flag from dictionary stack
+                    if  let _metaQueryUseDefaults = _metaValue["query_order_use_internals"] as? Bool {
+                        filterQueryUseDefaults = _metaQueryUseDefaults
+                    }
+                    
+                    // fetch base 'order-by' query sortKeys from dictionary stack
+                    if  let _metaQueryOrderBy = _metaValue["query_order_by"] as? OrderBy<StreamPlayList>.SortKey {
+                        filterQueryOrderByClause = _metaQueryOrderBy
+                    }
+                    
+                    // fetch base 'where' query override statement from dictionary stack
+                    if  let _metaQueryWhere = _metaValue["query_override"] as? FetchChainBuilder<StreamPlayList> {
+                        filterQueryFetchChainBuilder = _metaQueryWhere
+                    }
+                }
+                
+                break
+            }
+        }
+        
+        return (
+            filterTitle,
+            filterDescription,
+            filterQueryOrderByClause,
+            filterQueryFetchChainBuilder,
+            filterQueryUseDefaults,
+            filterImageKey
+        )
+    }
+    
+    //
+    // this method will handle main filter menu tap events and notification
+    //
+    func menu(
+       _ menu: MenuView,
+         didSelectItemAt index: Int) {
+        
+        // fetch logical filterBlock by key selection index
+        let filterBlock = getFilterBlockByIndex( index )
+        // persist current filter to provider based playlist
+        setConfigTableFilterKeyByProviderTag ( Int16 (index), _sysDefaultProviderTag )
+        // show notification for user about current filter set
+        showFilterNotification ( filterBlock.0, filterBlock.1, filterBlock.5 )
+        // call specific filter action corresponding to current filter-item menu selection
+        handleTableFilterByFetchChainQuery(
+            filterBlock.2,
+            filterBlock.3,
+            filterBlock.4
+        )
+    }
+    
+    func getConfigTableFilterKeyByProviderTag(
+        _ filterProviderTag: String = "_spotify") -> Int {
+        
+        // prefetch stream provider entity to select corresponding config by lines below ...
+        var _configProvider = CoreStore.defaultStack.fetchOne(
+            From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
+        )
+        
+        // try to fetch config value object by given provider entity ...
+        if  let _configKeyRow = CoreStore.defaultStack.fetchOne(
+            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
+            ) as? StreamProviderConfig {
+            
+            return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
+        }
+        
+        // no filter set? activate default filter!
+        setConfigTableFilterKeyByProviderTag ( Int16(sysPlaylistDefaultFilterIndex), _sysDefaultProviderTag )
+        
+        return sysPlaylistDefaultFilterIndex
+    }
+    
+    func setConfigTableFilterKeyByProviderTag(
+       _ filterKey: Int16 = 0,
+       _ filterProviderTag: String = "_spotify") {
+        
+        if  spotifyClient.spfCurrentSession == nil {
+            handleErrorAsDialogMessage("Session Error", "unable to save current filter to your playlist - session lost!")
+            return
+        }
+        
+        CoreStore.perform(
+            
+            asynchronous: { (transaction) -> Void in
+                
+                let providerUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
+                
+                // prefetch stream provider entity again to select corresponding config by lines below ...
+                var _configProvider = transaction.fetchOne(
+                    From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
+                )
+                
+                // try to fetch config value object by given provider entity ...
+                var _configKeyRow = transaction.fetchOne(
+                    From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
+                )
+                
+                // stream provider config entry in local db not available or not fetchable yet? Create a new one ...
+                if _configKeyRow == nil {
+                    _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
+                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.isGlobal = false // this config will be provider dependent
+                    _configKeyRow!.provider = _configProvider!
+                    _configKeyRow!.providerUserId = providerUserId
+                    _configKeyRow!.createdAt = Date()
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
+                    }
+                    
+                    // stream provider config available? ... update corresponding property (so filterKey in this case)
+                }   else {
+                    
+                    _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
+                    _configKeyRow!.provider = _configProvider!
+                    _configKeyRow!.updatedAt = Date()
+                    
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
+                    }
+                }
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode == true { print (error) }
+                case .success(let userInfo): break
+                if  self.debugMode == true {
+                    print ("dbg [playlist] : config_key ➡ finaly persisted")
+                    }
+                }
+            }
+        )
+    }
+    
+    func handleTableFilterByFetchChainQuery(
+       _ filterQueryOrderByClause: OrderBy<StreamPlayList>.SortKey? = nil,
+       _ filterQueryFetchChainBuilder: FetchChainBuilder<StreamPlayList>? = nil,
+       _ filterQueryUseDefaults: Bool = false ) {
+        
+        var filterQueryOrderBy = OrderBy<StreamPlayList>()
+        var filterQueryResults = [StreamPlayList]()
+        
+        if  filterQueryOrderByClause == nil &&
+            filterQueryFetchChainBuilder == nil {
+            if  self.debugMode == true {
+                print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter process aborted!")
+                
+                return
+            }
+        }
+        
+        if  filterQueryOrderByClause != nil {
+            filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
+            if  filterQueryUseDefaults == true {
+                filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.metaWeight) )
+            }
+        }
+        
+        if  filterQueryFetchChainBuilder != nil {
+            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll( filterQueryFetchChainBuilder! ) {
+                filterQueryResults = _playListFilterResults
+            }
+            
+        }   else {
+            if  let _playListFilterResults = CoreStore.defaultStack.fetchAll(
+                From<StreamPlayList>(),
+                Where<StreamPlayList>("isPlaylistHidden = %d", false),
+                filterQueryOrderBy
+                ) { filterQueryResults = _playListFilterResults }
+        }
+        
+        if  filterQueryResults.count > 0 {
+            // reset table cache and reload table view only on existing (countable) results
+            spotifyClient.playlistsInCache = filterQueryResults
+            
+        }   else {
+            HUD.flash(.label("no playlists for this filter"), delay: 2.275)
+            spotifyClient.playlistsInCache = []
+            // @todo :: feature_1001 : user will be informed using a simple dialog
+            // - do you want to load your playlist using one of your favorite filters instead?
+            // - filter1, filter2 or filter3 ...
+        }
+        
+        handlePlaylistReloadData()
+    }
+    
+    func showFilterNotification(
+       _ title: String,
+       _ description: String,
+       _ imageKey: Int? ) {
+        
+        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+        bannerView.lblTitle.text = title
+        bannerView.lblSubTitle.text = description
+        if  imageKey != nil {
+            bannerView.imgViewNotificationDefault.image = UIImage(named: "mnu_pl_fltr_icn_\(imageKey!)_nfo")
+        }
+        
+        let banner = NotificationBanner(customView: bannerView)
+        banner.duration = 0.9375
+        banner.onTap = {
+            banner.dismiss()
+        };  banner.show(bannerPosition: .top)
+    }
+    
+    @objc
+    func handlePlaylistTrackTimerEvent() {
+        
+        if debugMode == false { return }
+        
+        let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
+        let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
+        let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
+        
+        if  localPlayer.player!.playbackState.isPlaying {
+            print ("_track:  \(currentTrackName)")
+            print ("_album:  \(currentAlbumName)")
+            print ("_artist: \(currentArtistName)")
+            print ("----------------------------------------------------------------------------")
+            print ("_player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
+            print ("_player_is_repeating: \(localPlayer.player!.playbackState.isRepeating)")
+            print ("_player_is_shuffle: \(localPlayer.player!.playbackState.isShuffling)")
+            print ("_player_is_playling: \(localPlayer.player!.playbackState.isPlaying)")
+        }   else {
+            print ("__ not playing, ignore metablock debug out")
         }
     }
     

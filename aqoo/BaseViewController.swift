@@ -18,7 +18,8 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
-    let debugKFCMode: Bool = true
+    let debugKFCMode: Bool = false
+    let metaDateTimeFormat = "dd.MM.Y hh:mm"
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let spotifyClient = SpotifyClient.sharedInstance
@@ -35,7 +36,6 @@ class BaseViewController: UIViewController {
     let _sysDefaultCoverOverrideImage = "imgUICoverOverrideDefault_v1"
     let _sysDefaultUserProfileImage = "imgUITblProfileDefault_v1"
     let _sysDefaultSpotifyUserImage = "imgUITblProfileSpotify_v1"
-    
     let _sysPlaylistCoverImageSize = CGSize(width: 128, height: 128)
     let _sysDefaultProviderTag = "_spotify"
     let _sysDefaultSpotifyUsername = "spotify"
@@ -45,10 +45,7 @@ class BaseViewController: UIViewController {
     let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
     let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
-    
     let _sysPlaylistCacheRefreshEnforce: DateComponents = 3.minutes
-    
-    let metaDateTimeFormat = "dd.MM.Y hh:mm"
     
     //
     // all predefined filter indices as 'readably' value

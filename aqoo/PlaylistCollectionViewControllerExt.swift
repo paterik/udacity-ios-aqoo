@@ -16,10 +16,6 @@ extension PlaylistCollectionViewController {
         collectionView.delegate = self
     }
     
-    func handlePlaylistCache() {
-        
-    }
-    
     func refreshCollectionView() {
         
         if isDataAvailable() {

@@ -12,7 +12,7 @@ import CryptoSwift
 import CoreStore
 
 extension PlaylistEditViewFirstPage {
- 
+    
     //
     // MARK: Class Setup UI/UX Functions
     //

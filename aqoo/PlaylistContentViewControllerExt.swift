@@ -17,6 +17,10 @@ import fluid_slider
 
 extension PlaylistContentViewController {
  
+    //
+    // MARK: Class Setup UI/UX Functions
+    //
+    
     func setupUIBase() {
         
         var _noCoverImageAvailable : Bool = true
