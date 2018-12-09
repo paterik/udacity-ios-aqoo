@@ -28,7 +28,6 @@
 		B16AC2062196E0F200FAAEC0 /* TrackBaseControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */; };
 		B17B2235213BE05300649AB2 /* ProxyPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */; };
 		B17FC7CD1FF6508D00CA3166 /* CGDim.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CC1FF6508D00CA3166 /* CGDim.swift */; };
-		B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */; };
 		B189892B1F72B98600516A53 /* LoginViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892A1F72B98600516A53 /* LoginViewControllerExt.swift */; };
 		B189892E1F72B9A800516A53 /* PlaylistViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B189892D1F72B9A800516A53 /* PlaylistViewControllerExt.swift */; };
 		B18C61EE20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18C61ED20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift */; };
@@ -117,7 +116,6 @@
 		B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackBaseControls.swift; sourceTree = "<group>"; };
 		B17B2234213BE05300649AB2 /* ProxyPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyPlaylist.swift; sourceTree = "<group>"; };
 		B17FC7CC1FF6508D00CA3166 /* CGDim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGDim.swift; sourceTree = "<group>"; };
-		B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTriangleView.swift; sourceTree = "<group>"; };
 		B181B06C1F717C8200F29E8C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B181B06E1F717C9100F29E8C /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Spotify.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/aqoo-cpdybjroehrohedthosfkrarpbuw/Build/Products/Debug-iphonesimulator/Spotify-iOS-SDK/Spotify.framework"; sourceTree = "<group>"; };
 		B181B0701F717CA100F29E8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -522,7 +520,6 @@
 				B15E030F2112D332003124E4 /* AppBaseNotification.swift */,
 				B16AC2032196E0E200FAAEC0 /* TrackBaseControls.xib */,
 				B16AC2052196E0F200FAAEC0 /* TrackBaseControls.swift */,
-				B17FC7CE1FF918C700CA3166 /* BaseTriangleView.swift */,
 				B15E03112112D3A7003124E4 /* BaseNotificationProtocol.swift */,
 				B15E03152112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift */,
 			);
@@ -791,7 +788,6 @@
 				B13DB8DE21062A990013CAC5 /* PlaylistTracksTableCell.swift in Sources */,
 				B1D45005204AC5E300B1BAF4 /* PlaylistMusicIndicatorView.swift in Sources */,
 				B19C526F1F7060230064E1A5 /* BaseViewController.swift in Sources */,
-				B17FC7CF1FF918C700CA3166 /* BaseTriangleView.swift in Sources */,
 				B10198AD20381AE900232EB6 /* PlaylistCollectionViewCell.swift in Sources */,
 				B1F88B7F1F7045E80005FE43 /* UIImage.swift in Sources */,
 				B10198AB2038197400232EB6 /* PlaylistCollectionViewController.swift in Sources */,
