@@ -4,8 +4,20 @@ All notable changes of AQOO release series are documented in this file using the
 
 _This VirtualTourist project changelog documentation start with version 0.0.1 (2017-07-18)_
 
-## [1.0.0], 2018-12-09:
+## [1.0.1], 2018-12-09:
 _current_
+
+### Added
+
+* support for new xcode 10.1 (10B61)
+* support for new swift 4.2.1 (2018-10-30(a))
+
+### Fixed
+
+* compile/link errors on new swift 4.2 and xcode 10.1 release
+
+
+## [1.0.0], 2018-12-09:
 
 ### Added
 
