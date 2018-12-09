@@ -13,6 +13,15 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
                                  UITextFieldDelegate {
     
     //
+    // MARK: Class IBOutlet definitions
+    //
+    
+    @IBOutlet weak var inpPlaylistName: UITextField!
+    @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
+    @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
+    @IBOutlet weak var viewPlaylistTags: UIView!
+    
+    //
     // MARK: Class LowLevel Variables
     //
     
@@ -22,16 +31,12 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     var imagePickerSuccess: Bool = false
 
     //
-    // MARK: Constants (normal)
+    // MARK: Constants (class)
     //
+    
     let playlistTagsField = WSTagsField()
     let imagePickerController = UIImagePickerController()
 
-    @IBOutlet weak var inpPlaylistName: UITextField!
-    @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
-    @IBOutlet weak var imgPlaylistCoverBig: UIImageView!
-    @IBOutlet weak var viewPlaylistTags: UIView!
-    
     //
     // MARK: Class Method Overloads
     //
@@ -169,21 +174,6 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         present(alertController, animated: true, completion: nil)
     }
     
-    //
-    // MARK: Class IABaction Methods
-    //
-    
-    @IBAction func inpPlaylistNameChanged(_ sender: Any) {
-        
-        handleBtnSavePlaylistChangesState( active: true )
-    }
-
-    @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
-        
-        handlePlaylistMetaUpdate()
-        dismiss(animated: true, completion: nil)
-    }
-    
     func isCameraAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
     }
@@ -231,7 +221,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     }
     
     func imagePickerControllerDidCancel(
-        _ picker: UIImagePickerController) {
+       _ picker: UIImagePickerController) {
         
         imagePickerSuccess = false
         
@@ -242,6 +232,21 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
         
         imagePickerController.allowsEditing = false
         present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    //
+    // MARK: Class IABaction Methods
+    //
+    
+    @IBAction func inpPlaylistNameChanged(_ sender: Any) {
+        
+        handleBtnSavePlaylistChangesState( active: true )
+    }
+
+    @IBAction func btnSavePlaylistChangesAction(_ sender: Any) {
+        
+        handlePlaylistMetaUpdate()
+        dismiss(animated: true, completion: nil)
     }
 }
 

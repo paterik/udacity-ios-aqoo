@@ -32,7 +32,7 @@ class PlaylistViewController: BaseViewController,
     @IBOutlet weak var tableView: UITableView!
     
     //
-    // MARK: Constants (special)
+    // MARK: Constants (class)
     //
     
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
@@ -94,6 +94,7 @@ class PlaylistViewController: BaseViewController,
     // primary used filter context including title, description, imageKey
     // and corresponding FetchChainBuilder-Call for CoreStore (lazy query)
     //
+    
     var playlistFilterMeta = [
         
         0 : [
@@ -209,7 +210,7 @@ class PlaylistViewController: BaseViewController,
     }
     
     //
-    // MARK: Class Table Delegates
+    // MARK: Class Delegate Method Overloads
     //
     
     func tableView(

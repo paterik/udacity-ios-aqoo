@@ -19,12 +19,20 @@ class PlaylistContentViewController: BaseViewController,
                                      UITableViewDataSource,
                                      UITableViewDelegate {
     
+    //
+    // MARK: Constants (class)
+    //
+    
     let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
     let localPlayer = SPFClientPlayer.sharedInstance
     let kBaseCellHeight: CGFloat = 72.0
     
     let currentTrack = ProxyPlaylistTrack.sharedInstance
     let currentPlaylist = ProxyPlaylist.sharedInstance
+    
+    //
+    // MARK: Class Variables
+    //
     
     var trackSubControlView: TrackBaseControls?
     var trackSubControlBanner: NotificationBanner?
@@ -37,6 +45,10 @@ class PlaylistContentViewController: BaseViewController,
     
     var playListInDb: StreamPlayList?
     var playListInCloud: SPTPartialPlaylist?
+    
+    //
+    // MARK: Class IBOutlet definitions
+    //
     
     @IBOutlet weak var trackControlView: PlaylistTracksControlView!
     @IBOutlet weak var tableView: UITableView!
@@ -75,7 +87,7 @@ class PlaylistContentViewController: BaseViewController,
     }
     
     //
-    // MARK: Class Table Delegates
+    // MARK: Class Delegate Method Overloads
     //
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -186,24 +198,9 @@ class PlaylistContentViewController: BaseViewController,
         return playlistCell
     }
     
-    func resetPlayer() {
-        
-        // reset (all) playMode controls
-        trackControlView.mode = .clear
-        // reset playMode for all (spotify) playlists in cache
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
-        // reset playMode/timeFrame-Meta-Information for all (spotify) playlistTracks in cache
-        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
-        // clear local playlist playback meta
-        resetLocalPlayerMetaSettings()
-        // clear local track playback meta
-        resetLocalTrackGlobalMeta()
-        // deactivate trackControls on bottom of this view
-        toggleTrackSubControls( false )
-        
-        // logout from player -> not used yet!
-        // localPlayer.player?.logout()
-    }
+    //
+    // MARK: Class IBAction Methods
+    //
     
     @IBAction func btnClosePlayistContentView(_ sender: Any) {
         

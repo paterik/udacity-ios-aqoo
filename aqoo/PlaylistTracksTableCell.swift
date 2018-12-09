@@ -11,6 +11,10 @@ import MaterialComponents.MaterialProgressView
 
 class PlaylistTracksTableCell: UITableViewCell {
     
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var lblAlbumName: UILabel!
     @IBOutlet weak var lblTrackName: UILabel!
     @IBOutlet weak var lblTrackPlaytime: UILabel!
@@ -22,6 +26,10 @@ class PlaylistTracksTableCell: UITableViewCell {
     @IBOutlet weak var imageViewTrackIsExplicit: UIImageView!
     @IBOutlet weak var imageViewTrackIsPlayingIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var imageViewTrackIsPlayingSymbol: UIImageView!
+    
+    //
+    // MARK: Class Properties
+    //
     
     var state: PlaylistMusicIndicatorViewState = .stopped {
         didSet { imageViewTrackIsPlayingIndicator.state = state }

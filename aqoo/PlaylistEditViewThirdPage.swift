@@ -10,11 +10,19 @@ import UIKit
 
 class PlaylistEditViewThirdPage: BasePlaylistEditViewController {
     
-    var playlistUpdateDetected: Bool = false
+    //
+    // MARK: Class IBOutlet definitions
+    //
     
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var textFieldPlaylistDetails: UITextView!
     @IBOutlet weak var btnResetPlaylistStatistics: UIButton!
+    
+    //
+    // MARK: Class Variables
+    //
+    
+    var playlistUpdateDetected: Bool = false
     
     //
     // MARK: Class Method Overloads

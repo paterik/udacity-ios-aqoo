@@ -758,6 +758,22 @@ extension PlaylistContentViewController {
         currentTrack.interval = TimeInterval(currentTrack.timePosition)
     }
     
+    func resetPlayer() {
+        
+        // reset (all) playMode controls
+        trackControlView.mode = .clear
+        // reset playMode for all (spotify) playlists in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        // reset playMode/timeFrame-Meta-Information for all (spotify) playlistTracks in cache
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+        // clear local playlist playback meta
+        resetLocalPlayerMetaSettings()
+        // clear local track playback meta
+        resetLocalTrackGlobalMeta()
+        // deactivate trackControls on bottom of this view
+        toggleTrackSubControls( false )
+    }
+    
     func loadMetaPlaylistTracksFromDb() {
         
         // load all tracks from db

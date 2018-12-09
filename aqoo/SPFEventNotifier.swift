@@ -10,6 +10,10 @@ import Foundation
 
 struct SPFEventNotifier {
     
+    //
+    // MARK: Properties
+    //
+    
     var notifyUserProfileLoadCompleted = "_cloud_user_profile_load_completed"
     var notifyPlaylistLoadCompleted = "__cloud_playlist_load_completed"
     var notifyPlaylistMetaExtendLoadCompleted = "__cloud_playlist_meta_extend_load_completed"

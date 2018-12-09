@@ -10,6 +10,10 @@ import UIKit
 
 class AppBaseNotification: UIView {
 
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblSubTitle: UILabel!
     @IBOutlet weak var imgViewNotificationDefault: UIImageView!

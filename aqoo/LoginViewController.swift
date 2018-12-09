@@ -11,10 +11,18 @@ import Spotify
 
 class LoginViewController: BaseViewController, WebViewControllerDelegate {
 
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var imgSpotifyStatus: UIImageView!
     @IBOutlet weak var btnSpotifyLogin: UIButton!
     @IBOutlet weak var btnSpotifyLogout: UIButton!
     @IBOutlet weak var lblSpotifySessionStatus: UILabel!
+    
+    //
+    // MARK: Class Variables
+    //
     
     var authViewController: UIViewController?
     
@@ -63,6 +71,10 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
     }
     
     override var prefersStatusBarHidden: Bool { return true }
+    
+    //
+    // MARK: Class IABaction Methods
+    //
     
     @IBAction func btnSpotifyLoginAction(_ sender: SPTConnectButton) {
 

@@ -11,11 +11,23 @@ import Kingfisher
 
 class PlaylistColletionViewCell: UICollectionViewCell {
     
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet var imageViewPlaylistCover: UIImageView!
     @IBOutlet var imageViewPlaylistIsSpotify: UIView!
     @IBOutlet var lblPlaylistMetaTrackCount: UILabel!
     
+    //
+    // MARK: Class Properties
+    //
+    
     var imageCacheKey: String?
+    
+    //
+    // MARK: Class Overrides
+    //
     
     override func prepareForReuse() {
         super.prepareForReuse()

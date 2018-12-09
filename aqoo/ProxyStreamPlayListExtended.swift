@@ -8,6 +8,10 @@
 
 class ProxyStreamPlayListExtended {
     
+    //
+    // MARK: Properties
+    //
+    
     var playlistIdentifier: String
     var playlistSnapshotId: String
     var playlistFollowerCount: Int

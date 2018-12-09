@@ -12,12 +12,20 @@ import Spotify
 
 class PlaylistTableFoldingCell: FoldingCell {
     
+    //
+    // MARK: Class Properties
+    //
+    
     var metaIndexPathRow: Int?
     var metaOwnerName: String?
     var metaPlaylistInDb: StreamPlayList?
     var metaPlayListInCloud: SPTPartialPlaylist?
     var imageCacheKeyNormalView: String?
     var imageCacheKeyDetailView: String?
+    
+    //
+    // MARK: Class IBOutlet definitions
+    //
     
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
     @IBOutlet weak var imageViewPlaylistCoverRaw: UIImageView!

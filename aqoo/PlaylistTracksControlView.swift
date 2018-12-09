@@ -10,6 +10,10 @@ import UIKit
 
 class PlaylistTracksControlView: UIView {
     
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var lblPlaylistName: UILabel!
     @IBOutlet weak var lblPlaylistOverallPlaytime: UILabel!
     @IBOutlet weak var lblPlaylistTrackCount: UILabel!
@@ -20,6 +24,10 @@ class PlaylistTracksControlView: UIView {
     
     @IBOutlet weak var imageViewPlaylistIsPlayingIndicator: PlaylistMusicIndicatorView!
     @IBOutlet weak var imageViewPlaylistCover: UIImageView!
+    
+    //
+    // MARK: Class Properties
+    //
     
     var mode: PlaylistMusicPlayMode = .playNormal {
         

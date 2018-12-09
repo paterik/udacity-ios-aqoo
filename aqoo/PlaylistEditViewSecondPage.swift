@@ -11,13 +11,21 @@ import fluid_slider
 
 class PlaylistEditViewSecondPage: BasePlaylistEditViewController {
     
-    var playlistUpdateDetected: Bool = false
+    //
+    // MARK: Class IBOutlet definitions
+    //
     
     @IBOutlet weak var btnSavePlaylistChanges: UIBarButtonItem!
     @IBOutlet weak var cViewPlaylistRatingIntensity: Slider!
     @IBOutlet weak var cViewPlaylistRatingEmotional: Slider!
     @IBOutlet weak var cViewPlaylistRatingDepth: Slider!
     @IBOutlet weak var lblPlaylistRatingAverageValue: UILabel!
+    
+    //
+    // MARK: Class Variables
+    //
+    
+    var playlistUpdateDetected: Bool = false
     
     //
     // MARK: Class Method Overloads

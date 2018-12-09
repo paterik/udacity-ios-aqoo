@@ -10,6 +10,10 @@ import UIKit
 
 class PlaylistFilterNotification: UIView {
     
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var lblSubTitle: UILabel!
     @IBOutlet var imgViewNotificationDefault: UIImageView!

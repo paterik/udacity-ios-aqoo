@@ -15,8 +15,16 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
     @IBOutlet var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet var collectionView: UICollectionView!
     
+    //
+    // MARK: Class Variables
+    //
+    
     let coverCellIdent = "CoverCollectionCell"
     let coverCellImageCornerRadius: CGFloat = 4.0
+    
+    //
+    // MARK: Class Variables
+    //
     
     var cacheTimer: Timer!
     

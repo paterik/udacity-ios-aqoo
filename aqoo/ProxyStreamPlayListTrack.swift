@@ -10,6 +10,10 @@ import Spotify
 
 class ProxyStreamPlayListTrack {
     
+    //
+    // MARK: Properties
+    //
+    
     var playlistIdentifier: String
     var trackIdentifier: String?
     var trackURIInternal: URL

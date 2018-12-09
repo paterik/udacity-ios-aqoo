@@ -13,6 +13,10 @@ import CryptoSwift
 
 class SPFClientPlaylistControls {
     
+    //
+    // MARK: Constants
+    //
+    
     static let sharedInstance = SPFClientPlaylistControls()
     
     let debugMode: Bool = true

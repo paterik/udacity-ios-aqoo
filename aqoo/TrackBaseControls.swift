@@ -11,6 +11,10 @@ import fluid_slider
 
 class TrackBaseControls: UIView {
     
+    //
+    // MARK: Class IBOutlet definitions
+    //
+    
     @IBOutlet weak var cViewTrackPositionIndex: Slider!
     @IBOutlet weak var btnSetPreviousTrack: UIButton!
     @IBOutlet weak var btnSetNextTrack: UIButton!
