@@ -15,7 +15,7 @@ class SPFClientPlaylistControls {
     
     static let sharedInstance = SPFClientPlaylistControls()
     
-    let debugMode: Bool = false
+    let debugMode: Bool = true
     
     func setTrackInPlayState(
        _ trackInDb : StreamPlayListTracks,
@@ -85,6 +85,14 @@ class SPFClientPlaylistControls {
                 
                 let playlistInDb = transaction.edit(playlistInDb)!
                     playlistInDb.currentPlayMode = newPlayMode
+                
+                if  newPlayMode != 0 {
+                    playlistInDb.metaNumberOfPlayedPartly += 1
+                    playlistInDb.metaNumberOfPlayed += 1
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : add metaNumberOfPlayedPartly stats to [\(playlistInDb.metaListInternalName)]")
+                    }
+                }
             },
             completion: { (result) -> Void in
                 

@@ -42,6 +42,8 @@ extension PlaylistViewController {
     @objc
     func handlePlaylistTrackTimerEvent() {
         
+        if debugMode == false { return }
+        
         let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
         let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
         let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
@@ -1398,13 +1400,10 @@ extension PlaylistViewController {
         // played, playedParty, playedCompletly and number of shares during development
         //
         
-        let _played = Int.random(1000, 5550) // 234
         let _rate_intensity = Int.random(0, 100)
         let _rate_emotional = Int.random(0, 100)
         let _rate_depth = Int.random(0, 100)
         
-        var _playedPartly = _played - Int.random(0, _played) // 234 - (0..234)[54] = 180
-        var _playedCompletly = _played - _playedPartly // 54
         var _playlistTitleRaw: String = ""
         
         CoreStore.defaultStack.perform(
@@ -1441,12 +1440,9 @@ extension PlaylistViewController {
                     _playlistTitleRaw = playListInCloud.name.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     if  self.debugLoadFixtures == true && self.debugMode == true {
-                        print ("fixture_load --> \(_played) x played")
-                        print ("fixture_load --> \(_playedPartly) x playedPartly")
-                        print ("fixture_load --> \(_playedCompletly) x playedCompletly")
-                        print ("fixture_load --> \(_rate_intensity) x rate/intensity")
-                        print ("fixture_load --> \(_rate_emotional) x rate/emotional")
-                        print ("fixture_load --> \(_rate_depth) x rate/depth")
+                        print ("fixture_load --> x[\(_rate_intensity)] rate/intensity")
+                        print ("fixture_load --> x[\(_rate_emotional)] rate/emotional")
+                        print ("fixture_load --> x[\(_rate_depth)] rate/depth")
                     }
                     
                     _playListInDb = transaction.create(Into<StreamPlayList>()) as StreamPlayList
@@ -1483,9 +1479,6 @@ extension PlaylistViewController {
                     // on devMode (debugLoadFixtures) - will be removed on release
                     //
                     if self.debugLoadFixtures == true {
-                        _playListInDb!.metaNumberOfPlayed = Int64(_played)
-                        _playListInDb!.metaNumberOfPlayedPartly = Int64(_playedPartly)
-                        _playListInDb!.metaNumberOfPlayedCompletely = Int64(_playedCompletly)
                         _playListInDb!.metaListRatingArousal = Float(_rate_intensity)
                         _playListInDb!.metaListRatingValence = Float(_rate_emotional)
                         _playListInDb!.metaListRatingDepth = Float(_rate_depth)
