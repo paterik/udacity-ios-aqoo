@@ -19,7 +19,7 @@ def aq_ui
 end
 
 def aq_base
-    pod 'Spotify-iOS-SDK'
+    pod 'Spotify-iOS-SDK', '0.27.0'
     pod 'CryptoSwift', '0.11.0'
     pod 'Kingfisher', '4.9.0'
     pod 'LetterAvatarKit', '1.1.5'
