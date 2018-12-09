@@ -3,8 +3,9 @@
 
 [![Udacity Course Id](https://img.shields.io/badge/udacity-ND003-37C6EE.svg)](UDACITY)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION)
-[![Language](https://img.shields.io/badge/swift-4.2-orange.svg)](http://swift.org)
+[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.1-blue.svg)](VERSION)
+[![Language](https://img.shields.io/badge/swift-4.2-orange.svg)](https://swift.org)
+[![IDE](https://img.shields.io/badge/xcode-10.1-lightblue.svg)](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
 
@@ -14,7 +15,7 @@
 
 ## App Specifications
 
-- AQOO was developed using the latest XCode 9.4.1 (9F2000) build and is able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
+- AQOO was developed using the latest XCode 10.1 (10B61) build and is able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
 
 - AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
 and run ```pod install``` on your console before starting the app as your XCode workspace.
@@ -80,11 +81,11 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 ![normal tracklist](github/media/small/aq_tracklist_01.png) |  ![playmode active](github/media/small/aq_tracklist_02.png) | ![playlist cover view](github/media/small/aq_coverlist_01.png)
 
 ## Keywords
-swift, swift-4, udacity, extension, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
+swift, swift-4, udacit, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
 
 ## Releases
 
-AQQO is currently available in [3 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.0``` provided on ```2018-12-09```.
+AQQO is currently available in [4 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.1``` provided on ```2018-12-09```.
 
 ## Changelog
 
