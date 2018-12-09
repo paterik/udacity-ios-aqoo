@@ -84,7 +84,7 @@ swift, swift-4, udacity, extension, uikit, foundation, app, spotify, spotify-sdk
 
 ## Releases
 
-AQQO is currently available in [2 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_.
+AQQO is currently available in [3 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_.
 
 ## Changelog
 

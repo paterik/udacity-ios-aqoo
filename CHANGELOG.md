@@ -2,7 +2,7 @@
 
 All notable changes of AQOO release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-_This VirtualTourist project changelog documentation start with version 0.9.9 (2017-10-18)_
+_This VirtualTourist project changelog documentation start with version 0.0.1 (2017-07-18)_
 
 ## [1.0.0], 2018-12-09:
 _current_
@@ -33,10 +33,26 @@ _current_
 * spotify origin source app authentication
 
 
-## [0.9.9], 2017-09-18:
+## [0.9.9], 2018-07-08:
 
 ### Added
 
-* main code base (initial commit)
+* playlist view
+* playlist editView(s)
+* playlist cell/coverView
+* trackView / trackPlaylistCell
+* trackView playMode controls
+
+## [0.9.8], 2017-12-31:
+
+### Added
+
+* main code base (SDK integration)
 * minor documentation
 * changelog and license
+
+## [0.0.1], 2017-07-18:
+
+### Added
+
+* initial commit
