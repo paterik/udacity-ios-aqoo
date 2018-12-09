@@ -3,8 +3,8 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Udacity Course Id](https://img.shields.io/badge/course-ND003-37C6EE.svg)](COURSE)
-[![System Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION)
-[![Language](https://img.shields.io/badge/swift-4.0-orange.svg)](http://swift.org)
+[![APP Version (current)](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION)
+[![Language](https://img.shields.io/badge/swift-4.2-orange.svg)](http://swift.org)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
 
