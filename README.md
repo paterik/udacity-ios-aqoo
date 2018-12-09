@@ -1,8 +1,8 @@
 # AQOO
 ## udacity.com student submission
 
+[![Udacity Course Id](https://img.shields.io/badge/course-ND003-37C6EE.svg)](UDACITY)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Udacity Course Id](https://img.shields.io/badge/course-ND003-37C6EE.svg)](COURSE)
 [![APP Version (current)](https://img.shields.io/badge/version-1.0.0-blue.svg)](VERSION)
 [![Language](https://img.shields.io/badge/swift-4.2-orange.svg)](http://swift.org)
 
