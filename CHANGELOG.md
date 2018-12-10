@@ -4,8 +4,16 @@ All notable changes of AQOO release series are documented in this file using the
 
 _This VirtualTourist project changelog documentation start with version 0.0.1 (2017-07-18)_
 
-## [1.0.1], 2018-12-09:
+## [1.0.2], 2018-12-10:
 _current_
+
+### Fixed
+
+* downgrade Pod/MaterialComponents (to 70.0.0)
+* fix dependency branch problems in Podfile definitions
+
+
+## [1.0.1], 2018-12-09:
 
 ### Added
 
