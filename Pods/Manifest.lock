@@ -9,9 +9,9 @@ PODS:
   - Kingfisher (4.9.0)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
-  - MaterialComponents/Palettes (72.0.1)
-  - MaterialComponents/private/Math (72.0.1)
-  - MaterialComponents/ProgressView (72.0.1):
+  - MaterialComponents/Palettes (70.0.0)
+  - MaterialComponents/private/Math (70.0.0)
+  - MaterialComponents/ProgressView (70.0.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Math
     - MDFInternationalization
@@ -48,12 +48,12 @@ DEPENDENCIES:
   - Kingfisher (= 4.9.0)
   - LetterAvatarKit (= 1.1.5)
   - MarqueeLabel/Swift (= 3.1.6)
-  - MaterialComponents/ProgressView
+  - MaterialComponents/ProgressView (= 70.0.0)
   - NotificationBannerSwift (= 1.6.3)
   - Persei (= 3.1.1)
   - PKHUD (= 5.0.0)
   - SnapKit (= 4.0.0)
-  - Spotify-iOS-SDK
+  - Spotify-iOS-SDK (= 0.27.0)
   - SwiftDate (= 5.0.7)
   - SwiftRandom (= 1.0.0)
   - WSTagsField (= 3.2.0)
@@ -93,7 +93,7 @@ SPEC CHECKSUMS:
   Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
-  MaterialComponents: fb709eff8adee8021cc55b3de93adb0f1050aa4a
+  MaterialComponents: 7c107af5ae6566de2f1ba94bde3db99d1b874bab
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
@@ -107,6 +107,6 @@ SPEC CHECKSUMS:
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: c924cdc2368a3271e85692d0be7cb96986cc3007
+PODFILE CHECKSUM: 73ea9c0c3a37c4bc1b65049d4526b9511ff2f815
 
 COCOAPODS: 1.5.3
