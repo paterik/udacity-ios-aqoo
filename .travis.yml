@@ -15,9 +15,6 @@ before_install:
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
     - pod update
 
-xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone 6s
-xcode_project: aqoo.xcodeproj
-
 env:
   global:
     - LC_CTYPE=en_US.UTF-8
@@ -25,7 +22,6 @@ env:
 
 script:
   - set -o pipefail
-  - pod install
   - xcodebuild -version
   - xcodebuild -showsdks
-  - xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+  - xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd -toolchain XCode10.1
