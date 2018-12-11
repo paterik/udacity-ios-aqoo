@@ -25,3 +25,4 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd -toolchain XCode10.1
+
