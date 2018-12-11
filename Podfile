@@ -13,7 +13,7 @@ def aq_ui
     pod 'Persei', '3.1.1'
     pod 'PKHUD', '5.0.0'
     pod 'WSTagsField', '3.2.0'
-    pod 'MaterialComponents/ProgressView', '70.0.0'
+    pod 'MaterialComponents', '72.1.0'
     pod 'NotificationBannerSwift', '1.6.3'
     pod 'MarqueeLabel/Swift', '3.1.6'
 end
