@@ -164,9 +164,7 @@ class SPFClientPlaylists: NSObject {
                             var tmpCover = self.handlePlaylistTrackByProxy( _playlistTrack, playlist )
                             if  index == 0 {
                                 // set the playlistCover based on first Track of this list
-                                if  tmpCover != nil {
-                                    playlistCoverURLFromFirstTrack = tmpCover!
-                                }
+                                playlistCoverURLFromFirstTrack = tmpCover
                             }
                         }
                     }
