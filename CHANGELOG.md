@@ -4,8 +4,20 @@ All notable changes of AQOO release series are documented in this file using the
 
 _This VirtualTourist project changelog documentation start with version 0.0.1 (2017-07-18)_
 
-## [1.0.2], 2018-12-10:
+## [1.0.3], 2018-12-11:
 _current_
+
+### Added
+
+* travis ci build for XCode 10.1 (Swift 4.2.1)
+* documentation parts for XCode 9 and XCode 10 usage
+
+### Fixed
+
+* minor issues in image download cache handling
+
+
+## [1.0.2], 2018-12-10:
 
 ### Fixed
 

@@ -3,8 +3,8 @@
 
 [![Udacity Course Id](https://img.shields.io/badge/udacity-ND003-37C6EE.svg)](UDACITY)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.2-blue.svg)](VERSION)
-[![Language](https://img.shields.io/badge/swift-4.2-orange.svg)](https://swift.org)
+[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.3-blue.svg)](VERSION)
+[![Language](https://img.shields.io/badge/swift-4.2.1-orange.svg)](https://swift.org)
 [![IDE](https://img.shields.io/badge/xcode-10.1-lightblue.svg)](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
@@ -85,7 +85,7 @@ swift, swift-4, udacit, uikit, foundation, app, spotify, spotify-sdk, streaming,
 
 ## Releases
 
-AQQO is currently available in [5 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.1``` provided on ```2018-12-09```.
+AQQO is currently available in [5 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.3``` provided on ```2018-12-11```.
 
 ## Changelog
 
