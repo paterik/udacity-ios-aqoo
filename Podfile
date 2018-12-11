@@ -11,9 +11,9 @@ def aq_ui
     pod 'fluid-slider', '0.0.6'
     pod 'GradientLoadingBar', '1.1.11'
     pod 'Persei', '3.1.1'
-    pod 'PKHUD', '5.0.0'
+    pod 'PKHUD', '5.2.0'
     pod 'WSTagsField', '3.2.0'
-    pod 'MaterialComponents', '72.1.0'
+    pod 'MaterialComponents/ProgressView', '70.1.0'
     pod 'NotificationBannerSwift', '1.6.3'
     pod 'MarqueeLabel/Swift', '3.1.6'
 end
