@@ -1,6 +1,7 @@
 branches:
   only:
-    - development
+  - master
+  - development
 
 language: swift
 
