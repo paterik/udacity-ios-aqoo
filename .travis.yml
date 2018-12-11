@@ -13,7 +13,7 @@ cache:
 
 before_install:
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-    - pwd ; ls -lha ; pod install
+    - pwd ; ls -lha ; pod update
 
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone 6s
 xcode_project: aqoo.xcodeproj
