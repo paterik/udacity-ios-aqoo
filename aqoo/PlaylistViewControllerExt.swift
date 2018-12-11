@@ -345,7 +345,7 @@ extension PlaylistViewController {
     }
     
     @objc
-    func setupUILoadMetaExtendedPlaylists() {
+    func setupUILoadMetaExtendedPlaylists(_ notification: Notification) {
         
         // in this version of aqoo only a base set of meta data will be extending our playlist rows
         handlePlaylistExtendedMetaEnrichment()
@@ -380,7 +380,6 @@ extension PlaylistViewController {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName)")
-                print ("playlist covers: \(playListInCloud.images?.count) (alternativ covers)")
                 print ("uri: \(playListInCloud.playableUri)")
                 print ("hash: \(_playListFingerprint!) [ aqoo fingerprint ]")
                 print ("progress: \(_progress!)")
@@ -404,7 +403,7 @@ extension PlaylistViewController {
             currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
                 timeInterval : TimeInterval(1),
                 target       : self,
-                selector     : #selector(handlePlaylistTrackTimerEvent),
+                selector     : #selector(handlePlaylistTrackTimerEventDebug),
                 userInfo     : nil,
                 repeats      : true
             )
@@ -660,7 +659,7 @@ extension PlaylistViewController {
     }
     
     @objc
-    func handlePlaylistTrackTimerEvent() {
+    func handlePlaylistTrackTimerEventDebug() {
         
         if debugMode == false { return }
         
@@ -1076,6 +1075,7 @@ extension PlaylistViewController {
                         guard let playlistTracksInCloud = self.getPlaylistTracksFromProxyCache( playlistIdentifier )
                             as? ([ProxyStreamPlayListTrack], Int) else { return }
                         
+                        playlistToUpdate.largestImageURL = playlistInCloudExt.playlistFirstTrackCoverUrl
                         playlistToUpdate.metaNumberOfFollowers = playlistInCloudExt.playlistFollowerCount
                         playlistToUpdate.metaListSnapshotId = playlistInCloudExt.playlistSnapshotId
                         playlistToUpdate.metaListSnapshotDate = Date()
@@ -1292,7 +1292,6 @@ extension PlaylistViewController {
                 .append(another: RoundCornerImageProcessor(cornerRadius: _sysUserProfileImageCRadiusInDeg))
                 .append(another: BlackWhiteProcessor())
             
-            
             playlistCell.imageViewPlaylistOwner.kf.setImage(
                 with: URL(string: userProfileImageURL),
                 placeholder: UIImage(named: _sysDefaultUserProfileImage),
@@ -1349,7 +1348,7 @@ extension PlaylistViewController {
                         playListInDb.ownerSharingURL = userProfile.sharingURL.absoluteString
                     }
                     
-                } catch {
+                }   catch {
                     
                     if  self.debugMode == true {
                         print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
@@ -1664,8 +1663,6 @@ extension PlaylistViewController {
             },
             
             success: { (transactionPlaylists) in
-                
-                HUD.flash(.label("loading playlists"), delay: 2.0)
                 
                 if transactionPlaylists?.isEmpty == false {
                     

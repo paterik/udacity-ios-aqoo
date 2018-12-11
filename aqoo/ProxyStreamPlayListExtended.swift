@@ -14,12 +14,14 @@ class ProxyStreamPlayListExtended {
     
     var playlistIdentifier: String
     var playlistSnapshotId: String
+    var playlistFirstTrackCoverUrl: String?
     var playlistFollowerCount: Int
     
-    init(identifier: String, snapshotId: String, followerCount: Int) {
+    init(identifier: String, snapshotId: String, followerCount: Int, coverUrl: String?) {
         
         playlistIdentifier = identifier
         playlistSnapshotId = snapshotId
         playlistFollowerCount = followerCount
+        playlistFirstTrackCoverUrl = coverUrl
     }
 }

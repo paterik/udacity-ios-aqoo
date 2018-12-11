@@ -6,7 +6,7 @@ PODS:
     - pop
   - FoldingCell (3.1.5)
   - GradientLoadingBar (1.1.11)
-  - Kingfisher (4.9.0)
+  - Kingfisher (5.0.0)
   - LetterAvatarKit (1.1.5)
   - MarqueeLabel/Swift (3.1.6)
   - MaterialComponents/Palettes (70.1.0)
@@ -45,7 +45,7 @@ DEPENDENCIES:
   - fluid-slider (= 0.0.6)
   - FoldingCell (= 3.1.5)
   - GradientLoadingBar (= 1.1.11)
-  - Kingfisher (= 4.9.0)
+  - Kingfisher (= 5.0.0)
   - LetterAvatarKit (= 1.1.5)
   - MarqueeLabel/Swift (= 3.1.6)
   - MaterialComponents/ProgressView (= 70.1.0)
@@ -90,7 +90,7 @@ SPEC CHECKSUMS:
   fluid-slider: 3aeb48bd7f875dc0431963fde12674e69c7c0ed2
   FoldingCell: 0b0fe83d826634f6c79105330da5423832ea1340
   GradientLoadingBar: d06c05c4732c6a1404d47f33342de8fb3062d5e2
-  Kingfisher: 64539b51826b778206daa6ed815d12653caa69dd
+  Kingfisher: 2b0dd651e4fe5a07305b8242fde56f8e2d410f58
   LetterAvatarKit: 080050b8b27b73af83a2f17e9f82cf6628182250
   MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MaterialComponents: 08ee29b4052a3e999fe31fe8ba304dca3eae230d
@@ -107,6 +107,6 @@ SPEC CHECKSUMS:
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: f4b9803479d5eb8540a81289b1f26ddaa492084c
+PODFILE CHECKSUM: 02a5a6f27b9067e7aa274d4391b6a04bc4360ad3
 
 COCOAPODS: 1.5.3

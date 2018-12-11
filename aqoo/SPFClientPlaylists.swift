@@ -15,7 +15,7 @@ class SPFClientPlaylists: NSObject {
     // MARK: Constants (Special)
     //
     
-    let debugMode: Bool = true
+    let debugMode: Bool = false
     let notifier = SPFEventNotifier()
     
     //
@@ -42,9 +42,11 @@ class SPFClientPlaylists: NSObject {
     // MARK: API Methods
     //
     
-    func handlePlaylistTrackByProxy(_ track: SPTPlaylistTrack, _ playlistIdentifier: String) {
+    func handlePlaylistTrackByProxy(_ track: SPTPlaylistTrack, _ playlist: SPTPartialPlaylist) -> String? {
         
-        if track.isPlayable == false { return }
+        if track.isPlayable == false { return nil }
+        
+        let playlistIdentifier = playlist.getMD5Identifier()
         
         if  debugMode == true {
             var _dateAdded : NSDate = track.addedAt as! NSDate
@@ -96,6 +98,8 @@ class SPFClientPlaylists: NSObject {
         }
         
         self.playlistTracksInCloud.append(playlistsTrack)
+        
+        return track.album.largestCover.imageURL.absoluteString
     }
     
     func handlePlaylistTracksGetNextPage(
@@ -114,8 +118,8 @@ class SPFClientPlaylists: NSObject {
                     let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
                    
                     for _track in _playlistTracks {
-                        if let _playlistTrack = _track as? SPTPlaylistTrack {
-                            self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
+                        if  let _playlistTrack = _track as? SPTPlaylistTrack {
+                            self.handlePlaylistTrackByProxy( _playlistTrack, playlist )
                         }
                     }
                     
@@ -134,6 +138,8 @@ class SPFClientPlaylists: NSObject {
         for playlist in playistItems  {
             
             let uri = URL(string: playlist.uri.absoluteString)
+            var playlistCoverURLFromFirstTrack: String?
+            
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
             SPTPlaylistSnapshot.playlist(withURI: uri!, accessToken: accessToken) {
                 (error, snap) in
@@ -141,13 +147,6 @@ class SPFClientPlaylists: NSObject {
                 self.playlistInCloudExtendedHandled += 1
                 
                 if  let _snapshot = snap as? SPTPlaylistSnapshot {
-                    
-                    // extend playlist with addtional meta information using proxy collection object
-                    var playlistsExtended = ProxyStreamPlayListExtended(
-                        identifier: playlist.getMD5Identifier(),
-                        snapshotId: _snapshot.snapshotId,
-                        followerCount: _snapshot.followerCount
-                    );  self.playlistsInCloudExtended.append(playlistsExtended)
                     
                     // all playlist items handled? Send completion call ...
                     if  self.playlistInCloudExtendedHandled == self.playlistsInCloud.count {
@@ -159,11 +158,26 @@ class SPFClientPlaylists: NSObject {
                     
                     // handle firstPage track objects
                     let _firstPage : SPTListPage = _snapshot.firstTrackPage
-                    for _track in _firstPage.items {
+                    for (index, _track) in _firstPage.items.enumerated() {
+                        
                         if let _playlistTrack = _track as? SPTPlaylistTrack {
-                            self.handlePlaylistTrackByProxy( _playlistTrack, playlist.getMD5Identifier() )
+                            var tmpCover = self.handlePlaylistTrackByProxy( _playlistTrack, playlist )
+                            if  index == 0 {
+                                // set the playlistCover based on first Track of this list
+                                if  tmpCover != nil {
+                                    playlistCoverURLFromFirstTrack = tmpCover!
+                                }
+                            }
                         }
                     }
+                    
+                    // extend playlist with addtional meta information using proxy collection object
+                    var playlistsExtended = ProxyStreamPlayListExtended(
+                        identifier: playlist.getMD5Identifier(),
+                        snapshotId: _snapshot.snapshotId,
+                        followerCount: _snapshot.followerCount,
+                        coverUrl: playlistCoverURLFromFirstTrack ?? nil
+                    );  self.playlistsInCloudExtended.append(playlistsExtended)
                     
                     // handle all nextPage track objects
                     if _firstPage.hasNextPage {

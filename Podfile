@@ -21,7 +21,7 @@ end
 def aq_base
     pod 'Spotify-iOS-SDK', '0.27.0'
     pod 'CryptoSwift', '0.11.0'
-    pod 'Kingfisher', '4.9.0'
+    pod 'Kingfisher', '5.0.0'
     pod 'LetterAvatarKit', '1.1.5'
     pod 'SwiftRandom', '1.0.0'
     pod 'SwiftDate', '5.0.7'

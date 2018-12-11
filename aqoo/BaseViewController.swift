@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
-    let debugKFCMode: Bool = false
+    let debugKFCMode: Bool = true
     let metaDateTimeFormat = "dd.MM.Y hh:mm"
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -203,7 +203,7 @@ class BaseViewController: UIViewController {
         var _noCoverSetForInternal: Bool = false
         
         // try to bound cover image using largestImageURL
-        if  playlistItem.largestImageURL != nil {
+        if  playlistItem.largestImageURL != nil && playlistItem.largestImageURL != "" {
             _usedCoverImageURL = URL(string: playlistItem.largestImageURL!)
             _noCoverImageAvailable = false
             if self.debugKFCMode == true {
