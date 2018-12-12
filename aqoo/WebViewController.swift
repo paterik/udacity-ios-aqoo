@@ -19,11 +19,19 @@ protocol WebViewControllerDelegate {
 
 class WebViewController: UIViewController, UIWebViewDelegate {
     
+    //
+    // MARK: Class Variables
+    //
+    
     var loadComplete: Bool = false
     var initialURL: URL!
     var webView: UIWebView!
     var delegate: WebViewControllerDelegate?
     var webViewGradientLoadingBar = GradientLoadingBar()
+    
+    //
+    // MARK: Class Method Overloads
+    //
     
     override func viewDidLoad() {
         
@@ -60,20 +68,20 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         webView.loadRequest(initialRequest)
     }
     
-    @objc
-    func done() {
-        
-        delegate?.webViewControllerDidFinish(self)
-        presentingViewController?.dismiss(animated: true)
-    }
+    //
+    // MARK: Class Delegate Method Overloads
+    //
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         
         if !self.loadComplete {
+            
             delegate?.webViewController?(self, didCompleteInitialLoad: true)
-            loadComplete = true
+            
             HUD.flash(.label("connected"), delay: 1.175)
             webViewGradientLoadingBar.hide()
+            
+            loadComplete = true
         }
     }
     
@@ -82,9 +90,14 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         if !self.loadComplete {
             
             delegate?.webViewController?(self, didCompleteInitialLoad: true)
+            
             loadComplete = true
         }
     }
+    
+    //
+    // MARK: Class Initializer Overrides
+    //
     
     init(url URL: URL) {
         
@@ -95,5 +108,16 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
+    }
+    
+    //
+    // MARK: Class ObjC (native) Methods
+    //
+    
+    @objc
+    func done() {
+        
+        delegate?.webViewControllerDidFinish(self)
+        presentingViewController?.dismiss(animated: true)
     }
 }
