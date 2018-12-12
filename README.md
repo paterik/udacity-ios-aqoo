@@ -109,6 +109,7 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 ## Known Issues
 
 * The cover image cache for the playlists may take a bit time to display the identified images in our table cells - after view refresh process (by scrolling in your playlist items or leaving this view and returning) all covers should be visible.
+* The cover image handler has changed on 2018-12-09 based on major changes of the current Spotify API endpoint - so I’ve decide to take an image from the corresponding tracklist instead of the origin cover image. *This will be changed as soon as I extend the current API structure*. 
 * The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project.
 * The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your Keys.plist file. You’ve to request a valid ```client_id```and ```client_secret``` including your application ```callback_url``` from [spotify/developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) app registration page. 
 

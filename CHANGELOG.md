@@ -13,6 +13,8 @@ _current_
 * extended documentation for XCode 9 and XCode 10 usage
 * extended documentation for „known issues“
 * new tracklist based spotify playlist cover image processor
+* new  progress indicator during spotify request auth process
+* new connection check handler for all net related view controls
 
 ### Fixed
 
