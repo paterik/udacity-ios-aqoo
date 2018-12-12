@@ -809,14 +809,14 @@ extension PlaylistViewController {
         playlistCell.lblPlaylistUpdatedAt.text = "not yet"
         if  let playlistUpdatedAt = playlistItem.updatedAt as? Date {
             playlistCell.lblPlaylistUpdatedAt.alpha = 1.0
-            playlistCell.lblPlaylistUpdatedAt.text = getHumanReadableDate(playlistUpdatedAt)
+            playlistCell.lblPlaylistUpdatedAt.text = dfDates.getHumanReadableDate(playlistUpdatedAt)
         }
         
         playlistCell.lblPlaylistCreatedAt.alpha = sysPlaylistMetaFieldEmptyAlpha
         playlistCell.lblPlaylistCreatedAt.text = "not yet"
         if  let playlistCreatedAt = playlistItem.createdAt as? Date {
             playlistCell.lblPlaylistCreatedAt.alpha = 1.0
-            playlistCell.lblPlaylistCreatedAt.text = getHumanReadableDate(playlistCreatedAt)
+            playlistCell.lblPlaylistCreatedAt.text = dfDates.getHumanReadableDate(playlistCreatedAt)
         }
         
         // metaListOverallPlaytimeInSeconds
@@ -824,7 +824,7 @@ extension PlaylistViewController {
         playlistCell.lblPlaylistPlaytimeInDetail.text = "unknown"
         if  let playlistOverallPlaytime = playlistItem.metaListOverallPlaytimeInSeconds as? Int32 {
             playlistCell.lblPlaylistPlaytimeInDetail.alpha = 1.0
-            playlistCell.lblPlaylistPlaytimeInDetail.text = getSecondsAsHoursMinutesSecondsString(Int(playlistOverallPlaytime))
+            playlistCell.lblPlaylistPlaytimeInDetail.text = dfDates.getSecondsAsHoursMinutesSecondsString(Int(playlistOverallPlaytime))
         }
     }
     
@@ -1577,7 +1577,7 @@ extension PlaylistViewController {
        _ playlistInCloud: SPTPartialPlaylist,
        _ playlistInDb: StreamPlayList) -> String {
         
-        let _createdDateString: NSString = getDateAsString(playlistInDb.createdAt!)
+        let _createdDateString: NSString = dfDates.getDateAsString(playlistInDb.createdAt!)
         
         return "\"\(playlistInCloud.name)\" is a playlist belonging to [\(playlistInCloud.owner.canonicalUserName)]. It was created on \(_createdDateString). Copy the following link to directly access this playlist in Spotify: \(playlistInCloud.playableUri.absoluteString)"
     }

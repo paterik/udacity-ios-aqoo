@@ -112,11 +112,11 @@ extension LoginViewController {
      
         var statusVerb: String = "undefined"
         
-        NetworkManager.isReachable { networkManagerInstance in
+        DFNetworkManager.isReachable { networkManagerInstance in
             statusVerb = "pass"
         }
         
-        NetworkManager.isUnreachable { networkManagerInstance in
+        DFNetworkManager.isUnreachable { networkManagerInstance in
             statusVerb = "fail"
             self.handleErrorAsDialogMessage(
                 "Spotify Connection Fail!",

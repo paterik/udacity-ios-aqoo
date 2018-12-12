@@ -13,6 +13,8 @@
 		B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */; };
 		B11575C3205A7C5800C41F7D /* AppBaseNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */; };
 		B134301621C1267900CF6285 /* DFNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301521C1267900CF6285 /* DFNetworkManager.swift */; };
+		B134301821C1766700CF6285 /* DFNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301721C1766700CF6285 /* DFNumbers.swift */; };
+		B134301A21C177B700CF6285 /* DFDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301921C177B700CF6285 /* DFDates.swift */; };
 		B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */; };
 		B13D6F021F91BD4E00486487 /* SPFEventNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */; };
 		B13DB8DC210629BB0013CAC5 /* PlaylistTracksControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13DB8DB210629BB0013CAC5 /* PlaylistTracksControlView.swift */; };
@@ -101,6 +103,8 @@
 		B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewControllerExt.swift; sourceTree = "<group>"; };
 		B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppBaseNotification.xib; sourceTree = "<group>"; };
 		B134301521C1267900CF6285 /* DFNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNetworkManager.swift; sourceTree = "<group>"; };
+		B134301721C1766700CF6285 /* DFNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNumbers.swift; sourceTree = "<group>"; };
+		B134301921C177B700CF6285 /* DFDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFDates.swift; sourceTree = "<group>"; };
 		B13D6EFE1F91B8A300486487 /* SPFClientPlaylists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFClientPlaylists.swift; sourceTree = "<group>"; };
 		B13D6F011F91BD4E00486487 /* SPFEventNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPFEventNotifier.swift; sourceTree = "<group>"; };
 		B13DB8DB210629BB0013CAC5 /* PlaylistTracksControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTracksControlView.swift; sourceTree = "<group>"; };
@@ -533,6 +537,8 @@
 			children = (
 				B1F89F8921BC799800309D02 /* UITextViewPLDetail.swift */,
 				B134301521C1267900CF6285 /* DFNetworkManager.swift */,
+				B134301721C1766700CF6285 /* DFNumbers.swift */,
+				B134301921C177B700CF6285 /* DFDates.swift */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -769,6 +775,7 @@
 				B1B8DD26202E1EE3008CE9EB /* UIView.swift in Sources */,
 				B1698D6C2104742000A2CD37 /* ProxyStreamPlayListTrack.swift in Sources */,
 				B18C61EE20FF6329003C41B4 /* PlaylistContentViewControllerExt.swift in Sources */,
+				B134301A21C177B700CF6285 /* DFDates.swift in Sources */,
 				B13D6EFF1F91B8A300486487 /* SPFClientPlaylists.swift in Sources */,
 				B1E2DA0C1F796BF400BA78E7 /* SPFPartialPlaylistExt.swift in Sources */,
 				B1A620501F700D820093CAEF /* aqoo.xcdatamodeld in Sources */,
@@ -783,6 +790,7 @@
 				B159C3C120FF5A0E007A460E /* PlaylistContentViewController.swift in Sources */,
 				B1CDAAA02000D4F5008138F1 /* NSDate.swift in Sources */,
 				B1D33DD220D17F2D00DCDC5F /* PlaylistEditViewFirstPage.swift in Sources */,
+				B134301821C1766700CF6285 /* DFNumbers.swift in Sources */,
 				B16AC2062196E0F200FAAEC0 /* TrackBaseControls.swift in Sources */,
 				B1A6204A1F700D820093CAEF /* LoginViewController.swift in Sources */,
 				B1A620481F700D820093CAEF /* AppDelegate.swift in Sources */,

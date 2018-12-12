@@ -10,13 +10,13 @@
 import Foundation
 import Reachability
 
-class NetworkManager: NSObject {
+class DFNetworkManager: NSObject {
     
     //
     // MARK: Class Constants (Statics)
     //
     
-    static let sharedInstance: NetworkManager = { return NetworkManager() }()
+    static let sharedInstance: DFNetworkManager = { return DFNetworkManager() }()
     
     //
     // MARK: Class Constants (Normal)
@@ -54,7 +54,7 @@ class NetworkManager: NSObject {
             try reachability.startNotifier()
         }   catch {
             if  debugMode {
-                print ("dbg [NetworkManager] : Unable to start notifier")
+                print ("dbg [DFNetworkManager] : Unable to start notifier")
             }
         }
     }
@@ -66,7 +66,7 @@ class NetworkManager: NSObject {
     @objc func networkStatusChanged(_ notification: Notification) {
         
         if  debugMode {
-            print ("dbg [NetworkManager] : network status changed!")
+            print ("dbg [DFNetworkManager] : network status changed!")
         }
     }
     
@@ -74,37 +74,41 @@ class NetworkManager: NSObject {
         
         do {
             // Stop the network status notifier
-            try (NetworkManager.sharedInstance.reachability).startNotifier()
+            try (DFNetworkManager.sharedInstance.reachability).startNotifier()
         }   catch {
-            print ("dbg [NetworkManager] : Unable to stop notifier")
+            print ("dbg [DFNetworkManager] : Unable to stop notifier")
         }
     }
     
     // Network is reachable
-    static func isReachable(completed: @escaping (NetworkManager) -> Void) {
-        if (NetworkManager.sharedInstance.reachability).connection != .none {
-            completed(NetworkManager.sharedInstance)
+    static func isReachable(completed: @escaping (DFNetworkManager) -> Void) {
+        
+        if (DFNetworkManager.sharedInstance.reachability).connection != .none {
+            completed(DFNetworkManager.sharedInstance)
         }
     }
     
     // Network is unreachable
-    static func isUnreachable(completed: @escaping (NetworkManager) -> Void) {
-        if (NetworkManager.sharedInstance.reachability).connection == .none {
-            completed(NetworkManager.sharedInstance)
+    static func isUnreachable(completed: @escaping (DFNetworkManager) -> Void) {
+        
+        if (DFNetworkManager.sharedInstance.reachability).connection == .none {
+            completed(DFNetworkManager.sharedInstance)
         }
     }
     
     // Network is reachable via WWAN/Cellular
-    static func isReachableViaWWAN(completed: @escaping (NetworkManager) -> Void) {
-        if (NetworkManager.sharedInstance.reachability).connection == .cellular {
-            completed(NetworkManager.sharedInstance)
+    static func isReachableViaWWAN(completed: @escaping (DFNetworkManager) -> Void) {
+        
+        if (DFNetworkManager.sharedInstance.reachability).connection == .cellular {
+            completed(DFNetworkManager.sharedInstance)
         }
     }
     
     // Network is reachable via WiFi
-    static func isReachableViaWiFi(completed: @escaping (NetworkManager) -> Void) {
-        if (NetworkManager.sharedInstance.reachability).connection == .wifi {
-            completed(NetworkManager.sharedInstance)
+    static func isReachableViaWiFi(completed: @escaping (DFNetworkManager) -> Void) {
+        
+        if (DFNetworkManager.sharedInstance.reachability).connection == .wifi {
+            completed(DFNetworkManager.sharedInstance)
         }
     }
 }

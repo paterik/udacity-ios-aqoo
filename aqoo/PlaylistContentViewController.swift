@@ -140,7 +140,7 @@ class PlaylistContentViewController: BaseViewController,
         playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
         playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true
         playlistCell.lblTrackPlaytime.textColor = UIColor(netHex: 0x80C9A4)
-        playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(_ctd))
+        playlistCell.lblTrackPlaytime.text = dfDates.getSecondsAsMinutesSecondsDigits(Int(_ctd))
         playlistCell.lblTrackPlaytimeRemaining.textColor = UIColor(netHex: 0x1DB954)
         playlistCell.lblTrackPlaytimeRemaining.text = playlistCell.lblTrackPlaytime.text
         playlistCell.progressBar.progress = 0.0
@@ -180,7 +180,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.imageViewTrackIsPlayingSymbol.isHidden = false
             playlistCell.lblTrackPlaytime.isHidden = true
             playlistCell.lblTrackPlaytimeRemaining.isHidden = false
-            playlistCell.lblTrackPlaytimeRemaining.text = getSecondsAsMinutesSecondsDigits(Int(_ctd) - currentTrack.timePosition)
+            playlistCell.lblTrackPlaytimeRemaining.text = dfDates.getSecondsAsMinutesSecondsDigits(Int(_ctd) - currentTrack.timePosition)
             playlistCell.progressBar.setProgress(currentTrack.timeProgress, animated: false)
             
         }   else if currentPlaylist.playMode == 0 || playlistTrackCacheData.metaTrackIsPlaying == false {
@@ -188,7 +188,7 @@ class PlaylistContentViewController: BaseViewController,
             playlistCell.state = .stopped
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = true
             playlistCell.imageViewTrackIsPlayingSymbol.isHidden = true
-            playlistCell.lblTrackPlaytime.text = getSecondsAsMinutesSecondsDigits(Int(_ctd))
+            playlistCell.lblTrackPlaytime.text = dfDates.getSecondsAsMinutesSecondsDigits(Int(_ctd))
             playlistCell.lblTrackPlaytime.isHidden = false
             playlistCell.lblTrackPlaytimeRemaining.text = playlistCell.lblTrackPlaytime.text
             playlistCell.lblTrackPlaytimeRemaining.isHidden = true

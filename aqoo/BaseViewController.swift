@@ -18,10 +18,12 @@ class BaseViewController: UIViewController {
     
     let debugMode: Bool = true
     let debugLoadFixtures: Bool = true
-    let debugKFCMode: Bool = true
+    let debugKFCMode: Bool = false
     let metaDateTimeFormat = "dd.MM.Y hh:mm"
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    let dfDates = DFDates.sharedInstance
+    let dfNumbers = DFNumbers.sharedInstance
     let spotifyClient = SpotifyClient.sharedInstance
     let notifier = SPFEventNotifier()
     
@@ -125,11 +127,6 @@ class BaseViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func getDateAsString (_ dateValue: Date, _ dateFormatter: String = "dd.MM.Y hh:mm") -> NSString {
-        
-        return NSDate().dateToString(Date(), dateFormatter) as! NSString
     }
     
     var getDocumentsUrl: URL {
@@ -297,112 +294,6 @@ class BaseViewController: UIViewController {
             detailViewCacheKey: _usedDetailCoverImageCacheKey,
             imageDownloadURL: _usedCoverImageURL
         )
-    }
-    
-    func getSecondsAsHoursMinutesSeconds (_ seconds : Int) -> (Int, Int, Int) {
-        
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    func getSecondsAsHoursMinutesSecondsString (_ seconds : Int) -> String {
-        
-        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
-        
-        return "\(h) hours, \(m) min, \(s) sec"
-    }
-    
-    func getSecondsAsHoursMinutesSecondsDigits (_ seconds : Int) -> String {
-        
-        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
-        
-        return String(format: "%02d:%02d:%02d", h, m, s)
-    }
-    
-    func getSecondsAsMinutesSecondsDigits (_ seconds : Int) -> String {
-        
-        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
-        
-        return String(format: "%02d:%02d", m, s)
-    }
-    
-    func getHumanReadableDate(_ date : Date) -> String {
-        
-        var secondsAgo = Int(Date().timeIntervalSince(date))
-        if  secondsAgo < 0 {
-            secondsAgo = secondsAgo * (-1)
-        }
-        
-        let minute = 60
-        let hour = 60 * minute
-        let day = 24 * hour
-        let week = 7 * day
-        
-        if  secondsAgo < minute  {
-            
-            if  secondsAgo < 2 {
-                return "just now"
-            }   else {
-                return "\(secondsAgo) secs ago"
-            }
-            
-        }   else if secondsAgo < hour {
-            
-            let min = (secondsAgo / minute)
-            if  min == 1 {
-                return "\(min) min ago"
-            }   else {
-                return "\(min) mins ago"
-            }
-            
-        }   else if secondsAgo < day {
-            
-            let hr = (secondsAgo / hour)
-            if  hr == 1 {
-                return "\(hr) hr ago"
-            }   else {
-                return "\(hr) hrs ago"
-            }
-            
-        }   else if secondsAgo < week {
-            
-            let day = (secondsAgo / day)
-            if  day == 1 {
-                return "\(day) day ago"
-            }   else {
-                return "\(day) days ago"
-            }
-            
-        }   else {
-            
-            let formatter = DateFormatter()
-                formatter.dateFormat = "MMM dd, hh:mm a"
-                formatter.locale = Locale(identifier: "en_US")
-            
-            let strDate: String = formatter.string(from: date)
-            
-            return strDate
-        }
-    }
-    
-    func getRandomNumber(between lower: Int, and upper: Int) -> Int {
-        
-        return Int(arc4random_uniform(UInt32(upper - lower))) + lower
-    }
-    
-    func getRandomUniqueNumberArray(forLowerBound lower: Int, andUpperBound upper:Int, andNumNumbers iterations: Int) -> [Int] {
-        
-        guard iterations <= (upper - lower) else { return [] }
-        
-        var numbers: Set<Int> = Set<Int>()
-        
-        (0..<iterations).forEach { _ in
-            let beforeCount = numbers.count
-            repeat {
-                numbers.insert(getRandomNumber(between: lower, and: upper))
-            }   while numbers.count == beforeCount
-        }
-        
-        return numbers.map{ $0 }
     }
     
     func handleCoverImageByCache(

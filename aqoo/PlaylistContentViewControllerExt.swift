@@ -77,7 +77,7 @@ extension PlaylistContentViewController {
         trackControlView.lblPlaylistName.text = playListInDb!.metaListInternalName
         trackControlView.lblPlaylistTrackCount.text = String(format: "%D", playListInDb!.trackCount)
         if  let playlistOverallPlaytime = playListInDb!.metaListOverallPlaytimeInSeconds as? Int32 {
-            trackControlView.lblPlaylistOverallPlaytime.text = getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
+            trackControlView.lblPlaylistOverallPlaytime.text = dfDates.getSecondsAsHoursMinutesSecondsDigits(Int(playlistOverallPlaytime))
         }
         
         setupUIPlayModeControls()
@@ -197,7 +197,7 @@ extension PlaylistContentViewController {
         }
         
         let fractionStepper: CGFloat = 1 / maxValue
-        let trackDurationFormatted: String = getSecondsAsMinutesSecondsDigits(Int(maxValue))
+        let trackDurationFormatted: String = dfDates.getSecondsAsMinutesSecondsDigits(Int(maxValue))
         let labelTextAttributes: [NSAttributedStringKey : Any] = [
             .font: UIFont(name: "HelveticaNeue-CondensedBold", size: 12),
             .foregroundColor: UIColor.white
@@ -789,7 +789,7 @@ extension PlaylistContentViewController {
         
         // init shuffled key stack for shuffle-play-mode
         if  currentPlaylist.tracks != nil {
-            currentPlaylist.shuffleKeys = getRandomUniqueNumberArray(
+            currentPlaylist.shuffleKeys = dfNumbers.getRandomUniqueNumberArray(
                 forLowerBound: 0,
                 andUpperBound: currentPlaylist.tracks!.count,
                 andNumNumbers: currentPlaylist.tracks!.count
