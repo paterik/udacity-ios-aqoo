@@ -54,13 +54,14 @@ class LoginViewController: BaseViewController, WebViewControllerDelegate {
         appDelegate.restrictRotation = .portrait
         
         setupUILoginControls()
+        setupUIGlobalTimerEvents()
         
         if  spotifyClient.isSpotifyTokenValid() {
 
             lblSpotifySessionStatus.text = "CONNECTED"
             showAppLandingPage()
         
-        } else {
+        }   else {
             
             if  spotifyClient.spfAuth.hasTokenRefreshService {
         

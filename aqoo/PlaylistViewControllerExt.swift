@@ -577,10 +577,10 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
-                case .success(let userInfo): break
-                if  self.debugMode == true {
-                    print ("dbg [playlist] : config_key ➡ finaly persisted")
+                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .success(let userInfo): break
+                    if  self.debugMode == true {
+                        print ("dbg [playlist] : config_key ➡ finaly persisted")
                     }
                 }
             }

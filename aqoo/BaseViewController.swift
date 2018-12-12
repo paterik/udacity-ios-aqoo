@@ -46,6 +46,14 @@ class BaseViewController: UIViewController {
     let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65
     let _sysPlaylistCacheRefreshEnforce: DateComponents = 3.minutes
+    let _sysConnectionCheckTimerInterval: Double = 1
+    
+    
+    //
+    // MARK: Class Variables
+    //
+    
+    var connectionCheckTimer: Timer!
     
     //
     // all predefined filter indices as 'readably' value

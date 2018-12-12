@@ -26,6 +26,7 @@ PODS:
   - Persei (3.1.1)
   - PKHUD (5.2.0)
   - pop (1.0.12)
+  - ReachabilitySwift (4.3.0)
   - SnapKit (4.0.0)
   - Spotify-iOS-SDK (0.27.0):
     - Spotify-iOS-SDK/Authentication (= 0.27.0)
@@ -52,6 +53,7 @@ DEPENDENCIES:
   - NotificationBannerSwift (= 1.6.3)
   - Persei (= 3.1.1)
   - PKHUD (= 5.2.0)
+  - ReachabilitySwift
   - SnapKit (= 4.0.0)
   - Spotify-iOS-SDK (= 0.27.0)
   - SwiftDate (= 5.0.7)
@@ -77,6 +79,7 @@ SPEC REPOS:
     - Persei
     - PKHUD
     - pop
+    - ReachabilitySwift
     - SnapKit
     - Spotify-iOS-SDK
     - SwiftDate
@@ -101,12 +104,13 @@ SPEC CHECKSUMS:
   Persei: 6d36b54e40eccd437211548d3f897269c85d3a13
   PKHUD: dd5357ac65f26115c35c4a68e9b328053326c5fe
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Spotify-iOS-SDK: f195e9a40a339cf374cab2ece5804aca3cdf7e14
   SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: 02a5a6f27b9067e7aa274d4391b6a04bc4360ad3
+PODFILE CHECKSUM: 1adc8bd065951fe91bfe992051f233d79fad8e97
 
 COCOAPODS: 1.5.3

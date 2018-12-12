@@ -31,8 +31,13 @@ def aq_data
     pod 'CoreStore', '5.2.0'
 end
 
+def aq_system
+    pod 'ReachabilitySwift', '4.3.0'
+end
+
 target 'aqoo' do
     aq_ui
     aq_base
     aq_data
+    aq_system
 end

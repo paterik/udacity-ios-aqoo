@@ -73,8 +73,7 @@ extension LoginViewController {
         
         let _tokenIsValid = spotifyClient.isSpotifyTokenValid()
         
-        btnSpotifyLogin.isEnabled =  _tokenIsValid
-        btnSpotifyLogin.isEnabled = !_tokenIsValid
+        btnSpotifyLogin.isEnabled =  !_tokenIsValid
         
         lblSpotifySessionStatus.text = "NOT CONNECTED"
         imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusLocked_v1")
@@ -84,6 +83,49 @@ extension LoginViewController {
             spotifyClient.spfIsLoggedIn = true
             lblSpotifySessionStatus.text = "CONNECTED"
             imgSpotifyStatus.image = UIImage(named: "imgUISpotifyStatusConnected_v1")
+        }
+    }
+    
+    //
+    // this function register all global available timer based event
+    // up for now I'll use this to check device connetion state to the
+    // web only ...
+    //
+    func setupUIGlobalTimerEvents() {
+        
+        if  connectionCheckTimer != nil {
+            connectionCheckTimer.invalidate()
+        }
+        
+        // start connection check timer
+        connectionCheckTimer = Timer.scheduledTimer(
+            timeInterval : TimeInterval(_sysConnectionCheckTimerInterval),
+            target       : self,
+            selector     : #selector(handleConnectivityCheck),
+            userInfo     : nil,
+            repeats      : true
+        )
+    }
+    
+    @objc
+    func handleConnectivityCheck() {
+     
+        var statusVerb: String = "undefined"
+        
+        NetworkManager.isReachable { networkManagerInstance in
+            statusVerb = "pass"
+        }
+        
+        NetworkManager.isUnreachable { networkManagerInstance in
+            statusVerb = "fail"
+            self.handleErrorAsDialogMessage(
+                "Spotify Connection Fail!",
+                "Oops! I'm unable connect to public network - please check your connections settings"
+            )
+        }
+        
+        if  self.debugMode == true {
+            print ("dbg [login/con] : connection check ➡ \(statusVerb)")
         }
     }
     
