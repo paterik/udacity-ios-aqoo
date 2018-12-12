@@ -26,9 +26,10 @@
  *more detailed/build related information can be obtained in the ```App Build Process``` section of this documentation*
 
 ## App Build Process
+
 To build this app you’ve to take care of the following steps.
 
-1. Checkout this repository on your system 
+1. Checkout this repository on your system - I suggest using the smaller [shallow clone mechanic](https://www.perforce.com/blog/git-beyond-basics-using-shallow-clones)
 
 ```
 git clone git@github.com:paterik/udacity-ios-aqoo.git --depth 1
@@ -50,6 +51,8 @@ ToolChain Setup | Build CleanUp
 ![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
 
 6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads.
+
+![Build State](github/media/xcode_tc_setup_10.jpg) 
 
 ## App Requirements
 
