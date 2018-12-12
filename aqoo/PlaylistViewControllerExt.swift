@@ -490,6 +490,7 @@ extension PlaylistViewController {
         
         // fetch logical filterBlock by key selection index
         let filterBlock = getFilterBlockByIndex( index )
+        
         // persist current filter to provider based playlist
         setConfigTableFilterKeyByProviderTag ( Int16 (index), _sysDefaultProviderTag )
         // show notification for user about current filter set
@@ -653,6 +654,7 @@ extension PlaylistViewController {
         
         let banner = NotificationBanner(customView: bannerView)
         banner.duration = 0.9375
+        banner.bannerHeight = 75.0
         banner.onTap = {
             banner.dismiss()
         };  banner.show(bannerPosition: .top)
@@ -1749,6 +1751,7 @@ extension PlaylistViewController {
         
         let banner = NotificationBanner(customView: bannerView)
         banner.duration = duration // 0.9275
+        banner.bannerHeight = 75.0
         banner.onTap = {
             banner.dismiss()
         };  banner.show(bannerPosition: .bottom)

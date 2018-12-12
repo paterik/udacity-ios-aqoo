@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,39 +17,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTIFICATION_TITLE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFd-tz-EyM" userLabel="lbl_title">
-                    <rect key="frame" x="83" y="8" width="282" height="29"/>
+                    <rect key="frame" x="68" y="8" width="297" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="297" id="KyZ-p8-ehU"/>
+                        <constraint firstAttribute="height" constant="29" id="PQA-HI-IoQ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnNotificationDefault_v1" translatesAutoresizingMaskIntoConstraints="NO" id="s7N-Xd-8GZ" userLabel="img_default">
-                    <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="75" id="uns-ga-nR8"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTIFICATION_SUBTITLE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCt-FI-fct" userLabel="lbl_subTitle">
-                    <rect key="frame" x="83" y="45" width="282" height="23"/>
+                    <rect key="frame" x="68" y="45" width="297" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="23" id="K7Z-R3-BmS"/>
+                        <constraint firstAttribute="width" constant="297" id="4pW-0o-9zt"/>
+                        <constraint firstAttribute="height" constant="23" id="kr8-Y8-AgK"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="10"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnNotificationDefault_v1" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s7N-Xd-8GZ" userLabel="img_default">
+                    <rect key="frame" x="16" y="15" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="4dZ-tc-rbG"/>
+                        <constraint firstAttribute="height" constant="44" id="6uo-XO-Oda"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.1137254902" green="0.72549019609999998" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="VCt-FI-fct" firstAttribute="top" secondItem="VFd-tz-EyM" secondAttribute="bottom" constant="8" symbolic="YES" id="56c-Kz-vf4"/>
-                <constraint firstItem="s7N-Xd-8GZ" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="94n-d0-u8a"/>
-                <constraint firstItem="VFd-tz-EyM" firstAttribute="leading" secondItem="VCt-FI-fct" secondAttribute="leading" id="B0k-gw-7M2"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="VCt-FI-fct" secondAttribute="bottom" constant="7" id="GGe-14-4fd"/>
-                <constraint firstItem="s7N-Xd-8GZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="GOh-3r-ZR7"/>
-                <constraint firstItem="s7N-Xd-8GZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Uh6-XB-gyv"/>
-                <constraint firstItem="VFd-tz-EyM" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="kIC-X1-xxt"/>
-                <constraint firstItem="VFd-tz-EyM" firstAttribute="leading" secondItem="s7N-Xd-8GZ" secondAttribute="trailing" constant="8" symbolic="YES" id="lNL-vB-qMd"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VFd-tz-EyM" secondAttribute="trailing" constant="10" id="mey-PF-s0U"/>
-                <constraint firstItem="VFd-tz-EyM" firstAttribute="trailing" secondItem="VCt-FI-fct" secondAttribute="trailing" id="tbK-Co-juK"/>
+                <constraint firstItem="s7N-Xd-8GZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="2mv-2Q-lsu"/>
+                <constraint firstItem="VFd-tz-EyM" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="A6o-aB-Dn3"/>
+                <constraint firstItem="s7N-Xd-8GZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="DUF-OU-fGW"/>
+                <constraint firstItem="VCt-FI-fct" firstAttribute="top" secondItem="VFd-tz-EyM" secondAttribute="bottom" constant="8" id="KOk-J4-BmF"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VFd-tz-EyM" secondAttribute="trailing" constant="10" id="Naj-GV-hpl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VCt-FI-fct" secondAttribute="trailing" constant="10" id="xv1-ub-3cB"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -59,9 +62,10 @@
                 <outlet property="lblSubTitle" destination="VCt-FI-fct" id="g7W-ca-BdR"/>
                 <outlet property="lblTitle" destination="VFd-tz-EyM" id="y0v-lU-l6P"/>
             </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="130.88455772113943"/>
         </view>
     </objects>
     <resources>
-        <image name="icnNotificationDefault_v1" width="64" height="64"/>
+        <image name="icnNotificationDefault_v1" width="92.160003662109375" height="92.160003662109375"/>
     </resources>
 </document>
