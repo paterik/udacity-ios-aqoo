@@ -41,10 +41,9 @@ cd <your_project_path> ; pod update
 ```
 3. Load project workspace ```aqoo.xcworkspace``` in your XCode 10.1 IDE and ensure your toolchain is set to XCode 10 internal or the currently supported Swift 4.2.1 and may clean up your previous build artifacts using <Product/clean>
 
-ToolChain Setup | Build CleanUp 
+ToolChain Setup | Build CleanUp
 :-------------------------:|:-------------------------:
-![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)|
-![Build CleanUp](github/media/xcode_prep_cw.jpg)
+![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)  |  ![Build CleanUp](github/media/xcode_prep_cw.jpg)
 
 5. Add a new property list (plist) file into your project resource group and insert the 3 required keys (```spfClientSecret```, ```spfClientId```, ```spfClientCallbackURL```) for SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)
 
