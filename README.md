@@ -19,7 +19,7 @@
 
 - AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
 
-- AQOO uses multiple API endpoints of [spotifies iOS SDK](https://developer.spotify.com/documentation/web-api/quick-start/) webAPI-wrapper. An internet connection is required for login, playlist-synch and streaming of your tracks.
+- AQOO uses multiple API endpoints of [Spotify-Streaming-SDK](https://spotify.github.io/ios-streaming-sdk/) webAPI-wrapper. An internet connection is required for login, track-/playlist-sync and streaming of all of your tracks.
 
 - AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from [icons8](https://icons8.de/). A complete list of used libraries and assets can be found in the [COPYRIGHT.md](COPYRIGHT.md) file.
 
@@ -46,7 +46,7 @@ ToolChain Setup | Build CleanUp
 :-------------------------:|:-------------------------:
 ![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)  |  ![Build CleanUp](github/media/xcode_prep_cw.jpg)
 
-5. Add a new property list (plist) file into your project resource group and insert the 3 required keys (```spfClientSecret```, ```spfClientId```, ```spfClientCallbackURL```) for SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)
+5. Add a new property list (plist) file into your project resource group and insert the 3 required keys (```spfClientSecret```, ```spfClientId```, ```spfClientCallbackURL```) for SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app). You can find a dedicated tuturial for this process at [medium.com](https://medium.com/@brianhans/getting-started-with-the-spotify-ios-sdk-435607216ecc).
 
 ![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
 
