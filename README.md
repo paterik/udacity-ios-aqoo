@@ -42,7 +42,7 @@ cd <your_project_path> ; pod update
 3. Load project workspace ```aqoo.xcworkspace``` in your XCode 10.1 IDE and ensure your toolchain is set to XCode 10 internal or the currently supported Swift 4.2.1 and may clean up your previous build artifacts using <Product/clean>
 
 ToolChain Setup | Build CleanUp 
-:-------------------------:|:-------------------------:|:-------------------------:
+:-------------------------:|:-------------------------:
 ![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)|
 ![Build CleanUp](github/media/xcode_prep_cw.jpg)
 
@@ -112,7 +112,7 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 
 ## Keywords
 
-swift, swift-4, udacit, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
+ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
 
 ## Releases
 
