@@ -151,12 +151,12 @@ extension PlaylistViewController {
                 completion: { (result) -> Void in
                     
                     switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .failure(let error): if self.debugMode { print (error) }
                     case .success(let userInfo):
                         // enforce playlistView table reload
                         self.handlePlaylistReloadData()
                         
-                        if  self.debugMode == true {
+                        if  self.debugMode {
                             print ("dbg [playlist] : old user playlists cache removed")
                         }
                     }
@@ -170,7 +170,7 @@ extension PlaylistViewController {
         ImageCache.default.maxDiskCacheSize = sysImgCacheInMb * 1024 * 1024
         ImageCache.default.maxCachePeriodInSecond = TimeInterval(60 * 60 * 24 * sysImgCacheRevalidateInDays)
         ImageDownloader.default.downloadTimeout = sysImgCacheRevalidateTimeoutInSeconds
-        if  debugMode == true {
+        if  debugMode {
             ImageCache.default.calculateDiskCacheSize { size in
                 print("\n=== used kingfisher cache disk size in bytes: \(size)\n")
             }
@@ -376,7 +376,7 @@ extension PlaylistViewController {
             
             _progress = (Float(playlistIndex + 1) / Float(spotifyClient.playlistsInCloud.count)) * 100.0
 
-            if  debugMode == true {
+            if  debugMode {
                 print ("\nlist: #\(playlistIndex) [ \(playListInCloud.name) ]")
                 print ("contains: \(playListInCloud.trackCount) playlable songs")
                 print ("owner: \(playListInCloud.owner.canonicalUserName)")
@@ -397,7 +397,7 @@ extension PlaylistViewController {
             currentPlaylist.trackCheckTimer.invalidate()
         }
         
-        if  active == true {
+        if  active {
             
             // start playback meta timer
             currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
@@ -559,7 +559,7 @@ extension PlaylistViewController {
                     _configKeyRow!.providerUserId = providerUserId
                     _configKeyRow!.createdAt = Date()
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
                     }
                     
@@ -570,7 +570,7 @@ extension PlaylistViewController {
                     _configKeyRow!.provider = _configProvider!
                     _configKeyRow!.updatedAt = Date()
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
                     }
                 }
@@ -578,9 +578,9 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .failure(let error): if self.debugMode { print (error) }
                     case .success(let userInfo): break
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : config_key ➡ finaly persisted")
                     }
                 }
@@ -598,7 +598,7 @@ extension PlaylistViewController {
         
         if  filterQueryOrderByClause == nil &&
             filterQueryFetchChainBuilder == nil {
-            if  self.debugMode == true {
+            if  self.debugMode {
                 print ("dbg [playlist] : filter ➡ no orderBy or where parameter set - filter process aborted!")
                 
                 return
@@ -607,7 +607,7 @@ extension PlaylistViewController {
         
         if  filterQueryOrderByClause != nil {
             filterQueryOrderBy = OrderBy<StreamPlayList>( filterQueryOrderByClause! )
-            if  filterQueryUseDefaults == true {
+            if  filterQueryUseDefaults {
                 filterQueryOrderBy += OrderBy( .ascending(\StreamPlayList.metaWeight) )
             }
         }
@@ -691,7 +691,7 @@ extension PlaylistViewController {
         playlistCell.imageViewPlaylistCover.alpha = 1
         playlistCell.imageViewPlaylistOwner.alpha = 1
         playlistCell.lblPlaylistMetaTrackCount.backgroundColor = UIColor(netHex: 0x222222)
-        if  playlistCell.metaPlaylistInDb!.isIncomplete == true {
+        if  playlistCell.metaPlaylistInDb!.isIncomplete {
             playlistCell.imageViewPlaylistCover.alpha = 0.475
             playlistCell.imageViewPlaylistOwner.alpha = 0.475
             playlistCell.lblPlaylistName.alpha = 0.475
@@ -708,9 +708,9 @@ extension PlaylistViewController {
         // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
         playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         if  playlistItem.isSpotify == false ||
-            playlistItem.isPlaylistVotedByStar == true ||
-            playlistItem.isPlaylistRadioSelected == true ||
-            playlistItem.isPlaylistYourWeekly == true {
+            playlistItem.isPlaylistVotedByStar ||
+            playlistItem.isPlaylistRadioSelected ||
+            playlistItem.isPlaylistYourWeekly {
             
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
@@ -876,7 +876,7 @@ extension PlaylistViewController {
     @objc
     func handleCacheTimerEvent() {
         
-        if  self.debugMode == true {
+        if  self.debugMode {
             ImageCache.default.calculateDiskCacheSize { size in
                 print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self.sysImgCacheInMb * 1024)")
             }
@@ -894,7 +894,7 @@ extension PlaylistViewController {
         
         let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
             
-            if  self.debugMode == true {
+            if  self.debugMode {
                 print ("dbg [playlist] : cache ➡ cleanUp local image cache")
             }
             
@@ -909,7 +909,7 @@ extension PlaylistViewController {
                 
                 success: { (transactionPlaylists) in
                     
-                    if  transactionPlaylists?.isEmpty == false && self.debugMode == true {
+                    if  transactionPlaylists?.isEmpty == false && self.debugMode {
                         print ("dbg [playlist] : cache ➡ cleanUp local db cache, \(transactionPlaylists!.count - 1) rows will be removed")
                     }
                 },
@@ -928,9 +928,9 @@ extension PlaylistViewController {
                 completion: { (result) -> Void in
                     
                     switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }
+                    case .failure(let error): if self.debugMode { print (error) }
                     case .success(let userInfo):
-                        if  self.debugMode == true {
+                        if  self.debugMode {
                             self.spotifyClient.playlistRefreshEnforced = true
                             self.handlePlaylistCloudRefresh()
                             print ("dbg [playlist] : cache ➡ local db cache removed")
@@ -961,7 +961,7 @@ extension PlaylistViewController {
             if  playlistInCloudLastLocalUpdate == nil ||
                 Date() >= (playlistInCloudLastLocalUpdate! + _sysPlaylistCacheRefreshEnforce) ||
                 spotifyClient.playlistsInCloud.count == 0 ||
-                spotifyClient.playlistRefreshEnforced == true {
+                spotifyClient.playlistRefreshEnforced {
                 
                 loadProvider ( spotifyClient.spfStreamingProviderDbTag )
                 
@@ -970,7 +970,7 @@ extension PlaylistViewController {
                 
             }   else {
                 
-                if  debugMode == true {
+                if  debugMode {
                     print ("dbg [playlist] : using playlist cache, no update required now")
                     handlePlaylistReloadData()
                 };  return
@@ -979,7 +979,7 @@ extension PlaylistViewController {
             
         } else {
             
-            if  debugMode == true {
+            if  debugMode {
                 print ("dbg [playlist] : Oops, your cloudProviderToken is not valid anymore")
             };  btnExitLandingPageAction( self )
         }
@@ -995,7 +995,7 @@ extension PlaylistViewController {
         var _playListMetaListHash: String?
         
         if  shared == false {
-            if debugMode == true {
+            if debugMode {
                 print ("dbg [playlist/share/aborted] : user canceled content share - return ...")
             }
             
@@ -1022,9 +1022,9 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                    case .failure(let error): if self.debugMode == true { print (error) }; break
+                    case .failure(let error): if self.debugMode { print (error) }; break
                     case .success(let userInfo):
-                    if self.debugMode == true {
+                    if self.debugMode {
                         print ("dbg [playlist/share/success] number of shares updated")
                     };  break
                 }
@@ -1119,7 +1119,7 @@ extension PlaylistViewController {
                                 
                                 let playlist = transaction.edit(playlistToUpdate)!
                                 
-                                if  self.debugMode == true {
+                                if  self.debugMode {
                                     print ("dbg [playlist] : track #\(index) = [\(track.trackName)] NOT found -> CREATED")
                                 }
                                 
@@ -1128,7 +1128,7 @@ extension PlaylistViewController {
                                 var _trackIndex = trackInDbCache!.metaTrackOrderNumber
                                 
                                 if  trackInDbCache!.getMD5Fingerprint() == track.getMD5Fingerprint() {
-                                    if  self.debugMode == true {
+                                    if  self.debugMode {
                                         print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] ignored -> NO_CHANGES")
                                     }
                                     
@@ -1152,7 +1152,7 @@ extension PlaylistViewController {
                                     trackInDbCache!.metaTrackLastTrackPosition = 0
                                     trackInDbCache!.updatedAt = Date()
                                     
-                                    if  self.debugMode == true {
+                                    if  self.debugMode {
                                         print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] found -> UPDATED")
                                     }
                                 }
@@ -1163,9 +1163,9 @@ extension PlaylistViewController {
                     completion: { (result) -> Void in
                         
                         switch result {
-                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .failure(let error): if self.debugMode { print (error) }
                         case .success(let userInfo):
-                            if  self.debugMode == true {
+                            if  self.debugMode {
                                 print ("dbg [playlist] = [\(playlist.metaListInternalName)], \(trackCount) tracks handled -> EXTENDED")
                                 print ("---")
                             }
@@ -1181,14 +1181,14 @@ extension PlaylistViewController {
         // unify current userProfile array, remove double entries
         userProfilesInPlaylistsUnique = Array(Set(userProfilesInPlaylists))
         
-        if  debugMode == true {
+        if  debugMode {
             print ("dbg [playlist] : enrich playlists by adding \(userProfilesInPlaylistsUnique.count) user profiles")
             print ("dbg [playlist] : playlist profiles ➡ \(userProfilesInPlaylistsUnique.joined(separator: ", "))")
         }
         
         for _profileUserName in userProfilesInPlaylistsUnique {
             
-            if  debugMode == true {
+            if  debugMode {
                 print ("dbg [playlist] : send userProfile request (event) for [ \(_profileUserName) ]")
             }
             
@@ -1212,7 +1212,7 @@ extension PlaylistViewController {
                    continue
                 }
 
-                if  debugMode == true {
+                if  debugMode {
                     print ("dbg [playlist] : [\(playlist.metaListInternalName)] orphan flagged for removal")
                 }
                 
@@ -1228,9 +1228,9 @@ extension PlaylistViewController {
                     completion: { (result) -> Void in
                     
                         switch result {
-                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .failure(let error): if self.debugMode { print (error) }
                         case .success(let userInfo):
-                            if  self.debugMode == true {
+                            if  self.debugMode {
                                 print ("dbg [playlist] : [\(playlist.metaListInternalName)] handled -> REMOVED")
                             }
                         }
@@ -1352,7 +1352,7 @@ extension PlaylistViewController {
                     
                 }   catch {
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : [\(playListInDb.ownerImageURL)] not handled -> EXCEPTION")
                     }
                     
@@ -1362,7 +1362,7 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     self.handlePlaylistDbCacheOwnerProfileInitialTableViewData(
                         userProfileUserName,
@@ -1444,7 +1444,7 @@ extension PlaylistViewController {
                     // (raw)fetch all kind of titles including empty/whitespaced ones
                     _playlistTitleRaw = playListInCloud.name.trimmingCharacters(in: .whitespacesAndNewlines)
                     
-                    if  self.debugLoadFixtures == true && self.debugMode == true {
+                    if  self.debugLoadFixtures && self.debugMode {
                         print ("fixture_load --> x[\(_rate_intensity)] rate/intensity")
                         print ("fixture_load --> x[\(_rate_emotional)] rate/emotional")
                         print ("fixture_load --> x[\(_rate_depth)] rate/depth")
@@ -1471,7 +1471,7 @@ extension PlaylistViewController {
                     
                     // some playlists will be handled icomplete and will (re)fetched during the next viewLoad process, ..
                     // a single spaced playlistName identify those playlist meta results - I'll tag those also in advance
-                    if (_playlistTitleRaw == "") {
+                    if  _playlistTitleRaw == "" {
                         _playListInDb!.metaListNameOrigin = "playlist #\(playListIndex)"
                         if  playListInCloud.owner.displayName != nil {
                            _playListInDb!.metaListNameOrigin = "\(playListInCloud.owner.displayName!)'s playlist #\(playListIndex)"
@@ -1483,7 +1483,7 @@ extension PlaylistViewController {
                     // activate simulated meta values for single playlist entries during loadUp
                     // on devMode (debugLoadFixtures) - will be removed on release
                     //
-                    if self.debugLoadFixtures == true {
+                    if self.debugLoadFixtures {
                         _playListInDb!.metaListRatingArousal = Float(_rate_intensity)
                         _playListInDb!.metaListRatingValence = Float(_rate_emotional)
                         _playListInDb!.metaListRatingDepth = Float(_rate_depth)
@@ -1516,7 +1516,7 @@ extension PlaylistViewController {
                         From<StreamProvider>().where((\StreamProvider.tag == providerTag))
                     )
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> CREATED")
                     }
                 
@@ -1548,7 +1548,7 @@ extension PlaylistViewController {
                         _playListInDb!.metaPreviouslyCreated = false
                         _playListInDb!.updatedAt = Date()
                         
-                        if  self.debugMode == true {
+                        if  self.debugMode {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> UPDATED")
                         }
                     }
@@ -1560,7 +1560,7 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }; break
+                case .failure(let error): if self.debugMode { print (error) }; break
                 case .success(let userInfo):
                     // save handled hashed in separate collection
                     self.spotifyClient.playListHashesInCloud.append(_playListMetaListHash!)
@@ -1619,7 +1619,7 @@ extension PlaylistViewController {
                 if transactionProvider != nil {
                     
                     self.spotifyClient.spfStreamingProvider = transactionProvider!
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : provider [\(tag)] successfully loaded, fetching playlists now")
                     };  self.loadProviderPlaylists ( self.spotifyClient.spfStreamingProvider! )
                     
@@ -1669,14 +1669,14 @@ extension PlaylistViewController {
                 if transactionPlaylists?.isEmpty == false {
                     
                     // store database fetch results in cache collection
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : \(transactionPlaylists!.count - 1) playlists available ...")
                     };  self.spotifyClient.playlistsInCache = transactionPlaylists!
                     
                 } else {
                     
                     // clean previously cached playlist collection
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : no cached playlist data for this provider found ...")
                     };  self.spotifyClient.playlistsInCache = []
                         self.playlistGradientLoadingBar.hide()
@@ -1721,13 +1721,13 @@ extension PlaylistViewController {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     
                     self.showUserNotification("\(hiddenStateVerb) \(playlistInDb.metaListInternalName)", hiddenStateInformation, nil, 0.9275)
                     self.setupUILoadExtendedPlaylists()
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : [\(playlistInDb.metaListInternalName)] handled -> HIDDEN=\(newHiddenState)")
                     }
                 }
@@ -1830,7 +1830,7 @@ extension PlaylistViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             
             if  localPlayer.player?.loggedIn == true {
-                if  self.debugMode == true {
+                if  self.debugMode {
                     print ("dbg [playlist] : player was previously initialized, start refreshing session")
                 };  localPlayer.player?.logout()
             };      localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
@@ -1854,7 +1854,7 @@ extension PlaylistViewController {
         if  newPlayMode == playMode.Stopped.rawValue {
             // API_CALL : stop playback - ignore incoming error, just reset cell playState
             try! localPlayer.player?.setIsPlaying(false, callback: { (error) in
-                if  self.debugMode == true {
+                if  self.debugMode {
                     print ("dbg [playlist] : stop playlist playback in player directly")
                 }
             })
@@ -1905,7 +1905,7 @@ extension PlaylistViewController {
         // iterate through all cells-in-playmode and reset corresponding controls
         for playlistCell in playlistCellsInPlayMode {
             
-            if (playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash) { continue }
+            if playlistCell.metaPlaylistInDb!.getMD5Identifier() == currentCellPlayingHash { continue }
             
             togglePlayModeIcons( playlistCell, false )
             playlistCell.mode = .clear
@@ -1950,7 +1950,7 @@ extension PlaylistViewController {
         
         playlistCell.imageViewPlaylistIsPlaying.isHidden = !active
         playlistCell.state = .stopped
-        if  active == true {
+        if  active {
             playlistCell.state = .playing
         }
     }
@@ -2001,7 +2001,7 @@ extension PlaylistViewController {
     func onPlaylistChanged(
        _ playlistItem: StreamPlayList ) {
         
-        if  self.debugMode == true {
+        if  self.debugMode {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
         }
         

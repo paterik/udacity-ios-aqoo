@@ -96,9 +96,9 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
         // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
         playlistCell.imageViewPlaylistIsSpotify.isHidden = false
         if  playlistItem.isSpotify == false ||
-            playlistItem.isPlaylistVotedByStar == true ||
-            playlistItem.isPlaylistRadioSelected == true ||
-            playlistItem.isPlaylistYourWeekly == true {
+            playlistItem.isPlaylistVotedByStar ||
+            playlistItem.isPlaylistRadioSelected ||
+            playlistItem.isPlaylistYourWeekly {
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
         

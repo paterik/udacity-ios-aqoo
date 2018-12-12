@@ -103,7 +103,7 @@ class PlaylistEditViewFirstPage: BasePlaylistEditViewController,
     @objc
     func btnCoverOverrideTapped(sender: UITapGestureRecognizer) {
         
-        if (sender.state != .ended) { return }
+        if sender.state != .ended { return }
         
         var _title = "Pick an image"
         var _message = "Choose your image location"

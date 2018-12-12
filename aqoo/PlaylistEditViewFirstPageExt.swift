@@ -85,10 +85,10 @@ extension PlaylistEditViewFirstPage {
         }   else {
             
             // evaluate the "perfect" cover for our detailView
-            if (playListInDb!.largestImageURL != nil) {
+            if  playListInDb!.largestImageURL != nil {
                 _playListCoverURL = playListInDb!.largestImageURL!
                 noCoverImageAvailable = false
-            }   else if (playListInDb!.smallestImageURL != nil) {
+            }   else if playListInDb!.smallestImageURL != nil {
                 _playListCoverURL = playListInDb!.smallestImageURL!
                 noCoverImageAvailable = false
             }
@@ -211,7 +211,7 @@ extension PlaylistEditViewFirstPage {
                 )
                 
                 //  add tag to StreamPlayListTags cache/db table
-                if  add == true {
+                if  add {
                     playlistTagToUpdate = transaction.create(Into<StreamPlayListTags>()) as StreamPlayListTags
                     playlistTagToUpdate!.playlistTag = tag
                     playlistTagToUpdate!.createdAt = Date()
@@ -219,7 +219,7 @@ extension PlaylistEditViewFirstPage {
                     playlistTagToUpdate!.playlist = playlistInContext
                     
                     self.handleBtnSavePlaylistChangesState( active: true )
-                    if self.debugMode == true { print ("TAG [\(tag)] ADDED") }
+                    if self.debugMode { print ("TAG [\(tag)] ADDED") }
                 }
                 
                 //  remove tag from StreamPlayListTags cache/db table
@@ -228,7 +228,7 @@ extension PlaylistEditViewFirstPage {
                     
                     self.playlistTagsField.removeTag(tag)
                     self.handleBtnSavePlaylistChangesState( active: true )
-                    if self.debugMode == true { print ("TAG [\(tag)] REMOVED") }
+                    if self.debugMode { print ("TAG [\(tag)] REMOVED") }
                 }
             },
             completion: { (result) -> Void in
@@ -241,7 +241,7 @@ extension PlaylistEditViewFirstPage {
                     )
                     
                 case .success(let userInfo):
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [db] : TAG [\(tag)] loaded")
                     }
                 }

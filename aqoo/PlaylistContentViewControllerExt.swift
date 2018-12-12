@@ -56,7 +56,7 @@ extension PlaylistContentViewController {
             }
             
             // no large image found? try smallestImageURL instead
-            if  playListInDb!.smallestImageURL != nil && _noCoverImageAvailable == true {
+            if  playListInDb!.smallestImageURL != nil && _noCoverImageAvailable {
                _usedCoverImageURL = URL(string: playListInDb!.smallestImageURL!)
                _usedCoverImageCacheKey = String(format: "d0::%@", _usedCoverImageURL!.absoluteString).md5()
                _noCoverImageAvailable = false
@@ -108,7 +108,7 @@ extension PlaylistContentViewController {
         if  spotifyClient.isSpotifyTokenValid() {
             
             if  localPlayer.player?.loggedIn == true {
-                if  self.debugMode == true {
+                if  self.debugMode {
                     print ("dbg [playlist/track] : player was previously initialized, start refreshing session")
                 };  localPlayer.player?.logout()
             };      localPlayer.initPlayer(authSession: spotifyClient.spfCurrentSession!)
@@ -254,7 +254,7 @@ extension PlaylistContentViewController {
         trackIndexOldValueInSeconds = currentTrack.timePosition
         trackIndexValueChanged = true
         
-        if  debugMode == true {
+        if  debugMode {
             print ("dbg [playlist/track/seek] : rawValue: \(trackIndexValueRaw) (\(trackIndexNewValueInSeconds))s")
         }
     }
@@ -266,7 +266,7 @@ extension PlaylistContentViewController {
             trackIsFinishedByLaw = true
         }
         
-        if  debugMode == true {
+        if  debugMode {
             print ("dbg [playlist/track/ctrl] : jumped to next track")
         }
     }
@@ -301,7 +301,7 @@ extension PlaylistContentViewController {
         trackStopPlaying( _trackIndexCurrent )
         trackStartPlaying( currentTrack.index )
         
-        if  debugMode == true {
+        if  debugMode {
             print ("dbg [playlist/track/ctrl] : jumped to previous track")
         }
     }
@@ -309,7 +309,7 @@ extension PlaylistContentViewController {
     @objc
     func handlePlaylistPlayShuffleMode(sender: UITapGestureRecognizer) {
         
-        if (sender.state != .ended) { return }
+        if sender.state != .ended { return }
         
         handlePlaylistPlayMode(playMode.PlayShuffle.rawValue)
     }
@@ -317,7 +317,7 @@ extension PlaylistContentViewController {
     @objc
     func handlePlaylistPlayNormalMode(sender: UITapGestureRecognizer) {
         
-        if (sender.state != .ended) { return }
+        if sender.state != .ended { return }
         
         handlePlaylistPlayMode(playMode.PlayNormal.rawValue)
     }
@@ -325,7 +325,7 @@ extension PlaylistContentViewController {
     @objc
     func handlePlaylistPlayRepeatMode(sender: UITapGestureRecognizer) {
         
-        if (sender.state != .ended) { return }
+        if sender.state != .ended { return }
         
         handlePlaylistPlayMode(playMode.PlayRepeatAll.rawValue)
     }
@@ -397,7 +397,7 @@ extension PlaylistContentViewController {
             trackStartPlaying( currentTrack.index )
         }
         
-        if  debugMode == true {
+        if  debugMode {
             print ("dbg [playlist/track] : newPlayMode=\(usedPlayMode), oldPlayMode=\(currentPlaylist.playMode), currentPlayMode=\(playListInDb!.currentPlayMode)" )
         }
     }
@@ -458,7 +458,7 @@ extension PlaylistContentViewController {
                 startingWith: 0,
                 startingWithPosition: currentTrack.interval!,
                 callback: { (error) in
-                    if (error != nil) {
+                    if error != nil {
                         self.handleErrorAsDialogMessage("Player Controls Error PCE.01", "\(error?.localizedDescription)")
                         
                         return
@@ -475,7 +475,7 @@ extension PlaylistContentViewController {
             case playMode.PlayNormal.rawValue:
                 
                 //  last track in playlist? return false otherwise jump to next track in playlist
-                if  playlistIsFinished() == true {
+                if  playlistIsFinished() {
                     return false
                 }   else {
                     currentTrack.index += 1
@@ -492,7 +492,7 @@ extension PlaylistContentViewController {
                     currentTrack.shuffleIndex += 1
                     currentTrack.index = currentPlaylist.shuffleKeys![currentTrack.shuffleIndex]
                     
-                    if  debugMode == true {
+                    if  debugMode {
                         print ("dbg [playlist/track/shuffle] : currentPosition = \(currentTrack.shuffleIndex) of \(currentPlaylist.shuffleKeys!.count - 1)")
                     }
                 }
@@ -504,7 +504,7 @@ extension PlaylistContentViewController {
                 // jump to next track in current playlist
                 currentTrack.index += 1
                 // check playlist finished state, jump to first track again on "repeatAll" mode
-                if  playlistIsFinished() == true {
+                if  playlistIsFinished() {
                     currentTrack.index = 0
                 }
             
@@ -520,7 +520,7 @@ extension PlaylistContentViewController {
         
         var _isFinished: Bool = true
         
-        if  trackIsFinishedByLaw == true {
+        if  trackIsFinishedByLaw {
             trackIsFinishedByLaw = false
             
             return true
@@ -530,12 +530,12 @@ extension PlaylistContentViewController {
            _isFinished = currentTrack.timePosition == Int(currentTrack.selected!.trackDuration)
         }
         
-        if _isFinished == true {
+        if _isFinished {
             
             resetLocalTrackTimeMeta()
             handleResetForTrackSliderControl( )
             
-            if  debugMode == true {
+            if  debugMode {
                 print ("dbg [playlist/track] : track finished, try to start next song ...\n")
             }
         }
@@ -568,7 +568,7 @@ extension PlaylistContentViewController {
             default: break
         }
         
-        if _isFinished == true && debugMode == true {
+        if _isFinished && debugMode {
             print ("dbg [playlist/track] : \(playListInDb!.metaListHash) finished, no more songs available ...\n")
         }
         
@@ -583,7 +583,7 @@ extension PlaylistContentViewController {
             return
         }
         
-        if  active == true {
+        if  active {
             trackSubControlBanner!.show(bannerPosition: .bottom)
         }   else {
             trackSubControlBanner!.dismiss()
@@ -612,7 +612,7 @@ extension PlaylistContentViewController {
         trackControlView.imageViewPlaylistIsPlayingIndicator.isHidden = !active
         trackControlView.state = .stopped
         
-        if  active == true {
+        if  active  {
             
             // start playback meta timer
             currentPlaylist.trackCheckTimer = Timer.scheduledTimer(
@@ -633,7 +633,7 @@ extension PlaylistContentViewController {
     func handleActiveTrackCellByTrackPosition(_ trackPosition: Int) {
         
         // do not update cell completely if in editMode (swiped)
-        if tableView.isEditing == true { return }
+        if tableView.isEditing { return }
         
         var trackIndexPath = IndexPath(row: trackPosition, section: 0)
         
@@ -702,10 +702,10 @@ extension PlaylistContentViewController {
             
             if  playlistIsFinished() == false {
                 
-                if  trackJumpToNext() == true {
+                if  trackJumpToNext() {
                     trackStartPlaying( currentTrack.index )
                 }   else {
-                    if  debugMode == true {
+                    if  debugMode {
                         print ("dbg [playlist/track] : unable to playback next track\n")
                     }
                 }
@@ -796,7 +796,7 @@ extension PlaylistContentViewController {
                 andNumNumbers: currentPlaylist.tracks!.count
             )
             
-            if  debugMode == true {
+            if  debugMode {
                 print ("dbg [playlist/track/shuffle] : keys = [\(currentPlaylist.shuffleKeys!)]")
             }
         }

@@ -49,7 +49,7 @@ class SPFClientPlaylists: NSObject {
         
         let playlistIdentifier = playlist.getMD5Identifier()
         
-        if  debugMode == true {
+        if  debugMode {
             var _dateAdded : NSDate = track.addedAt as! NSDate
             var _dateAddedHR : String = _dateAdded.dateToString(_dateAdded as Date!, "dd.MM.Y hh:mm") as String
             
@@ -134,7 +134,7 @@ class SPFClientPlaylists: NSObject {
                         }
                     }
                     
-                    if _nextPage.hasNextPage == true {
+                    if _nextPage.hasNextPage {
                         self.handlePlaylistTracksGetNextPage( playlist, _nextPage, accessToken )
                     }
                 }

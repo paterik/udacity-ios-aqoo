@@ -156,7 +156,7 @@ class PlaylistContentViewController: BaseViewController,
         
         // check explicit state of current track and activate icon if needed/required
         playlistCell.imageViewTrackIsExplicit.isHidden = true
-        if  playlistTrackCacheData.trackExplicit == true {
+        if  playlistTrackCacheData.trackExplicit {
             playlistCell.imageViewTrackIsExplicit.isHidden = false
         }
         
@@ -173,7 +173,7 @@ class PlaylistContentViewController: BaseViewController,
         // dynamic meta data payload
         //
         
-        if  playlistTrackCacheData.metaTrackIsPlaying == true {
+        if  playlistTrackCacheData.metaTrackIsPlaying {
             
             playlistCell.state = .playing
             playlistCell.imageViewTrackIsPlayingIndicator.isHidden = false

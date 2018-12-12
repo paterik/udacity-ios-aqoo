@@ -40,10 +40,10 @@ class SPFClientPlaylistControls {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist/track] : set playState for [\(trackInDb.trackIdentifier!)] to [\(isPlaying)]")
                     }
                 }
@@ -67,10 +67,10 @@ class SPFClientPlaylistControls {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist/track] : playing stream, set timeFrame position for [\(trackInDb.trackIdentifier!)] to [\(newTrackTimePosition)]")
                     }
                 }
@@ -93,7 +93,7 @@ class SPFClientPlaylistControls {
                 if  newPlayMode != 0 {
                     playlistInDb.metaNumberOfPlayedPartly += 1
                     playlistInDb.metaNumberOfPlayed += 1
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : add metaNumberOfPlayedPartly stats to [\(playlistInDb.metaListInternalName)]")
                     }
                 }
@@ -101,10 +101,10 @@ class SPFClientPlaylistControls {
             completion: { (result) -> Void in
                 
                 switch result {
-                case .failure(let error): if self.debugMode == true { print (error) }
+                case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     
-                    if  self.debugMode == true {
+                    if  self.debugMode {
                         print ("dbg [playlist] : set playMode for [\(playlistInDb.metaListInternalName)] to [\(newPlayMode)]")
                     }
                 }
@@ -121,7 +121,7 @@ class SPFClientPlaylistControls {
                     asynchronous: { (transaction) -> Void in playlist.currentPlayMode = 0 },
                     completion: { (result) -> Void in
                         switch result {
-                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .failure(let error): if self.debugMode { print (error) }
                         case .success(let userInfo): break }
                     }
                 )
@@ -143,7 +143,7 @@ class SPFClientPlaylistControls {
                     },
                     completion: { (result) -> Void in
                         switch result {
-                        case .failure(let error): if self.debugMode == true { print (error) }
+                        case .failure(let error): if self.debugMode { print (error) }
                         case .success(let userInfo): break }
                     }
                 )

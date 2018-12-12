@@ -45,19 +45,19 @@ class SpotifyClient: SPFClientPlaylists {
     
     func initAPI() {
         
-        // load api keys from special "Keys.plist" file (you have to generate one if you use this sources for your
-        // own app or you want to compile this app by yourself)
+        // load api keys from special "Keys.plist" file (you have to generate one if you use
+        // this sources for your own app or you want to compile this app by yourself!)
         if let path = Bundle.main.path(forResource: spfSecretPropertyListFile, ofType: "plist") {
             if let dict = NSDictionary(contentsOfFile: path) {
                 
                 if let spfClientId = dict["spfClientId"] as? String {
                     spfAuth.clientID = spfClientId
-                    if debugMode == true { print ("dbg [init] : using spotify clientId => \(spfClientId)") }
+                    if debugMode { print ("dbg [init] : using spotify clientId => \(spfClientId)") }
                 }
                 
                 if let spfCallbackURL = dict["spfClientCallbackURL"] as? String {
                     spfAuth.redirectURL = URL(string: spfCallbackURL)
-                    if debugMode == true { print ("dbg [init] : using spotify callBackURL => \(spfCallbackURL)") }
+                    if debugMode { print ("dbg [init] : using spotify callBackURL => \(spfCallbackURL)") }
                 }
             }
         }
