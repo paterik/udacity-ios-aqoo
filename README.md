@@ -29,19 +29,27 @@
 To build this app you’ve to take care of the following steps.
 
 1. Checkout this repository on your system 
+
 ```
 git clone git@github.com:paterik/udacity-ios-aqoo.git --depth 1
 ```
+
 2. Install [POD](https://guides.cocoapods.org/using/getting-started.html) on your system and load all libs required (do NOT use ```pod install```)
+
 ```
 cd <your_project_path> ; pod update
 ```
-3. Load project workspace ```aqoo.xcworkspace``` in your XCode 10.1 IDE and ensure your toolchain is set to XCode 10 internal or the currently supported Swift 4.2.1
-![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)
-4. You may clean up your previous build artifacts using <Product/clean>
+3. Load project workspace ```aqoo.xcworkspace``` in your XCode 10.1 IDE and ensure your toolchain is set to XCode 10 internal or the currently supported Swift 4.2.1 and may clean up your previous build artifacts using <Product/clean>
+
+ToolChain Setup | Build CleanUp 
+:-------------------------:|:-------------------------:|:-------------------------:
+![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)|
 ![Build CleanUp](github/media/xcode_prep_cw.jpg)
+
 5. Add a new property list (plist) file into your project resource group and insert the 3 required keys (```spfClientSecret```, ```spfClientId```, ```spfClientCallbackURL```) for SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)
+
 ![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
+
 6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads.
 
 ## App Requirements
@@ -100,7 +108,7 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 
 * The cover image cache for the playlists may take a bit time to display the identified images in our table cells - after view refresh process (by scrolling in your playlist items or leaving this view and returning) all covers should be visible.
 * The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project.
-* The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your Keys.plist file. You’ve to request a valid ```client_id```and ```client_secret``` including your application ```callback_url``` from [Spotify/Developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)page. 
+* The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your Keys.plist file. You’ve to request a valid ```client_id```and ```client_secret``` including your application ```callback_url``` from [spotify/developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) app registration page. 
 
 ## Keywords
 
@@ -108,7 +116,7 @@ swift, swift-4, udacit, uikit, foundation, app, spotify, spotify-sdk, streaming,
 
 ## Releases
 
-AQQO is currently available in [5 releases](https://github.com/paterik/udacity-ios-virtual-tourist/releases) and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.3``` provided on ```2018-12-11```.
+AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.3``` provided on ```2018-12-12```.
 
 ## Changelog
 
