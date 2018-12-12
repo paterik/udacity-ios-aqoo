@@ -17,6 +17,7 @@ class SPFClientPlaylists: NSObject {
     
     let debugMode: Bool = false
     let notifier = SPFEventNotifier()
+    let playlistCoverDefaultURL = "https://www.dropbox.com/s/t2aaqgqhojmvxw8/img_cover_override%20255x255%20v1.png"
     
     //
     // MARK: Variables
@@ -99,7 +100,17 @@ class SPFClientPlaylists: NSObject {
         
         self.playlistTracksInCloud.append(playlistsTrack)
         
-        return track.album.largestCover.imageURL.absoluteString
+        var coverUrl = playlistCoverDefaultURL
+        
+        if  track.album.largestCover != nil {
+            coverUrl = track.album.largestCover.imageURL.absoluteString
+        }
+        
+        if  track.album.smallestCover != nil {
+            coverUrl = track.album.smallestCover.imageURL.absoluteString
+        }
+        
+        return coverUrl
     }
     
     func handlePlaylistTracksGetNextPage(
