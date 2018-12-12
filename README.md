@@ -29,7 +29,7 @@
 
 To build this app you’ve to take care of the following steps.
 
-1. Checkout this repository on your system - I suggest using the smaller [shallow clone mechanic](https://www.perforce.com/blog/git-beyond-basics-using-shallow-clones)
+1. Checkout this repository on your system. I suggest using the smaller [shallow clone mechanic](https://www.perforce.com/blog/git-beyond-basics-using-shallow-clones) for this process.
 
 ```
 git clone git@github.com:paterik/udacity-ios-aqoo.git --depth 1
