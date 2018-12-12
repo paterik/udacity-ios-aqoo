@@ -25,14 +25,8 @@ env:
     - LANG=en_US.UTF-8
 
 script:
-  - xctool -workspace aqoo.xcworkspace -scheme aqoo -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s, OS=11.3' build-tests
-
-  #  ONLY_ACTIVE_ARCH=NO
-  # CODE_SIGN_IDENTITY=""
-  # CODE_SIGNING_REQUIRED=NO
-  #- xctool -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 build ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-  #- xcodebuild -version
-  #- xcodebuild -showsdks
-  #- xcodebuild -list
-  #- xcodebuild clean
-  #- xcodebuild build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty;
+  - set -e
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - xcodebuild -list
+  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty;
