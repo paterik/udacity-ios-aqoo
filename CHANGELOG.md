@@ -4,18 +4,22 @@ All notable changes of AQOO release series are documented in this file using the
 
 _This VirtualTourist project changelog documentation start with version 0.0.1 (2017-07-18)_
 
-## [1.0.3], 2018-12-11:
+## [1.0.3], 2018-12-12:
 _current_
 
 ### Added
 
-* travis ci build for XCode 10.1 (Swift 4.2.1)
-* documentation parts for XCode 9 and XCode 10 usage
+* travis ci build processor for XCode 10.1 (Swift 4.2.1)
+* extended documentation for XCode 9 and XCode 10 usage
+* extended documentation for „known issues“
+* new tracklist based spotify playlist cover image processor
 
 ### Fixed
 
-* minor issues in image download cache handling
-
+* pod vendor library stack (some upgrades, some downgrades)
+* spotify playlist cover image processor (after major API changes)
+* structural and logical code changes after first review
+* problems in view constraints of some views
 
 ## [1.0.2], 2018-12-10:
 

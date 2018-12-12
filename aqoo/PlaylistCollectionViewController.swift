@@ -125,7 +125,9 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
        _ collectionView: UICollectionView,
          didSelectItemAt indexPath: IndexPath) {
         
-        print("Cell [\(indexPath.row)] selected")
+        if  debugMode {
+            print("Cell [\(indexPath.row)] selected")
+        }
     }
     
     @objc

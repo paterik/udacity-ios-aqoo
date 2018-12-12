@@ -14,21 +14,37 @@
 „AQOO“ („A-Q“) is an iOS 11 mobile app that allows users to manage and listen their [spotify](http://spotify.com/) playlists. This app uses the classic 0.27.0 spotify sdk/api iOS framework including some major improvements like dedicated list sorting mechanics, advanced shuffle playmode and advanced rating options.
 
 ## App Specifications
- 
+
 - AQOO was developed using the latest XCode 10.1 (10B61) build and is able to run under iOS version 11.4 up to the latest iOS version 12.1 (16B92) 
 
 - AQOO is using POD composition technics to handle 3rd party dependencies. You have to install [POD](https://guides.cocoapods.org/using/getting-started.html) 
-and run ```pod install``` on your console before starting the app as your XCode workspace.
 
 - AQOO uses multiple API endpoints of [spotifies iOS SDK](https://developer.spotify.com/documentation/web-api/quick-start/) webAPI-wrapper. An internet connection is required for login, playlist-synch and streaming of your tracks.
 
 - AQOO uses 3rd Party Libraries for better UX/UI behavior and graphical elements from [icons8](https://icons8.de/). A complete list of used libraries and assets can be found in the [COPYRIGHT.md](COPYRIGHT.md) file.
 
+ *more detailed/build related information can be obtained in the ```App Build Process``` section of this documentation*
+
+## App Build Process
+To build this app you’ve to take care of the following steps.
+
+1. Checkout this repository on your system 
+```
+git clone git@github.com:paterik/udacity-ios-aqoo.git --depth 1
+```
+2. Install [POD](https://guides.cocoapods.org/using/getting-started.html) on your system and load all libs required (do NOT use ```pod install```)
+```
+cd <your_project_path> ; pod update
+```
+3. Load project workspace ```aqoo.xcworkspace``` in your XCode 10.1 IDE and ensure your toolchain is set to XCode 10 internal or the currently supported Swift 4.2.1
+![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)
+4. You may clean up your previous build artifacts using <Product/clean>
+![Build CleanUp](github/media/xcode_prep_cw.jpg)
+5. Add a new property list (plist) file into your project resource group and insert the 3 required keys (```spfClientSecret```, ```spfClientId```, ```spfClientCallbackURL```) for SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)
+![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
+6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads.
+
 ## App Requirements
-
-AQOO uses a dedicated Spotify-API-Access-KeyPair (```spfClientSecret```, ```spfClientId```) and a predefined project-callback-URL ```spfClientCallbackURL```  (e.g. ```aqoo://```).  Those keys and their corresponding values have to be included into a ```Keys.plist``` file. Please create this file first and add the KeyValues generated from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) later. 
-
-![Keys.plist file](github/media/aq_keys_plist.jpg) 
 
 AQOO needs a valid spotify premium account to authenticate and gain access to your personal playlist information. *Unfortunately spotify free-accounts are currently not supported by this app*.
 
@@ -80,7 +96,14 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 :-------------------------:|:-------------------------:|:-------------------------:
 ![normal tracklist](github/media/small/aq_tracklist_01.png) |  ![playmode active](github/media/small/aq_tracklist_02.png) | ![playlist cover view](github/media/small/aq_coverlist_01.png)
 
+## Known Issues
+
+* The cover image cache for the playlists may take a bit time to display the identified images in our table cells - after view refresh process (by scrolling in your playlist items or leaving this view and returning) all covers should be visible.
+* The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project.
+* The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your Keys.plist file. You’ve to request a valid ```client_id```and ```client_secret``` including your application ```callback_url``` from [Spotify/Developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app)page. 
+
 ## Keywords
+
 swift, swift-4, udacit, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
 
 ## Releases
