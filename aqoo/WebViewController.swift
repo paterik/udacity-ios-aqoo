@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import PKHUD
 import WebKit
+import GradientLoadingBar
 
 @objc
 protocol WebViewControllerDelegate {
@@ -21,12 +23,18 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     var initialURL: URL!
     var webView: UIWebView!
     var delegate: WebViewControllerDelegate?
+    var webViewGradientLoadingBar = GradientLoadingBar()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         let initialRequest = URLRequest(url: initialURL)
+        
+        // prepare main HUD settings
+        HUD.dimsBackground = false
+        HUD.allowsInteraction = false
+        HUD.flash(.label("connect to spotify"), delay: 2.175)
         
         webView = UIWebView(frame: view.bounds)
         webView.delegate = self
@@ -38,6 +46,16 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             target: self,
             action: #selector(done)
         )
+        
+        webViewGradientLoadingBar = GradientLoadingBar(
+            height: 5,
+            durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
+            gradientColorList: [
+                UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
+                UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
+            ],
+            onView: webView
+        );  webViewGradientLoadingBar.show()
         
         webView.loadRequest(initialRequest)
     }
@@ -54,6 +72,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         if !self.loadComplete {
             delegate?.webViewController?(self, didCompleteInitialLoad: true)
             loadComplete = true
+            HUD.flash(.label("connected"), delay: 1.175)
+            webViewGradientLoadingBar.hide()
         }
     }
     

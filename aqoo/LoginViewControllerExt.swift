@@ -125,10 +125,14 @@ extension LoginViewController {
         }
         
         if  self.debugMode == true {
-            print ("dbg [login/con] : connection check ➡ \(statusVerb)")
+            // print ("dbg [login/con] : connection check ➡ \(statusVerb)")
         }
     }
     
-    func webViewControllerDidFinish(_ controller: WebViewController) { }
+    func webViewControllerDidFinish(_ controller: WebViewController) {
+        
+        print ("!!! DONE !!!")
+        
+    }
 
 }
