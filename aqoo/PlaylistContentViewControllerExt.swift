@@ -238,6 +238,7 @@ extension PlaylistContentViewController {
         
         trackSubControlView = TrackBaseControls.fromNib(nibName: "TrackBaseControls")
         trackSubControlBanner = NotificationBanner(customView: trackSubControlView!)
+        trackSubControlBanner!.bannerHeight = 75
         trackSubControlBanner!.autoDismiss = false
         
         handleInitValuesForTrackControl()
