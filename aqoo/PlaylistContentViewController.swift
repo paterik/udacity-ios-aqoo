@@ -90,11 +90,6 @@ class PlaylistContentViewController: BaseViewController,
     // MARK: Class Delegate Method Overloads
     //
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return 1
-    }
-    
     func tableView(
        _ tableView: UITableView,
          numberOfRowsInSection section: Int) -> Int {
