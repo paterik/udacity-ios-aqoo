@@ -52,7 +52,7 @@ ToolChain Setup | Build CleanUp
 
 6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads.
 
-![Build State](github/media/xcode_tc_setup_10.jpg) 
+![Build State](github/media/xcode_10_build_done.jpg) 
 
 ## App Requirements
 
