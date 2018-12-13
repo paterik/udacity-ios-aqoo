@@ -103,11 +103,11 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
             playlistItem,
             playlistCell.imageViewPlaylistCover,
             playlistCell.imageViewPlaylistCover,
-            playlistCell.imageViewPlaylistCover
+            nil
         )
         
-        if  coverImageBlock.detailView != nil {
-            playlistCell.imageCacheKey = coverImageBlock.detailViewCacheKey
+        if  coverImageBlock.normalView != nil {
+            playlistCell.imageCacheKey = coverImageBlock.normalViewCacheKey
             playlistCell.imageViewPlaylistCover = coverImageBlock.normalView
         }
         
