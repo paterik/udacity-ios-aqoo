@@ -7,17 +7,15 @@ _This AQOO project changelog documentation start with version 0.0.1 (2017-07-18)
 ## [1.0.4], 2018-12-14:
 _current_
 
-### Added
-
-* improved track fetch mechanics (retry system)
-
 ### Fixed
 
+* bug in playlist refresh that prevent track loading
 * structural and logical improvements/fixes after 2nd review
 * image caching problem in playlist cover sets
 * image quality problem on playlistCover rendering
 * minor constraint issues in playlist colletion view
 * minor documentation/changelog issues
+
 
 ## [1.0.3], 2018-12-12:
 
