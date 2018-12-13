@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nWJ-Hn-QuD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nWJ-Hn-QuD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -181,7 +181,7 @@
                                                             <rect key="frame" x="-3" y="60" width="32" height="32"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="kWC-iX-15N" userLabel="ui_img_playlistIdentFlag">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -197,7 +197,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgUITblContentChanged_v1" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-jW-gyw" userLabel="ui_img_contentChanged">
-                                                            <rect key="frame" x="98" y="11" width="15" height="15"/>
+                                                            <rect key="frame" x="98" y="11" width="15" height="14"/>
                                                             <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="94" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rzk-Wc-Tps" userLabel="ui_lbl_playlistTrackCount">
@@ -226,7 +226,7 @@
                                                             </constraints>
                                                         </view>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnSetPlayMini_1" translatesAutoresizingMaskIntoConstraints="NO" id="TvP-5j-vWs" userLabel="ui_img_contentStatePlaying">
-                                                            <rect key="frame" x="95" y="46" width="15" height="15"/>
+                                                            <rect key="frame" x="95" y="45" width="15" height="16"/>
                                                             <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="15" id="sam-lJ-MU3"/>
@@ -318,7 +318,7 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drJ-4c-Ll4" userLabel="ui_view_contentStateDetailView" customClass="PlaylistMusicIndicatorView" customModule="aqoo" customModuleProvider="target">
-                                                                    <rect key="frame" x="98" y="11" width="15" height="15"/>
+                                                                    <rect key="frame" x="98" y="10.5" width="15" height="15"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="15" id="8U3-FR-gBf"/>
@@ -698,7 +698,7 @@
                                                                     <rect key="frame" x="8" y="0.0" width="42" height="45"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiN-T8-PQm" userLabel="ui_btn_playlistDelete">
-                                                                            <rect key="frame" x="8" y="10" width="25" height="25"/>
+                                                                            <rect key="frame" x="8" y="4.5" width="36" height="36"/>
                                                                             <state key="normal" image="icnHide_v2">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -719,7 +719,7 @@
                                                                     <rect key="frame" x="183" y="0.0" width="164" height="45"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qr4-VD-i7G" userLabel="ui_btn_playlistShare">
-                                                                            <rect key="frame" x="8" y="10" width="25" height="25"/>
+                                                                            <rect key="frame" x="-25" y="10" width="36" height="36"/>
                                                                             <state key="normal" image="icnShareContent_v2">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -728,7 +728,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dfb-4k-Gv3" userLabel="ui_btn_playlistEdit">
-                                                                            <rect key="frame" x="70" y="10" width="25" height="25"/>
+                                                                            <rect key="frame" x="48" y="10" width="36" height="36"/>
                                                                             <state key="normal" image="icnSettings_v1">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -737,7 +737,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GxB-PO-V89" userLabel="ui_btn_playlistView">
-                                                                            <rect key="frame" x="131" y="10" width="25" height="25"/>
+                                                                            <rect key="frame" x="120" y="10" width="36" height="36"/>
                                                                             <state key="normal" image="icnShowPlaylist_v1">
                                                                                 <color key="titleColor" red="0.1993662417" green="0.21939548850000001" blue="0.23608461019999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             </state>
@@ -1026,36 +1026,18 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qIQ-qp-X6Q" userLabel="ui_img_playlistIdent">
-                                            <rect key="frame" x="-2" y="69" width="40" height="24"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="Ule-l7-bsN" userLabel="ui_img_playlistIdentFlag">
-                                                    <rect key="frame" x="-2" y="0.0" width="32" height="32"/>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="Ule-l7-bsN" firstAttribute="top" secondItem="qIQ-qp-X6Q" secondAttribute="top" id="XuV-IL-PMa"/>
-                                                <constraint firstItem="Ule-l7-bsN" firstAttribute="leading" secondItem="qIQ-qp-X6Q" secondAttribute="leading" constant="-2" id="f3i-Dj-MgH"/>
-                                            </constraints>
-                                        </view>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="3Kc-bP-YdH" secondAttribute="bottom" id="1Qb-zH-rnl"/>
                                     <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="7mc-Im-RL5" secondAttribute="leading" id="6FC-tn-lPd"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="qIQ-qp-X6Q" secondAttribute="trailing" constant="54" id="App-VF-ddR"/>
                                     <constraint firstItem="3LJ-9p-E6N" firstAttribute="top" secondItem="3Kc-bP-YdH" secondAttribute="top" id="IL8-Z7-WTo"/>
                                     <constraint firstAttribute="trailing" secondItem="3Kc-bP-YdH" secondAttribute="trailing" id="XiW-52-a0W"/>
-                                    <constraint firstItem="Ule-l7-bsN" firstAttribute="top" secondItem="3Kc-bP-YdH" secondAttribute="bottom" constant="-31" id="gIG-fu-cDt"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="qIQ-qp-X6Q" secondAttribute="bottom" constant="-1" id="h21-Sq-LOW"/>
                                     <constraint firstItem="3LJ-9p-E6N" firstAttribute="leading" secondItem="3Kc-bP-YdH" secondAttribute="trailing" constant="-35" id="iBi-Ce-7Bo"/>
                                     <constraint firstItem="3Kc-bP-YdH" firstAttribute="top" secondItem="7mc-Im-RL5" secondAttribute="top" id="oCJ-x6-4Z2"/>
-                                    <constraint firstItem="3Kc-bP-YdH" firstAttribute="leading" secondItem="Ule-l7-bsN" secondAttribute="trailing" constant="-28" id="z1u-ji-7nS"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageViewPlaylistCover" destination="3Kc-bP-YdH" id="gIR-A9-Alv"/>
-                                    <outlet property="imageViewPlaylistIsSpotify" destination="qIQ-qp-X6Q" id="h25-MH-1Lq"/>
                                     <outlet property="lblPlaylistMetaTrackCount" destination="3LJ-9p-E6N" id="jzD-PW-MzA"/>
                                 </connections>
                             </collectionViewCell>
@@ -1166,7 +1148,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnTrackIsExplicit" translatesAutoresizingMaskIntoConstraints="NO" id="Wfu-5p-Skj" userLabel="ui_img_playlistTrackIsExplicit">
-                                                    <rect key="frame" x="71" y="25" width="22" height="15"/>
+                                                    <rect key="frame" x="71" y="24.5" width="22" height="15"/>
                                                     <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="2t3-Rd-Ahk"/>
@@ -1177,7 +1159,7 @@
                                                     <rect key="frame" x="0.0" y="31" width="32" height="32"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnCellFXIsMine_v1" translatesAutoresizingMaskIntoConstraints="NO" id="8eZ-Tm-i6h" userLabel="ui_img_playlistIdentFlag">
-                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="46"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="clip" minimumFontSize="6" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RjO-iS-Dfi" userLabel="ui_lbl_playlistTrackIndex">
                                                             <rect key="frame" x="2" y="19" width="17" height="9"/>
@@ -1624,7 +1606,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sh-6v-AHV">
-                                <rect key="frame" x="16" y="72" width="343" height="77"/>
+                                <rect key="frame" x="16" y="72" width="343" height="76.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="76.5" id="XAd-SJ-o0s"/>
                                 </constraints>
@@ -1799,35 +1781,35 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icnCellFXIsMine_v1" width="32" height="32"/>
-        <image name="icnCellFXTrackCount_v4" width="25" height="25"/>
-        <image name="icnCtrlsGreenboxBK_v1" width="127" height="127"/>
-        <image name="icnExitView_v1" width="25" height="25"/>
-        <image name="icnHide_v2" width="25" height="25"/>
-        <image name="icnPLCellView" width="25" height="25"/>
-        <image name="icnPLRefresh" width="25" height="25"/>
-        <image name="icnPLTableView" width="25" height="25"/>
-        <image name="icnPlaylistViewDetailPage1_v1" width="25" height="25"/>
-        <image name="icnPlaylistViewDetailPage2_v1" width="25" height="25"/>
-        <image name="icnPlaylistViewDetailPage3_v1" width="25" height="25"/>
-        <image name="icnSave_v1" width="25" height="25"/>
-        <image name="icnSetPlayMini_1" width="25" height="25"/>
-        <image name="icnSetPlayNormal_0" width="25" height="25"/>
-        <image name="icnSetPlayNormal_1" width="25" height="25"/>
-        <image name="icnSetPlayRepeatAll_0" width="25" height="25"/>
-        <image name="icnSetPlayRepeatAll_1" width="25" height="25"/>
-        <image name="icnSetPlayShuffle_0" width="25" height="25"/>
-        <image name="icnSetPlayShuffle_1" width="25" height="25"/>
-        <image name="icnSettings_v1" width="25" height="25"/>
-        <image name="icnShareContent_v2" width="25" height="25"/>
-        <image name="icnShowPlaylist_v1" width="25" height="25"/>
-        <image name="icnTrackIsExplicit" width="25" height="16"/>
-        <image name="imgUICoverOverrideDefault_v1" width="127" height="127"/>
-        <image name="imgUISpotifyStatusLocked_v1" width="256" height="256"/>
-        <image name="imgUITblContentChanged_v1" width="25" height="25"/>
-        <image name="imgUITblPlaylistDefault_v1" width="64" height="64"/>
-        <image name="imgUITblProfileDefault_v1" width="64" height="64"/>
-        <image name="sample_cover_02" width="150" height="150"/>
-        <image name="sample_user_01" width="100" height="100"/>
+        <image name="icnCellFXIsMine_v1" width="46.080001831054688" height="46.080001831054688"/>
+        <image name="icnCellFXTrackCount_v4" width="36" height="36"/>
+        <image name="icnCtrlsGreenboxBK_v1" width="127.5" height="127.5"/>
+        <image name="icnExitView_v1" width="36" height="36"/>
+        <image name="icnHide_v2" width="36" height="36"/>
+        <image name="icnPLCellView" width="50" height="50"/>
+        <image name="icnPLRefresh" width="36" height="36"/>
+        <image name="icnPLTableView" width="50" height="50"/>
+        <image name="icnPlaylistViewDetailPage1_v1" width="36" height="36"/>
+        <image name="icnPlaylistViewDetailPage2_v1" width="36" height="36"/>
+        <image name="icnPlaylistViewDetailPage3_v1" width="36" height="36"/>
+        <image name="icnSave_v1" width="36" height="36"/>
+        <image name="icnSetPlayMini_1" width="36" height="36"/>
+        <image name="icnSetPlayNormal_0" width="36" height="36"/>
+        <image name="icnSetPlayNormal_1" width="36" height="36"/>
+        <image name="icnSetPlayRepeatAll_0" width="36" height="36"/>
+        <image name="icnSetPlayRepeatAll_1" width="36" height="36"/>
+        <image name="icnSetPlayShuffle_0" width="36" height="36"/>
+        <image name="icnSetPlayShuffle_1" width="36" height="36"/>
+        <image name="icnSettings_v1" width="36" height="36"/>
+        <image name="icnShareContent_v2" width="36" height="36"/>
+        <image name="icnShowPlaylist_v1" width="36" height="36"/>
+        <image name="icnTrackIsExplicit" width="36" height="23"/>
+        <image name="imgUICoverOverrideDefault_v1" width="183.60000610351562" height="183.60000610351562"/>
+        <image name="imgUISpotifyStatusLocked_v1" width="368.6400146484375" height="368.6400146484375"/>
+        <image name="imgUITblContentChanged_v1" width="36" height="36"/>
+        <image name="imgUITblPlaylistDefault_v1" width="92.160003662109375" height="92.160003662109375"/>
+        <image name="imgUITblProfileDefault_v1" width="92.160003662109375" height="92.160003662109375"/>
+        <image name="sample_cover_02" width="300" height="300"/>
+        <image name="sample_user_01" width="200" height="200"/>
     </resources>
 </document>
