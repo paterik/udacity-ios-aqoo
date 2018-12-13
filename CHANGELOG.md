@@ -15,6 +15,7 @@ _current_
 
 * structural and logical improvements/fixes after 2nd review
 * image caching problem in playlist cover sets
+* image quality problem on playlistCover rendering
 * minor constraint issues in playlist colletion view
 * minor documentation/changelog issues
 

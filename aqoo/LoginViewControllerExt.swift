@@ -124,9 +124,12 @@ extension LoginViewController {
             )
         }
         
-        if  self.debugMode == true {
+        // disabled ... to noisy ;)
+        /*
+         if  self.debugMode == true {
             print ("dbg [login/con] : connection check ➡ \(statusVerb)")
-        }
+         }
+         */
     }
     
     func webViewControllerDidFinish(_ controller: WebViewController) { }

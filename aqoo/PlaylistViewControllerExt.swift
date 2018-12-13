@@ -723,7 +723,7 @@ extension PlaylistViewController {
         
         // set default cover image using makeLetterAvatar vendor library call (for normal and detail cell view)
         playlistCell.imageViewPlaylistCover.image = UIImage(named: _sysDefaultCoverImage)
-        playlistCell.imageViewPlaylistCoverInDetail.image = UIImage.makeLetterAvatar(withUsername: playlistItem.metaListInternalName)
+        playlistCell.imageViewPlaylistCoverInDetail.image = UIImage(named: _sysDefaultCoverImage)
         
         // set final cover image based on current playlist model and corresponding imageView
         var playlistCoverView: UIImageView! = playlistCell.imageViewPlaylistCover
@@ -739,6 +739,7 @@ extension PlaylistViewController {
             }
             
         }   else {
+            
             var coverImageBlock = getCoverImageViewByCacheModel(
                 playlistItem,
                 playlistCoverRawView,

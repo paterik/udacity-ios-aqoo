@@ -106,7 +106,7 @@ class SPFClientPlaylists: NSObject {
             coverUrl = track.album.largestCover.imageURL.absoluteString
         }
         
-        if  track.album.smallestCover != nil {
+        if  track.album.largestCover == nil && track.album.smallestCover != nil {
             coverUrl = track.album.smallestCover.imageURL.absoluteString
         }
         
@@ -124,6 +124,11 @@ class SPFClientPlaylists: NSObject {
             callback: {
                 
                 ( error, response ) in
+                
+                if  error != nil && self.debugMode {
+                    print ("[dbg/error-1003] handlePlaylistTracksGetNextPage :: further tracks couln't be handled ...")
+                    print (error)
+                }
                 
                 if  let _nextPage = response as? SPTListPage,
                     let _playlistTracks = _nextPage.items as? [SPTPlaylistTrack] {
@@ -154,6 +159,11 @@ class SPFClientPlaylists: NSObject {
             // use SPTPlaylistSnapshot to get fetch playlist snapshots incl tracks
             SPTPlaylistSnapshot.playlist(withURI: uri!, accessToken: accessToken) {
                 (error, snap) in
+                
+                if  error != nil && self.debugMode {
+                    print ("[dbg/error-1002] handlePlaylistTracksGetFirstPage :: tracks couln't be handled ...")
+                    print (error)
+                }
                 
                 self.playlistInCloudExtendedHandled += 1
                 
@@ -244,6 +254,11 @@ class SPFClientPlaylists: NSObject {
                 
                 ( error, response ) in
                 
+                if  error != nil && self.debugMode {
+                    print ("[dbg/error-1001] handlePlaylistGetFirstPage :: playlist couln't be handled ...")
+                    print (error)
+                }
+                
                 if  let _firstPage = response as? SPTPlaylistList,
                     let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
                     
@@ -273,6 +288,7 @@ class SPFClientPlaylists: NSObject {
         let seconds = interval % 60
         let minutes = (interval / 60) % 60
         let hours = (interval / 3600)
+        
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
