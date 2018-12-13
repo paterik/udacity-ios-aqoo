@@ -20,7 +20,11 @@ class DFDates {
     // MARK: Class Constants (Public)
     //
     
-    func getDateAsString (_ dateValue: Date, _ dateFormatter: String = "dd.MM.Y hh:mm") -> NSString {
+    func getDateAsString (_ dateValue: Date?, _ dateFormatter: String = "dd.MM.Y hh:mm") -> NSString {
+        
+        if  dateValue != nil {
+            return NSDate().dateToString(dateValue, dateFormatter) as! NSString
+        }
         
         return NSDate().dateToString(Date(), dateFormatter) as! NSString
     }
@@ -46,7 +50,11 @@ class DFDates {
     
     func getSecondsAsMinutesSecondsDigits (_ seconds : Int) -> String {
         
-        let (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
+        var (h, m, s) = getSecondsAsHoursMinutesSeconds ( seconds )
+        
+        if h > 0 {
+           m += h * 60
+        }
         
         return String(format: "%02d:%02d", m, s)
     }
