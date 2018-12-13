@@ -7,14 +7,27 @@ _This AQOO project changelog documentation start with version 0.0.1 (2017-07-18)
 ## [1.0.4], 2018-12-14:
 _current_
 
+### Added
+
+* unit tests for DateHelper (DFDates) class
+* unit tests for NumberHelper (DFNumbers) class
+
 ### Fixed
 
-* bug in playlist refresh that prevent track loading
-* structural and logical improvements/fixes after 2nd review
+* bug in manual playlist refresh action that prevent track meta data loading
+* bug in DateHelper class, error in mm:ss formatter on seconds > 60
+* bug in DateHelper class, error in getDateAsString function on user defined dates
 * image caching problem in playlist cover sets
 * image quality problem on playlistCover rendering
+* structural and logical improvements/fixes after 2nd review
 * minor constraint issues in playlist colletion view
 * minor documentation/changelog issues
+* minor changes in travis build processor
+
+### Removed
+
+* playlist identification icon rendering in playlist collection view
+* old code (action) fragments related to extended play-controls in playlist table view
 
 
 ## [1.0.3], 2018-12-12:
