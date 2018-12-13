@@ -3,7 +3,7 @@
 
 [![Udacity Course Id](https://img.shields.io/badge/udacity-ND003-37C6EE.svg)](UDACITY)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.3-blue.svg)](VERSION)
+[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.4-blue.svg)](VERSION)
 [![Language](https://img.shields.io/badge/swift-4.2.1-orange.svg)](https://swift.org)
 [![IDE](https://img.shields.io/badge/xcode-10.1-lightblue.svg)](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
 
@@ -119,7 +119,7 @@ ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-s
 
 ## Releases
 
-AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.3``` provided on ```2018-12-12```.
+AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-14```.
 
 ## Changelog
 
