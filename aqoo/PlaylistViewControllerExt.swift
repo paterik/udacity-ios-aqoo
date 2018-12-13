@@ -707,11 +707,7 @@ extension PlaylistViewController {
         
         // ignore "spotify label" for all internal playlist - otherwise activate spotify marker
         playlistCell.imageViewPlaylistIsSpotify.isHidden = false
-        if  playlistItem.isSpotify == false ||
-            playlistItem.isPlaylistVotedByStar ||
-            playlistItem.isPlaylistRadioSelected ||
-            playlistItem.isPlaylistYourWeekly {
-            
+        if  playlistItem.isSpotify == false {
             playlistCell.imageViewPlaylistIsSpotify.isHidden = true
         }
         
