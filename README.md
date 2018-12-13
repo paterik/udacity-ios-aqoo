@@ -51,7 +51,13 @@ ToolChain Setup | Build CleanUp
 
 ![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
 
-6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads. 
+6. Setup XCode to use the „New Build System“ (*Select File -> Project/Workspace Setting*) 
+
+![Keys.plist file](github/media/xcode_10_ws_settings.jpg) 
+
+7. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads. 
+
+![Build State](github/media/xcode_10_build_done.jpg) 
 
 *You can execute the commandline-based build process (please close XCode 10.1 first) using the following command:*
 
@@ -64,9 +70,6 @@ xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "pl
 ```
 xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd
 ```
-
-
-![Build State](github/media/xcode_10_build_done.jpg) 
 
 ## App Requirements
 
@@ -123,8 +126,11 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 ## Known Issues
 
 * The cover image cache for the playlists may take a bit time to display the identified images in our table cells - after view refresh process (by scrolling in your playlist items or leaving this view and returning) all covers should be visible.
+
 * The cover image handler has changed on 2018-12-09 based on major changes of the current Spotify API endpoint - so I’ve decide to take an image from the corresponding tracklist instead of the origin cover image. *This will be changed as soon as I extend the current API structure*. 
-* The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project.
+
+* The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project. If the build is still failing, check the current workspace settings - enforce „New Build System“ setup for XCode. There is an article about this on [medium.com](https://medium.com/xcblog/xcode-new-build-system-for-speedy-swift-builds-c39ea6596e17)
+
 * The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your ```Keys.plist``` file. You’ve to request a valid ```client_id```and your application ```callback_url``` from [spotify/developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) app registration page. 
 
 ## Keywords
@@ -133,7 +139,7 @@ ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-s
 
 ## Releases
 
-AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-14```.
+AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-13```.
 
 ## Changelog
 
