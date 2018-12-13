@@ -277,7 +277,7 @@ extension PlaylistContentViewController {
         let _trackIndexCurrent: Int  = currentTrack.index
         let _trackShuffleIndexCurrent: Int = currentTrack.shuffleIndex
         
-        // handle previousTrack in "normalPlayMode" weazL
+        // handle previousTrack in "normalPlayMode"
         if  currentPlaylist.playMode == playMode.PlayNormal.rawValue {
             
             if  _trackIndexCurrent == 0 { return }
