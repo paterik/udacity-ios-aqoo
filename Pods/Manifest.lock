@@ -53,7 +53,7 @@ DEPENDENCIES:
   - NotificationBannerSwift (= 1.6.3)
   - Persei (= 3.1.1)
   - PKHUD (= 5.2.0)
-  - ReachabilitySwift
+  - ReachabilitySwift (= 4.3.0)
   - SnapKit (= 4.0.0)
   - Spotify-iOS-SDK (= 0.27.0)
   - SwiftDate (= 5.0.7)
@@ -111,6 +111,6 @@ SPEC CHECKSUMS:
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: 1adc8bd065951fe91bfe992051f233d79fad8e97
+PODFILE CHECKSUM: 17ef59745aba71bc03edf5ab7a2e058b914cef34
 
 COCOAPODS: 1.5.3

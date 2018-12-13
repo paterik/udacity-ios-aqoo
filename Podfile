@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '11.0'
+platform :ios, '12'
 use_frameworks!
 inhibit_all_warnings!
 
@@ -19,7 +19,7 @@ def aq_ui
 end
 
 def aq_base
-    pod 'Spotify-iOS-SDK', '0.27.0'
+    pod 'Spotify-iOS-SDK', '0.27.0', :modular_headers => true
     pod 'CryptoSwift', '0.11.0'
     pod 'Kingfisher', '5.0.0'
     pod 'LetterAvatarKit', '1.1.5'
