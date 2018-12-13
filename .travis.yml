@@ -11,19 +11,10 @@ osx_image: xcode10.1
 cache:
   - cocoapods
 
-#before_install:
-#    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-#    - brew update
-#    - pod --version
-#    - pod update
-
 before_install:
-  - rvm install ruby-2.2.2
-  - gem install cocoapods
+  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty -N
   - brew update
-  - brew install swiftlint || true #need to clean up project at some stage using swiftlint 
-  - pod repo update
   - pod update
 
 env:
@@ -36,5 +27,5 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild -list
-  - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
-  #- xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
+  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
+  # - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
