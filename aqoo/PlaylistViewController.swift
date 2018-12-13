@@ -391,16 +391,6 @@ class PlaylistViewController: BaseViewController,
         handlePlaylistCacheCleanUp()
     }
     
-    @IBAction func btnPlayRepeatModeAction(_ playModeControlBtn: UIButton) {
-
-        handlePlaylistCellObjectsByTapAction( playModeControlBtn )
-    }
-    
-    @IBAction func btnPlayShuffleModeAction(_ playModeControlBtn: UIButton) {
-        
-        handlePlaylistCellObjectsByTapAction( playModeControlBtn )
-    }
-    
     @IBAction func btnPlayNormalModeAction(_ playModeControlBtn: UIButton) {
         
         handlePlaylistCellObjectsByTapAction( playModeControlBtn )

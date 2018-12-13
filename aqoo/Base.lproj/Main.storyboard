@@ -1382,9 +1382,6 @@
                                         </state>
                                         <state key="selected" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
                                         <state key="highlighted" image="icnSetPlayShuffle_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
-                                        <connections>
-                                            <action selector="btnPlayShuffleModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="dr6-mb-PYO"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLI-03-vrR" userLabel="ui_btn_playlistPlayRepeat">
                                         <rect key="frame" x="211" y="50" width="40" height="40"/>
@@ -1399,9 +1396,6 @@
                                         </state>
                                         <state key="selected" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
                                         <state key="highlighted" image="icnSetPlayRepeatAll_1" backgroundImage="icnCtrlsGreenboxBK_v1"/>
-                                        <connections>
-                                            <action selector="btnPlayRepeatModeAction:" destination="ldu-zH-OI7" eventType="touchUpInside" id="hkT-0n-eqL"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOi-ca-0uG" userLabel="ui_lbl_playlistOverallPlaytime">
                                         <rect key="frame" x="290" y="111" width="57" height="16"/>
