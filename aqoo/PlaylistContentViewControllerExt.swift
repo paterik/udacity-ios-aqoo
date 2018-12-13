@@ -116,7 +116,7 @@ extension PlaylistContentViewController {
         }   else {
             
             // @todo: exit view, return to login page!
-            self.handleErrorAsDialogMessage(
+            handleErrorAsDialogMessage(
                 "Spotify Session Closed",
                 "Oops! your spotify session is not valid anymore, please (re)login again ..."
             )

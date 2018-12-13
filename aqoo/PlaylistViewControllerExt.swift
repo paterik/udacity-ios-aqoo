@@ -859,7 +859,7 @@ extension PlaylistViewController {
                 getRatingLabel(0, 0, CGFloat(calcRatingBarWidthForValence), CGFloat(maxRatingBarHeight))
             );  playlistCell.cViewPlaylistRatingEmotional.addSubview(cViewIcnRatingEmotional)
         
-        // add depth (intellectual) rating
+        // add depth ("intellectual") rating
         for subview in playlistCell.cViewPlaylistRatingDepth.subviews {
             subview.removeFromSuperview()
         };  playlistCell.cViewPlaylistRatingDepth.addSubview(
@@ -873,7 +873,7 @@ extension PlaylistViewController {
     @objc
     func handleCacheTimerEvent() {
         
-        if  self.debugMode {
+        if  debugMode {
             ImageCache.default.calculateDiskCacheSize { size in
                 print ("dbg [playlist] : cache ➡ used image cache in bytes: \(size)/\(self.sysImgCacheInMb * 1024)")
             }

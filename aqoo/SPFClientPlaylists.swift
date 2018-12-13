@@ -58,7 +58,7 @@ class SPFClientPlaylists: NSObject {
             print("     id = \(track.identifier)")
             print("     artist = \(track.artists.count)")
             print("     uri_internal = \(track.uri.absoluteString)")
-            print("     duration = \(self.dfDates.stringFromTimeInterval(interval: track.duration))")
+            print("     duration = \(dfDates.stringFromTimeInterval(interval: track.duration))")
             print("     accessable = \(track.isPlayable)")
             print("     explicit = \(track.flaggedExplicit)")
             print("     popularity = \(track.popularity)")
@@ -99,7 +99,7 @@ class SPFClientPlaylists: NSObject {
             playlistsTrack.albumCoverSmallestImageURL = track.album.smallestCover.imageURL.absoluteString
         }
         
-        self.playlistTracksInCloud.append(playlistsTrack)
+        playlistTracksInCloud.append(playlistsTrack)
         
         var coverUrl = playlistCoverDefaultURL
         
