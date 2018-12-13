@@ -139,7 +139,7 @@ ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-s
 
 ## Releases
 
-AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-13```.
+AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-14```.
 
 ## Changelog
 
