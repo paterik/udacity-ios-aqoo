@@ -28,13 +28,6 @@ PODS:
   - pop (1.0.12)
   - ReachabilitySwift (4.3.0)
   - SnapKit (4.0.0)
-  - Spotify-iOS-SDK (0.27.0):
-    - Spotify-iOS-SDK/Authentication (= 0.27.0)
-    - Spotify-iOS-SDK/Metadata (= 0.27.0)
-    - Spotify-iOS-SDK/Playback (= 0.27.0)
-  - Spotify-iOS-SDK/Authentication (0.27.0)
-  - Spotify-iOS-SDK/Metadata (0.27.0)
-  - Spotify-iOS-SDK/Playback (0.27.0)
   - SwiftDate (5.0.7)
   - SwiftRandom (1.0.0)
   - WSTagsField (3.2.0)
@@ -55,7 +48,6 @@ DEPENDENCIES:
   - PKHUD (= 5.2.0)
   - ReachabilitySwift (= 4.3.0)
   - SnapKit (= 4.0.0)
-  - Spotify-iOS-SDK (= 0.27.0)
   - SwiftDate (= 5.0.7)
   - SwiftRandom (= 1.0.0)
   - WSTagsField (= 3.2.0)
@@ -81,7 +73,6 @@ SPEC REPOS:
     - pop
     - ReachabilitySwift
     - SnapKit
-    - Spotify-iOS-SDK
     - SwiftDate
     - SwiftRandom
     - WSTagsField
@@ -106,11 +97,10 @@ SPEC CHECKSUMS:
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Spotify-iOS-SDK: f195e9a40a339cf374cab2ece5804aca3cdf7e14
   SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
   SwiftRandom: 437275c63500ddf5a565cbd56996fb23f12cfc3d
   WSTagsField: 7541354e7a85765ae473a5b2476a5b2ea900cf2c
 
-PODFILE CHECKSUM: e785947f6523f746e82c3fa015d5483a234d494b
+PODFILE CHECKSUM: 7e9094cfdeeb64b23c6e9968bb9c72cbbda0f472
 
 COCOAPODS: 1.5.3

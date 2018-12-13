@@ -6,7 +6,7 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
-import Spotify
+// import Spotify
 
 extension SPTPartialPlaylist {
 

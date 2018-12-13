@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import CoreStore
-import Spotify
+// import Spotify
 import AVFoundation
 
 @UIApplicationMain

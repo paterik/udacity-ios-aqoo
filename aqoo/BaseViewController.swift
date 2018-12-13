@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Spotify
+// import Spotify
 import Kingfisher
 
 class BaseViewController: UIViewController {
