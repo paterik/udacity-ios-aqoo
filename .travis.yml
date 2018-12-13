@@ -11,11 +11,20 @@ osx_image: xcode10.1
 cache:
   - cocoapods
 
+#before_install:
+#    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+#    - brew update
+#    - pod --version
+#    - pod update
+
 before_install:
-    - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-    - brew update
-    - pod --version
-    - pod update
+  - rvm install ruby-2.2.2
+  - gem install cocoapods
+  - gem install xcpretty -N
+  - brew update
+  - brew install swiftlint || true #need to clean up project at some stage using swiftlint 
+  - pod repo update
+  - pod update
 
 env:
   global:
