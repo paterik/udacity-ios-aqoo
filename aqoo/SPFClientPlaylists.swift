@@ -18,6 +18,7 @@ class SPFClientPlaylists: NSObject {
     let debugMode: Bool = false
     let notifier = SPFEventNotifier()
     let playlistCoverDefaultURL = "https://www.dropbox.com/s/t2aaqgqhojmvxw8/img_cover_override%20255x255%20v1.png"
+    let dfDates = DFDates.sharedInstance
     
     //
     // MARK: Variables
@@ -57,7 +58,7 @@ class SPFClientPlaylists: NSObject {
             print("     id = \(track.identifier)")
             print("     artist = \(track.artists.count)")
             print("     uri_internal = \(track.uri.absoluteString)")
-            print("     duration = \(self.stringFromTimeInterval(interval: track.duration))")
+            print("     duration = \(self.dfDates.stringFromTimeInterval(interval: track.duration))")
             print("     accessable = \(track.isPlayable)")
             print("     explicit = \(track.flaggedExplicit)")
             print("     popularity = \(track.popularity)")
@@ -147,11 +148,14 @@ class SPFClientPlaylists: NSObject {
         )
     }
     
+    // weazL
     func handlePlaylistTracksGetFirstPage(
        _ playistItems : [SPTPartialPlaylist],
        _ accessToken: String ) {
         
-        for playlist in playistItems  {
+        playlistInCloudExtendedHandled = 0
+        
+        for (indexPlaylist, playlist) in playistItems.enumerated()  {
             
             let uri = URL(string: playlist.uri.absoluteString)
             var playlistCoverURLFromFirstTrack: String?
@@ -179,11 +183,11 @@ class SPFClientPlaylists: NSObject {
                     
                     // handle firstPage track objects
                     let _firstPage : SPTListPage = _snapshot.firstTrackPage
-                    for (index, _track) in _firstPage.items.enumerated() {
+                    for (indexTrack, _track) in _firstPage.items.enumerated() {
                         
                         if let _playlistTrack = _track as? SPTPlaylistTrack {
                             var tmpCover = self.handlePlaylistTrackByProxy( _playlistTrack, playlist )
-                            if  index == 0 {
+                            if  indexTrack == 0 {
                                 // set the playlistCover based on first Track of this list
                                 playlistCoverURLFromFirstTrack = tmpCover
                             }
@@ -217,6 +221,11 @@ class SPFClientPlaylists: NSObject {
             callback: {
                 
                 ( error, response ) in
+                
+                if  error != nil && self.debugMode {
+                    print ("[dbg/error-1004] handlePlaylistGetNextPage :: playlist next page couln't be handled ...")
+                    print (error)
+                }
                 
                 if  let _nextPage = response as? SPTListPage,
                     let _playlists = _nextPage.items as? [SPTPartialPlaylist] {
@@ -263,8 +272,9 @@ class SPFClientPlaylists: NSObject {
                     let _playlists = _firstPage.items as? [SPTPartialPlaylist] {
                     
                     self.playlistsInCloud = _playlists
+                    // handle all corresponding tracks of current playlist collection
                     self.handlePlaylistTracksGetFirstPage(_playlists, accessToken)
-                    
+                    // iterate through next page if possible/available
                     if _firstPage.hasNextPage == false {
                         // no further entries in pagination? send completed call!
                         NotificationCenter.default.post(
@@ -276,19 +286,5 @@ class SPFClientPlaylists: NSObject {
                 }
             }
         )
-    }
-    
-    //
-    // MARK: Helper Methods (internal)
-    //
-    
-    fileprivate func stringFromTimeInterval(interval: TimeInterval) -> String {
-        
-        let interval = Int(interval)
-        let seconds = interval % 60
-        let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
-        
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }

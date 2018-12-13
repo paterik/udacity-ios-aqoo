@@ -927,9 +927,11 @@ extension PlaylistViewController {
                     switch result {
                     case .failure(let error): if self.debugMode { print (error) }
                     case .success(let userInfo):
+                        
+                        self.spotifyClient.playlistRefreshEnforced = true
+                        self.handlePlaylistCloudRefresh()
+                        
                         if  self.debugMode {
-                            self.spotifyClient.playlistRefreshEnforced = true
-                            self.handlePlaylistCloudRefresh()
                             print ("dbg [playlist] : cache ➡ local db cache removed")
                         }
                     }
@@ -941,6 +943,10 @@ extension PlaylistViewController {
             
             self.spotifyClient.playlistRefreshEnforced = true
             self.handlePlaylistCloudRefresh()
+            
+            if  self.debugMode {
+                print ("dbg [playlist] : cache ➡ local db cache removed")
+            }
             
             return
         }
@@ -960,6 +966,10 @@ extension PlaylistViewController {
                 spotifyClient.playlistsInCloud.count == 0 ||
                 spotifyClient.playlistRefreshEnforced {
                 
+                if  debugMode {
+                    print ("dbg [playlist] : playlist refresh enforced by system")
+                }
+                
                 loadProvider ( spotifyClient.spfStreamingProviderDbTag )
                 
                 playlistInCloudLastLocalUpdate = Date()
@@ -967,11 +977,11 @@ extension PlaylistViewController {
                 
             }   else {
                 
+                handlePlaylistReloadData()
+                
                 if  debugMode {
                     print ("dbg [playlist] : using playlist cache, no update required now")
-                    handlePlaylistReloadData()
                 };  return
- 
             }
             
         } else {
