@@ -105,6 +105,7 @@ class PlaylistCollectionViewController: BaseViewController, UICollectionViewData
             playlistCell.imageViewPlaylistCover,
             nil
         )
+
         
         if  coverImageBlock.normalView != nil {
             playlistCell.imageCacheKey = coverImageBlock.normalViewCacheKey

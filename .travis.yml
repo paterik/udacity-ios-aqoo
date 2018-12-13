@@ -27,6 +27,6 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild -list
-  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
+  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
   # - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
   # - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd | xcpretty || true;
