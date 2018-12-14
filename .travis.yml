@@ -44,4 +44,4 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild -list
-  - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
+  - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
