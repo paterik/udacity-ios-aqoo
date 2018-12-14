@@ -19,14 +19,14 @@ post_install do |installer|
     end
 
     # for now Spotify-iOS-SDK needs to stay at Swift 4.1
-    swift4 = ['Spotify-iOS-SDK']
-    installer.pods_project.targets.each do |target|
-	target.build_configurations.each do |config|
-	    if swift4.include?(target.name)
-    		config.build_settings['SWIFT_VERSION'] = '4.1'
-	    end
-	end
-    end
+    # swift4 = ['Spotify-iOS-SDK']
+    # installer.pods_project.targets.each do |target|
+#	target.build_configurations.each do |config|
+#	    if swift4.include?(target.name)
+#    		config.build_settings['SWIFT_VERSION'] = '4.1'
+#	    end
+#	end
+#    end
 end
 
 def aq_ui
