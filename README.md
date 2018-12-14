@@ -48,28 +48,26 @@ ToolChain Setup | Build CleanUp
 :-------------------------:|:-------------------------:
 ![ToolChain Config](github/media/xcode_tc_setup_10_marks.jpg)  |  ![Build CleanUp](github/media/xcode_prep_cw.jpg)
 
-5. Add a new property list (plist) file into your project resource group, named this file ```Keys.plist``` and insert the two required keys ```spfClientId``` and ```spfClientCallbackURL``` for APP/SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app). You can find a dedicated tuturial for this process at [medium.com](https://medium.com/@brianhans/getting-started-with-the-spotify-ios-sdk-435607216ecc).
+5. Add a new property list (plist) file into your project resource group, named this file ```Keys.plist``` and insert the two required keys ```spfClientId``` and ```spfClientCallbackURL``` for APP/SpotifyAPI authentication. Generate the corresponding values for this keys from spotifies developer app  [registration formular](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app). You can find a dedicated tuturial for this process at [medium.com](https://medium.com/@brianhans/getting-started-with-the-spotify-ios-sdk-435607216ecc). I recommend to switch to the new build system of XCode (*Select File -> Project/Workspace Setting*)
 
-![Keys.plist file](github/media/aq_keys_plist_marks.jpg) 
+Keys.plist Config | New Build System Config
+:-------------------------:|:-------------------------:
+![Keys.plist file](github/media/aq_keys_plist_marks.jpg)   | ![XCode NBS](github/media/xcode_10_ws_settings.jpg) 
 
-6. Setup XCode to use the „New Build System“ (*Select File -> Project/Workspace Setting*) 
-
-![Keys.plist file](github/media/xcode_10_ws_settings.jpg) 
-
-7. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads. 
+6. Compile/build the app using one of your favorite device simulators. This app ist optimized for iphone mobile device classes but should also be runnable using bigger screen devices like iPads. 
 
 ![Build State](github/media/xcode_10_build_done.jpg) 
 
 *You can execute the commandline-based build process (please close XCode 10.1 first) using the following command:*
 
 ```
-xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd
+xcodebuild clean build -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES
 ```
 
 *To run application unit tests locally, use the following command:*
 
 ```
-xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOcd
+xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES
 ```
 
 ## App Requirements
@@ -134,13 +132,15 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 
 * The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your ```Keys.plist``` file. You’ve to request a valid ```client_id```and your application ```callback_url``` from [spotify/developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) app registration page. 
 
+* The Spotify-Streaming-SDK used in the project will no longer maintained by spotify - furthermore some of the core functions are currently under heavy refactoring/changes. I’ll try to provide a own iOS-webAPI-wrapper as functional base for this application and provide the code here on github as opensource within the next month.
+
 ## Keywords
 
 ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-sdk, streaming, music, player, streams
 
 ## Releases
 
-AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.5``` provided on ```2018-12-15```.
+AQQO is currently available in [7 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.5``` provided on ```2018-12-15```.
 
 ## Changelog
 
