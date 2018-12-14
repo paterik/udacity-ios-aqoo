@@ -10,7 +10,6 @@
 //
 
 import UIKit
-// import Spotify
 
 class SPFClientPlayer: NSObject, SPTAudioStreamingPlaybackDelegate, SPTAudioStreamingDelegate {
     

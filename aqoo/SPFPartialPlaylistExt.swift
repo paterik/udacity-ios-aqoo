@@ -6,8 +6,6 @@
 //  Copyright © 2017 Patrick Paechnatz. All rights reserved.
 //
 
-// import Spotify
-
 extension SPTPartialPlaylist {
 
     func getMD5Fingerprint() -> String {

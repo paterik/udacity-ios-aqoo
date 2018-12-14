@@ -7,7 +7,6 @@
 //
 
 import UIKit
-// import Spotify
 import Kingfisher
 
 class SpotifyClient: SPFClientPlaylists {

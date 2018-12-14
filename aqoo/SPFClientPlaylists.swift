@@ -7,7 +7,6 @@
 //
 
 import UIKit
-// import Spotify
 
 class SPFClientPlaylists: NSObject {
     
