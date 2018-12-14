@@ -15,10 +15,10 @@ cache:
 before_install:
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty -N
-  - brew update
+  - brew update >/dev/null 2>&1
   - pod cache clean --all
   - rm -rf ./Pods/*
-  - pod install
+  - pod update
 
 env:
   global:
@@ -29,7 +29,7 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild -list
-  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES -verbose CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES || true
+  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
   # - xcodebuild clean build-for-testing -verbose -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" -sdk iphonesimulator -toolchain XCode10.1 -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES || true;
   # - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | xcpretty || true;
   # - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqoo -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.3" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | xcpretty || true;
