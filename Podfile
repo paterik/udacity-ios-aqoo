@@ -1,3 +1,4 @@
+source 'https://github.com/artsy/Specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '11.4'
