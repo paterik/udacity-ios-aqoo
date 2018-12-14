@@ -3,9 +3,10 @@
 
 [![Udacity Course Id](https://img.shields.io/badge/udacity-ND003-37C6EE.svg)](UDACITY)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.4-blue.svg)](VERSION)
+[![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.5-blue.svg)](VERSION)
 [![Language](https://img.shields.io/badge/swift-4.2.1-orange.svg)](https://swift.org)
 [![IDE](https://img.shields.io/badge/xcode-10.1-lightblue.svg)](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
+[![Build Status](https://travis-ci.org/paterik/udacity-ios-aqoo.svg?branch=development)](https://travis-ci.org/paterik/udacity-ios-aqoo)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
 
@@ -129,7 +130,7 @@ Tracklist View | Tracklist Playback | Playlist Cover View
 
 * The cover image handler has changed on 2018-12-09 based on major changes of the current Spotify API endpoint - so I’ve decide to take an image from the corresponding tracklist instead of the origin cover image. *This will be changed as soon as I extend the current API structure*. 
 
-* The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project. If the build is still failing, check the current workspace settings - enforce „New Build System“ setup for XCode. There is an article about this on [medium.com](https://medium.com/xcblog/xcode-new-build-system-for-speedy-swift-builds-c39ea6596e17)
+* The build process could break if you’re not using the latest XCode 10.1 version and the corresponding Swift binary set in version 4.2.1 - please ensure, that you’re using the right ToolChain and XCode version for this project. If the build is still failing, check the current workspace settings - enforce „New Build System“ setup for XCode (there is an article about this on [medium.com](https://medium.com/xcblog/xcode-new-build-system-for-speedy-swift-builds-c39ea6596e17)). You can also try to clean the ```./Pods/*``` directory and enforce a complete cache clean for pod using ```pod cache clean --all``` followed by a fresh update/install of all required libs ```pod update```.
 
 * The application will show ```client_id missing``` error if your Keys.plist file hasn’t complete or invalid value sets - please ensure, that you provide all neccessary values to your ```Keys.plist``` file. You’ve to request a valid ```client_id```and your application ```callback_url``` from [spotify/developer](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) app registration page. 
 
@@ -139,7 +140,7 @@ ios, iphone, swift, swift-4, udacity, uikit, foundation, app, spotify, spotify-s
 
 ## Releases
 
-AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.4``` provided on ```2018-12-14```.
+AQQO is currently available in [6 releases](https://github.com/paterik/udacity-ios-aqoo/releases) core and will be following the sequence-based semantic version pattern _major.minor.patch_. The latest stable version of this app is ```1.0.5``` provided on ```2018-12-15```.
 
 ## Changelog
 

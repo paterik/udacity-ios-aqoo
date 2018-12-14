@@ -4,8 +4,22 @@ All notable changes of AQOO release series are documented in this file using the
 
 _This AQOO project changelog documentation start with version 0.0.1 (2017-07-18)_
 
-## [1.0.4], 2018-12-14:
+## [1.0.5], 2018-12-15:
 _current_
+
+### Added
+
+* travis ci build status including a working travis-ci build/test pipeline
+
+### Fixed
+
+* bug in cell-based playlist hide process
+* bug in network indicator view state during long playlist load process
+* structural and logical improvements/fixes after 3rd review
+* minor documentation/changelog issues
+
+
+## [1.0.4], 2018-12-14:
 
 ### Added
 
