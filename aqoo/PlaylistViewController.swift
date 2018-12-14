@@ -32,14 +32,6 @@ class PlaylistViewController: BaseViewController,
     @IBOutlet weak var tableView: UITableView!
     
     //
-    // MARK: Constants (class)
-    //
-    
-    let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
-    let localPlayer = SPFClientPlayer.sharedInstance
-    let currentPlaylist = ProxyPlaylist.sharedInstance
-    
-    //
     // MARK: Constants (system)
     //
     

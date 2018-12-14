@@ -15,6 +15,7 @@ _current_
 
 * bug in cell-based playlist hide process
 * bug in network indicator view state during long playlist load process
+* bug in playMode reset on app crash (playMode was still activ on old playlist)
 * structural and logical improvements/fixes after 3rd review
 * minor documentation/changelog issues
 

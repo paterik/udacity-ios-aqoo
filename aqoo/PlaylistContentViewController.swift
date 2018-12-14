@@ -23,12 +23,7 @@ class PlaylistContentViewController: BaseViewController,
     // MARK: Constants (class)
     //
     
-    let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
-    let localPlayer = SPFClientPlayer.sharedInstance
     let kBaseCellHeight: CGFloat = 72.0
-    
-    let currentTrack = ProxyPlaylistTrack.sharedInstance
-    let currentPlaylist = ProxyPlaylist.sharedInstance
     
     //
     // MARK: Class Variables

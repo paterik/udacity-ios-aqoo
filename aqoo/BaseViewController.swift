@@ -25,6 +25,11 @@ class BaseViewController: UIViewController {
     let dfDates = DFDates.sharedInstance
     let dfNumbers = DFNumbers.sharedInstance
     let spotifyClient = SpotifyClient.sharedInstance
+    let localPlaylistControls = SPFClientPlaylistControls.sharedInstance
+    let localPlayer = SPFClientPlayer.sharedInstance
+    let currentPlaylist = ProxyPlaylist.sharedInstance
+    let currentTrack = ProxyPlaylistTrack.sharedInstance
+    
     let notifier = SPFEventNotifier()
     
     let _defaultLandingPageSegueId = "showAllUserPlaylists"

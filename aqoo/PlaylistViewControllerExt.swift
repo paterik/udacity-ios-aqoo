@@ -343,11 +343,11 @@ extension PlaylistViewController {
     
     @objc
     func setupUILoadMetaExtendedPlaylists(_ notification: Notification) {
-        
         // in this version of aqoo only a base set of meta data will be extending our playlist rows
         handlePlaylistExtendedMetaEnrichment()
-        // further enrichments are in alpha and will be available soon
-        // ...
+        
+        // reset possible playback flag state after app crash/reset
+        handlePlaylistPlayStateReset()
     }
     
     @objc
@@ -672,12 +672,11 @@ extension PlaylistViewController {
         let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
         
         if  localPlayer.player!.playbackState.isPlaying {
-            print ("_track:  \(currentTrackName)")
-            print ("_album:  \(currentAlbumName)")
-            print ("_artist: \(currentArtistName)")
-            print ("----------------------------------------------------------------------------")
-            print ("_player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
-            print ("_player_is_playing: \(localPlayer.player!.playbackState.isPlaying)")
+            print ("[meta] track:  \(currentTrackName)")
+            print ("[meta] album:  \(currentAlbumName)")
+            print ("[meta] artist: \(currentArtistName)")
+            print ("[meta] player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
+            print ("[meta] player_is_playing: \(localPlayer.player!.playbackState.isPlaying)")
         }   else {
             print ("__ not playing, ignore metablock debug out")
         }
@@ -1957,6 +1956,13 @@ extension PlaylistViewController {
         
         setupUICollapseAllVisibleOpenCells()
         tableView.reloadData()
+    }
+    
+    
+    func handlePlaylistPlayStateReset() {
+        
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
     }
     
     func togglePlayModeIcons(
