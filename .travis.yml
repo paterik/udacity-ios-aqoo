@@ -45,4 +45,4 @@ script:
   - xcodebuild -showsdks
   - xcodebuild -list
   - killall "Simulator" || echo "no matching Simulator processes belonging to you were found ..."
-  - xcodebuild clean build test -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Release -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
+  - xcodebuild clean build-for-testing test -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO | xcpretty || true
