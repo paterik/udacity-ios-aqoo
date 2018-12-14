@@ -11,22 +11,12 @@ inhibit_all_warnings!
 post_install do |installer|
 
     installer.pods_project.targets.each do |target|
-	target.build_configurations.each do |config|
-	    config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ''
-	    config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
-	    config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
-	end
+        target.build_configurations.each do |config|
+            config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ''
+            config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
+            config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
     end
-
-    # for now Spotify-iOS-SDK needs to stay at Swift 4.1
-    # swift4 = ['Spotify-iOS-SDK']
-    # installer.pods_project.targets.each do |target|
-#	target.build_configurations.each do |config|
-#	    if swift4.include?(target.name)
-#    		config.build_settings['SWIFT_VERSION'] = '4.1'
-#	    end
-#	end
-#    end
 end
 
 def aq_ui
