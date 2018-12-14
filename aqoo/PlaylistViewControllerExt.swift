@@ -660,7 +660,12 @@ extension PlaylistViewController {
     @objc
     func handlePlaylistTrackTimerEventDebug() {
         
-        if debugMode == false { return }
+        if  debugMode == false { return }
+        
+        if  localPlayer.player == nil ||
+            localPlayer.player!.metadata.currentTrack == nil {
+            print ("__ connection seems to be bad, can't recognize players meta data ... [dbg:meta:ignored]")
+        }
         
         let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
         let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
@@ -672,9 +677,7 @@ extension PlaylistViewController {
             print ("_artist: \(currentArtistName)")
             print ("----------------------------------------------------------------------------")
             print ("_player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
-            print ("_player_is_repeating: \(localPlayer.player!.playbackState.isRepeating)")
-            print ("_player_is_shuffle: \(localPlayer.player!.playbackState.isShuffling)")
-            print ("_player_is_playling: \(localPlayer.player!.playbackState.isPlaying)")
+            print ("_player_is_playing: \(localPlayer.player!.playbackState.isPlaying)")
         }   else {
             print ("__ not playing, ignore metablock debug out")
         }
