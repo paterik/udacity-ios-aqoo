@@ -197,9 +197,6 @@ extension PlaylistViewController {
         
         // updated selected index based on given persisted filterKey
         playListMenuBasicFilters.selectedIndex = getConfigTableFilterKeyByProviderTag()
-        
-        // finalize the preload process, hide loading bar now ...
-        playlistGradientLoadingBar.hide()
     }
     
     @objc
@@ -1063,7 +1060,7 @@ extension PlaylistViewController {
             From<StreamPlayList>().where((\StreamPlayList.provider == defaultStreamingProvider))
             ) {
             
-            for playlist in _playListCache {
+            for (playlistIndex, playlist) in _playListCache.enumerated() {
                 
                 var playlistIdentifier : String = playlist.getMD5Identifier()
                 var trackIdentifier : String
@@ -1175,6 +1172,13 @@ extension PlaylistViewController {
                             if  self.debugMode {
                                 print ("dbg [playlist] = [\(playlist.metaListInternalName)], \(trackCount) tracks handled -> EXTENDED")
                                 print ("---")
+                            }
+                            
+                            // last item of our playlist handled? deactivate the loading bar ...
+                            if  playlistIndex == _playListCache.count - 1 {
+                                if  self.debugMode {
+                                    print ("=== [loading complete] ===")
+                                };  self.playlistGradientLoadingBar.hide()
                             }
                         }
                     }
@@ -1685,8 +1689,10 @@ extension PlaylistViewController {
                     // clean previously cached playlist collection
                     if  self.debugMode {
                         print ("dbg [playlist] : no cached playlist data for this provider found ...")
-                    };  self.spotifyClient.playlistsInCache = []
-                        self.playlistGradientLoadingBar.hide()
+                    }
+                    
+                    self.spotifyClient.playlistsInCache = []
+                    self.playlistGradientLoadingBar.hide()
                 }
             },
             
@@ -1947,7 +1953,6 @@ extension PlaylistViewController {
     func handlePlaylistReloadData() {
         
         setupUICollapseAllVisibleOpenCells()
-        playlistGradientLoadingBar.hide()
         tableView.reloadData()
     }
     
