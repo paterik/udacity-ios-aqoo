@@ -98,7 +98,7 @@ Splash Screen | Login Screen | Spotify Login | Spotify Auth
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![splash screen](github/media/small/aq_launch_01.png)  |  ![login view](github/media/small/aq_login_01.png) | ![spotify login](github/media/small/aq_spotify_login_01.png)  |  ![spotify auth](github/media/small/aq_spotify_auth_02.png)
 
-##  Your Playlist View
+##  App Playlist View
 
 After authentication the app will provide you a tableView with all your spotify playlists available. Here you can filter, edit and hide playlists using background cell controls or open a more detailed cell-view for each entry. *You can also jump from selected playlist into tracklist view directly*.
 
@@ -106,7 +106,7 @@ Playlist View | Playlist Cell Controls | Playlist Cell Details
 :-------------------------:|:-------------------------:|:-------------------------:
 ![normal playlist view](github/media/small/aq_playlist_04.png) |  ![playlist cell controls](github/media/small/aq_playlist_03.png) | ![playlist cell details](github/media/small/aq_playlist_02.png)
 
-## Your Playlist Edit View
+## App Playlist Edit View
 
 You can configure your playlist by editing base information like title and description. Furthermore you can add tags to help categorize your list  and [rate your playlist](https://www.digitalmusicnews.com/2016/05/17/music-genres-three-attributes/) using three different meta values (intensity, emotivness and depth).
 
@@ -114,7 +114,7 @@ Playlist Edit View | Playlist Rating View | Playlist Meta Edit View
 :-------------------------:|:-------------------------:|:-------------------------:
 ![main edit view](github/media/small/aq_playlist_edit_01.png) |  ![rating view](github/media/small/aq_playlist_edit_02.png) | ![playlist details view](github/media/small/aq_playlist_edit_03.png)
 
-## Your Tracklist View
+## App Tracklist View
 
 From each playlist entry you can switch to the corresponding tracklist and start playing in shuffle-, repeat- or normal mode. While the track is playing there are additional controls available such as jump between tracks and skipping forward or backward inside the track using the timeframe slider. *In general you can switch between two main views for your playlists stack - the normal table based view and the playlist cover view*. 
 
