@@ -12,6 +12,10 @@
 		B10198AD20381AE900232EB6 /* PlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */; };
 		B10198AF20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */; };
 		B11575C3205A7C5800C41F7D /* AppBaseNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */; };
+		B131FDA621C325D300EA384A /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B131FDA321C325D200EA384A /* SpotifyMetadata.framework */; };
+		B131FDA721C325D300EA384A /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B131FDA421C325D200EA384A /* SpotifyAuthentication.framework */; };
+		B131FDA821C325D300EA384A /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B131FDA521C325D200EA384A /* SpotifyAudioPlayback.framework */; };
+		B131FDAD21C326E100EA384A /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B131FDAC21C326E100EA384A /* BridgeViewController.m */; };
 		B134301621C1267900CF6285 /* DFNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301521C1267900CF6285 /* DFNetworkManager.swift */; };
 		B134301821C1766700CF6285 /* DFNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301721C1766700CF6285 /* DFNumbers.swift */; };
 		B134301A21C177B700CF6285 /* DFDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B134301921C177B700CF6285 /* DFDates.swift */; };
@@ -102,6 +106,12 @@
 		B10198AC20381AE900232EB6 /* PlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
 		B10198AE20381B1A00232EB6 /* PlaylistCollectionViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCollectionViewControllerExt.swift; sourceTree = "<group>"; };
 		B11575C2205A7C5800C41F7D /* AppBaseNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppBaseNotification.xib; sourceTree = "<group>"; };
+		B131FDA321C325D200EA384A /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		B131FDA421C325D200EA384A /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		B131FDA521C325D200EA384A /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		B131FDAA21C326E100EA384A /* aqoo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "aqoo-Bridging-Header.h"; sourceTree = "<group>"; };
+		B131FDAB21C326E100EA384A /* BridgeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
+		B131FDAC21C326E100EA384A /* BridgeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
 		B134301521C1267900CF6285 /* DFNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNetworkManager.swift; sourceTree = "<group>"; };
 		B134301721C1766700CF6285 /* DFNumbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFNumbers.swift; sourceTree = "<group>"; };
 		B134301921C177B700CF6285 /* DFDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFDates.swift; sourceTree = "<group>"; };
@@ -186,6 +196,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B131FDA621C325D300EA384A /* SpotifyMetadata.framework in Frameworks */,
+				B131FDA821C325D300EA384A /* SpotifyAudioPlayback.framework in Frameworks */,
+				B131FDA721C325D300EA384A /* SpotifyAuthentication.framework in Frameworks */,
 				274870619A13B1E2F6DBFF79 /* Pods_aqoo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +223,9 @@
 		1A1B1BA17A91FCB83ADF6709 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B131FDA521C325D200EA384A /* SpotifyAudioPlayback.framework */,
+				B131FDA421C325D200EA384A /* SpotifyAuthentication.framework */,
+				B131FDA321C325D200EA384A /* SpotifyMetadata.framework */,
 				B155CD7E200916A600CEC786 /* fluid_slider.framework */,
 				B181B0701F717CA100F29E8C /* SystemConfiguration.framework */,
 				B181B06E1F717C9100F29E8C /* Spotify.framework */,
@@ -234,6 +250,16 @@
 				B1C4B05220F4D05E00E43D89 /* PlaylistViewUpdateDelegate.swift */,
 			);
 			name = delegates;
+			sourceTree = "<group>";
+		};
+		B131FDA921C325FC00EA384A /* header */ = {
+			isa = PBXGroup;
+			children = (
+				B131FDAB21C326E100EA384A /* BridgeViewController.h */,
+				B131FDAC21C326E100EA384A /* BridgeViewController.m */,
+				B131FDAA21C326E100EA384A /* aqoo-Bridging-Header.h */,
+			);
+			name = header;
 			sourceTree = "<group>";
 		};
 		B13D6EFC1F91B6AB00486487 /* _playlists */ = {
@@ -467,6 +493,7 @@
 		B1F88B781F7045580005FE43 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				B131FDA921C325FC00EA384A /* header */,
 				B1BD1EE61F7785F9001FC294 /* data */,
 				B1D6A3911F90FE23006E1DBC /* clients */,
 				B119C20C201C75E5009B78BF /* delegates */,
@@ -614,7 +641,7 @@
 					B1A620431F700D820093CAEF = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = QYU36A8NKN;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					B1A6205A1F700D820093CAEF = {
@@ -727,7 +754,6 @@
 				"${BUILT_PRODUCTS_DIR}/Persei/Persei.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Spotify-iOS-SDK/Spotify.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftRandom/SwiftRandom.framework",
 				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
@@ -753,7 +779,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Persei.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spotify.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRandom.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
@@ -814,6 +839,7 @@
 				B1D33DD020D17A3800DCDC5F /* PlaylistEditViewTabBarController.swift in Sources */,
 				B1CFA8AB1F93971C00F96FAC /* PlaylistTableFoldingCell.swift in Sources */,
 				B15E03162112FE6C003124E4 /* PlaylistMusicPlayModeControls.swift in Sources */,
+				B131FDAD21C326E100EA384A /* BridgeViewController.m in Sources */,
 				B1BD1EEA1F778646001FC294 /* StreamProvider.swift in Sources */,
 				B15E031821130C49003124E4 /* SPFClientPlayer.swift in Sources */,
 				B1B8DD28202E5756008CE9EB /* Dictionary.swift in Sources */,
@@ -1010,11 +1036,18 @@
 			baseConfigurationReference = FF148C225F4CDC81757308B8 /* Pods-aqoo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = QYU36A8NKN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = aqoo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dunkelfrosch.ios.aqoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "aqoo/aqoo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -1025,11 +1058,17 @@
 			baseConfigurationReference = 670C25FE154DA39F400F13F6 /* Pods-aqoo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = QYU36A8NKN;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = aqoo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dunkelfrosch.ios.aqoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "aqoo/aqoo-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

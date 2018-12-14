@@ -8,7 +8,7 @@
 
 import UIKit
 import Persei
-import Spotify
+// import Spotify
 import CoreStore
 import Kingfisher
 import FoldingCell

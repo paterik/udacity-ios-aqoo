@@ -1223,16 +1223,6 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>https://developer.spotify.com/developer-terms-of-use/</string>
-			<key>License</key>
-			<string>Proprietary</string>
-			<key>Title</key>
-			<string>Spotify-iOS-SDK</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>The MIT License (MIT)
 
 Copyright (c) 2018 Daniele Margutti
