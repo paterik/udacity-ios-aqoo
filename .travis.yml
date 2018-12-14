@@ -20,12 +20,27 @@ before_install:
   - rm -rf ./Pods/*
   - pod update
 
+
 env:
   global:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
 
 script:
+  - |
+    cat > ./aqoo/Keys.plist <<- "EOF"
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+      <dict>
+        <key>spfClientCallbackURL</key>
+        <string>aqoo://</string>
+        <key>spfClientSecret</key>
+        <string>00000000000000000000000000000000</string>
+        <key>spfClientId</key>
+        <string>00000000000000000000000000000000</string>
+      </dict>
+    </plist>
   - xcodebuild -version
   - xcodebuild -showsdks
   - xcodebuild -list
