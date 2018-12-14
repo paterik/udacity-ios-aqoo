@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>AQOO demand access to your audio/record controls play spotify streams correctly</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>AQOO demand access to your local music library</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -19,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
+	<string>1.0.5</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -58,8 +54,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>AQOO demand access to your local music library</string>
 	<key>NSCameraUsageDescription</key>
 	<string>AQOO demand access to your camera to use own images as playlist covers</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>AQOO demand access to your audio/record controls play spotify streams correctly</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>AQOO demand access to your photo library to use cover photos for sharing</string>
 	<key>NSPhotoLibraryUsageDescription</key>
