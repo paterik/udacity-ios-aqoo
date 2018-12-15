@@ -6,7 +6,7 @@
 [![APP Version (latest stable)](https://img.shields.io/badge/version-1.0.5-blue.svg)](VERSION)
 [![Language](https://img.shields.io/badge/swift-4.2.1-orange.svg)](https://swift.org)
 [![IDE](https://img.shields.io/badge/xcode-10.1-lightblue.svg)](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12)
-[![Build Status](https://travis-ci.org/paterik/udacity-ios-aqoo.svg?branch=development)](https://travis-ci.org/paterik/udacity-ios-aqoo)
+[![Build Status](https://travis-ci.org/paterik/udacity-ios-aqoo.svg?branch=master)](https://travis-ci.org/paterik/udacity-ios-aqoo)
 
 *This repository contains the project submission for my udacity.com final project work "AQOO" during my iOS developer certification program (course ND003).*
 
