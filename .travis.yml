@@ -45,5 +45,5 @@ script:
   - xcodebuild -showsdks
   - xcodebuild -list
   - killall "Simulator" || echo "No matching simulator processes belonging to you were found ..."
-  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
-  - xcodebuild test -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty || true
+  - xcodebuild clean build-for-testing -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=11.4" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty
+  - xcodebuild test -workspace aqoo.xcworkspace -scheme aqooCI -destination "platform=iOS Simulator,name=iPhone 6s,OS=12.1" -sdk iphonesimulator -toolchain XCode10.1 -configuration Debug -UseNewBuildSystem=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES | xcpretty
