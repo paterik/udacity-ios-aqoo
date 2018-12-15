@@ -441,7 +441,10 @@ class PlaylistViewController: BaseViewController,
         
         let dlgBtnYesAction = UIAlertAction(title: "Yes", style: .default) { (action: UIAlertAction!) in
             
-            self.localPlayer.player?.logout()
+            if  self.localPlayer.player != nil {
+                self.localPlayer.player!.logout()
+            }
+            
             self.spotifyClient.closeSpotifySession()
             self.performSegue(withIdentifier: "unwindToLoginView", sender: self)
         }
