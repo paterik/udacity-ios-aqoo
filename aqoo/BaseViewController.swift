@@ -9,6 +9,7 @@
 import UIKit
 import Spotify
 import Kingfisher
+import NotificationBannerSwift
 
 class BaseViewController: UIViewController {
     
@@ -137,6 +138,48 @@ class BaseViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showUserNotification(
+       _ title: String,
+       _ description: String,
+       _ iconImageName: String?,
+       _ duration: TimeInterval) {
+        
+        let bannerView = AppBaseNotification.fromNib(nibName: "AppBaseNotification")
+            bannerView.lblTitle.text = title
+            bannerView.lblSubTitle.text = description
+        
+        if  iconImageName != nil {
+            bannerView.imgViewNotificationDefault.image = UIImage(named: "\(iconImageName)")
+        }
+        
+        let banner = NotificationBanner(customView: bannerView)
+            banner.duration = duration // 0.9275
+            banner.bannerHeight = 75.0
+            banner.onTap = {
+            banner.dismiss()
+        };  banner.show(bannerPosition: .bottom)
+    }
+    
+    func showFilterNotification(
+       _ title: String,
+       _ description: String,
+       _ imageKey: Int? ) {
+        
+        let bannerView = PlaylistFilterNotification.fromNib(nibName: "PlaylistFilterNotification")
+            bannerView.lblTitle.text = title
+            bannerView.lblSubTitle.text = description
+        if  imageKey != nil {
+            bannerView.imgViewNotificationDefault.image = UIImage(named: "mnu_pl_fltr_icn_\(imageKey!)_nfo")
+        }
+        
+        let banner = NotificationBanner(customView: bannerView)
+            banner.duration = 0.9375
+            banner.bannerHeight = 75.0
+            banner.onTap = {
+            banner.dismiss()
+        };  banner.show(bannerPosition: .top)
     }
     
     var getDocumentsUrl: URL {
