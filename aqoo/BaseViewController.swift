@@ -13,6 +13,12 @@ import Kingfisher
 class BaseViewController: UIViewController {
     
     //
+    // MARK: Class Constants (Statics)
+    //
+    
+    static let sharedInstance = BaseViewController()
+    
+    //
     // MARK: Base Constants
     //
     
@@ -47,8 +53,8 @@ class BaseViewController: UIViewController {
     let _sysDefaultProviderTag = "_spotify"
     let _sysDefaultSpotifyUsername = "spotify"
     let _sysDefaultAvatarFallbackURL = "https://api.adorable.io/avatars/75"
-    let _sysUserProfileImageCRadiusInDeg: CGFloat = 45
-    let _sysUserProfileImageSize = CGSize(width: 128, height: 128)
+    
+    
     let _sysPlaylistCoverDetailImageSize = CGSize(width: 255, height: 255)
     let _sysPlaylistCoverOverrideResize = CGSize(width: 512, height: 512)
     let _sysPlaylistCoverOriginInActiveAlpha: CGFloat = 0.65

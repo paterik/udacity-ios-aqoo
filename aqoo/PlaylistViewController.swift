@@ -53,6 +53,7 @@ class PlaylistViewController: BaseViewController,
     let sysPlaylistFilterBackgroundColor = UIColor(netHex: 0x222222)
     let sysPlaylistSwipeBackgroundColor = UIColor(netHex: 0x222222)
     let sysPlaylistDefaultFilterIndex: Int = 0
+    let sysFoldingCell = PlaylistTableFoldingCell.sharedInstance
     
     //
     // MARK: Class Variables
@@ -229,13 +230,13 @@ class PlaylistViewController: BaseViewController,
             for: indexPath) as! PlaylistTableFoldingCell
         
         let playlistCacheData = spotifyClient.playlistsInCache[indexPath.row]
-       
-        handlePlaylistCellMetaFields  ( playlistCell, playlistCacheData )
-        handlePlaylistCellCoverImages ( playlistCell, playlistCacheData )        
-        handlePlaylistTimeAndDateMeta ( playlistCell, playlistCacheData )
-        handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
-        handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
-        handlePlaylistIncompletData   ( playlistCell, playlistCacheData )
+        
+        playlistCell.handlePlaylistCellMetaFields  ( playlistCell, playlistCacheData )
+        playlistCell.handlePlaylistCellCoverImages ( playlistCell, playlistCacheData )
+        playlistCell.handlePlaylistTimeAndDateMeta ( playlistCell, playlistCacheData )
+        playlistCell.handlePlaylistRatingBlockMeta ( playlistCell, playlistCacheData )
+        playlistCell.handlePlaylistOwnerImageMeta  ( playlistCell, playlistCacheData )
+        playlistCell.handlePlaylistIncompleteData  ( playlistCell, playlistCacheData )
         
         playlistCell.durationsForExpandedState = sysCellOpeningDurations
         playlistCell.durationsForCollapsedState = sysCellClosingDurations
