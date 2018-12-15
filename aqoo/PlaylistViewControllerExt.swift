@@ -136,7 +136,7 @@ extension PlaylistViewController {
         // define (and show) our playlist loading bar
         playlistGradientLoadingBar = GradientLoadingBar(
             height: 5,
-            durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
+            durations: Durations(fadeIn: 0.975, fadeOut: 0.725, progress: 2.725),
             gradientColorList: [
                 UIColor(netHex: 0x1ED760),
                 UIColor(netHex: 0xff2D55)
@@ -204,9 +204,8 @@ extension PlaylistViewController {
         playListMenuBasicFilters.items = menuItems
         // updated selected index based on given persisted filterKey
         playListMenuBasicFilters.selectedIndex = getConfigTableFilterKeyByProviderTag()
-        
+        // add filter sets to current tableView
         tableView.addSubview(playListMenuBasicFilters)
-        
     }
     
     @objc
@@ -345,11 +344,11 @@ extension PlaylistViewController {
     @objc
     func handlePlaylistLocalLoadCompleted () {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            if  self.playlistGradientLoadingBar.isVisible {
-                self.playlistGradientLoadingBar.hide()
-            }
+        if  debugMode {
+            print ("dbg [playlist] : loading complete, hide progressBar")
         }
+        
+        playlistGradientLoadingBar.hide()
     }
     
     @objc
@@ -527,7 +526,7 @@ extension PlaylistViewController {
     }
     
     func getConfigTableFilterKeyByProviderTag(
-        _ filterProviderTag: String = "_spotify") -> Int {
+       _ filterProviderTag: String = "_spotify") -> Int {
         
         // prefetch stream provider entity to select corresponding config by lines below ...
         var _configProvider = CoreStore.defaultStack.fetchOne(
@@ -997,7 +996,7 @@ extension PlaylistViewController {
                             // last track item of our playlist handled? deactivate the loading bar ...
                             if  playlistIndex == _playListCache.count - 1 {
                                 if  self.debugMode {
-                                    print ("=== [loading complete 01] ===")
+                                    print ("=== [loading complete] ===")
                                 }
                                 
                                 NotificationCenter.default.post(
@@ -1343,7 +1342,7 @@ extension PlaylistViewController {
                         self.spotifyClient.playlistInCacheHandledWithoutUpdate += 1
                         if  self.spotifyClient.playlistInCacheHandledWithoutUpdate == self.spotifyClient.playlistsInCache.count - 1 {
                             if  self.debugMode {
-                                print ("=== [loading complete 02] ===")
+                                print ("=== [loading complete] ===")
                             }
                             
                             NotificationCenter.default.post(
@@ -1505,7 +1504,6 @@ extension PlaylistViewController {
                         name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistLocalLoadCompleted),
                         object: self
                     )
-                    
                 }
             },
             
