@@ -15,7 +15,7 @@ class SPFClientPlaylists: NSObject {
     // MARK: Constants (Special)
     //
     
-    let debugMode: Bool = false
+    let debugMode: Bool = true
     let notifier = SPFEventNotifier()
     let playlistCoverDefaultURL = "https://www.dropbox.com/s/t2aaqgqhojmvxw8/img_cover_override%20255x255%20v1.png"
     let dfDates = DFDates.sharedInstance
