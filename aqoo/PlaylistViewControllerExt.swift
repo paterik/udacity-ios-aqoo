@@ -12,9 +12,9 @@ import Persei
 import PKHUD
 import CoreStore
 import CryptoSwift
-import Kingfisher
 import NotificationBannerSwift
 import GradientLoadingBar
+import Kingfisher
 import SwiftDate
 
 extension PlaylistViewController {
@@ -51,7 +51,6 @@ extension PlaylistViewController {
             name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
         )
-        
         
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.handlePlaylistLocalLoadCompleted),
@@ -129,10 +128,8 @@ extension PlaylistViewController {
         
         // cleanUp filter definition
         playListBasicFilterItems.removeAll()
-        
         // (re)set flag for collapsed cells
         playlistCellsCollapsed = true
-        
         // define (and show) our playlist loading bar
         playlistGradientLoadingBar = GradientLoadingBar(
             height: 5,
@@ -145,8 +142,7 @@ extension PlaylistViewController {
         )
         
         // start loading indicator placement (progressBar and HUDLabel)
-        playlistGradientLoadingBar.show()
-        HUD.show(.label("loading ..."), onView: self.view)
+        playlistGradientLoadingBar.show(); HUD.show(.label("loading ..."), onView: self.view)
     }
     
     func setupDBSessionAuth() {
@@ -539,9 +535,7 @@ extension PlaylistViewController {
         )
         
         // try to fetch config value object by given provider entity ...
-        if  let _configKeyRow = CoreStore.defaultStack.fetchOne(
-            From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)
-            ) as? StreamProviderConfig {
+        if  let _configKeyRow = CoreStore.defaultStack.fetchOne(From<StreamProviderConfig>().where(\StreamProviderConfig.provider == _configProvider)) as? StreamProviderConfig {
             
             return Int ( _configKeyRow.defaultPlaylistTableFilterKey )
         }
@@ -564,9 +558,8 @@ extension PlaylistViewController {
         CoreStore.perform(
             
             asynchronous: { (transaction) -> Void in
-                
+                // get userId from current spotify session object
                 let providerUserId = self.spotifyClient.spfCurrentSession!.canonicalUsername
-                
                 // prefetch stream provider entity again to select corresponding config by lines below ...
                 var _configProvider = transaction.fetchOne(
                     From<StreamProvider>().where(\StreamProvider.tag == filterProviderTag)
@@ -585,7 +578,6 @@ extension PlaylistViewController {
                     _configKeyRow!.provider = _configProvider!
                     _configKeyRow!.providerUserId = providerUserId
                     _configKeyRow!.createdAt = Date()
-                    
                     if  self.debugMode {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] created")
                     }
@@ -596,7 +588,6 @@ extension PlaylistViewController {
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
                     _configKeyRow!.provider = _configProvider!
                     _configKeyRow!.updatedAt = Date()
-                    
                     if  self.debugMode {
                         print ("dbg [playlist] : config_key ➡ [FILTER_INDEX = (\(filterKey))] update")
                     }
@@ -792,7 +783,6 @@ extension PlaylistViewController {
                 }
                 
                 loadProvider ( spotifyClient.spfStreamingProviderDbTag )
-                
                 playlistInCloudLastLocalUpdate = Date()
                 spotifyClient.playlistRefreshEnforced = false
                 
@@ -836,7 +826,6 @@ extension PlaylistViewController {
                 
                 // render hash for new playlist using corresponding cloud entry
                 _playListMetaListHash = self.playlistInCacheSelected!.getMD5Identifier()
-                
                 // corresponding playlist entry exists in db? Check this entry again and prepare for update
                 _playListInDb = transaction.fetchOne(
                     From<StreamPlayList>().where((\StreamPlayList.metaListHash == _playListMetaListHash!))
@@ -868,7 +857,6 @@ extension PlaylistViewController {
         var sumPlaytimeInSeconds = 0
         
         for track in spotifyClient.playlistTracksInCloud {
-            
             if  track.playlistIdentifier == playlistIdentifier {
                 sumPlaytimeInSeconds = sumPlaytimeInSeconds + Int(track.trackDuration) % 1000
                 availablePlaylistTracks.append(track)
@@ -913,9 +901,7 @@ extension PlaylistViewController {
                         
                         // handle & persist all tracks in each given playlist
                         for (trackIndex, track) in (playlistTracksInCloud.0).enumerated() {
-                            
                             trackCount += 1
-                            
                             trackInDbCache = transaction.fetchOne(
                                 From<StreamPlayListTracks>()
                                     .where((\StreamPlayListTracks.playlist == playlistToUpdate) &&
@@ -1293,7 +1279,7 @@ extension PlaylistViewController {
                     // activate simulated meta values for single playlist entries during loadUp
                     // on devMode (debugLoadFixtures) - will be removed on release
                     //
-                    if self.debugLoadFixtures {
+                    if  self.debugLoadFixtures {
                         _playListInDb!.metaListRatingArousal = Float(_rate_intensity)
                         _playListInDb!.metaListRatingValence = Float(_rate_emotional)
                         _playListInDb!.metaListRatingDepth = Float(_rate_depth)
