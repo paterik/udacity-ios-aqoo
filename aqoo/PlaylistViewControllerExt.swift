@@ -128,41 +128,47 @@ extension PlaylistViewController {
             height: 5,
             durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
-                UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
-                UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
+                UIColor(netHex: 0x1ED760),
+                UIColor(netHex: 0xff2D55)
             ],
             onView: self.view
         );  playlistGradientLoadingBar.show()
     }
     
+    func handlePlaylistResetMetaState() {
+     
+        // reset possible playback flag state after app crash/reset on playlists
+        localPlaylistControls.resetPlayModeOnAllPlaylists()
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
+    }
+    
     func setupDBSessionAuth() {
         
-        if  spotifyClient.isSpotifyTokenValid() {
-            
-            // get current provider session based userId as primary identifier
-            // and cleanUP foreign/old user based data from app
-            
-            let providerUserId = spotifyClient.spfCurrentSession!.canonicalUsername
-            
-            CoreStore.defaultStack.perform(
-                asynchronous: { (transaction) -> Int? in transaction.deleteAll(
-                    From<StreamPlayList>().where((\StreamPlayList.aqooUserId != providerUserId)))
-                },
-                completion: { (result) -> Void in
+        if  spotifyClient.isSpotifyTokenValid() == false { return }
+        
+        // get current provider session based userId as primary identifier
+        // and cleanUP foreign/old user based data from app
+        
+        let providerUserId = spotifyClient.spfCurrentSession!.canonicalUsername
+        
+        CoreStore.defaultStack.perform(
+            asynchronous: { (transaction) -> Int? in transaction.deleteAll(
+                From<StreamPlayList>().where((\StreamPlayList.aqooUserId != providerUserId)))
+            },
+            completion: { (result) -> Void in
+                
+                switch result {
+                case .failure(let error): if self.debugMode { print (error) }
+                case .success(let userInfo):
+                    // enforce playlistView table reload
+                    self.handlePlaylistReloadData()
                     
-                    switch result {
-                    case .failure(let error): if self.debugMode { print (error) }
-                    case .success(let userInfo):
-                        // enforce playlistView table reload
-                        self.handlePlaylistReloadData()
-                        
-                        if  self.debugMode {
-                            print ("dbg [playlist] : old user playlists cache removed")
-                        }
+                    if  self.debugMode {
+                        print ("dbg [playlist] : old user playlists cache removed")
                     }
                 }
-            )
-        }
+            }
+        )
     }
     
     func setupUICacheProcessor() {
@@ -343,11 +349,11 @@ extension PlaylistViewController {
     
     @objc
     func setupUILoadMetaExtendedPlaylists(_ notification: Notification) {
+        
         // in this version of aqoo only a base set of meta data will be extending our playlist rows
         handlePlaylistExtendedMetaEnrichment()
-        
-        // reset possible playback flag state after app crash/reset
-        handlePlaylistPlayStateReset()
+        // reset possible playback flag state after app crash/reset on tracks
+        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
     }
     
     @objc
@@ -548,7 +554,7 @@ extension PlaylistViewController {
                 )
                 
                 // stream provider config entry in local db not available or not fetchable yet? Create a new one ...
-                if _configKeyRow == nil {
+                if  _configKeyRow == nil {
                     _configKeyRow = transaction.create(Into<StreamProviderConfig>()) as StreamProviderConfig
                     _configKeyRow!.defaultPlaylistTableFilterKey = filterKey
                     _configKeyRow!.isGlobal = false // this config will be provider dependent
@@ -667,16 +673,12 @@ extension PlaylistViewController {
             print ("__ connection seems to be bad, can't recognize players meta data ... [dbg:meta:ignored]")
         }
         
-        let currentAlbumName = localPlayer.player!.metadata.currentTrack!.albumName
-        let currentTrackName = localPlayer.player!.metadata.currentTrack!.name
+        let currentAlbumName = localPlayer.player!.metadata.currentTrack!.playbackSourceName
+        let currentTrackName = localPlayer.player!.metadata.currentTrack!.albumName
         let currentArtistName = localPlayer.player!.metadata.currentTrack!.artistName
         
         if  localPlayer.player!.playbackState.isPlaying {
-            print ("[meta] track:  \(currentTrackName)")
-            print ("[meta] album:  \(currentAlbumName)")
-            print ("[meta] artist: \(currentArtistName)")
-            print ("[meta] player_is_activeDevice: \(localPlayer.player!.playbackState.isActiveDevice)")
-            print ("[meta] player_is_playing: \(localPlayer.player!.playbackState.isPlaying)")
+            print ("[meta] play track: \(currentTrackName) (album: \(currentAlbumName), artist: \(currentArtistName))")
         }   else {
             print ("__ not playing, ignore metablock debug out")
         }
@@ -1956,13 +1958,6 @@ extension PlaylistViewController {
         
         setupUICollapseAllVisibleOpenCells()
         tableView.reloadData()
-    }
-    
-    
-    func handlePlaylistPlayStateReset() {
-        
-        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
     }
     
     func togglePlayModeIcons(

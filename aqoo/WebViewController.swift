@@ -59,8 +59,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             height: 5,
             durations: Durations(fadeIn: 0.975, fadeOut: 1.375, progress: 2.725),
             gradientColorList: [
-                UIColor(netHex: 0x1ED760), // 0x1ED760 | 0x4CD964
-                UIColor(netHex: 0xff2D55)  // 0xff2D55 | 0xff2D55
+                UIColor(netHex: 0x1ED760),
+                UIColor(netHex: 0xff2D55)
             ],
             onView: webView
         );  webViewGradientLoadingBar.show()

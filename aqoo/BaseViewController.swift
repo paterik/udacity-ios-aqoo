@@ -55,7 +55,6 @@ class BaseViewController: UIViewController {
     let _sysPlaylistCacheRefreshEnforce: DateComponents = 3.minutes
     let _sysConnectionCheckTimerInterval: Double = 1
     
-    
     //
     // MARK: Class Variables
     //

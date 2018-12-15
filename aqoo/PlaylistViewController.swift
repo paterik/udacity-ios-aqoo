@@ -155,6 +155,7 @@ class PlaylistViewController: BaseViewController,
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
    
         handlePlaylistCloudRefresh()
+        handlePlaylistResetMetaState()
         
         appDelegate.restrictRotation = .all
     }
