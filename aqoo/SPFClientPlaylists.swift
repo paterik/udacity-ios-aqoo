@@ -39,6 +39,7 @@ class SPFClientPlaylists: NSObject {
     // some helper vars
     var playListDefaultImage: UIImage?
     var playlistInCloudExtendedHandled: Int = 0
+    var playlistInCacheHandledWithoutUpdate: Int = 0
     
     //
     // MARK: API Methods

@@ -51,6 +51,13 @@ extension PlaylistViewController {
             name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistCacheLoadCompleted),
             object: nil
         )
+        
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.handlePlaylistLocalLoadCompleted),
+            name: NSNotification.Name(rawValue: self.notifier.notifyPlaylistLocalLoadCompleted),
+            object: nil
+        )
     }
     
     func setupUITableBasicMenuView() {
@@ -123,6 +130,9 @@ extension PlaylistViewController {
         // cleanUp filter definition
         playListBasicFilterItems.removeAll()
         
+        // (re)set flag for collapsed cells
+        playlistCellsCollapsed = true
+        
         // define (and show) our playlist loading bar
         playlistGradientLoadingBar = GradientLoadingBar(
             height: 5,
@@ -133,13 +143,6 @@ extension PlaylistViewController {
             ],
             onView: self.view
         );  playlistGradientLoadingBar.show()
-    }
-    
-    func handlePlaylistResetMetaState() {
-     
-        // reset possible playback flag state after app crash/reset on playlists
-        localPlaylistControls.resetPlayModeOnAllPlaylists()
-        localPlaylistControls.resetPlayModeOnAllPlaylistTracks()
     }
     
     func setupDBSessionAuth() {
@@ -199,10 +202,11 @@ extension PlaylistViewController {
         
         // finale item allocation for our filterMenu
         playListMenuBasicFilters.items = menuItems
-        tableView.addSubview(playListMenuBasicFilters)
-        
         // updated selected index based on given persisted filterKey
         playListMenuBasicFilters.selectedIndex = getConfigTableFilterKeyByProviderTag()
+        
+        tableView.addSubview(playListMenuBasicFilters)
+        
     }
     
     @objc
@@ -319,8 +323,11 @@ extension PlaylistViewController {
         
         var duration = 0.0
         
+        if  playlistCellsCollapsed { return }
+        
         let cells = tableView.visibleCells as! Array<PlaylistTableFoldingCell>
         for (index, cell) in cells.enumerated() {
+            
             if  cell.isUnfolded {
                 cell.unfold(false, animated: false, completion: nil)
                 duration = sysCloseCellDuration
@@ -329,6 +336,18 @@ extension PlaylistViewController {
                     self.tableView.beginUpdates()
                     self.tableView.endUpdates()
                 },  completion: nil)
+            }
+        }
+        
+        playlistCellsCollapsed = true
+    }
+    
+    @objc
+    func handlePlaylistLocalLoadCompleted () {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            if  self.playlistGradientLoadingBar.isVisible {
+                self.playlistGradientLoadingBar.hide()
             }
         }
     }
@@ -365,6 +384,7 @@ extension PlaylistViewController {
         // clear internal cache for playlists
         spotifyClient.playListHashesInCloud = []
         spotifyClient.playListHashesInCache = []
+        spotifyClient.playlistInCacheHandledWithoutUpdate = 0
         
         // clear internal cache for user profiles
         userProfilesHandledWithImages = [:]
@@ -962,6 +982,8 @@ extension PlaylistViewController {
         
         if  spotifyClient.isSpotifyTokenValid() {
             
+            playlistGradientLoadingBar.show()
+            
             if  playlistInCloudLastLocalUpdate == nil ||
                 Date() >= (playlistInCloudLastLocalUpdate! + _sysPlaylistCacheRefreshEnforce) ||
                 spotifyClient.playlistsInCloud.count == 0 ||
@@ -1092,7 +1114,7 @@ extension PlaylistViewController {
                         playlistToUpdate.metaListOverallPlaytimeInSeconds = Int32(playlistTracksInCloud.1)
                         
                         // handle & persist all tracks in each given playlist
-                        for (index, track) in (playlistTracksInCloud.0).enumerated() {
+                        for (trackIndex, track) in (playlistTracksInCloud.0).enumerated() {
                             
                             trackCount += 1
                             
@@ -1123,21 +1145,21 @@ extension PlaylistViewController {
                                 trackInDbCache!.metaTrackArtists = ""
                                 trackInDbCache!.metaTrackIsPlaying = false
                                 trackInDbCache!.metaTrackLastTrackPosition = 0
-                                trackInDbCache!.metaTrackOrderNumber = Int64(index)
+                                trackInDbCache!.metaTrackOrderNumber = Int64(trackIndex)
                                 
                                 let playlist = transaction.edit(playlistToUpdate)!
                                 
                                 if  self.debugMode {
-                                    print ("dbg [playlist] : track #\(index) = [\(track.trackName)] NOT found -> CREATED")
+                                    print ("dbg [playlist] : track #\(trackIndex) = [\(track.trackName)] NOT found -> CREATED")
                                 }
                                 
                             }   else {
                                 
-                                var _trackIndex = trackInDbCache!.metaTrackOrderNumber
+                                var trackIndexInDb = trackInDbCache!.metaTrackOrderNumber
                                 
                                 if  trackInDbCache!.getMD5Fingerprint() == track.getMD5Fingerprint() {
                                     if  self.debugMode {
-                                        print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] ignored -> NO_CHANGES")
+                                        print ("dbg [playlist] : track #\(trackIndexInDb) = [\(track.trackName)] ignored -> NO_CHANGES")
                                     }
                                     
                                 }   else {
@@ -1161,7 +1183,7 @@ extension PlaylistViewController {
                                     trackInDbCache!.updatedAt = Date()
                                     
                                     if  self.debugMode {
-                                        print ("dbg [playlist] : track #\(_trackIndex) = [\(track.trackName)] found -> UPDATED")
+                                        print ("dbg [playlist] : track #\(trackIndexInDb) = [\(track.trackName)] found -> UPDATED")
                                     }
                                 }
                             }
@@ -1178,11 +1200,16 @@ extension PlaylistViewController {
                                 print ("---")
                             }
                             
-                            // last item of our playlist handled? deactivate the loading bar ...
+                            // last track item of our playlist handled? deactivate the loading bar ...
                             if  playlistIndex == _playListCache.count - 1 {
                                 if  self.debugMode {
-                                    print ("=== [loading complete] ===")
-                                };  self.playlistGradientLoadingBar.hide()
+                                    print ("=== [loading complete 01] ===")
+                                }
+                                
+                                NotificationCenter.default.post(
+                                    name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistLocalLoadCompleted),
+                                    object: self
+                                )
                             }
                         }
                     }
@@ -1548,6 +1575,19 @@ extension PlaylistViewController {
                             print ("dbg [playlist] : [\(_playListInDb!.metaListInternalName)] handled -> NO_CHANGES")
                         }
                         
+                        // last item of our playlist handled? deactivate the loading bar ...
+                        self.spotifyClient.playlistInCacheHandledWithoutUpdate += 1
+                        if  self.spotifyClient.playlistInCacheHandledWithoutUpdate == self.spotifyClient.playlistsInCache.count - 1 {
+                            if  self.debugMode {
+                                print ("=== [loading complete 02] ===")
+                            }
+                            
+                            NotificationCenter.default.post(
+                                name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistLocalLoadCompleted),
+                                object: self
+                            )
+                        }
+                        
                     }   else {
                         
                         // name (origin) , number of tracks or flags for public/collaborative changed? update list
@@ -1696,7 +1736,12 @@ extension PlaylistViewController {
                     }
                     
                     self.spotifyClient.playlistsInCache = []
-                    self.playlistGradientLoadingBar.hide()
+                    
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name.init(rawValue: self.notifier.notifyPlaylistLocalLoadCompleted),
+                        object: self
+                    )
+                    
                 }
             },
             
@@ -1711,13 +1756,22 @@ extension PlaylistViewController {
     }
 
     func handlePlaylistHiddenFlag(
-       _ playlistInDb: StreamPlayList) {
+       _ playlistInDb: StreamPlayList?) {
         
-        var newHiddenState: Bool = !playlistInDb.isPlaylistHidden
         var hiddenStateVerb: String = "Disable"
         var hiddenStateInformation: String = "You can find this playlist using the 'show-hidden' filter"
         var _playListInDb: StreamPlayList?
         
+        if  playlistInDb == nil {
+            self.handleErrorAsDialogMessage(
+                "Error Loading Playlist",
+                "Oops! An error occured while loading this playlist from database ..."
+            )
+            
+            return
+        }
+        
+        var newHiddenState: Bool = !playlistInDb!.isPlaylistHidden
         if  newHiddenState == false {
             hiddenStateVerb = "Enable"
             hiddenStateInformation = "This playlist is now visible in all filters again"
@@ -1727,7 +1781,7 @@ extension PlaylistViewController {
             
             asynchronous: { (transaction) -> Void in
                 _playListInDb = transaction.fetchOne(
-                    From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistInDb.getMD5Identifier())
+                    From<StreamPlayList>().where(\StreamPlayList.metaListHash == playlistInDb!.getMD5Identifier())
                 )
                 
                 if  _playListInDb != nil {
@@ -1741,11 +1795,11 @@ extension PlaylistViewController {
                 case .failure(let error): if self.debugMode { print (error) }
                 case .success(let userInfo):
                     
-                    self.showUserNotification("\(hiddenStateVerb) \(playlistInDb.metaListInternalName)", hiddenStateInformation, nil, 0.9275)
+                    self.showUserNotification("\(hiddenStateVerb) \(playlistInDb!.metaListInternalName)", hiddenStateInformation, nil, 0.9275)
                     self.setupUILoadExtendedPlaylists()
                     
                     if  self.debugMode {
-                        print ("dbg [playlist] : [\(playlistInDb.metaListInternalName)] handled -> HIDDEN=\(newHiddenState)")
+                        print ("dbg [playlist] : [\(playlistInDb!.metaListInternalName)] handled -> HIDDEN=\(newHiddenState)")
                     }
                 }
             }
@@ -1957,6 +2011,7 @@ extension PlaylistViewController {
     func handlePlaylistReloadData() {
         
         setupUICollapseAllVisibleOpenCells()
+        
         tableView.reloadData()
     }
     
@@ -2020,7 +2075,7 @@ extension PlaylistViewController {
         if  self.debugMode {
             print ("dbg [delegate] : PlaylistViewControllerExt::playlistItem = [\(playlistItem.metaListInternalName)]")
         }
-        
+
         setupUICollapseAllVisibleOpenCells()
         setupUILoadExtendedPlaylists()
         playlistChangedItem = playlistItem

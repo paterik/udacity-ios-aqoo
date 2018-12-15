@@ -75,6 +75,7 @@ class PlaylistViewController: BaseViewController,
     var playlistCellsInPlayMode = [PlaylistTableFoldingCell]()
     
     var playlistChanged: Bool?
+    var playlistCellsCollapsed: Bool = false
     var playlistChangedItem: StreamPlayList?
     var playlistGradientLoadingBar = GradientLoadingBar()
     var playListMenuBasicFilters: MenuView!
@@ -155,7 +156,6 @@ class PlaylistViewController: BaseViewController,
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
    
         handlePlaylistCloudRefresh()
-        handlePlaylistResetMetaState()
         
         appDelegate.restrictRotation = .all
     }
@@ -311,8 +311,8 @@ class PlaylistViewController: BaseViewController,
             backgroundColor: sysPlaylistSwipeBackgroundColor,
             image: UIImage(named: "icnHide_v3"),
             forCellHeight: UInt(self.sysCloseCellHeight)) { (action, index) in
-                
-            self.handlePlaylistHiddenFlag(self.playlistInCacheSelected!)
+
+            self.handlePlaylistHiddenFlag( self.playlistInCacheSelected! )
         }
         
         let tblActionShowPlaylistContent = BGTableViewRowActionWithImage.rowAction(
@@ -391,7 +391,11 @@ class PlaylistViewController: BaseViewController,
     
     @IBAction func btnShowPlaylistHidingOptionAction(_ sender: Any) {
         
-        handlePlaylistHiddenFlag( playlistInCacheSelected! )
+        // this option is only available on open cells so presume that collapsed cell-flag must be false now
+        playlistCellsCollapsed = false
+        // hide playlist using db call
+        handlePlaylistHiddenFlag( playlistInCacheSelected )
+        // reload table data to enforce cell movement
         handlePlaylistReloadData()
     }
     

@@ -18,6 +18,7 @@ struct SPFEventNotifier {
     var notifyPlaylistLoadCompleted = "__cloud_playlist_load_completed"
     var notifyPlaylistMetaExtendLoadCompleted = "__cloud_playlist_meta_extend_load_completed"
     var notifyPlaylistCacheLoadCompleted = "__cache_playlist_load_completed"
+    var notifyPlaylistLocalLoadCompleted = "__cache_playlist_local_load_completed"
     var notifySessionRequestSuccess = "__cloud_session_request_completed"
     var notifySessionRequestCanceled = "__cloud_session_request_canceled"
 }

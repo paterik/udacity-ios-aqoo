@@ -5572,40 +5572,6 @@
 			};
 			name = Debug;
 		};
-		1847BBE2F085D1661619BA2A0B761889 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 418B7D444B9B9948D2A2ACE6F1EE4F8B /* Spotify-iOS-SDK.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXPANDED_CODE_SIGN_IDENTITY = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Spotify-iOS-SDK/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK.modulemap";
-				PRODUCT_MODULE_NAME = Spotify;
-				PRODUCT_NAME = Spotify;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.1;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		193F1C299CDE0F7C16EF861ED4574AA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A013FE08157E30D56BE743463CBE75D8 /* BGTableViewRowActionWithImage.xcconfig */;
@@ -6164,41 +6130,6 @@
 			};
 			name = Debug;
 		};
-		633753B5C75483DCC95CE2E3E630DCA6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 418B7D444B9B9948D2A2ACE6F1EE4F8B /* Spotify-iOS-SDK.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXPANDED_CODE_SIGN_IDENTITY = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Spotify-iOS-SDK/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK.modulemap";
-				PRODUCT_MODULE_NAME = Spotify;
-				PRODUCT_NAME = Spotify;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.1;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		65FE1B49D87609368DB64162C79BC336 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D9BDE74B7B6B0879911F90360D7C73FD /* CryptoSwift.xcconfig */;
@@ -6263,6 +6194,41 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6E8C9B1FDEAA3D5301D622BC7DE26A26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 418B7D444B9B9948D2A2ACE6F1EE4F8B /* Spotify-iOS-SDK.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Spotify-iOS-SDK/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK.modulemap";
+				PRODUCT_MODULE_NAME = Spotify;
+				PRODUCT_NAME = Spotify;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -7222,6 +7188,40 @@
 			};
 			name = Debug;
 		};
+		F7F1D15FFD77DC459E9ADF5A9CA15354 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 418B7D444B9B9948D2A2ACE6F1EE4F8B /* Spotify-iOS-SDK.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Spotify-iOS-SDK/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Spotify-iOS-SDK/Spotify-iOS-SDK.modulemap";
+				PRODUCT_MODULE_NAME = Spotify;
+				PRODUCT_NAME = Spotify;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		FD1EC57AAFA41FD8AB55AC4E2E3F542D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A013FE08157E30D56BE743463CBE75D8 /* BGTableViewRowActionWithImage.xcconfig */;
@@ -7433,8 +7433,8 @@
 		B85A9D1AF7244B705664EDEA66BB7A01 /* Build configuration list for PBXNativeTarget "Spotify-iOS-SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1847BBE2F085D1661619BA2A0B761889 /* Debug */,
-				633753B5C75483DCC95CE2E3E630DCA6 /* Release */,
+				F7F1D15FFD77DC459E9ADF5A9CA15354 /* Debug */,
+				6E8C9B1FDEAA3D5301D622BC7DE26A26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
