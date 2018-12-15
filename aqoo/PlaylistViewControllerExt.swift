@@ -142,7 +142,11 @@ extension PlaylistViewController {
                 UIColor(netHex: 0xff2D55)
             ],
             onView: self.view
-        );  playlistGradientLoadingBar.show()
+        )
+        
+        // start loading indicator placement (progressBar and HUDLabel)
+        playlistGradientLoadingBar.show()
+        HUD.show(.label("loading ..."), onView: self.view)
     }
     
     func setupDBSessionAuth() {
@@ -348,6 +352,7 @@ extension PlaylistViewController {
             print ("dbg [playlist] : loading complete, hide progressBar")
         }
         
+        HUD.hide()
         playlistGradientLoadingBar.hide()
     }
     
